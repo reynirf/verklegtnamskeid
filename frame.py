@@ -1,5 +1,5 @@
 import os
-
+from lib.color import Color
 class Frame:
     def __init__(self): 
         self.rows, self.columns = os.popen('stty size', 'r').read().split()
@@ -16,6 +16,6 @@ class Frame:
     # os.system('while sleep 1;do tput sc;tput cup 0 $(($(tput cols)-11));echo "`date +%r`";tput rc;done &')
 
     def __str__(self):
-        return '{}{}\n'.format(self.logo, '-'*int(self.columns))
+        return '{}{}\n'.format(Color.return_colored(self.logo,'yellow'), Color.return_colored('-'*int(self.columns), 'red'))
 
         

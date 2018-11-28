@@ -9,7 +9,10 @@ class Color:
         'BOLD':'\033[1m',
         'UNDERLINE':'\033[4m',
         'END':'\033[0m'
-    }
+    }   
 
     def print_colored(text, color):
         print('{}{}{}'.format(Color.COLORS[color.upper()],text,Color.COLORS['END']))
+        
+    def return_colored(text, color):
+        return '{}{}{}'.format(Color.COLORS[color.upper()],text,Color.COLORS['END'])
