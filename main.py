@@ -1,8 +1,10 @@
 from models.vehicle import Vehicle
-from frame import Frame
+from ui.frame import Frame
 from lib.color import Color
 from models.user import User
 from lib.nocco_list import NoccoList
+
+
 
 def get_users():
     with open('data/ids.txt') as users:
@@ -29,22 +31,42 @@ def initialize_user(user):
     user = User(name,user_id)
     return user
 
+def introduce_user(user):
+    print(user)
+
 frame = Frame()
 print(frame)
 
 users = get_users()
 user = authenticate(users)
 
+print()
+
 if not user:
     print('Invalid ID')
 else:
     user = initialize_user(user)
+    introduce_user(user)
 
 print()
-print(user)
+
+prompt = NoccoList.choose_one('What do you want?', ['I want money', 'Cookies','MEAT AND CHEESE','All above'],'answer')
+
+print() 
+print('THE ANSWER YOU PICKED IS: ' + prompt['answer'])
+
+print()
+print()
+print()
+print()
+print()
+print()
+print()
+print()
+print()
+print()
 print()
 
-prompt = NoccoList.choose_one('What do you want?', ['test1', 'test2','test3','test'],'answer')
 
 
 # for i in Color.COLORS:

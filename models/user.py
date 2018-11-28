@@ -10,4 +10,4 @@ class User:
         return self.__name
 
     def __str__(self):
-        return "User has ID {} and the users' name is {}".format(self.__id, self.__name)
+        return "[{}] Welcome {}!".format(self.__id, self.__name)
