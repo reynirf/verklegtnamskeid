@@ -20,10 +20,10 @@ def authenticate(users):
         user_id = input('Enter ID: ')
         users[user_id]
         return (users[user_id],user_id)
-    except ValueError:
-        return 0
     except KeyError:
-        return 0
+        Frame.delete_last_lines(2)
+        Color.print_colored('Invalid ID '+user_id, 'red')
+        return authenticate(users)
 
 def initialize_user(user):
     name = user[0]
