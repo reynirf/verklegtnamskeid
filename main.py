@@ -48,10 +48,10 @@ introduce_user(user)
 
 print()
 
-prompt = NoccoList.choose_one('What do you want?', ['I want money', 'Cookies','MEAT AND CHEESE','All above'],'answer')
+prompt = NoccoList.choose_one('Choose an action', ['Menu', 'Order','Customer','Reports','Logout'],'answer')
 
 print() 
-print('THE ANSWER YOU PICKED IS: ' + prompt['answer'])
+print('The action you picked: ' + prompt['answer'])
 
 print()
 print()

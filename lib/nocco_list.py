@@ -9,13 +9,21 @@ import datetime
 class NoccoList:
     def print_alternatives_and_get_index(question, alternatives, alternative_index):
         Color.print_colored('Use the RIGHT ARROW KEY (>) to choose an action', 'red')
-        print('[{}] {}: {}'.format(Color.return_colored('?', 'yellow'), question, alternatives[alternative_index]))
+        # print('[{}] {}: {}'.format(Color.return_colored('?', 'yellow'), question, alternatives[alternative_index]))
+        print('[{}] {}: {}'.format(Color.return_colored('!', 'yellow'), question, alternatives[alternative_index]))
         for i,alternative in enumerate(alternatives):
             if i == alternative_index:
-                print('   {}'.format(Color.return_colored('> ' + alternative,'cyan')))
+                if alternative == alternatives[-1]:
+                    print()
+                    print('   {}'.format(Color.return_colored('> ' + alternative,'red')))
+                else:
+                    print('   {}'.format(Color.return_colored('> ' + alternative,'cyan')))
             else:
+                if alternative == alternatives[-1]:
+                    print()
                 print('     {}'.format(alternative))
 
+            
     def choose_one(question, alternatives, answer_key):
         alternative_index = 0
         NoccoList.print_alternatives_and_get_index(question, alternatives, alternative_index)
@@ -30,7 +38,7 @@ class NoccoList:
                     alternative_index += 1
             else:
                 return {answer_key:alternatives[alternative_index]}
-            Frame.delete_last_lines(n=len(alternatives)+2)
+            Frame.delete_last_lines(n=len(alternatives)+3)
             NoccoList.print_alternatives_and_get_index(question, alternatives, alternative_index)
 
         # os.system('cls' if os.name == 'nt' else 'clear')
