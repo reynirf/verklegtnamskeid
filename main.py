@@ -34,6 +34,9 @@ def initialize_user(user):
 def introduce_user(user):
     print(user)
 
+# def logout(user):
+#     Frame.delete_last_lines(12)
+
 frame = Frame()
 print(frame) #ekki remove'a
 
@@ -48,20 +51,11 @@ introduce_user(user)
 
 print()
 
-prompt = NoccoList.choose_one('Choose an action', ['Menu', 'Order','Customer','Reports','Logout'],'answer')
+prompt = NoccoList.choose_one('Choose an action', ['Order','Customer','Reports','Logout'],'answer')
 
 print() 
 print('The action you picked: ' + prompt['answer'])
 
-print()
-print()
-print()
-print()
-print()
-print()
-print()
-print()
-print()
 print()
 print()
 
