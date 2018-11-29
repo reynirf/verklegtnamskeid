@@ -13,7 +13,6 @@ import datetime
 
 class NoccoList:
     def print_alternatives_and_get_index(question, alternatives, alternative_index):
-        Color.print_colored('Use the RIGHT ARROW KEY (>) to choose an action', 'red')
         # print('[{}] {}: {}'.format(Color.return_colored('?', 'yellow'), question, alternatives[alternative_index]))
         print('[{}] {}: {}'.format(Color.return_colored('!', 'yellow'), question, alternatives[alternative_index]))
         for i,alternative in enumerate(alternatives):
@@ -32,7 +31,7 @@ class NoccoList:
     def choose_one(question, alternatives, answer_key):
         alternative_index = 0
         NoccoList.print_alternatives_and_get_index(question, alternatives, alternative_index)
-        
+        alphabet = ['A','a','B','b','C','c','D','d','E','e','F','f','G','g','H','h','I','i','J','j','K','k','L','l','M','m','N','n','O','o','P','p','Q','q','R','r','S','s','T','t','U','u','V','v','W','w','X','x','Y','y','Z','z']
         while 1:
             key = NoccoKey.get()
             if key == 'up':
@@ -41,12 +40,10 @@ class NoccoList:
             elif key == 'down':
                 if alternative_index != len(alternatives)-1:
                     alternative_index += 1
-            else:
+            elif key not in alphabet:
                 return {answer_key:alternatives[alternative_index]}
-            Frame.delete_last_lines(n=len(alternatives)+3)
+            Frame.delete_last_lines(n=len(alternatives)+2)
             NoccoList.print_alternatives_and_get_index(question, alternatives, alternative_index)
-
-        # os.system('cls' if os.name == 'nt' else 'clear')
 
     def write_many():
         pass
