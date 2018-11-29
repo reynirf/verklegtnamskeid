@@ -1,3 +1,8 @@
+
+#NOCCOLIST
+#VERSION 1.0.2
+
+
 from lib.color import Color
 from ui.frame import Frame
 from lib.nocco_key import NoccoKey
