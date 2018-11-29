@@ -42,11 +42,8 @@ user = authenticate(users)
 
 print()
 
-if not user:
-    print('Invalid ID')
-else:
-    user = initialize_user(user)
-    introduce_user(user)
+user = initialize_user(user)
+introduce_user(user)
 
 print()
 
