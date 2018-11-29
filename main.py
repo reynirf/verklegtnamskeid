@@ -22,7 +22,7 @@ def authenticate(users):
         return (users[user_id],user_id)
     except KeyError:
         Frame.delete_last_lines(2)
-        Color.print_colored('Invalid ID '+user_id, 'red')
+        Color.print_colored('Invalid ID: '+user_id, 'red')
         return authenticate(users)
 
 def initialize_user(user):
@@ -35,12 +35,13 @@ def introduce_user(user):
     print(user)
 
 frame = Frame()
-print(frame)
+print(frame) #ekki remove'a
 
 users = get_users()
+print() #ekki remove'a
 user = authenticate(users)
 
-print()
+print() 
 
 user = initialize_user(user)
 introduce_user(user)
