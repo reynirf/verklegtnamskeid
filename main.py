@@ -1,7 +1,7 @@
 from models.vehicle import Vehicle
 from ui.frame import Frame
 from lib.color import Color
-from models.user import User
+from models.employee import Employee
 from lib.nocco_list import NoccoList
 
 
@@ -28,7 +28,7 @@ def authenticate(users):
 def initialize_user(user):
     name = user[0]
     user_id = user[1]
-    user = User(name,user_id)
+    user = Employee(name,user_id)
     return user
 
 def introduce_user(user):

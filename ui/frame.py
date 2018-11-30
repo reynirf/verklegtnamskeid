@@ -1,7 +1,8 @@
 import os
 from lib.color import Color
 import sys
-# from datetime import datetime,time
+from datetime import datetime
+import time
 class Frame:
     CURSOR_UP_ONE = '\x1b[1A'
     ERASE_LINE = '\x1b[2K'
@@ -19,10 +20,10 @@ class Frame:
     os.system('cls' if os.name == 'nt' else 'clear')
     # os.system('while sleep 1;do tput sc;tput cup 0 $(($(tput cols)-11));echo "`date +%r`";tput rc;done &')
 
-    # def clock(self):
-    #     while True:
-    #         print(datetime.now().strftime("%H:%M:%S"), end="\r")
-    #         time.sleep(1)
+    def clock(self):
+        while True:
+            print(datetime.today().strftime("%H:%M:%S"), end="\r")
+            time.sleep(1)
 
 
     def __str__(self):

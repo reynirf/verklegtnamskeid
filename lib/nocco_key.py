@@ -1,4 +1,6 @@
-import termios, sys, tty
+import termios
+import sys
+import tty
 
 class NoccoKey:
         def get():
