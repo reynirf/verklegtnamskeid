@@ -4,8 +4,8 @@ from lib.color import Color
 from models.employee import Employee
 from lib.nocco_list import NoccoList
 import csv
-
-
+import time
+import getpass
 
 def get_employees():
     with open('data/employees.csv') as csv_file:
@@ -20,25 +20,28 @@ def get_employees():
                 } 
         return employees
 
-def authenticate(employees):
+def authenticate(employees, has_failed=0):
     try:
         employee_id = input('Enter ID: ')
-        employee_password = input('Enter password: ')
-        employees[employee_id]
+        employee_password = getpass.getpass('Enter password: ')
+
+        employees[employee_id] #test to see if the employee_id exists. If it doesn't exist, it will raise a KeyError
+        
         if employee_password != employees[employee_id]['password']:
             raise ValueError
-        return (employees[employee_id],employee_id)
+        return (employees[employee_id],employee_id),has_failed
     except KeyError:
+        has_failed = True
         Frame.delete_last_lines(3)
         Color.print_colored('Invalid ID: ' + employee_id, 'red')
-        return authenticate(employees)
+        return authenticate(employees,has_failed)
     except ValueError:
+        has_failed = True
         Frame.delete_last_lines(3)
         Color.print_colored('Wrong password', 'red')
-        return authenticate(employees)
+        return authenticate(employees,has_failed)
 
 def initialize_employee(employee):
-    print(employee)
     info = employee[0]
     employee_id = employee[1]
     password = info['password']
@@ -47,30 +50,58 @@ def initialize_employee(employee):
     return employee
 
 def introduce_employee(employee):
-    Frame.delete_last_lines(5)
+    Frame.delete_last_lines(3)
     print(employee)
 
-# def logout(employee):
-#     Frame.delete_last_lines(12)
+def authenticate_process(employees):
+    print() #ekki remove'a
+    print()
+    employee,has_failed = authenticate(employees)
+    print()
+    employee = initialize_employee(employee)
+    if has_failed:
+        Frame.delete_last_lines(4)
+        print()
+        print()
+        print()
+        print()
+    introduce_employee(employee)
+    print()
+
+    return employee
+
+def logout(employee, employees):
+    Frame.delete_last_lines(8)
+    print('{} has been logged out'.format(Color.return_colored(employee.get_name(), 'red')))
+    time.sleep(2)
+    Frame.delete_last_lines(3)
+    return authenticate_process(employees)
+
+def handle_answer_from_menu(prompt, employee, employees):
+    if prompt.lower() == 'logout':
+        new_employee = logout(employee, employees) #logout and return the next user who logs into the syste
+        menu(new_employee, employees)
+        return new_employee
+        
+
+
+def menu(employee, employees):
+    prompt = NoccoList.choose_one('Choose an action', ['Order','Customer','Reports','Logout'],'action')
+    employee = handle_answer_from_menu(prompt['action'], employee, employees)
+
 
 frame = Frame()
 print(frame) #ekki remove'a
 
 employees = get_employees()
-print() #ekki remove'a
-employee = authenticate(employees)
+employee = authenticate_process(employees)
+menu(employee, employees)
+
+
+
 
 print() 
-
-employee = initialize_employee(employee)
-introduce_employee(employee)
-
-print()
-
-prompt = NoccoList.choose_one('Choose an action', ['Order','Customer','Reports','Logout'],'answer')
-
-print() 
-print('The action you picked: ' + prompt['answer'])
+# print('The action you picked: ' + prompt['answer'])
 
 print()
 print()

@@ -1,3 +1,5 @@
+from lib.color import Color
+
 class Employee:
     def __init__(self, name='', user_id='', password=''):
         self.__name = name
@@ -11,4 +13,4 @@ class Employee:
         return self.__name
 
     def __str__(self):
-        return "[{}] Welcome {}!".format(self.__id, self.__name)
+        return "[{}] Welcome {}!".format(Color.return_colored(self.__id, 'yellow'), Color.return_colored(self.__name,'bold'))
