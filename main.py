@@ -32,6 +32,7 @@ def initialize_employee(employee):
     return employee
 
 def introduce_employee(employee):
+    Frame.delete_last_lines(2)
     print(employee)
 
 # def logout(employee):
