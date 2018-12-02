@@ -14,7 +14,7 @@ import datetime
 class NoccoList:
     def print_alternatives_and_get_index(question, alternatives, alternative_index):
         # print('[{}] {}: {}'.format(Color.return_colored('?', 'yellow'), question, alternatives[alternative_index]))
-        print('[{}] {}: {}'.format(Color.return_colored('!', 'yellow'), question, alternatives[alternative_index]))
+        print('[{}] {}: {}'.format(Color.return_colored('!', 'yellow'), question, Color.return_colored(alternatives[alternative_index], 'bold')))
         for i,alternative in enumerate(alternatives):
             if i == alternative_index:
                 if alternative == alternatives[-1]:
