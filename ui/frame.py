@@ -3,6 +3,7 @@ from lib.color import Color
 import sys
 from datetime import datetime
 import time
+
 class Frame:
     CURSOR_UP_ONE = '\x1b[1A'
     ERASE_LINE = '\x1b[2K'

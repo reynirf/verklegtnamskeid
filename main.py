@@ -6,48 +6,48 @@ from lib.nocco_list import NoccoList
 
 
 
-def get_users():
-    with open('data/ids.txt') as users:
-        raw_users = users.read()
+def get_employees():
+    with open('data/ids.txt') as employees:
+        raw_employees = employees.read()
 
-    users = {}
-    for user in raw_users.split('\n'):
-        users[user[0:3]] = user[4:]
-    return users
+    employees = {}
+    for employee in raw_employees.split('\n'):
+        employees[employee[0:3]] = employee[4:]
+    return employees
 
-def authenticate(users):
+def authenticate(employees):
     try:
-        user_id = input('Enter ID: ')
-        users[user_id]
-        return (users[user_id],user_id)
+        employee_id = input('Enter ID: ')
+        employees[employee_id]
+        return (employees[employee_id],employee_id)
     except KeyError:
         Frame.delete_last_lines(2)
-        Color.print_colored('Invalid ID: '+user_id, 'red')
-        return authenticate(users)
+        Color.print_colored('Invalid ID: ' + employee_id, 'red')
+        return authenticate(employees)
 
-def initialize_user(user):
-    name = user[0]
-    user_id = user[1]
-    user = Employee(name,user_id)
-    return user
+def initialize_employee(employee):
+    name = employee[0]
+    employee_id = employee[1]
+    employee = Employee(name,employee_id)
+    return employee
 
-def introduce_user(user):
-    print(user)
+def introduce_employee(employee):
+    print(employee)
 
-# def logout(user):
+# def logout(employee):
 #     Frame.delete_last_lines(12)
 
 frame = Frame()
 print(frame) #ekki remove'a
 
-users = get_users()
+employees = get_employees()
 print() #ekki remove'a
-user = authenticate(users)
+employee = authenticate(employees)
 
 print() 
 
-user = initialize_user(user)
-introduce_user(user)
+employee = initialize_employee(employee)
+introduce_employee(employee)
 
 print()
 
