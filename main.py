@@ -3,36 +3,51 @@ from ui.frame import Frame
 from lib.color import Color
 from models.employee import Employee
 from lib.nocco_list import NoccoList
+import csv
 
 
 
 def get_employees():
-    with open('data/ids.txt') as employees:
-        raw_employees = employees.read()
-
-    employees = {}
-    for employee in raw_employees.split('\n'):
-        employees[employee[0:3]] = employee[4:]
-    return employees
+    with open('data/employees.csv') as csv_file:
+        csv_reader = csv.reader(csv_file, delimiter=',')
+        employees = {}
+        for i,employee in enumerate(csv_reader):
+            if i != 0:
+                e_id = employee[0]
+                employees[e_id] = {
+                    'name': employee[1],
+                    'password': employee[2]
+                } 
+        return employees
 
 def authenticate(employees):
     try:
         employee_id = input('Enter ID: ')
+        employee_password = input('Enter password: ')
         employees[employee_id]
+        if employee_password != employees[employee_id]['password']:
+            raise ValueError
         return (employees[employee_id],employee_id)
     except KeyError:
-        Frame.delete_last_lines(2)
+        Frame.delete_last_lines(3)
         Color.print_colored('Invalid ID: ' + employee_id, 'red')
+        return authenticate(employees)
+    except ValueError:
+        Frame.delete_last_lines(3)
+        Color.print_colored('Wrong password', 'red')
         return authenticate(employees)
 
 def initialize_employee(employee):
-    name = employee[0]
+    print(employee)
+    info = employee[0]
     employee_id = employee[1]
-    employee = Employee(name,employee_id)
+    password = info['password']
+    name = info['name']
+    employee = Employee(name,employee_id,password)
     return employee
 
 def introduce_employee(employee):
-    Frame.delete_last_lines(2)
+    Frame.delete_last_lines(5)
     print(employee)
 
 # def logout(employee):
