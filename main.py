@@ -22,7 +22,7 @@ def get_employees():
 
 def authenticate(employees, has_failed=0):
     try:
-        employee_id = input('Enter ID: ')
+        employee_id = input('Enter your ID: ')
         employee_password = getpass.getpass('Enter password: ')
 
         employees[employee_id] #test to see if the employee_id exists. If it doesn't exist, it will raise a KeyError
@@ -71,27 +71,36 @@ def authenticate_process(employees):
     return employee
 
 def logout(employee, employees):
-    Frame.delete_last_lines(8)
+    Frame.delete_last_lines(9)
     print('{} has been logged out'.format(Color.return_colored(employee.get_name(), 'red')))
     time.sleep(2)
     Frame.delete_last_lines(3)
     return authenticate_process(employees)
 
+def report_error():
+    Frame.delete_last_lines(7)
+    print('Contact your manager to report an error')
+    NoccoList.single_list('Go back')
+    Frame.delete_last_lines(3)
+
 def handle_answer_from_menu(prompt, employee, employees):
     if prompt.lower() == 'logout':
         new_employee = logout(employee, employees) #logout and return the next user who logs into the syste
         menu(new_employee, employees)
-        return new_employee
-        
-
+    if prompt.lower() == 'report an error':
+        report_error()
+        menu(employee, employees)
 
 def menu(employee, employees):
-    prompt = NoccoList.choose_one('Choose an action', ['Order','Customer','Reports','Logout'],'action')
-    employee = handle_answer_from_menu(prompt['action'], employee, employees)
+    prompt = NoccoList.choose_one('Choose an action', ['Order','Customer','Cars', 'Report an error','Logout'],'action')
+    handle_answer_from_menu(prompt['action'], employee, employees)
 
+
+
+#STARTING FUNCTIONALITY
 
 frame = Frame()
-print(frame) #ekki remove'a
+print(frame) #starting UI
 
 employees = get_employees()
 employee = authenticate_process(employees)

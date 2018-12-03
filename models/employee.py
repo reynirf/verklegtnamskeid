@@ -13,4 +13,4 @@ class Employee:
         return self.__name
 
     def __str__(self):
-        return "[{}] Welcome {}!".format(Color.return_colored(self.__id, 'yellow'), Color.return_colored(self.__name,'bold'))
+        return "[{}] {}".format(Color.return_colored(self.__id, 'yellow'), Color.return_colored(self.__name,'bold'))
