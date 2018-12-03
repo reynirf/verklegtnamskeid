@@ -1,8 +1,3 @@
-
-#NOCCOLIST
-#VERSION 1.0.2
-
-
 from lib.color import Color
 from ui.frame import Frame
 from lib.nocco_key import NoccoKey
@@ -13,28 +8,39 @@ import datetime
 
 class NoccoList:
     ALPHABET = ['A','a','B','b','C','c','D','d','E','e','F','f','G','g','H','h','I','i','J','j','K','k','L','l','M','m','N','n','O','o','P','p','Q','q','R','r','S','s','T','t','U','u','V','v','W','w','X','x','Y','y','Z','z']
+    def __init__(self):
+        self.nocco_key = NoccoKey()
+        self.color = Color()
+        self.frame = Frame()
 
-    def print_alternatives_and_get_index(question, alternatives, alternative_index):
-        # print('[{}] {}: {}'.format(Color.return_colored('?', 'yellow'), question, alternatives[alternative_index]))
-        print('[{}] {}: {}'.format(Color.return_colored('!', 'yellow'), question, Color.return_colored(alternatives[alternative_index], 'bold')))
+    def print_alternatives(self, question, alternatives, alternative_index):
+        print('[{}] {}: {}'.format(
+            self.color.return_colored('!', 'yellow'), 
+            question, 
+            self.color.return_colored(alternatives[alternative_index], 'bold')
+        ))
         for i,alternative in enumerate(alternatives):
             if i == alternative_index:
                 if alternative == alternatives[-1]:
                     print()
-                    print('   {}'.format(Color.return_colored('> ' + alternative,'red')))
+                    print('   {}'.format(self.color.return_colored('> ' + alternative,'red')))
                 else:
-                    print('   {}'.format(Color.return_colored('> ' + alternative,'cyan')))
+                    print('   {}'.format(self.color.return_colored('> ' + alternative,'cyan')))
             else:
                 if alternative == alternatives[-1]:
                     print()
                 print('     {}'.format(alternative))
 
             
-    def choose_one(question, alternatives, answer_key):
+    def choose_one(self, question, alternatives, answer_key):
         alternative_index = 0
-        NoccoList.print_alternatives_and_get_index(question, alternatives, alternative_index)
+        self.print_alternatives(
+            question, 
+            alternatives, 
+            alternative_index
+        )
         while 1:
-            key = NoccoKey.get()
+            key = self.nocco_key.get()
             if key == 'up':
                 if alternative_index != 0:
                     alternative_index -= 1
@@ -43,21 +49,19 @@ class NoccoList:
                     alternative_index += 1
             elif key not in NoccoList.ALPHABET:
                 return {answer_key:alternatives[alternative_index]}
-            Frame.delete_last_lines(n=len(alternatives)+2)
-            NoccoList.print_alternatives_and_get_index(question, alternatives, alternative_index)
+            self.frame.delete_last_lines(n=len(alternatives)+2)
+            self.print_alternatives(
+                question, 
+                alternatives, 
+                alternative_index
+            )
 
-    def single_list(alternative):
+    def single_list(self, alternative):
         print()
-        print(' {}'.format(Color.return_colored('> ' + alternative,'red')))
+        print(' {}'.format(self.color.return_colored('> ' + alternative,'red')))
         while 1:
-            key = NoccoKey.get()
+            key = self.nocco_key.get()
             if key not in NoccoList.ALPHABET and key != 'down' and key != 'up':
                 return alternative
-            Frame.delete_last_lines(1)
-            print(' {}'.format(Color.return_colored('> ' + alternative,'red')))
-
-            
-    def write_many():
-        pass
-    def checkbox():
-        pass
+            self.frame.delete_last_lines(1)
+            print(' {}'.format(self.color.return_colored('> ' + alternative,'red')))

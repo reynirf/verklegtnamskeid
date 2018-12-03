@@ -5,6 +5,7 @@ class Employee:
         self.__name = name
         self.__id = user_id
         self.__password = password
+        self.color = Color()
     
     def get_name(self):
         return self.__name
@@ -13,4 +14,7 @@ class Employee:
         return self.__name
 
     def __str__(self):
-        return "[{}] {}".format(Color.return_colored(self.__id, 'yellow'), Color.return_colored(self.__name,'bold'))
+        return "[{}] {}".format(
+            self.color.return_colored(self.__id, 'yellow'), 
+            self.color.return_colored(self.__name,'bold')
+        )

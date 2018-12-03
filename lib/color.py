@@ -11,8 +11,19 @@ class Color:
         'END':'\033[0m'
     }   
 
-    def print_colored(text, color):
-        print('{}{}{}'.format(Color.COLORS[color.upper()],text,Color.COLORS['END']))
+    def __init__(self):
+        pass
+
+    def print_colored(self, text, color):
+        print('{}{}{}'.format(
+            self.COLORS[color.upper()],
+            text,
+            self.COLORS['END']
+        ))
         
-    def return_colored(text, color):
-        return '{}{}{}'.format(Color.COLORS[color.upper()],text,Color.COLORS['END'])
+    def return_colored(self, text, color):
+        return '{}{}{}'.format(
+            self.COLORS[color.upper()],
+            text,
+            self.COLORS['END']
+        )
