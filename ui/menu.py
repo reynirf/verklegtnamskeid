@@ -101,7 +101,12 @@ class Menu:
             'action')
         self.handle_answer_from_menu(loller['action'], employee, employees)
             
-        
+    def cars(self, employee, employees):
+        self.frame.delete_last_lines(7)
+        car = self.nocco_list.choose_one('Choose an action', ['Register car', 'Find car', 'Show all available cars',
+            'Show cars in service', 'Show cars that require maintance', 'Show cars that must be checked',
+            'Go back'], 'action')
+        self.handle_answer_from_menu(car['action'], employee, employees)    
 
     def handle_answer_from_menu(self, prompt, employee, employees):
         if prompt.lower() == 'logout':
@@ -116,6 +121,9 @@ class Menu:
             self.init_menu(employee,employees)
         if prompt.lower()== 'go back':
             self.frame.delete_last_lines(7)
+        if prompt.lower()== 'cars':
+            self.cars(employee, employees)
+            self.init_menu(employee, employees)
 
 
 
