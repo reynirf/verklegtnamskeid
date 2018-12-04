@@ -14,6 +14,7 @@ class Menu:
         self.nocco_list = NoccoList()
         self.color = Color()
         self.frame = Frame()
+        self.employee_manager = EmployeeManager()
 
     def get_employees(self):
         with open('data/employees.csv') as csv_file:
@@ -98,7 +99,7 @@ class Menu:
         )))
         time.sleep(2)
         self.frame.delete_last_lines(3)
-        return self.authenticate_v2)
+        return self.authenticate_v2()
 
     def report_error(self):
         self.frame.delete_last_lines(7)
