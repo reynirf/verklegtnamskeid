@@ -1,12 +1,13 @@
-import os.path
 from lib.nocco_list import NoccoList
 from lib.color import Color
 from ui.frame import Frame
 from models.employee import Employee
+from service.employee_manager import EmployeeManager
 import csv
 import time
 import getpass
-from service.employee_manager import EmployeeManager
+import os.path
+
 
 
 class Menu:
@@ -29,22 +30,19 @@ class Menu:
         logged_in = False
         while logged_in == False:
             employee_id = input('Enter your ID: ')
-            employee_password = input('Enter password: ')
+            employee_password = getpass.getpass('Enter password: ')
             response = self.employee_manager.authenticate(employee_id, employee_password)
             if type(response) == Employee:
-                self.frame.delete_last_lines(3)
+                print()
+                if self.employee_manager.has_failed():
+                    self.frame.delete_last_lines(4)
+                    print('\n' * 3)
+                self.introduce_employee(response)
+                print()
                 return response
             else:
                 self.frame.delete_last_lines(3)
                 self.color.print_colored(response, 'red')
-
-    def initialize_employee(self, employee):
-        info = employee[0]
-        employee_id = employee[1]
-        password = info['password']
-        name = info['name']
-        employee = Employee(name,employee_id,password)
-        return employee
 
     def introduce_employee(self, employee):
         self.frame.delete_last_lines(3)
@@ -87,11 +85,6 @@ class Menu:
             ['Save','Print information','Cancel'],
             'action')
         self.handle_answer_from_menu(register_customer_list['action'], employee, 'register_customer')
-
-        loller = self.nocco_list.choose_one('Choose an action', 
-            ['Customer','Register customer','Edit list of customer', 'Find customer','Go back'],
-            'action')
-        self.handle_answer_from_menu(loller['action'], employee, 'register_customer')
             
     def cars(self, employee):
         self.frame.delete_last_lines(7)
@@ -99,6 +92,14 @@ class Menu:
             'Show cars in service', 'Show cars that require maintance', 'Show cars that must be checked',
             'Go back'], 'action')
         self.handle_answer_from_menu(car['action'], employee, 'cars')    
+
+    def init_menu(self, employee):
+            prompt = self.nocco_list.choose_one(
+                'Choose an action', 
+                ['Order','Customer','Cars', 'Report an error','Logout'],
+                'action'
+            )
+            self.handle_answer_from_menu(prompt['action'], employee, 'main_menu')
 
     def handle_answer_from_menu(self, prompt, employee, menu_type):
 
@@ -142,7 +143,7 @@ class Menu:
             if prompt.lower() == 'print information':
                 pass
             if prompt.lower() == 'cancel':
-                pass
+                self.frame.delete_last_lines(14)
         
         ######################################################    
         #                       CARS                          #                    
@@ -151,14 +152,6 @@ class Menu:
             if prompt.lower() == 'go back':
                 self.frame.delete_last_lines(9)
                 self.init_menu(employee)
-
-    def init_menu(self, employee):
-            prompt = self.nocco_list.choose_one(
-                'Choose an action', 
-                ['Order','Customer','Cars', 'Report an error','Logout'],
-                'action'
-            )
-            self.handle_answer_from_menu(prompt['action'], employee, 'main_menu')
 
 
 

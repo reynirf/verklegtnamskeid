@@ -16,7 +16,6 @@ class Employee:
     def get_password(self):
         return self.__password
 
-
     def __str__(self):
         return "[{}] {}".format(
             self.color.return_colored(self.__id, 'yellow'), 
