@@ -68,3 +68,7 @@ class NoccoList:
                 return alternative
             self.frame.delete_last_lines(1)
             print(' {}'.format(self.color.return_colored('> ' + alternative,'red')))
+
+    """ 
+    Something to check
+    """
