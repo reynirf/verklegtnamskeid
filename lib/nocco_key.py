@@ -22,7 +22,8 @@ class NoccoKey:
                         old_settings)
                 return ch
         except:
-            return '\x1b'
+            import msvcrt
+            return msvcrt.getch()
 
     def getKey(self):
         firstChar = self.get_character()
