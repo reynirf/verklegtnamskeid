@@ -9,7 +9,7 @@ class Frame:
     ERASE_LINE = '\x1b[2K'
     def __init__(self): 
         self.color = Color()
-        self.rows, self.columns = os.popen('stty size', 'r').read().split()
+        self.get_size_of_screen()
         self.logo = """  
      ____    _   _           _          _                 
     | __ )  (_) | |   __ _  | |   ___  (_)   __ _    __ _ 
@@ -20,6 +20,14 @@ class Frame:
 """;
 
     # os.system('while sleep 1;do tput sc;tput cup 0 $(($(tput cols)-11));echo "`date +%r`";tput rc;done &')
+
+    def get_size_of_screen(self):
+        try:
+            self.rows, self.columns = os.popen('stty size', 'r').read().split()
+        except ValueError:
+            import shutil
+            self.columns, self.rows = shutil.get_terminal_size()
+
 
     def init_clock(self):
         while True:
