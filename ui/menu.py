@@ -3,6 +3,8 @@ from lib.color import Color
 from ui.frame import Frame
 from models.employee import Employee
 from service.employee_manager import EmployeeManager
+from service.customer_manager import CustomerManager
+from service.vehicle_manager import VehicleManager
 import csv
 import time
 import getpass
@@ -16,6 +18,8 @@ class Menu:
         self.color = Color()
         self.frame = Frame()
         self.employee_manager = EmployeeManager()
+        self.customer_manager = CustomerManager()
+        self.vehicle_manager = VehicleManager()
 
     def get_employees(self):
         employee_list = self.employee_manager.get_employee_list()
