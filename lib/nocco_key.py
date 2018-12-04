@@ -1,6 +1,4 @@
-# import termios
 import sys
-import tty
 
 class NoccoKey:
     def __init__(self):
@@ -12,6 +10,7 @@ class NoccoKey:
     def get_character(self):
         try:
             import termios
+            import tty
             fd = sys.stdin.fileno()
             old_settings = termios.tcgetattr(fd)
             try:
