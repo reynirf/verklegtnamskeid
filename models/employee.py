@@ -18,7 +18,7 @@ class Employee:
         return self.__password
 
     def __str__(self):
-        return "[{}] {} {}".format(
+        return "[{}] {}. {}".format(
             self.color.return_colored(self.__id, 'yellow'),
             self.color.return_colored(self.__title, 'bold'), 
             self.color.return_colored(self.__name,'bold')
