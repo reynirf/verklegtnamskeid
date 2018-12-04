@@ -144,6 +144,8 @@ class Menu:
                 self.init_menu(employee, employees)
             if prompt.lower() == 'customer':
                 self.customer(employee, employees)
+            if prompt.lower() == 'cars':
+                self.cars(employee, employees)
 
         ######################################################    
         #                      CUSTOMER                      #
@@ -161,7 +163,7 @@ class Menu:
                 self.init_menu(employee,employees)
         
         ######################################################    
-        #                      REGISTER CUSTOMER             #                    
+        #                    REGISTER CUSTOMER               #                    
         ######################################################
         if menu_type == 'register_customer':
             if prompt.lower() == 'save':
@@ -170,6 +172,14 @@ class Menu:
                 pass
             if prompt.lower() == 'cancel':
                 pass
+        
+        ######################################################    
+        #                       CARS                          #                    
+        ######################################################
+        if menu_type == 'cars':
+            if prompt.lower() == 'go back':
+                self.frame.delete_last_lines(9)
+                self.init_menu(employee, employees)
 
     def init_menu(self, employee, employees):
             prompt = self.nocco_list.choose_one(
