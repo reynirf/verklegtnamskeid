@@ -52,7 +52,7 @@ class NoccoList:
                     alternative_index += 1
             elif key == 'enter':
                 return {answer_key:alternatives[alternative_index]}
-            elif key not in NoccoList.ALPHABET:
+            elif key not in self.ALPHABET:
                 return {answer_key:alternatives[alternative_index]}
             self.frame.delete_last_lines(n=len(alternatives)+2)
             self.print_alternatives(
@@ -66,7 +66,7 @@ class NoccoList:
         print(' {}'.format(self.color.return_colored('> ' + alternative,'red')))
         while 1:
             key = self.nocco_key.get()
-            if key not in NoccoList.ALPHABET and key != 'down' and key != 'up':
+            if key not in self.ALPHABET and key != 'down' and key != 'up':
                 return alternative
             self.frame.delete_last_lines(1)
             print(' {}'.format(self.color.return_colored('> ' + alternative,'red')))

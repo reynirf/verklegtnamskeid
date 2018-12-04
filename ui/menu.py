@@ -97,9 +97,8 @@ class Menu:
     def customer(self,employee, employees):
         self.frame.delete_last_lines(7)
         loller = self.nocco_list.choose_one('Choose an action', 
-            ['Customer','Register customer','Edit list of customer', 'Find customer','Go back','Logout'],
+            ['Customer','Register customer','Edit list of customer', 'Find customer','Go back'],
             'action')
-        self.frame.delete_last_lines(3)
         self.handle_answer_from_menu(loller['action'], employee, employees)
             
         
