@@ -22,7 +22,9 @@ class NoccoKey:
                 return ch
         except ModuleNotFoundError:
             import msvcrt
-            test = msvcrt.getch()
+            test = ''
+            if msvcrt.kbhit():
+                test = msvcrt.getch()
             print(test)
             print(test)
             print(test)
