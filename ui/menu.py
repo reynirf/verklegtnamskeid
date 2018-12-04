@@ -98,7 +98,7 @@ class Menu:
         )))
         time.sleep(2)
         self.frame.delete_last_lines(3)
-        return self.authenticate_v2)
+        return self.authenticate_v2()
 
     def report_error(self):
         self.frame.delete_last_lines(7)
@@ -106,14 +106,14 @@ class Menu:
         self.nocco_list.single_list('Go back')
         self.frame.delete_last_lines(3)
     
-    def customer(self,employee, employees):
+    def customer(self,employee):
         self.frame.delete_last_lines(7)
         customer_list = self.nocco_list.choose_one('Choose an action', 
             ['Customer','Register customer','Edit list of customer', 'Find customer','Go back'],
             'action')
-        self.handle_answer_from_menu(customer_list['action'], employee, employees, 'customer')
+        self.handle_answer_from_menu(customer_list['action'], employee, 'customer')
 
-    def register_customer(self,employee,employees):
+    def register_customer(self,employee):
         self.frame.delete_last_lines(7)
         name = input("Enter Name: ")
         ssn = input("Enter SSN: ")
@@ -127,14 +127,14 @@ class Menu:
         register_customer_list = self.nocco_list.choose_one('Choose an action', 
             ['Save','Print information','Cancel'],
             'action')
-        self.handle_answer_from_menu(register_customer_list['action'], employee, employees, 'register_customer')
+        self.handle_answer_from_menu(register_customer_list['action'], employee, 'register_customer')
             
-    def cars(self, employee, employees):
+    def cars(self, employee):
         self.frame.delete_last_lines(7)
         car = self.nocco_list.choose_one('Choose an action', ['Register car', 'Find car', 'Show all available cars',
             'Show cars in service', 'Show cars that require maintance', 'Show cars that must be checked',
             'Go back'], 'action')
-        self.handle_answer_from_menu(car['action'], employee, employees, 'cars')    
+        self.handle_answer_from_menu(car['action'], employee, 'cars')    
 
     def handle_answer_from_menu(self, prompt, employee, menu_type):
 
