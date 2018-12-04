@@ -6,7 +6,7 @@ from models.employee import Employee
 import csv
 import time
 import getpass
-
+from service.employee_manager import EmployeeManager
 
 
 class Menu:
@@ -27,6 +27,18 @@ class Menu:
                         'password': employee[2]
                     } 
             return employees
+
+    def authenticate_v2(self):
+        logged_in = False
+        while logged_in == False:
+            employee_id = input('Enter your ID: ')
+            employee_password = input('Enter password: ')
+            response = self.employee_manager.authenticate(employee_id, employee_password)
+            if type(response) == Employee:
+                return response
+            else:
+                self.frame.delete_last_lines(3)
+                self.color.print_colored(response, 'red')
 
     def authenticate(self, employees, has_failed=0):
         try:
@@ -79,14 +91,14 @@ class Menu:
 
         return employee
 
-    def logout(self, employee, employees):
+    def logout(self, employee):
         self.frame.delete_last_lines(9)
         print('{} has been logged out'.format(
             self.color.return_colored(employee.get_name(), 'red'
         )))
         time.sleep(2)
         self.frame.delete_last_lines(3)
-        return self.authenticate_process(employees)
+        return self.authenticate_v2)
 
     def report_error(self):
         self.frame.delete_last_lines(7)
@@ -124,7 +136,7 @@ class Menu:
             'Go back'], 'action')
         self.handle_answer_from_menu(car['action'], employee, employees, 'cars')    
 
-    def handle_answer_from_menu(self, prompt, employee, employees, menu_type):
+    def handle_answer_from_menu(self, prompt, employee, menu_type):
 
         ######################################################
         #                      MAIN MENU                     #                                                                                
@@ -132,15 +144,15 @@ class Menu:
         if menu_type == 'main_menu':
             if prompt.lower() == 'logout':
                 #logout and return the next user who logs into the system
-                new_employee = self.logout(employee, employees) 
-                self.init_menu(new_employee, employees)
+                new_employee = self.logout(employee) 
+                self.init_menu(new_employee)
             if prompt.lower() == 'report an error':
                 self.report_error()
-                self.init_menu(employee, employees)
+                self.init_menu(employee)
             if prompt.lower() == 'customer':
-                self.customer(employee, employees)
+                self.customer(employee)
             if prompt.lower() == 'cars':
-                self.cars(employee, employees)
+                self.cars(employee)
 
         ######################################################    
         #                      CUSTOMER                      #
@@ -148,14 +160,14 @@ class Menu:
 
         if menu_type == 'customer':
             if prompt.lower() == 'customer':
-                self.customer(employee,employees)
-                self.init_menu(employee,employees)
+                self.customer(employee)
+                self.init_menu(employee)
             if prompt.lower() == 'go back':
                 self.frame.delete_last_lines(7)
-                self.init_menu(employee,employees)
+                self.init_menu(employee)
             if prompt.lower() == 'register customer':
-                self.register_customer(employee,employees)
-                self.init_menu(employee,employees)
+                self.register_customer(employee)
+                self.init_menu(employee)
         
         ######################################################    
         #                    REGISTER CUSTOMER               #                    
@@ -174,15 +186,15 @@ class Menu:
         if menu_type == 'cars':
             if prompt.lower() == 'go back':
                 self.frame.delete_last_lines(9)
-                self.init_menu(employee, employees)
+                self.init_menu(employee)
 
-    def init_menu(self, employee, employees):
+    def init_menu(self, employee):
             prompt = self.nocco_list.choose_one(
                 'Choose an action', 
                 ['Order','Customer','Cars', 'Report an error','Logout'],
                 'action'
             )
-            self.handle_answer_from_menu(prompt['action'], employee, employees, 'main_menu')
+            self.handle_answer_from_menu(prompt['action'], employee, 'main_menu')
 
 
 
