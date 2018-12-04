@@ -14,7 +14,7 @@ class EmployeeRepo:
             with open(self.EMPLOYEE_FILE, 'r') as employee_file:
                 csv_reader = csv.DictReader(employee_file)
                 for line in csv_reader:
-                    employee = Employee(line['name'], line['id'], line['password'])
+                    employee = Employee(line['title'],line['name'], line['id'], line['password'])
                     self.employee_list.append(employee)
         return self.employee_list
 
