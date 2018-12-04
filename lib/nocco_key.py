@@ -23,7 +23,7 @@ class NoccoKey:
         except ModuleNotFoundError:
             import msvcrt
             test = ''
-            if msvcrt.kbhit()
+            if msvcrt.kbhit():
                 msvcrt.getch() # skip 0xE0
                 c = msvcrt.getch()
                 vals = [72, 77, 80, 75]
