@@ -1,4 +1,5 @@
 import sys
+import os
 
 class NoccoKey:
     def __init__(self):
@@ -22,21 +23,37 @@ class NoccoKey:
                 return ch
         except ModuleNotFoundError:
             import msvcrt
-            test = ''
-            if msvcrt.kbhit()
-                msvcrt.getch() # skip 0xE0
-                c = msvcrt.getch()
-                vals = [72, 77, 80, 75]
-                return vals.index(ord(c.decode('utf-8')))    
+            while 1:
+                if msvcrt.kbhit():
+                    msvcrt.getch()
+                    char = msvcrt.getch()
+                    vals = [72, 77, 80, 75]
+                    try:
+                        return vals.index(ord(char.decode('utf-8')))
+                    except ValueError:
+                        return ord(char.decode('utf-8'))
 
     def getKey(self):
         firstChar = self.get_character()
         if firstChar == '\x1b': # looks like this: ^[
-            return {
+            return {    
                 '[A': 'up',
                 '[B': 'down',
                 '[C': 'right',
                 '[D': 'left',
                 }[self.get_character() + self.get_character()]
+        elif os.name == 'nt':
+            if firstChar == 0:
+                return 'up'
+            elif firstChar == 1:
+                return 'right'
+            elif firstChar == 2:
+                return 'down'
+            elif firstChar == 3:
+                return 'left'
+            elif firstChar == 13:
+                return 'enter'
+            else:
+                return firstChar
         else:
             return firstChar
