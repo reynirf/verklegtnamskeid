@@ -96,15 +96,13 @@ class Menu:
     
     def customer(self,employee, employees):
         self.frame.delete_last_lines(7)
-<<<<<<< HEAD
-        customerlist = self.nocco_list.choose_one('Choose an action', 
+        customer_list = self.nocco_list.choose_one('Choose an action', 
             ['Customer','Register customer','Edit list of customer', 'Find customer','Go back'],
             'action')
-        self.frame.delete_last_lines(3)
-        self.handle_answer_from_menu(customerlist['action'], employee, employees, 'customer')
+        self.handle_answer_from_menu(customer_list['action'], employee, employees, 'customer')
 
     def register_customer(self,employee,employees):
-        self.frame.delete_last_lines(4)
+        self.frame.delete_last_lines(7)
         name = input("Enter Name: ")
         ssn = input("Enter SSN: ")
         birthday = input("Enter Birthday: ")
@@ -119,21 +117,18 @@ class Menu:
             'action')
         self.handle_answer_from_menu(register_customer_list['action'], employee, employees, 'register_customer')
 
-=======
         loller = self.nocco_list.choose_one('Choose an action', 
             ['Customer','Register customer','Edit list of customer', 'Find customer','Go back'],
             'action')
-        self.handle_answer_from_menu(loller['action'], employee, employees)
->>>>>>> 945aad653ddd2e8dba5c26fc848b9cde7110e4d2
+        self.handle_answer_from_menu(loller['action'], employee, employees, 'register_customer')
             
     def cars(self, employee, employees):
         self.frame.delete_last_lines(7)
         car = self.nocco_list.choose_one('Choose an action', ['Register car', 'Find car', 'Show all available cars',
             'Show cars in service', 'Show cars that require maintance', 'Show cars that must be checked',
             'Go back'], 'action')
-        self.handle_answer_from_menu(car['action'], employee, employees)    
+        self.handle_answer_from_menu(car['action'], employee, employees, 'cars')    
 
-<<<<<<< HEAD
     def handle_answer_from_menu(self, prompt, employee, employees, menu_type):
 
         ######################################################
@@ -147,6 +142,8 @@ class Menu:
             if prompt.lower() == 'report an error':
                 self.report_error()
                 self.init_menu(employee, employees)
+            if prompt.lower() == 'customer':
+                self.customer(employee, employees)
 
         ######################################################    
         #                      CUSTOMER                      #
@@ -158,6 +155,7 @@ class Menu:
                 self.init_menu(employee,employees)
             if prompt.lower() == 'go back':
                 self.frame.delete_last_lines(7)
+                self.init_menu(employee,employees)
             if prompt.lower() == 'register customer':
                 self.register_customer(employee,employees)
                 self.init_menu(employee,employees)
@@ -172,34 +170,14 @@ class Menu:
                 pass
             if prompt.lower() == 'cancel':
                 pass
-=======
-    def handle_answer_from_menu(self, prompt, employee, employees):
-        if prompt.lower() == 'logout':
-            #logout and return the next user who logs into the system
-            new_employee = self.logout(employee, employees) 
-            self.init_menu(new_employee, employees)
-        if prompt.lower() == 'report an error':
-            self.report_error()
-            self.init_menu(employee, employees)
-        if prompt.lower() == 'customer':
-            self.customer(employee,employees)
-            self.init_menu(employee,employees)
-        if prompt.lower()== 'go back':
-            self.frame.delete_last_lines(7)
-        if prompt.lower()== 'cars':
-            self.cars(employee, employees)
-            self.init_menu(employee, employees)
->>>>>>> 945aad653ddd2e8dba5c26fc848b9cde7110e4d2
-
-
-
-
-
 
     def init_menu(self, employee, employees):
-        prompt = self.nocco_list.choose_one(
-            'Choose an action', 
-            ['Order','Customer','Cars', 'Report an error','Logout'],
-            'action'
-        )
-        self.handle_answer_from_menu(prompt['action'], employee, employees, 'main_menu')
+            prompt = self.nocco_list.choose_one(
+                'Choose an action', 
+                ['Order','Customer','Cars', 'Report an error','Logout'],
+                'action'
+            )
+            self.handle_answer_from_menu(prompt['action'], employee, employees, 'main_menu')
+
+
+
