@@ -23,13 +23,11 @@ class NoccoKey:
         except ModuleNotFoundError:
             import msvcrt
             test = ''
-            if msvcrt.kbhit():
-                test = msvcrt.getch()
-            print(test)
-            print(test)
-            print(test)
-            print(test)
-            return test
+            if msvcrt.kbhit()
+                msvcrt.getch() # skip 0xE0
+                c = msvcrt.getch()
+                vals = [72, 77, 80, 75]
+                return vals.index(ord(c.decode('utf-8')))    
 
     def getKey(self):
         firstChar = self.get_character()
