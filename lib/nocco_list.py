@@ -50,7 +50,7 @@ class NoccoList:
             elif key == 'down':
                 if alternative_index != len(alternatives)-1:
                     alternative_index += 1
-            elif key == 'enter':
+            elif key == 'enter' or key == 'right':
                 return {answer_key:alternatives[alternative_index]}
             elif key not in self.ALPHABET:
                 return {answer_key:alternatives[alternative_index]}
@@ -70,7 +70,3 @@ class NoccoList:
                 return alternative
             self.frame.delete_last_lines(1)
             print(' {}'.format(self.color.return_colored('> ' + alternative,'red')))
-
-    """ 
-    Something to check
-    """
