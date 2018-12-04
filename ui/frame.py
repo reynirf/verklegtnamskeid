@@ -22,12 +22,11 @@ class Frame:
     # os.system('while sleep 1;do tput sc;tput cup 0 $(($(tput cols)-11));echo "`date +%r`";tput rc;done &')
 
     def get_size_of_screen(self):
-        try:
-            self.rows, self.columns = os.popen('stty size', 'r').read().split()
-        except ValueError:
+        if os.name == 'nt':
             import shutil
             self.columns, self.rows = shutil.get_terminal_size()
-
+        else:
+            self.rows, self.columns = os.popen('stty size', 'r').read().split()
 
     def init_clock(self):
         while True:
