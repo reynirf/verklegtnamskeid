@@ -20,7 +20,7 @@ class NoccoKey:
                 termios.tcsetattr(fd, termios.TCSADRAIN,
                         old_settings)
                 return ch
-        except:
+        except ModuleNotFoundError:
             import msvcrt
             return msvcrt.getch()
 
