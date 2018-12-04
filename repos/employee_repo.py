@@ -22,4 +22,10 @@ class EmployeeRepo:
                         line['password'])
                     self.__employee_list.append(employee)
         return self.__employee_list
+    
+    def set_current_employee(self, employee):
+        self.__current_employee = employee
+
+    def get_current_employee(self):
+        return self.__current_employee
 

@@ -13,6 +13,6 @@ class Vehicle:
         self.__created = datetime(now.year, now.month, now.day, now.hour, now.minute, now.second)
     
     def __str__(self):
-        return self.__licence + self.__make
+        return "{} {}".format(self.__licence, self.__make)
 
 

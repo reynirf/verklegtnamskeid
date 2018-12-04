@@ -11,4 +11,4 @@ print(frame)
 menu = Menu()
 
 employee = menu.authenticate_v2()
-menu.init_menu(employee)
+menu.init_menu()
