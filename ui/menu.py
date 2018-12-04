@@ -30,38 +30,19 @@ class Menu:
             return employees
 
     def authenticate_v2(self):
+        print()
+        print()
         logged_in = False
         while logged_in == False:
             employee_id = input('Enter your ID: ')
             employee_password = input('Enter password: ')
             response = self.employee_manager.authenticate(employee_id, employee_password)
             if type(response) == Employee:
+                self.frame.delete_last_lines(3)
                 return response
             else:
                 self.frame.delete_last_lines(3)
                 self.color.print_colored(response, 'red')
-
-    def authenticate(self, employees, has_failed=0):
-        try:
-            employee_id = input('Enter your ID: ')
-            employee_password = getpass.getpass('Enter password: ')
-            #test to see if the employee_id exists. 
-            # If it doesn't exist, it will raise a KeyError
-            employees[employee_id] 
-            
-            if employee_password != employees[employee_id]['password']:
-                raise ValueError
-            return (employees[employee_id],employee_id),has_failed
-        except KeyError:
-            has_failed = True
-            self.frame.delete_last_lines(3)
-            self.color.print_colored('Invalid ID: ' + employee_id, 'red')
-            return self.authenticate(employees,has_failed)
-        except ValueError:
-            has_failed = True
-            self.frame.delete_last_lines(3)
-            self.color.print_colored('Wrong password', 'red')
-            return self.authenticate(employees,has_failed)
 
     def initialize_employee(self, employee):
         info = employee[0]
@@ -74,23 +55,6 @@ class Menu:
     def introduce_employee(self, employee):
         self.frame.delete_last_lines(3)
         print(employee)
-
-    def authenticate_process(self, employees):
-        print() #ekki remove'a
-        print()
-        employee,has_failed = self.authenticate(employees)
-        print()
-        employee = self.initialize_employee(employee)
-        if has_failed:
-            self.frame.delete_last_lines(4)
-            print()
-            print()
-            print()
-            print()
-        self.introduce_employee(employee)
-        print()
-
-        return employee
 
     def logout(self, employee):
         self.frame.delete_last_lines(9)
@@ -129,6 +93,11 @@ class Menu:
             ['Save','Print information','Cancel'],
             'action')
         self.handle_answer_from_menu(register_customer_list['action'], employee, 'register_customer')
+
+        loller = self.nocco_list.choose_one('Choose an action', 
+            ['Customer','Register customer','Edit list of customer', 'Find customer','Go back'],
+            'action')
+        self.handle_answer_from_menu(loller['action'], employee, 'register_customer')
             
     def cars(self, employee):
         self.frame.delete_last_lines(7)
@@ -179,10 +148,10 @@ class Menu:
             if prompt.lower() == 'print information':
                 pass
             if prompt.lower() == 'cancel':
-                self.frame.delete_last_lines(14)
+                pass
         
         ######################################################    
-        #                       CARS                         #                    
+        #                       CARS                          #                    
         ######################################################
         if menu_type == 'cars':
             if prompt.lower() == 'go back':

@@ -11,7 +11,11 @@ class Employee:
         return self.__name
     
     def get_id(self):
-        return self.__name
+        return self.__id
+
+    def get_password(self):
+        return self.__password
+
 
     def __str__(self):
         return "[{}] {}".format(
