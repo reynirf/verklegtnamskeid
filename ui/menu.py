@@ -96,6 +96,7 @@ class Menu:
     
     def customer(self,employee, employees):
         self.frame.delete_last_lines(7)
+<<<<<<< HEAD
         customerlist = self.nocco_list.choose_one('Choose an action', 
             ['Customer','Register customer','Edit list of customer', 'Find customer','Go back'],
             'action')
@@ -118,9 +119,21 @@ class Menu:
             'action')
         self.handle_answer_from_menu(register_customer_list['action'], employee, employees, 'register_customer')
 
+=======
+        loller = self.nocco_list.choose_one('Choose an action', 
+            ['Customer','Register customer','Edit list of customer', 'Find customer','Go back'],
+            'action')
+        self.handle_answer_from_menu(loller['action'], employee, employees)
+>>>>>>> 945aad653ddd2e8dba5c26fc848b9cde7110e4d2
             
-        
+    def cars(self, employee, employees):
+        self.frame.delete_last_lines(7)
+        car = self.nocco_list.choose_one('Choose an action', ['Register car', 'Find car', 'Show all available cars',
+            'Show cars in service', 'Show cars that require maintance', 'Show cars that must be checked',
+            'Go back'], 'action')
+        self.handle_answer_from_menu(car['action'], employee, employees)    
 
+<<<<<<< HEAD
     def handle_answer_from_menu(self, prompt, employee, employees, menu_type):
 
         ######################################################
@@ -159,6 +172,24 @@ class Menu:
                 pass
             if prompt.lower() == 'cancel':
                 pass
+=======
+    def handle_answer_from_menu(self, prompt, employee, employees):
+        if prompt.lower() == 'logout':
+            #logout and return the next user who logs into the system
+            new_employee = self.logout(employee, employees) 
+            self.init_menu(new_employee, employees)
+        if prompt.lower() == 'report an error':
+            self.report_error()
+            self.init_menu(employee, employees)
+        if prompt.lower() == 'customer':
+            self.customer(employee,employees)
+            self.init_menu(employee,employees)
+        if prompt.lower()== 'go back':
+            self.frame.delete_last_lines(7)
+        if prompt.lower()== 'cars':
+            self.cars(employee, employees)
+            self.init_menu(employee, employees)
+>>>>>>> 945aad653ddd2e8dba5c26fc848b9cde7110e4d2
 
 
 
