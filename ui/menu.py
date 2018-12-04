@@ -1,3 +1,4 @@
+import os.path
 from lib.nocco_list import NoccoList
 from lib.color import Color
 from ui.frame import Frame
@@ -5,6 +6,8 @@ from models.employee import Employee
 import csv
 import time
 import getpass
+
+
 
 class Menu:
     def __init__(self):
@@ -90,6 +93,16 @@ class Menu:
         print('Contact your manager to report an error')
         self.nocco_list.single_list('Go back')
         self.frame.delete_last_lines(3)
+    
+    def customer(self,employee, employees):
+        self.frame.delete_last_lines(7)
+        loller = self.nocco_list.choose_one('Choose an action', 
+            ['Customer','Register customer','Edit list of customer', 'Find customer','Go back','Logout'],
+            'action')
+        self.frame.delete_last_lines(3)
+        self.handle_answer_from_menu(loller['action'], employee, employees)
+            
+        
 
     def handle_answer_from_menu(self, prompt, employee, employees):
         if prompt.lower() == 'logout':
@@ -99,6 +112,16 @@ class Menu:
         if prompt.lower() == 'report an error':
             self.report_error()
             self.init_menu(employee, employees)
+        if prompt.lower() == 'customer':
+            self.customer(employee,employees)
+            self.init_menu(employee,employees)
+        if prompt.lower()== 'go back':
+            self.frame.delete_last_lines(7)
+
+
+
+
+
 
     def init_menu(self, employee, employees):
         prompt = self.nocco_list.choose_one(

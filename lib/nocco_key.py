@@ -23,6 +23,7 @@ class NoccoKey:
                 return ch
         except ModuleNotFoundError:
             import msvcrt
+<<<<<<< HEAD
             while 1:
                 if msvcrt.kbhit():
                     msvcrt.getch()
@@ -32,6 +33,14 @@ class NoccoKey:
                         return vals.index(ord(char.decode('utf-8')))
                     except ValueError:
                         return ord(char.decode('utf-8'))
+=======
+            test = ''
+            if msvcrt.kbhit():
+                msvcrt.getch() # skip 0xE0
+                c = msvcrt.getch()
+                vals = [72, 77, 80, 75]
+                return vals.index(ord(c.decode('utf-8')))    
+>>>>>>> 0cadc8e31cb398ab887cbd6004f4ddf152cc7cb4
 
     def getKey(self):
         firstChar = self.get_character()
