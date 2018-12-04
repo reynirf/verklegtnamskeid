@@ -15,3 +15,6 @@ class EmployeeManager:
                 else:
                     return "Wrong password"
         return "Invalid id"
+    
+    def get_employee_list(self):
+        return self.__employee_repo.get_employee_list()

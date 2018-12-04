@@ -17,17 +17,11 @@ class Menu:
         self.employee_manager = EmployeeManager()
 
     def get_employees(self):
-        with open('data/employees.csv') as csv_file:
-            csv_reader = csv.reader(csv_file, delimiter=',')
-            employees = {}
-            for i,employee in enumerate(csv_reader):
-                if i != 0:
-                    e_id = employee[0]
-                    employees[e_id] = {
-                        'name': employee[1],
-                        'password': employee[2]
-                    } 
-            return employees
+        employee_list = self.employee_manager.get_employee_list()
+        return_string = ""
+        for employee in employee_list:
+            return_string += (print(employee) + "/n")
+        return return_string
 
     def authenticate_v2(self):
         print()
