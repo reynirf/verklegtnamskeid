@@ -22,7 +22,7 @@ class OrderManager:
 
     def save_new_order(self):
         #uses the temp values to save the new customer and then clears them 
-        self.__order_repo.save_new_car(
+        self.__order_repo.save_new_order(
             self.__temp_ID,
             self.__temp_ssn,
             self.__temp_car,
@@ -34,7 +34,7 @@ class OrderManager:
             self.__temp_return_location,
             self.__temp_number_of_seats,
             self.__temp_number_plate,
-            self.__temp_insurence)
+            self.__temp_insurance)
 
     def check_id(self,ID):
         self.__temp_ID = ID
@@ -69,5 +69,5 @@ class OrderManager:
     def check_number_plate(self,number_plate):
         self.__temp_number_plate = number_plate
     
-    def check_insurance(self,insurence):
-        self.__temp_insurence = insurence
+    def check_insurance(self,insurance):
+        self.__temp_insurance = insurance
