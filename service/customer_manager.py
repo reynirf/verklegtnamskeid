@@ -31,34 +31,63 @@ class CustomerManager:
             self.__temp_credit_card)
     
     def check_name(self, name):
-        #missing check for invalid names
+        """check if name is valid. Returns an error message if name
+        has numbers or punctuation in it"""
         for letter in name.strip():
             if letter in (string.digits + string.punctuation):
                 return "Name not valid. Please use only letters."
         self.__temp_name = name
     
     def check_ssn(self, ssn):
-        #missing check for invalid ssn
+        """Check if ssn is valid. Returns an error message if ssn
+        has letters or punctuation in it"""
+        ssn = ssn.replace("-", "")
+        for letter in ssn:
+            if letter in (string.ascii_letters + string.punctuation):
+                return "SSN not valid. Please use only numbers."
         self.__temp_ssn = ssn
 
     def check_birthday(self, birthday):
         #missing check for invalid birthday
+        
         self.__temp_birthday = birthday
+        return None
     
     def check_phone_number(self, phone):
-        #missing check for invalid phone number
+        """Check if phone number is valid. Returns an error message if phone
+        number has letters or punctuation in it"""
+        phone = phone.replace("-", "")
+        for letter in phone:
+            if letter in (string.ascii_letters + string.punctuation):
+                return "Phone number not valid. Please use only numbers."
         self.__temp_phone = phone
 
     def check_license(self, driver_license):
-        #missing check for invalid driver license category
+        """Check if driver license categories given are valid. Returns an 
+        error message if categories given are not valid."""
+        valid_categories = ["a", "a1", "b", "be", "c1", "c1e", "c", "ce", "d1", "d1e", "d", "de"]
+        driver_license = driver_license.split()
+        for char in driver_license:
+            if char.lower() not in valid_categories:
+                return "Driver license category not valid. Please try again."
         self.__temp_driver_license = driver_license
     
     def check_email(self, email):
-        #missing check for invalid email
+        """Check if email address is valid. Returns an error message if email
+        does not have an '@' in it"""
+        if "@" not in email:
+            return "Email not valid. Please try again"
         self.__temp_email = email
     
     def check_credit_card(self, credit_card):
-        #missing check for invalid credit card
+        """Check if credit card number is valid. Returns an error message if 
+        credit card number has letters or punctuation in it"""
+        credit_card = credit_card.replace("-", "")
+        for letter in credit_card:
+            if letter in (string.ascii_letters + string.punctuation):
+                return "Credit card number not valid. Please use only numbers."
+        if len(credit_card) < 16:
+            return "Credit card number not valid. Please try again."
         self.__temp_credit_card = credit_card
     
     def check_address(self, address):

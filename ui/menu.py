@@ -104,18 +104,48 @@ class Menu:
             if type(name_check) == str:
                 self.invalid_input(name_check)
         
-        ssn = input("Enter SSN: ")
-        self.customer_manager.check_ssn(ssn)
-        birthday = input("Enter Birthday: ")
-        self.customer_manager.check_birthday(birthday)
-        phone_number = input("Enter Phone number: ")
-        self.customer_manager.check_phone_number(phone_number)
-        driving_license_category = input("Enter Driving License Category: ")
-        self.customer_manager.check_license(driving_license_category)
-        email = input("Enter Email: ")
-        self.customer_manager.check_email(email)
-        credit_card = input("Enter Credit Card Number: ")
-        self.customer_manager.check_credit_card(credit_card)
+        ssn_check = "check if valid"
+        while type(ssn_check) == str:
+            ssn = input("Enter SSN: ")
+            ssn_check = self.customer_manager.check_ssn(ssn)
+            if type(ssn_check) == str:
+                self.invalid_input(ssn_check)
+        
+        birthday_check = "check if valid"
+        while type(birthday_check) == str:
+            birthday = input("Enter Birthday: ")
+            birthday_check = self.customer_manager.check_birthday(birthday)
+            if type(birthday_check) == str:
+                self.invalid_input(birthday_check)
+        
+        phone_check = "check if valid"
+        while type(phone_check) == str:
+            phone_number = input("Enter Phone number: ")
+            phone_check = self.customer_manager.check_phone_number(phone_number)
+            if type(phone_check) == str:
+                self.invalid_input(phone_check)
+
+        license_check = "check if valid"
+        while type(license_check) == str:
+            driving_license_category = input("Enter Driving License Category: ")
+            license_check = self.customer_manager.check_license(driving_license_category)
+            if type(license_check) == str:
+                self.invalid_input(license_check)
+        
+        email_check = "check if valid"
+        while type(email_check) == str:
+            email = input("Enter Email: ")
+            email_check = self.customer_manager.check_email(email)
+            if type(email_check) == str:
+                self.customer_manager.check_email(email)
+        
+        credit_card_check = "check if valid"
+        while type(credit_card_check) == str:
+            credit_card = input("Enter Credit Card Number: ")
+            credit_card_check = self.customer_manager.check_credit_card(credit_card)
+            if type(credit_card_check) == str:
+                self.invalid_input(credit_card_check)
+        
         home_address = input("Enter Home Address: ")
         self.customer_manager.check_address(home_address)
         print()
@@ -125,7 +155,7 @@ class Menu:
         self.handle_answer_from_menu(register_customer_list['action'], 'register_customer')
     
     def invalid_input(self, message):
-        self.frame.delete_last_lines(2)
+        self.frame.delete_last_lines(1)
         print('{}'.format(self.color.return_colored(message, 'red')))
 
     def save_new_customer(self):
@@ -159,13 +189,9 @@ class Menu:
         number_of_seats = input("Enter Number: ")
         self.vehicle_manager.check_number_of_seats(number_of_seats)
         number_plate = input("Enter Number Plate: ")
-<<<<<<< HEAD
         self.vehicle_manager.check_number_plate(number_plate)
         fuel = input("Enter Fuel: ")
         self.vehicle_manager.check_fuel(fuel)
-=======
-        fuel = input("Enter Fuel: ")
->>>>>>> d1259c5dfdd72fdf6995b6ee7f41dfd58ec0b991
         driving_transmission = input("Enter Driving Transmission: ")
         self.vehicle_manager.check_driving_transmission(driving_transmission)
         print()
