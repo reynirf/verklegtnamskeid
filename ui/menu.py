@@ -290,7 +290,7 @@ class Menu:
         #                      ORDER                         #
         ######################################################
 
-        if menu_type == 'order':
+        elif menu_type == 'order':
             if prompt.lower() == 'go back':
                 self.frame.delete_last_lines(6)
                 self.init_menu()
@@ -306,7 +306,7 @@ class Menu:
         #                      CUSTOMER                      #
         ######################################################
 
-        if menu_type == 'customer':
+        elif menu_type == 'customer':
             if prompt.lower() == 'go back':
                 self.frame.delete_last_lines(6)
                 self.init_menu()
@@ -320,7 +320,7 @@ class Menu:
         ######################################################    
         #                    REGISTER CUSTOMER               #                    
         ######################################################
-        if menu_type == 'register customer':
+        elif menu_type == 'register customer':
             if prompt.lower() == 'save':
                 self.frame.delete_last_lines(14)
                 self.save_new_customer()
@@ -337,7 +337,7 @@ class Menu:
         ######################################################    
         #                    FIND CUSTOMER                   #                    
         ######################################################
-        if menu_type == 'find customer':
+        elif menu_type == 'find customer':
             if prompt.lower() == 'find customer by name':
                 self.frame.delete_last_lines(5)
                 self.find_customer_by_name()
@@ -351,7 +351,7 @@ class Menu:
         ######################################################    
         #                       CARS                          #                    
         ######################################################
-        if menu_type == 'cars':
+        elif menu_type == 'cars':
             if prompt.lower() == 'register car':
                 self.frame.delete_last_lines(1)
                 self.register_car()
@@ -377,7 +377,7 @@ class Menu:
         ########################################################
         #                Register new order                    #
         ########################################################
-        if menu_type == 'register_order':
+        elif menu_type == 'register_order':
             if prompt.lower() == 'cancel':
                 self.frame.delete_last_lines(19)
                 self.order()
