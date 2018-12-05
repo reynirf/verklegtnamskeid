@@ -100,11 +100,17 @@ class Menu:
         ssn = input("Enter SSN: ")
         self.customer_manager.check_ssn(ssn)
         birthday = input("Enter Birthday: ")
+        self.customer_manager.check_birthday(birthday)
         phone_number = input("Enter Phone number: ")
-        driving_license_category = input("Enter Driving Licence Category: ")
+        self.customer_manager.check_phone_number(phone_number)
+        driving_license_category = input("Enter Driving License Category: ")
+        self.customer_manager.check_license(driving_license_category)
         email = input("Enter Email: ")
+        self.customer_manager.check_email(email)
         credit_card = input("Enter Credit Card Number: ")
+        self.customer_manager.check_credit_card(credit_card)
         home_address = input("Enter Home Address: ")
+        self.customer_manager.check_address(home_address)
         print()
         register_customer_list = self.nocco_list.choose_one('Choose an action', 
             ['Save','Print information','Cancel'],
