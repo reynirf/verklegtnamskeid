@@ -125,26 +125,27 @@ class Menu:
             if type(check) == str:
                 self.invalid_input(check)
                 mistakes += 1
+        return mistakes
 
     def register_customer(self):
         self.frame.delete_last_lines(7)
         mistakes = 0
 
-        self.check_if_valid(mistakes, 'Name', self.customer_manager.check_name)
+        mistakes = self.check_if_valid(mistakes, 'Name', self.customer_manager.check_name)
 
-        self.check_if_valid(mistakes, 'SSN', self.customer_manager.check_ssn)
+        mistakes = self.check_if_valid(mistakes, 'SSN', self.customer_manager.check_ssn)
         
-        self.check_if_valid(mistakes, 'Birthday', self.customer_manager.check_birthday)
+        mistakes = self.check_if_valid(mistakes, 'Birthday', self.customer_manager.check_birthday)
 
-        self.check_if_valid(mistakes, 'Phone number', self.customer_manager.check_phone_number)
+        mistakes = self.check_if_valid(mistakes, 'Phone number', self.customer_manager.check_phone_number)
 
-        self.check_if_valid(mistakes, 'Driving License Category', self.customer_manager.check_license)
+        mistakes = self.check_if_valid(mistakes, 'Driving License Category', self.customer_manager.check_license)
 
-        self.check_if_valid(mistakes, 'Email', self.customer_manager.check_email)
+        mistakes = self.check_if_valid(mistakes, 'Email', self.customer_manager.check_email)
 
-        self.check_if_valid(mistakes, 'Credit Card Number', self.customer_manager.check_credit_card)
+        mistakes = self.check_if_valid(mistakes, 'Credit Card Number', self.customer_manager.check_credit_card)
         
-        self.check_if_valid(mistakes, 'Home Address', self.customer_manager.check_address)
+        mistakes = self.check_if_valid(mistakes, 'Home Address', self.customer_manager.check_address)
 
         print()
         register_customer_list = self.nocco_list.choose_one('Choose an action', 
@@ -302,7 +303,7 @@ class Menu:
             if prompt.lower() == 'save':
                 self.frame.delete_last_lines(14)
                 self.save_new_customer()
-                print('\n' * 6)
+                # print('\n' * 6)
                 self.customer()
 
             elif prompt.lower() == 'print information':
