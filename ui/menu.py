@@ -117,7 +117,7 @@ class Menu:
         self.handle_answer_from_menu(register_order_list['action'], 'register_order')
 
 
-    def check_if_valid(self, mistakes, to_enter, to_check):
+    def check_if_valid(self, to_enter, to_check):
         type_mistake = 0
         error = "check if valid"
         while error:
@@ -125,40 +125,36 @@ class Menu:
             error = to_check(check_type)
             if not type_mistake and error:
                 self.invalid_input(error)
-                mistakes += 1
                 type_mistake = 1
             elif type_mistake and error:
                 self.frame.delete_last_lines()
             elif type_mistake and not error:
                 self.frame.delete_last_lines(2)
                 print("Enter " + to_enter + ': ' + check_type)
-        return mistakes + type_mistake
 
     def register_customer(self):
         self.frame.delete_last_lines(7)
-        mistakes = 0
 
-        mistakes = self.check_if_valid(mistakes, 'Name', self.customer_manager.check_name)
+        self.check_if_valid('Name', self.customer_manager.check_name)
 
-        mistakes = self.check_if_valid(mistakes, 'SSN', self.customer_manager.check_ssn)
+        self.check_if_valid('SSN', self.customer_manager.check_ssn)
         
-        mistakes = self.check_if_valid(mistakes, 'Birthday', self.customer_manager.check_birthday)
+        self.check_if_valid('Birthday', self.customer_manager.check_birthday)
 
-        mistakes = self.check_if_valid(mistakes, 'Phone number', self.customer_manager.check_phone_number)
+        self.check_if_valid('Phone number', self.customer_manager.check_phone_number)
 
-        mistakes = self.check_if_valid(mistakes, 'Driving License Category', self.customer_manager.check_license)
+        self.check_if_valid('Driving License Category', self.customer_manager.check_license)
 
-        mistakes = self.check_if_valid(mistakes, 'Email', self.customer_manager.check_email)
+        self.check_if_valid('Email', self.customer_manager.check_email)
 
-        mistakes = self.check_if_valid(mistakes, 'Credit Card Number', self.customer_manager.check_credit_card)
+        self.check_if_valid('Credit Card Number', self.customer_manager.check_credit_card)
         
-        mistakes = self.check_if_valid(mistakes, 'Home Address', self.customer_manager.check_address)
+        self.check_if_valid('Home Address', self.customer_manager.check_address)
 
         print()
         register_customer_list = self.nocco_list.choose_one('Choose an action', 
             ['Save','Print information','Cancel'],
             'action')
-        self.frame.delete_last_lines(mistakes)
         self.handle_answer_from_menu(register_customer_list['action'], 'register customer')
     
     def invalid_input(self, message):
