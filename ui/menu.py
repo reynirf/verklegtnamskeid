@@ -90,7 +90,8 @@ class Menu:
         return_location = input("Enter return location: ")
         insurance = input("Enter insurance: ")
         print()
-        register_order_list = self.nocco_list.choose_one("Choose an action",["Save", "Print order", "Cancel"], "action")
+        register_order_list = self.nocco_list.choose_one("Choose an action",["Save", "Print order",
+        "Show all available cars", "Cancel"], "action")
         self.handle_answer_from_menu(register_order_list['action'], 'register_order')
 
     def register_customer(self):
@@ -132,13 +133,47 @@ class Menu:
         print("{}".format(self.color.return_colored("New customer registered", 'green')))
         time.sleep(2)
         self.frame.delete_last_lines(1)
+    def save_new_car(self):
+        self.vehicle_manager.save_new_car()
+        print("{}".format(self.color.return_colored("New customer registered", 'cyan')))
+        time.sleep(2)
+        self.frame.delete_last_lines(2)
 
     def cars(self):
         self.frame.delete_last_lines(7)
         car = self.nocco_list.choose_one('Choose an action', ['Register car', 'Find car', 'Show all available cars',
             'Show cars in service', 'Show cars that require maintance', 'Show cars that must be checked',
             'Go back'], 'action')
-        self.handle_answer_from_menu(car['action'], 'cars')    
+        self.handle_answer_from_menu(car['action'], 'cars')
+
+    def register_car(self):
+        self.frame.delete_last_lines(7)
+        car_type = input("Enter Type: ")
+        self.vehicle_manager.check_type(car_type)
+        make = input("Enter Make: ")
+        self.vehicle_manager.check_make(make)
+        model = input("Enter Model: ")
+        self.vehicle_manager.check_model(model)
+        year = input("Enter Year: ")
+        self.vehicle_manager.check_year(year)
+        number_of_seats = input("Enter Number: ")
+        self.vehicle_manager.check_number_of_seats(number_of_seats)
+        number_plate = input("Enter Number Plate: ")
+<<<<<<< HEAD
+        self.vehicle_manager.check_number_plate(number_plate)
+        fuel = input("Enter Fuel: ")
+        self.vehicle_manager.check_fuel(fuel)
+=======
+        fuel = input("Enter Fuel: ")
+>>>>>>> d1259c5dfdd72fdf6995b6ee7f41dfd58ec0b991
+        driving_transmission = input("Enter Driving Transmission: ")
+        self.vehicle_manager.check_driving_transmission(driving_transmission)
+        print()
+        register_car = self.nocco_list.choose_one('Choose an action', 
+            ['Save','Print information','Cancel'],
+            'action')
+        self.handle_answer_from_menu(register_car['action'], 'cars')
+
 
     def init_menu(self):
             prompt = self.nocco_list.choose_one(
@@ -172,9 +207,6 @@ class Menu:
         ######################################################
 
         if menu_type == 'order':
-            if prompt.lower() == 'order':
-                self.order()
-                self.init_menu()
             if prompt.lower() == 'go back':
                 self.frame.delete_last_lines(6)
                 self.init_menu()
@@ -182,7 +214,10 @@ class Menu:
                 print()
                 self.register_order()
                 self.init_menu()
-        
+            if prompt.lower() == 'find order':
+                pass
+            if prompt.lower() == 'calculate order':
+                pass     
 
         ######################################################    
         #                      CUSTOMER                      #
@@ -219,14 +254,28 @@ class Menu:
         #                       CARS                          #                    
         ######################################################
         if menu_type == 'cars':
+            if prompt.lower() == 'register car':
+                self.frame.delete_last_lines(1)
+                self.register_car()
+                self.cars()
+            if prompt.lower() == 'save':
+                self.frame.delete_last_lines(14)
+                self.save_new_car()
+                print("\n" * 6)
+                self.cars()
+
             if prompt.lower() == 'go back':
                 self.frame.delete_last_lines(9)
                 self.init_menu()
 
-
+        ########################################################
+        #                Register new order                    #
+        ########################################################
         if menu_type == 'register_order':
             if prompt.lower() == 'cancel':
                 self.frame.delete_last_lines(8)
                 self.order()
+            if prompt.lower() == 'show all available cars':
+                pass
 
 
