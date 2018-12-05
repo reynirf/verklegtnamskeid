@@ -93,3 +93,9 @@ class CustomerManager:
     def check_address(self, address):
         #missing check for invalid address
         self.__temp_address = address
+
+    def find_customer_by_name(self, name):
+        customer_list = self.__customer_repo.get_customer_list()
+        for customer in customer_list:
+            if customer.__str__().lower() == name:
+                return customer

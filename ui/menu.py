@@ -2,6 +2,7 @@ from lib.nocco_list import NoccoList
 from lib.color import Color
 from ui.frame import Frame
 from models.employee import Employee
+from models.customer import Customer
 from service.employee_manager import EmployeeManager
 from service.customer_manager import CustomerManager
 from service.vehicle_manager import VehicleManager
@@ -190,6 +191,11 @@ class Menu:
             ['Find customer by name', 'Find customer by SSN', 'Go back'], 'action')
         self.handle_answer_from_menu(find_customer_list['action'], 'find customer')
 
+    def find_customer_by_name(self):
+        name = input("Enter name: ")
+        customer = self.customer_manager.find_customer_by_name(name)
+        print(customer)
+
     def save_new_car(self):
         self.vehicle_manager.save_new_car()
         print("{}".format(self.color.return_colored("New customer registered", 'green')))
@@ -324,8 +330,8 @@ class Menu:
         ######################################################
         if menu_type == 'find customer':
             if prompt.lower() == 'find customer by name':
-                pass
-
+                self.frame.delete_last_lines(5)
+                self.find_customer_by_name()
             elif prompt.lower() == 'find customer by ssn':
                 pass
 
