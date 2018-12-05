@@ -94,7 +94,24 @@ class Menu:
         car = self.nocco_list.choose_one('Choose an action', ['Register car', 'Find car', 'Show all available cars',
             'Show cars in service', 'Show cars that require maintance', 'Show cars that must be checked',
             'Go back'], 'action')
-        self.handle_answer_from_menu(car['action'], 'cars')    
+        self.handle_answer_from_menu(car['action'], 'cars')
+
+    def register_car(self):
+        self.frame.delete_last_lines(7)
+        car_type = input("Enter Type: ")
+        make = input("Enter Make: ")
+        model = input("Enter Model: ")
+        Year = input("Enter Year: ")
+        number_of_seats = input("Enter Number Of Seats: ")
+        number_plate = input("Enter Number Plate: ")
+        fuel = input("Enter Fuel ")
+        driving_transmission = input("Enter Driving Transmission: ")
+        print()
+        register_car = self.nocco_list.choose_one('Choose an action', 
+            ['Save','Print information','Cancel'],
+            'action')
+        self.handle_answer_from_menu(register_car['action'], 'cars')
+
 
     def init_menu(self):
             prompt = self.nocco_list.choose_one(
@@ -151,6 +168,14 @@ class Menu:
         #                       CARS                          #                    
         ######################################################
         if menu_type == 'cars':
+            if prompt.lower() == 'register car':
+                self.frame.delete_last_lines(1)
+                self.register_car()
+                self.cars()
+            if prompt.lower() == 'save':
+                self.frame.delete_last_lines(9)
+                self.cars()
+
             if prompt.lower() == 'go back':
                 self.frame.delete_last_lines(9)
                 self.init_menu()
