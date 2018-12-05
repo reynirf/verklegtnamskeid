@@ -69,7 +69,6 @@ class Menu:
         self.frame.delete_last_lines(3)
     
     def customer(self):
-        self.frame.delete_last_lines(7)
         customer_list = self.nocco_list.choose_one('Choose an action', 
             ['Register customer','Edit list of customer', 'Find customer','Go back'],
             'action')
@@ -174,7 +173,7 @@ class Menu:
         register_customer_list = self.nocco_list.choose_one('Choose an action', 
             ['Save','Print information','Cancel'],
             'action')
-        self.handle_answer_from_menu(register_customer_list['action'], 'register_customer')
+        self.handle_answer_from_menu(register_customer_list['action'], 'register customer')
     
     def invalid_input(self, message):
         self.frame.delete_last_lines(1)
@@ -186,6 +185,11 @@ class Menu:
         time.sleep(2)
         self.frame.delete_last_lines(1)
         
+    def find_customer(self):
+        find_customer_list = self.nocco_list.choose_one('Choose an action', 
+            ['Find customer by name', 'Find customer by SSN', 'Go back'], 'action')
+        self.handle_answer_from_menu(find_customer_list['action'], 'find customer')
+
     def save_new_car(self):
         self.vehicle_manager.save_new_car()
         print("{}".format(self.color.return_colored("New customer registered", 'green')))
@@ -257,6 +261,7 @@ class Menu:
                 self.init_menu()
 
             if prompt.lower() == 'customer':
+                self.frame.delete_last_lines(7)
                 self.customer()
 
             if prompt.lower() == 'cars':
@@ -277,7 +282,6 @@ class Menu:
             if prompt.lower() == 'register order':
                 print()
                 self.register_order()
-                self.init_menu()
             if prompt.lower() == 'find order':
                 pass
             if prompt.lower() == 'calculate order':
@@ -288,21 +292,20 @@ class Menu:
         ######################################################
 
         if menu_type == 'customer':
-            if prompt.lower() == 'customer':
-                self.customer()
-                self.init_menu()
             if prompt.lower() == 'go back':
                 self.frame.delete_last_lines(6)
                 self.init_menu()
-            if prompt.lower() == 'register customer':
+            elif prompt.lower() == 'register customer':
                 print()
                 self.register_customer()
-                self.init_menu()
+            elif prompt.lower() == 'find customer':
+                self.frame.delete_last_lines(6)
+                self.find_customer()
         
         ######################################################    
         #                    REGISTER CUSTOMER               #                    
         ######################################################
-        if menu_type == 'register_customer':
+        if menu_type == 'register customer':
             if prompt.lower() == 'save':
                 self.frame.delete_last_lines(14)
                 self.save_new_customer()
@@ -313,9 +316,23 @@ class Menu:
                 pass
 
             if prompt.lower() == 'cancel':
-                self.frame.delete_last_lines(7)
+                self.frame.delete_last_lines(14)
                 self.customer()
         
+        ######################################################    
+        #                    FIND CUSTOMER                   #                    
+        ######################################################
+        if menu_type == 'find customer':
+            if prompt.lower() == 'find customer by name':
+                pass
+
+            elif prompt.lower() == 'find customer by ssn':
+                pass
+
+            elif prompt.lower() == 'go back':
+                self.frame.delete_last_lines(5)
+                self.customer()
+
         ######################################################    
         #                       CARS                          #                    
         ######################################################
