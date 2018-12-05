@@ -203,7 +203,17 @@ class Menu:
     def find_customer_by_name(self):
         name = input("Enter name: ")
         customer = self.customer_manager.find_customer_by_name(name)
-        print("Customer: " + customer)
+        if customer != None:
+            print("Customer: " + customer.__str__())
+            found_customer_list = self.nocco_list.choose_one('choose an action',
+                ['Edit customer', 'Unsubscribe customer', 'Go back'], 'action')
+            self.frame.delete_last_lines(2)
+            self.handle_answer_from_menu(found_customer_list['action'], 
+                'find customer by name')
+        print('{}'.format(self.color.return_colored("Customer not found", 'red')))
+        time.sleep(2)
+        self.frame.delete_last_lines(2)
+        self.find_customer()
 
     def save_new_car(self):
         self.vehicle_manager.save_new_car()
@@ -349,7 +359,21 @@ class Menu:
                 self.customer()
 
         ######################################################    
-        #                       CARS                          #                    
+        #                FIND CUSTOMER BY NAME               #                    
+        ######################################################
+        if menu_type == 'find customer by name':
+            if prompt.lower() == 'edit customer':
+                self.frame.delete_last_lines(5)
+                pass
+            elif prompt.lower() == 'unsubscribe customer':
+                pass
+
+            elif prompt.lower() == 'go back':
+                self.frame.delete_last_lines(5)
+                self.find_customer()
+
+        ######################################################    
+        #                       CARS                         #                    
         ######################################################
         elif menu_type == 'cars':
             if prompt.lower() == 'register car':

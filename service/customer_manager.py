@@ -97,6 +97,5 @@ class CustomerManager:
     def find_customer_by_name(self, name):
         customer_list = self.__customer_repo.get_customer_list()
         for customer in customer_list:
-            if customer.__str__().lower() == name:
+            if customer.__str__().lower() == name.lower():
                 return customer
-        return "not found"
