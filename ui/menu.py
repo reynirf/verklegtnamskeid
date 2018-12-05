@@ -5,6 +5,7 @@ from models.employee import Employee
 from service.employee_manager import EmployeeManager
 from service.customer_manager import CustomerManager
 from service.vehicle_manager import VehicleManager
+from service.order_manager import OrderManager
 import csv
 import time
 import getpass
@@ -20,6 +21,7 @@ class Menu:
         self.employee_manager = EmployeeManager()
         self.customer_manager = CustomerManager()
         self.vehicle_manager = VehicleManager()
+        self.order_manager = OrderManager()
 
     def get_employees(self):
         employee_list = self.employee_manager.get_employee_list()
@@ -78,17 +80,38 @@ class Menu:
         order_list = self.nocco_list.choose_one("Choose an action",["Register order","Find order","Calculate order", "Go back"], "action")
         self.handle_answer_from_menu(order_list['action'],'order')
 
+    def save_new_order(self):
+        self.order_manager.save_new_order()
+        print("{}".format(self.color.return_colored("New order registered", 'green')))
+        time.sleep(2)
+        self.frame.delete_last_lines(1)
+
     def register_order(self):
         self.frame.delete_last_lines(7)
-        id = input("Id of order: ")
-        customer = input("Enter Customer: ")
-        employee = input("Enter employee: ")
+        ID = input("Id of order: ")
+        self.order_manager.check_id(ID)
+        ssn = input("Enter Customer SSN: ")
+        self.order_manager.check_ssn(ssn)
         car = input("Enter car: ")
+        self.order_manager.check_car(car)
         start_date = input("Enter start date: ")
-        ending_date = input("Enter ending date: ")
+        self.order_manager.check_start_date(start_date)
+        ending_date = input("Enter end date: ")
+        self.order_manager.check_ending_date(ending_date)
+        pick_up_time = input("Enter pick up time: ")
+        self.order_manager.check_pick_up_time(pick_up_time)
+        returning_time = input("Enter returning time: ")
+        self.order_manager.check_returning_time(returning_time)
         pick_up_location = input("Enter pick up location: ")
+        self.order_manager.check_pick_up_location(pick_up_location)
         return_location = input("Enter return location: ")
+        self.order_manager.check_return_location(return_location)
+        number_of_seats = input("Enter number of seats: ")
+        self.order_manager.check_number_of_seats(number_of_seats)
+        number_plate = input("Enter Number Plate: ")
+        self.order_manager.check_number_plate(number_plate)
         insurance = input("Enter insurance: ")
+        self.order_manager.check_insurance(insurance)
         print()
         register_order_list = self.nocco_list.choose_one("Choose an action",["Save", "Print order",
         "Show all available cars", "Cancel"], "action")
@@ -165,7 +188,7 @@ class Menu:
         self.frame.delete_last_lines(1)
     def save_new_car(self):
         self.vehicle_manager.save_new_car()
-        print("{}".format(self.color.return_colored("New customer registered", 'cyan')))
+        print("{}".format(self.color.return_colored("New customer registered", 'green')))
         time.sleep(2)
         self.frame.delete_last_lines(2)
 
@@ -303,5 +326,10 @@ class Menu:
                 self.order()
             if prompt.lower() == 'show all available cars':
                 pass
+            if prompt.lower() == 'save':
+                self.frame.delete_last_lines(14)
+                self.save_new_order()
+                print("\n" * 6)
+                self.order
 
 
