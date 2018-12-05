@@ -138,7 +138,7 @@ class Menu:
         Year = input("Enter Year: ")
         number_of_seats = input("Enter Number Of Seats: ")
         number_plate = input("Enter Number Plate: ")
-        fuel = input("Enter Fuel ")
+        fuel = input("Enter Fuel: ")
         driving_transmission = input("Enter Driving Transmission: ")
         print()
         register_car = self.nocco_list.choose_one('Choose an action', 
