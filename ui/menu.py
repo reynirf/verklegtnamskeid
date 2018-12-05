@@ -122,6 +122,11 @@ class Menu:
         print("{}".format(self.color.return_colored("New customer registered", 'green')))
         time.sleep(2)
         self.frame.delete_last_lines(1)
+    def save_new_car(self):
+        self.vehicle_manager.save_new_car()
+        print("{}".format(self.color.return_colored("New customer registered", 'cyan')))
+        time.sleep(2)
+        self.frame.delete_last_lines(2)
 
     def cars(self):
         self.frame.delete_last_lines(7)
@@ -133,13 +138,21 @@ class Menu:
     def register_car(self):
         self.frame.delete_last_lines(7)
         car_type = input("Enter Type: ")
+        self.vehicle_manager.check_type(car_type)
         make = input("Enter Make: ")
+        self.vehicle_manager.check_make(make)
         model = input("Enter Model: ")
-        Year = input("Enter Year: ")
-        number_of_seats = input("Enter Number Of Seats: ")
+        self.vehicle_manager.check_model(model)
+        year = input("Enter Year: ")
+        self.vehicle_manager.check_year(year)
+        number_of_seats = input("Enter Number: ")
+        self.vehicle_manager.check_number_of_seats(number_of_seats)
         number_plate = input("Enter Number Plate: ")
-        fuel = input("Enter Fuel ")
+        self.vehicle_manager.check_number_plate(number_plate)
+        fuel = input("Enter Fuel: ")
+        self.vehicle_manager.check_fuel(fuel)
         driving_transmission = input("Enter Driving Transmission: ")
+        self.vehicle_manager.check_driving_transmission(driving_transmission)
         print()
         register_car = self.nocco_list.choose_one('Choose an action', 
             ['Save','Print information','Cancel'],
@@ -231,7 +244,9 @@ class Menu:
                 self.register_car()
                 self.cars()
             if prompt.lower() == 'save':
-                self.frame.delete_last_lines(9)
+                self.frame.delete_last_lines(14)
+                self.save_new_car()
+                print("\n" * 6)
                 self.cars()
 
             if prompt.lower() == 'go back':

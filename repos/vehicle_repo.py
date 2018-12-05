@@ -24,3 +24,10 @@ class VehicleRepo:
                         line['maintainance'])
                     self.__vehicle_list.append(vehicle)
         return self.__vehicle_list
+
+    def save_new_car(self, car_type, make, model, year, 
+    number_of_seats, number_plate, fuel, driving_transmission):
+        with open(self.VEHICLE_FILE, 'a') as vehicle_file:
+            csv_writer = csv.writer(vehicle_file)
+            csv_writer.writerow([car_type,make,model,year,number_of_seats,number_plate,
+            fuel,driving_transmission])
