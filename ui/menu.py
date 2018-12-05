@@ -159,13 +159,9 @@ class Menu:
         number_of_seats = input("Enter Number: ")
         self.vehicle_manager.check_number_of_seats(number_of_seats)
         number_plate = input("Enter Number Plate: ")
-<<<<<<< HEAD
         self.vehicle_manager.check_number_plate(number_plate)
         fuel = input("Enter Fuel: ")
         self.vehicle_manager.check_fuel(fuel)
-=======
-        fuel = input("Enter Fuel: ")
->>>>>>> d1259c5dfdd72fdf6995b6ee7f41dfd58ec0b991
         driving_transmission = input("Enter Driving Transmission: ")
         self.vehicle_manager.check_driving_transmission(driving_transmission)
         print()
