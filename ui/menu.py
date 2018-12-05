@@ -118,13 +118,15 @@ class Menu:
 
     def register_customer(self):
         self.frame.delete_last_lines(7)
-        
+        mistakes = 0
+
         name_check = "check if valid"
         while type(name_check) == str:
             name = input("Enter Name: ")
             name_check = self.customer_manager.check_name(name)
             if type(name_check) == str:
                 self.invalid_input(name_check)
+                mistakes += 1
         
         ssn_check = "check if valid"
         while type(ssn_check) == str:
@@ -132,6 +134,7 @@ class Menu:
             ssn_check = self.customer_manager.check_ssn(ssn)
             if type(ssn_check) == str:
                 self.invalid_input(ssn_check)
+                mistakes += 1
         
         birthday_check = "check if valid"
         while type(birthday_check) == str:
@@ -139,6 +142,7 @@ class Menu:
             birthday_check = self.customer_manager.check_birthday(birthday)
             if type(birthday_check) == str:
                 self.invalid_input(birthday_check)
+                mistakes += 1
         
         phone_check = "check if valid"
         while type(phone_check) == str:
@@ -146,6 +150,7 @@ class Menu:
             phone_check = self.customer_manager.check_phone_number(phone_number)
             if type(phone_check) == str:
                 self.invalid_input(phone_check)
+                mistakes += 1
 
         license_check = "check if valid"
         while type(license_check) == str:
@@ -153,6 +158,7 @@ class Menu:
             license_check = self.customer_manager.check_license(driving_license_category)
             if type(license_check) == str:
                 self.invalid_input(license_check)
+                mistakes += 1
         
         email_check = "check if valid"
         while type(email_check) == str:
@@ -160,6 +166,7 @@ class Menu:
             email_check = self.customer_manager.check_email(email)
             if type(email_check) == str:
                 self.invalid_input(email_check)
+                mistakes += 1
         
         credit_card_check = "check if valid"
         while type(credit_card_check) == str:
@@ -167,6 +174,7 @@ class Menu:
             credit_card_check = self.customer_manager.check_credit_card(credit_card)
             if type(credit_card_check) == str:
                 self.invalid_input(credit_card_check)
+                mistakes += 1
         
         home_address = input("Enter Home Address: ")
         self.customer_manager.check_address(home_address)
@@ -174,6 +182,7 @@ class Menu:
         register_customer_list = self.nocco_list.choose_one('Choose an action', 
             ['Save','Print information','Cancel'],
             'action')
+        self.frame.delete_last_lines(mistakes)
         self.handle_answer_from_menu(register_customer_list['action'], 'register customer')
     
     def invalid_input(self, message):
