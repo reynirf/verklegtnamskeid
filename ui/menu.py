@@ -5,6 +5,7 @@ from models.employee import Employee
 from service.employee_manager import EmployeeManager
 from service.customer_manager import CustomerManager
 from service.vehicle_manager import VehicleManager
+from service.order_manager import OrderManager
 import csv
 import time
 import getpass
@@ -20,6 +21,7 @@ class Menu:
         self.employee_manager = EmployeeManager()
         self.customer_manager = CustomerManager()
         self.vehicle_manager = VehicleManager()
+        self.order_manager = OrderManager()
 
     def get_employees(self):
         employee_list = self.employee_manager.get_employee_list()
@@ -288,5 +290,10 @@ class Menu:
                 self.order()
             if prompt.lower() == 'show all available cars':
                 pass
+            if prompt.lower() == 'save':
+                self.frame.delete_last_lines(14)
+                self.save_new_order()
+                print("\n" * 6)
+                self.order
 
 
