@@ -72,6 +72,11 @@ class Menu:
             ['Customer','Register customer','Edit list of customer', 'Find customer','Go back'],
             'action')
         self.handle_answer_from_menu(customer_list['action'], 'customer')
+    
+    def order(self):
+        self.frame.delete_last_lines(7)
+        order_list = self.nocco_list.choose_one("Choose an action",["Register order","Find order","Calculate order", "Go back"], "action")
+        self.handle_answer_from_menu(order_list['action'],'order')
 
     def register_customer(self):
         self.frame.delete_last_lines(7)
@@ -120,6 +125,8 @@ class Menu:
                 self.customer()
             if prompt.lower() == 'cars':
                 self.cars()
+            if prompt.lower() == 'order':
+                self.order()
 
         ######################################################    
         #                      CUSTOMER                      #
