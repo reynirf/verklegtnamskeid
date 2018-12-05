@@ -197,6 +197,8 @@ class Menu:
             if prompt.lower() == 'save':
                 self.frame.delete_last_lines(14)
                 self.save_new_customer()
+                print('\n' * 6)
+                self.customer()
             if prompt.lower() == 'print information':
                 pass
             if prompt.lower() == 'cancel':
