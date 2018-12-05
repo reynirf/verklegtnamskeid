@@ -77,6 +77,23 @@ class Menu:
         self.frame.delete_last_lines(7)
         order_list = self.nocco_list.choose_one("Choose an action",["Register order","Find order","Calculate order", "Go back"], "action")
         self.handle_answer_from_menu(order_list['action'],'order')
+   
+    def register_order(self):
+        self.frame.delete_last_lines(7)
+        id = input("Id of order: ")
+        customer = input("Enter Customer: ")
+        employee = input("Enter employee: ")
+        car = input("Enter car: ")
+        start_date = input("Enter start date: ")
+        ending_date = input("Enter ending date: ")
+        pick_up_location = input("Enter pick up location: ")
+        return_location = input("Enter return location: ")
+        insurance = input("Enter insurance: ")
+        print()
+        order = Order(id, customer, employee, car, start_date, ending_date, pick_up_location, return_location,
+                      insurance)
+        register_order_list = self.nocco_list.choose_one("Choose an action",["Save", "Print order", "Cancel"], "action")
+        self.handle_answer_from_menu(register_customer_list['action'], 'register_order')
 
     def register_customer(self):
         self.frame.delete_last_lines(7)
@@ -127,6 +144,22 @@ class Menu:
                 self.cars()
             if prompt.lower() == 'order':
                 self.order()
+        
+        ######################################################    
+        #                      ORDER                      #
+        ######################################################
+
+        if menu_type == 'order':
+            if prompt.lower() == 'order':
+                self.order()
+                self.init_menu()
+            if prompt.lower() == 'go back':
+                self.frame.delete_last_lines(7)
+                self.init_menu()
+            if prompt.lower() == 'register order':
+                self.register_order()
+                self.init_menu()
+        
 
         ######################################################    
         #                      CUSTOMER                      #
