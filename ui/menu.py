@@ -78,6 +78,12 @@ class Menu:
         order_list = self.nocco_list.choose_one("Choose an action",["Register order","Find order","Calculate order", "Go back"], "action")
         self.handle_answer_from_menu(order_list['action'],'order')
 
+    def save_new_order(self):
+        self.order_manager.save_new_order()
+        print("{}".format(self.color.return_colored("New order registered", 'green')))
+        time.sleep(2)
+        self.frame.delete_last_lines(1)
+
     def register_order(self):
         self.frame.delete_last_lines(7)
         ID = input("Id of order: ")
