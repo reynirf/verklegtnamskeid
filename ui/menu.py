@@ -143,10 +143,9 @@ class Menu:
         self.check_if_valid(mistakes, 'Email', self.customer_manager.check_email)
 
         self.check_if_valid(mistakes, 'Credit Card Number', self.customer_manager.check_credit_card)
-
-        home_address = input("Enter Home Address: ")
         
-        self.customer_manager.check_address(home_address)
+        self.check_if_valid(mistakes, 'Home Address', self.customer_manager.check_address)
+
         print()
         register_customer_list = self.nocco_list.choose_one('Choose an action', 
             ['Save','Print information','Cancel'],
