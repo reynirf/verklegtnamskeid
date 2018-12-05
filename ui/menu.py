@@ -180,9 +180,6 @@ class Menu:
         ######################################################
 
         if menu_type == 'order':
-            if prompt.lower() == 'order':
-                self.order()
-                self.init_menu()
             if prompt.lower() == 'go back':
                 self.frame.delete_last_lines(6)
                 self.init_menu()
@@ -193,9 +190,7 @@ class Menu:
             if prompt.lower() == 'find order':
                 pass
             if prompt.lower() == 'calculate order':
-                pass
-            if prompt.lower() == 'show all available cars':
-                pass        
+                pass     
 
         ######################################################    
         #                      CUSTOMER                      #
@@ -244,10 +239,14 @@ class Menu:
                 self.frame.delete_last_lines(9)
                 self.init_menu()
 
-
+        ########################################################
+        #                Register new order                    #
+        ########################################################
         if menu_type == 'register_order':
             if prompt.lower() == 'cancel':
                 self.frame.delete_last_lines(8)
                 self.order()
+            if prompt.lower() == 'show all available cars':
+                pass
 
 
