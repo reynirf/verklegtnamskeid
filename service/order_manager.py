@@ -48,7 +48,7 @@ class OrderManager:
     def check_start_date(self,start_date):
         self.__temp_start_date = start_date
 
-    def check_end_date(self,end_date):
+    def check_ending_date(self,end_date):
         self.__temp_end_date = end_date
 
     def check_pick_up_time(self,pick_up_time):
@@ -69,5 +69,5 @@ class OrderManager:
     def check_number_plate(self,number_plate):
         self.__temp_number_plate = number_plate
     
-    def check_insurence(self,insurence):
+    def check_insurance(self,insurence):
         self.__temp_insurence = insurence
