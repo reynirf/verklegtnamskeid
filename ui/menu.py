@@ -80,15 +80,30 @@ class Menu:
 
     def register_order(self):
         self.frame.delete_last_lines(7)
-        id = input("Id of order: ")
-        customer = input("Enter Customer: ")
-        employee = input("Enter employee: ")
+        ID = input("Id of order: ")
+        self.order_manager.check_id(ID)
+        ssn = input("Enter Customer SSN: ")
+        self.order_manager.check_ssn(ssn)
         car = input("Enter car: ")
+        self.order_manager.check_car(car)
         start_date = input("Enter start date: ")
-        ending_date = input("Enter ending date: ")
+        self.order_manager.check_start_date(start_date)
+        ending_date = input("Enter end date: ")
+        self.order_manager.check_ending_date(ending_date)
+        pick_up_time = input("Enter pick up time: ")
+        self.order_manager.check_pick_up_time(pick_up_time)
+        returning_time = input("Enter returning time: ")
+        self.order_manager.check_returning_time(returning_time)
         pick_up_location = input("Enter pick up location: ")
+        self.order_manager.check_pick_up_location(pick_up_location)
         return_location = input("Enter return location: ")
+        self.order_manager.check_return_location(return_location)
+        number_of_seats = input("Enter number of seats: ")
+        self.order_manager.check_number_of_seats(number_of_seats)
+        number_plate = input("Enter Number Plate: ")
+        self.order_manager.check_number_plate(number_plate)
         insurance = input("Enter insurance: ")
+        self.order_manager.check_insurance(insurance)
         print()
         register_order_list = self.nocco_list.choose_one("Choose an action",["Save", "Print order",
         "Show all available cars", "Cancel"], "action")
@@ -125,7 +140,7 @@ class Menu:
         self.frame.delete_last_lines(1)
     def save_new_car(self):
         self.vehicle_manager.save_new_car()
-        print("{}".format(self.color.return_colored("New customer registered", 'cyan')))
+        print("{}".format(self.color.return_colored("New customer registered", 'green')))
         time.sleep(2)
         self.frame.delete_last_lines(2)
 
@@ -149,13 +164,9 @@ class Menu:
         number_of_seats = input("Enter Number: ")
         self.vehicle_manager.check_number_of_seats(number_of_seats)
         number_plate = input("Enter Number Plate: ")
-<<<<<<< HEAD
         self.vehicle_manager.check_number_plate(number_plate)
         fuel = input("Enter Fuel: ")
         self.vehicle_manager.check_fuel(fuel)
-=======
-        fuel = input("Enter Fuel: ")
->>>>>>> d1259c5dfdd72fdf6995b6ee7f41dfd58ec0b991
         driving_transmission = input("Enter Driving Transmission: ")
         self.vehicle_manager.check_driving_transmission(driving_transmission)
         print()
