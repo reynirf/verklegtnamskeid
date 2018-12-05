@@ -185,11 +185,22 @@ class Menu:
         print("{}".format(self.color.return_colored("New customer registered", 'green')))
         time.sleep(2)
         self.frame.delete_last_lines(1)
+        
     def save_new_car(self):
         self.vehicle_manager.save_new_car()
         print("{}".format(self.color.return_colored("New customer registered", 'green')))
         time.sleep(2)
         self.frame.delete_last_lines(2)
+
+    def show_all_available_cars(self):
+        test_data = [['Toyota', 'Huyndai', 'Ford', 'Reynir', 'Sixarinn'], ['Renault', 'Viddi', 'Peugot', 'Guðrún','Ermir'], ['Nike', 'Subaru', 'Volvo','Bíll','Hilux']]
+
+        col_width = max(len(word) for row in test_data for word in row) + 2 
+        for row in test_data:
+            print ("".join(word.ljust(col_width) for word in row))
+
+        self.nocco_list.single_list('Go back')
+
 
     def cars(self):
         self.frame.delete_last_lines(7)
@@ -240,13 +251,17 @@ class Menu:
             if prompt.lower() == 'logout':
                 self.logout() 
                 self.init_menu()
+
             if prompt.lower() == 'report an error':
                 self.report_error()
                 self.init_menu()
+
             if prompt.lower() == 'customer':
                 self.customer()
+
             if prompt.lower() == 'cars':
                 self.cars()
+
             if prompt.lower() == 'order':
                 self.frame.delete_last_lines(7)
                 self.order()
@@ -293,8 +308,10 @@ class Menu:
                 self.save_new_customer()
                 print('\n' * 6)
                 self.customer()
+
             if prompt.lower() == 'print information':
                 pass
+
             if prompt.lower() == 'cancel':
                 self.frame.delete_last_lines(7)
                 self.customer()
@@ -307,10 +324,18 @@ class Menu:
                 self.frame.delete_last_lines(1)
                 self.register_car()
                 self.cars()
+
             if prompt.lower() == 'save':
                 self.frame.delete_last_lines(14)
                 self.save_new_car()
                 print("\n" * 6)
+                self.cars()
+
+            if prompt.lower() == 'show all available cars':
+                self.frame.delete_last_lines(9)
+                self.show_all_available_cars()
+                print()
+                print()
                 self.cars()
 
             if prompt.lower() == 'go back':
@@ -324,8 +349,13 @@ class Menu:
             if prompt.lower() == 'cancel':
                 self.frame.delete_last_lines(19)
                 self.order()
+
             if prompt.lower() == 'show all available cars':
-                pass
+                self.frame.delete_last_lines(19)
+                self.show_all_available_cars()
+                self.frame.delete_last_lines(5)
+                self.order()
+
             if prompt.lower() == 'save':
                 self.frame.delete_last_lines(14)
                 self.frame.delete_last_lines(5)
