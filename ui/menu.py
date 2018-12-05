@@ -159,7 +159,7 @@ class Menu:
             email = input("Enter Email: ")
             email_check = self.customer_manager.check_email(email)
             if type(email_check) == str:
-                self.customer_manager.check_email(email)
+                self.invalid_input(email_check)
         
         credit_card_check = "check if valid"
         while type(credit_card_check) == str:
