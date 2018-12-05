@@ -194,7 +194,7 @@ class Menu:
     def find_customer_by_name(self):
         name = input("Enter name: ")
         customer = self.customer_manager.find_customer_by_name(name)
-        print(customer)
+        print("Customer: " + customer)
 
     def save_new_car(self):
         self.vehicle_manager.save_new_car()
@@ -278,7 +278,7 @@ class Menu:
                 self.order()
         
         ######################################################    
-        #                      ORDER                      #
+        #                      ORDER                         #
         ######################################################
 
         if menu_type == 'order':

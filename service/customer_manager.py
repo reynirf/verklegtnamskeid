@@ -19,7 +19,7 @@ class CustomerManager:
         return self.__customer_repo.get_customer_list()
     
     def save_new_customer(self):
-        #uses the temp values to save the new customer and then clears them 
+        #uses the temp values to save the new customer 
         self.__customer_repo.save_new_customer(
             self.__temp_name,
             self.__temp_ssn,
@@ -99,3 +99,4 @@ class CustomerManager:
         for customer in customer_list:
             if customer.__str__().lower() == name:
                 return customer
+        return "not found"
