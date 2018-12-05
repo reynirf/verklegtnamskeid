@@ -76,7 +76,9 @@ class Menu:
     def register_customer(self):
         self.frame.delete_last_lines(7)
         name = input("Enter Name: ")
+        self.customer_manager.check_name(name)
         ssn = input("Enter SSN: ")
+        self.customer_manager.check_ssn(ssn)
         birthday = input("Enter Birthday: ")
         phone_number = input("Enter Phone number: ")
         driving_license_category = input("Enter Driving Licence Category: ")
@@ -88,7 +90,13 @@ class Menu:
             ['Save','Print information','Cancel'],
             'action')
         self.handle_answer_from_menu(register_customer_list['action'], 'register_customer')
-            
+    
+    def save_new_customer(self):
+        self.customer_manager.save_new_customer()
+        print("{}".format(self.color.return_colored("New customer registered", 'green')))
+        time.sleep(2)
+        self.frame.delete_last_lines(1)
+
     def cars(self):
         self.frame.delete_last_lines(7)
         car = self.nocco_list.choose_one('Choose an action', ['Register car', 'Find car', 'Show all available cars',
@@ -141,11 +149,13 @@ class Menu:
         ######################################################
         if menu_type == 'register_customer':
             if prompt.lower() == 'save':
-                pass
+                self.frame.delete_last_lines(14)
+                self.save_new_customer()
             if prompt.lower() == 'print information':
                 pass
             if prompt.lower() == 'cancel':
-                self.frame.delete_last_lines(14)
+                self.frame.delete_last_lines(7)
+                self.customer()
         
         ######################################################    
         #                       CARS                          #                    
