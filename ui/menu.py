@@ -76,7 +76,6 @@ class Menu:
         self.handle_answer_from_menu(customer_list['action'], 'customer')
     
     def order(self):
-        self.frame.delete_last_lines(7)
         order_list = self.nocco_list.choose_one("Choose an action",["Register order","Find order","Calculate order", "Go back"], "action")
         self.handle_answer_from_menu(order_list['action'],'order')
 
@@ -219,6 +218,7 @@ class Menu:
             if prompt.lower() == 'cars':
                 self.cars()
             if prompt.lower() == 'order':
+                self.frame.delete_last_lines(7)
                 self.order()
         
         ######################################################    
@@ -292,14 +292,14 @@ class Menu:
         ########################################################
         if menu_type == 'register_order':
             if prompt.lower() == 'cancel':
-                self.frame.delete_last_lines(8)
+                self.frame.delete_last_lines(19)
                 self.order()
             if prompt.lower() == 'show all available cars':
                 pass
             if prompt.lower() == 'save':
                 self.frame.delete_last_lines(14)
+                self.frame.delete_last_lines(5)
                 self.save_new_order()
-                print("\n" * 6)
-                self.order
+                self.order()
 
 
