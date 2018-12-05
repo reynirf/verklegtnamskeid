@@ -189,6 +189,10 @@ class Menu:
                 print()
                 self.register_order()
                 self.init_menu()
+            if prompt.lower() == 'find order':
+                pass
+            if prompt.lower() == 'calculate order':
+                pass
         
 
         ######################################################    
