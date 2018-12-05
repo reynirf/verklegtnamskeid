@@ -1,5 +1,6 @@
 from repos.customer_repo import CustomerRepo
 from models.customer import Customer
+import string
 
 class CustomerManager:
 
@@ -31,6 +32,9 @@ class CustomerManager:
     
     def check_name(self, name):
         #missing check for invalid names
+        for letter in name.strip():
+            if letter in (string.digits + string.punctuation):
+                return "Name not valid. Please use only letters."
         self.__temp_name = name
     
     def check_ssn(self, ssn):
