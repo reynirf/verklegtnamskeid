@@ -20,8 +20,6 @@ class Frame:
                                             |___/             
 """;
 
-    # os.system('while sleep 1;do tput sc;tput cup 0 $(($(tput cols)-11));echo "`date +%r`";tput rc;done &')
-
     def get_size_of_screen(self):
         if os.name == 'nt':
             import shutil
