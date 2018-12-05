@@ -90,7 +90,8 @@ class Menu:
         return_location = input("Enter return location: ")
         insurance = input("Enter insurance: ")
         print()
-        register_order_list = self.nocco_list.choose_one("Choose an action",["Save", "Print order", "Cancel"], "action")
+        register_order_list = self.nocco_list.choose_one("Choose an action",["Save", "Print order",
+        "Show all available cars", "Cancel"], "action")
         self.handle_answer_from_menu(register_order_list['action'], 'register_order')
 
     def register_customer(self):
@@ -193,7 +194,8 @@ class Menu:
                 pass
             if prompt.lower() == 'calculate order':
                 pass
-        
+            if prompt.lower() == 'show all available cars':
+                pass        
 
         ######################################################    
         #                      CUSTOMER                      #
