@@ -90,10 +90,8 @@ class Menu:
         return_location = input("Enter return location: ")
         insurance = input("Enter insurance: ")
         print()
-        order = Order(id, customer, employee, car, start_date, ending_date, pick_up_location, return_location,
-                      insurance)
         register_order_list = self.nocco_list.choose_one("Choose an action",["Save", "Print order", "Cancel"], "action")
-        self.handle_answer_from_menu(register_customer_list['action'], 'register_order')
+        self.handle_answer_from_menu(register_order_list['action'], 'register_order')
 
     def register_customer(self):
         self.frame.delete_last_lines(7)
