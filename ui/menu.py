@@ -262,18 +262,18 @@ class Menu:
                 self.logout() 
                 self.init_menu()
 
-            if prompt.lower() == 'report an error':
+            elif prompt.lower() == 'report an error':
                 self.report_error()
                 self.init_menu()
 
-            if prompt.lower() == 'customer':
+            elif prompt.lower() == 'customer':
                 self.frame.delete_last_lines(7)
                 self.customer()
 
-            if prompt.lower() == 'cars':
+            elif prompt.lower() == 'cars':
                 self.cars()
 
-            if prompt.lower() == 'order':
+            elif prompt.lower() == 'order':
                 self.frame.delete_last_lines(7)
                 self.order()
         
@@ -285,12 +285,12 @@ class Menu:
             if prompt.lower() == 'go back':
                 self.frame.delete_last_lines(6)
                 self.init_menu()
-            if prompt.lower() == 'register order':
+            elif prompt.lower() == 'register order':
                 print()
                 self.register_order()
-            if prompt.lower() == 'find order':
+            elif prompt.lower() == 'find order':
                 pass
-            if prompt.lower() == 'calculate order':
+            elif prompt.lower() == 'calculate order':
                 pass     
 
         ######################################################    
@@ -318,10 +318,10 @@ class Menu:
                 print('\n' * 6)
                 self.customer()
 
-            if prompt.lower() == 'print information':
+            elif prompt.lower() == 'print information':
                 pass
 
-            if prompt.lower() == 'cancel':
+            elif prompt.lower() == 'cancel':
                 self.frame.delete_last_lines(14)
                 self.customer()
         
@@ -348,20 +348,20 @@ class Menu:
                 self.register_car()
                 self.cars()
 
-            if prompt.lower() == 'save':
+            elif prompt.lower() == 'save':
                 self.frame.delete_last_lines(14)
                 self.save_new_car()
                 print("\n" * 6)
                 self.cars()
 
-            if prompt.lower() == 'show all available cars':
+            elif prompt.lower() == 'show all available cars':
                 self.frame.delete_last_lines(9)
                 self.show_all_available_cars()
                 print()
                 print()
                 self.cars()
 
-            if prompt.lower() == 'go back':
+            elif prompt.lower() == 'go back':
                 self.frame.delete_last_lines(9)
                 self.init_menu()
 
@@ -373,13 +373,13 @@ class Menu:
                 self.frame.delete_last_lines(19)
                 self.order()
 
-            if prompt.lower() == 'show all available cars':
+            elif prompt.lower() == 'show all available cars':
                 self.frame.delete_last_lines(19)
                 self.show_all_available_cars()
                 self.frame.delete_last_lines(5)
                 self.order()
 
-            if prompt.lower() == 'save':
+            elif prompt.lower() == 'save':
                 self.frame.delete_last_lines(14)
                 self.frame.delete_last_lines(5)
                 self.save_new_order()
