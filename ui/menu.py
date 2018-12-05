@@ -111,8 +111,14 @@ class Menu:
 
     def register_customer(self):
         self.frame.delete_last_lines(7)
-        name = input("Enter Name: ")
-        self.customer_manager.check_name(name)
+        
+        name_check = "check if valid"
+        while type(name_check) == str:
+            name = input("Enter Name: ")
+            name_check = self.customer_manager.check_name(name)
+            if type(name_check) == str:
+                self.invalid_input(name_check)
+        
         ssn = input("Enter SSN: ")
         self.customer_manager.check_ssn(ssn)
         birthday = input("Enter Birthday: ")
@@ -133,6 +139,10 @@ class Menu:
             'action')
         self.handle_answer_from_menu(register_customer_list['action'], 'register_customer')
     
+    def invalid_input(self, message):
+        self.frame.delete_last_lines(2)
+        print('{}'.format(self.color.return_colored(message, 'red')))
+
     def save_new_customer(self):
         self.customer_manager.save_new_customer()
         print("{}".format(self.color.return_colored("New customer registered", 'green')))
