@@ -69,7 +69,7 @@ class Menu:
     def customer(self):
         self.frame.delete_last_lines(7)
         customer_list = self.nocco_list.choose_one('Choose an action', 
-            ['Customer','Register customer','Edit list of customer', 'Find customer','Go back'],
+            ['Register customer','Edit list of customer', 'Find customer','Go back'],
             'action')
         self.handle_answer_from_menu(customer_list['action'], 'customer')
     
@@ -155,6 +155,7 @@ class Menu:
                 self.frame.delete_last_lines(6)
                 self.init_menu()
             if prompt.lower() == 'register order':
+                print()
                 self.register_order()
                 self.init_menu()
         
@@ -168,9 +169,10 @@ class Menu:
                 self.customer()
                 self.init_menu()
             if prompt.lower() == 'go back':
-                self.frame.delete_last_lines(7)
+                self.frame.delete_last_lines(6)
                 self.init_menu()
             if prompt.lower() == 'register customer':
+                print()
                 self.register_customer()
                 self.init_menu()
         
@@ -183,7 +185,8 @@ class Menu:
             if prompt.lower() == 'print information':
                 pass
             if prompt.lower() == 'cancel':
-                self.frame.delete_last_lines(14)
+                self.frame.delete_last_lines(7)
+                self.customer()
         
         ######################################################    
         #                       CARS                          #                    
@@ -193,5 +196,10 @@ class Menu:
                 self.frame.delete_last_lines(9)
                 self.init_menu()
 
+
+        if menu_type == 'register_order':
+            if prompt.lower() == 'cancel':
+                self.frame.delete_last_lines(8)
+                self.order()
 
 
