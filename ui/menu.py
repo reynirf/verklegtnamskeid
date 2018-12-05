@@ -116,67 +116,36 @@ class Menu:
         "Show all available cars", "Cancel"], "action")
         self.handle_answer_from_menu(register_order_list['action'], 'register_order')
 
+
+    def check_if_valid(self, mistakes, to_enter, to_check):
+        check = "check if valid"
+        while type(check) == str:
+            check_type = input("Enter " + to_enter + ': ')
+            check = to_check(check_type)
+            if type(check) == str:
+                self.invalid_input(check)
+                mistakes += 1
+
     def register_customer(self):
         self.frame.delete_last_lines(7)
         mistakes = 0
 
-        name_check = "check if valid"
-        while type(name_check) == str:
-            name = input("Enter Name: ")
-            name_check = self.customer_manager.check_name(name)
-            if type(name_check) == str:
-                self.invalid_input(name_check)
-                mistakes += 1
-        
-        ssn_check = "check if valid"
-        while type(ssn_check) == str:
-            ssn = input("Enter SSN: ")
-            ssn_check = self.customer_manager.check_ssn(ssn)
-            if type(ssn_check) == str:
-                self.invalid_input(ssn_check)
-                mistakes += 1
-        
-        birthday_check = "check if valid"
-        while type(birthday_check) == str:
-            birthday = input("Enter Birthday: ")
-            birthday_check = self.customer_manager.check_birthday(birthday)
-            if type(birthday_check) == str:
-                self.invalid_input(birthday_check)
-                mistakes += 1
-        
-        phone_check = "check if valid"
-        while type(phone_check) == str:
-            phone_number = input("Enter Phone number: ")
-            phone_check = self.customer_manager.check_phone_number(phone_number)
-            if type(phone_check) == str:
-                self.invalid_input(phone_check)
-                mistakes += 1
+        self.check_if_valid(mistakes, 'Name', self.customer_manager.check_name)
 
-        license_check = "check if valid"
-        while type(license_check) == str:
-            driving_license_category = input("Enter Driving License Category: ")
-            license_check = self.customer_manager.check_license(driving_license_category)
-            if type(license_check) == str:
-                self.invalid_input(license_check)
-                mistakes += 1
+        self.check_if_valid(mistakes, 'SSN', self.customer_manager.check_ssn)
         
-        email_check = "check if valid"
-        while type(email_check) == str:
-            email = input("Enter Email: ")
-            email_check = self.customer_manager.check_email(email)
-            if type(email_check) == str:
-                self.invalid_input(email_check)
-                mistakes += 1
-        
-        credit_card_check = "check if valid"
-        while type(credit_card_check) == str:
-            credit_card = input("Enter Credit Card Number: ")
-            credit_card_check = self.customer_manager.check_credit_card(credit_card)
-            if type(credit_card_check) == str:
-                self.invalid_input(credit_card_check)
-                mistakes += 1
-        
+        self.check_if_valid(mistakes, 'Birthday', self.customer_manager.check_birthday)
+
+        self.check_if_valid(mistakes, 'Phone number', self.customer_manager.check_phone_number)
+
+        self.check_if_valid(mistakes, 'Driving License Category', self.customer_manager.check_license)
+
+        self.check_if_valid(mistakes, 'Email', self.customer_manager.check_email)
+
+        self.check_if_valid(mistakes, 'Credit Card Number', self.customer_manager.check_credit_card)
+
         home_address = input("Enter Home Address: ")
+        
         self.customer_manager.check_address(home_address)
         print()
         register_customer_list = self.nocco_list.choose_one('Choose an action', 
