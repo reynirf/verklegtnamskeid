@@ -77,7 +77,7 @@ class Menu:
         self.frame.delete_last_lines(7)
         order_list = self.nocco_list.choose_one("Choose an action",["Register order","Find order","Calculate order", "Go back"], "action")
         self.handle_answer_from_menu(order_list['action'],'order')
-   
+
     def register_order(self):
         self.frame.delete_last_lines(7)
         id = input("Id of order: ")
@@ -152,7 +152,7 @@ class Menu:
                 self.order()
                 self.init_menu()
             if prompt.lower() == 'go back':
-                self.frame.delete_last_lines(7)
+                self.frame.delete_last_lines(6)
                 self.init_menu()
             if prompt.lower() == 'register order':
                 self.register_order()
