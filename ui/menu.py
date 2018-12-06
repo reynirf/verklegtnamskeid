@@ -513,7 +513,9 @@ class Menu:
                 self.find_cars()
 
 
-        #commentið
+        ######################################################    
+        #                    REGISTER CAR                    #                    
+        ######################################################
         elif menu_type == 'register car':
             if prompt.lower() == 'save':
                 self.frame.delete_last_lines(16)
