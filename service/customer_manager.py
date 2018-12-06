@@ -78,8 +78,8 @@ class CustomerManager:
         self.__temp_driver_license = driver_license
     
     def check_email(self, email):
-        """Check if email address is valid. Returns an error message if email
-        does not have an '@' in it"""
+        """Check if email address is valid. Returns an error message if email 
+        does not have an @ in it"""
 
         if "@" not in email or len(email) < 6 or '.' not in email:
             return "Email not valid. Please try again"
