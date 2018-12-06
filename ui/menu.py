@@ -373,7 +373,7 @@ class Menu:
 
         self.check_if_valid('Year', self.vehicle_manager.check_year)
 
-        self.check_if_valid('Car type', self.vehicle_manager.check_type)
+        # self.check_if_valid('Car type', self.vehicle_manager.check_type)
     
         self.check_if_valid('Number of seats', self.vehicle_manager.check_number_of_seats)
 

@@ -163,14 +163,28 @@ class VehicleManager:
         if fuel_type in fuels:
             self.__temp_fuel = fuel
         else:
-            # TODO error handling for fuels allowed
             return self.fuels_allowed()
         
 
     def check_driving_transmission(self,driving_transmission):
+        """
+        Driving transmission allowed: Automatic, Manual, 
+        we don't have any other high tech crappy something.
+        """
+        transmissions = ["automatic","manual"]
+        inputed_transmission = ""
         if driving_transmission.strip() == '':
             return self.error("Driving transmission")
-        self.__temp_driving_transmission = driving_transmission
+        else:
+            for letter in driving_transmission:
+                if letter.isalpha():
+                    inputed_transmission += letter.lower()
+                else:
+                    return self.error("Driving transmission")
+        if inputed_transmission in transmissions:
+            self.__temp_driving_transmission = driving_transmission
+        else:
+            return self.transmission_allowed()
     
     def find_car_by_number_plate(self, number_plate):
         cars_list = self.__vehicle_repo.get_vehicle_list()
@@ -219,3 +233,6 @@ class VehicleManager:
     
     def fuels_allowed(self):
         return "Fuel can be: Bensin, Diesel, Electric or Hybrid."
+
+    def transmission_allowed(self):
+        return "Please enter either Automatic or Manual transmissions."
