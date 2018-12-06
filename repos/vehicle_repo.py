@@ -42,7 +42,7 @@ class VehicleRepo:
             for line in csv_reader:
                 if line[1] != vehicle.get_licence():
                     file_content.append(line)
-        with open(self.VEHICLE_FILE, 'w', newline='') as updated_file:
-            csv_writer = csv.writer(updated_file)
+        with open(self.VEHICLE_FILE, 'w', newline='') as vehicle_file:
+            csv_writer = csv.writer(vehicle_file)
             for line in file_content:
                 csv_writer.writerow(line)
