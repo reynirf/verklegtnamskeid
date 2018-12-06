@@ -33,16 +33,31 @@ class VehicleManager:
             self.__temp_driving_transmission)
 
     def check_type(self,car_type):
+        car_types = ["sedan", "offroad", "smallcar","bus"]
         """Check if type is valid. Returns an error message if type
         has numbers or punctuation in it"""
-
+        inputed_car = ""
         if car_type.strip() == '':
             return self.error("Car type")
+        for letter in car_type.strip():
+            if letter.isalpha():
+                inputed_car += letter
+            elif letter == "":
+                pass
+            else:
+                return self.error("Car type")
+        
+        if inputed_car in car_types:
+            self.__temp_car_type = inputed_car
+        else:
+            return self.vehicle_type()
 
+        """
         for letter in car_type.strip():
             if letter in (string.digits + string.punctuation):
                 return self.error('Car type')
         self.__temp_car_type = car_type
+        """
 
     def check_make(self,make):
         """Check if make is valid. Returns an error message if make
@@ -180,3 +195,5 @@ class VehicleManager:
     def nr_seats(self):
         return "Please enter from 2 to 14 seats."
     
+    def vehicle_type(self):
+        return "Please enter either Sedan, Bus, Off Road or Small Car."

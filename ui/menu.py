@@ -327,6 +327,7 @@ class Menu:
             for i,car in enumerate(cars):
                 print("Car "+ str(i+1) +": "+ car.get_licence())
                 time.sleep(2)
+                # TODO we need to figure out how to handle this 
             print()
     
     def find_cars_by_make(self):
@@ -342,6 +343,7 @@ class Menu:
             for i,car in enumerate(cars):
                 print("Car "+ str(i+1) +": "+ car.get_make())
                 time.sleep(2)
+                # TODO we need to figure out how to handle this
             print()
 
     def find_cars_by_type(self):
@@ -357,6 +359,7 @@ class Menu:
             for i,car in enumerate(cars):
                 print("Car "+ str(i+1) +": "+ car.get_vehicle_type())
                 time.sleep(2)
+                # TODO we need to figure out how to handle this
             print()
 
     def register_car(self):
