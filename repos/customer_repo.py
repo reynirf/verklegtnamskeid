@@ -43,7 +43,6 @@ class CustomerRepo:
                     file_content.append(line)
         with open(self.CUSTOMER_FILE, 'w', newline='') as customer_file:
             csv_writer = csv.writer(customer_file)
-            csv_writer.writerow(file_content[0])
             for line in file_content:
                 csv_writer.writerow(line)
         
