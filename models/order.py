@@ -1,14 +1,17 @@
 class Order:
-    def __init__(self, order_id, employee, customer, vehicle, 
-        start_time, end_time, pick_up, drop_off, insurance):
+    def __init__(self, order_id, ssn, vehicle, 
+        start_date, end_date, pick_up_time, return_time, pick_up_location, return_location, number_of_seats, number_plate, insurance):
         self.__order_id = order_id
-        self.__employee = employee
-        self.__customer = customer
+        self.__ssn = ssn
         self.__vehicle = vehicle
-        self.__start_time = start_time
-        self.__end_time = end_time
-        self.__pick_up = pick_up
-        self.__drop_off = drop_off
+        self.__start_date = start_date
+        self.__end_date = end_date
+        self.__pick_up_time = pick_up_time
+        self.__return_time = return_time
+        self.__pick_up_location = pick_up_location
+        self.__return_location = return_location
+        self.__number_of_seats = number_of_seats
+        self.__number_plate = number_plate 
         self.__insurance = insurance
     
     def __str__(self):

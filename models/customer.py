@@ -13,3 +13,6 @@ class Customer:
 
     def __str__(self):
         return self.__name
+
+    def get_ssn(self):
+        return self.__ssn

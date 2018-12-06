@@ -11,7 +11,7 @@ class Frame:
         self.color = Color()
         self.get_size_of_screen()
         self.list_of_boot_length = list(range(0,10)) #when debuggin
-        # self.list_of_boot_length = list(range(0,50))
+        #self.list_of_boot_length = list(range(0,50))
         self.logo = """  
      ____    _   _           _          _                 
     | __ )  (_) | |   __ _  | |   ___  (_)   __ _    __ _ 
@@ -62,7 +62,7 @@ class Frame:
             time.sleep(0.05) 
 
             #Uppfæra progress
-            self.boot_loop(number + 1, boot_length, prefix = 'Starting system:', suffix = 'Complete', length = 50)
+            self.boot_loop(number + 1, boot_length, 'Starting system:', 'Complete', 50)
 
     def __str__(self):
         return '{}{}\n'.format(
