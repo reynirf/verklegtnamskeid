@@ -264,7 +264,7 @@ class Menu:
     def find_cars_by_number_make(self):
         make = input("Enter make: ")
         print()
-        cars = self.vehicle_manager.find_car_by_make(make)
+        cars = self.vehicle_manager.find_car_by_number_make(make)
         if cars == None:
             print('{}'.format(self.color.return_colored("Car not found!", 'red')))
             time.sleep(2)
@@ -276,7 +276,7 @@ class Menu:
     def find_cars_by_number_type(self):
         type_of_car = input("Enter type: ")
         print()
-        cars = self.vehicle_manager.find_car_by_type(type_of_car)
+        cars = self.vehicle_manager.find_car_by_car_type(type_of_car)
         if cars == None:
             print('{}'.format(self.color.return_colored("Car not found!", 'red')))
             time.sleep(2)

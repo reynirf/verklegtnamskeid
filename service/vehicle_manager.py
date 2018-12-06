@@ -66,18 +66,20 @@ class VehicleManager:
     def find_car_by_number_make(self, make):
         cars_list = self.__vehicle_repo.get_vehicle_list()
         cars = []
-        for car in cars_list:
-            if car.__str__().lower == make.lower():
-                cars.append(car)
+        for vehicle in cars_list:
+            car_make = vehicle.get_make().lower()
+            if car_make == make.lower():
+                cars.append(vehicle)
         if cars != []:
             return cars
 
     def find_car_by_car_type(self, type_of_car):
         cars_list = self.__vehicle_repo.get_vehicle_list()
         cars = []
-        for car in cars_list:
-            if car.__str__().lower == type_of_car.lower():
-                cars.append(car)
+        for vehicle in cars_list:
+            car_type = vehicle.get_vehicle_type().lower()
+            if car_type == type_of_car.lower():
+                cars.append(vehicle)
         if cars != []:
             return cars
     
