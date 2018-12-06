@@ -33,6 +33,7 @@ class CustomerManager:
     def check_name(self, name):
         """check if name is valid. Returns an error message if name
         has numbers or punctuation in it"""
+
         for letter in name.strip():
             if letter in (string.digits + string.punctuation):
                 return "Name not valid. Please use only letters."
@@ -41,30 +42,34 @@ class CustomerManager:
     def check_ssn(self, ssn):
         """Check if ssn is valid. Returns an error message if ssn
         has letters or punctuation in it"""
+
         ssn = ssn.replace("-", "")
         for letter in ssn:
-            if letter in (string.ascii_letters + string.punctuation):
-                return "SSN not valid. Please use only numbers."
+            if letter in (string.ascii_letters + string.punctuation) or ssn.strip() == '':
+                return "SSN not valid. Please try again."
         self.__temp_ssn = ssn
 
     def check_birthday(self, birthday):
         #missing check for invalid birthday
-        
+        if birthday.strip() == '':
+            return 'Birthday not valid. Please try Again'
         self.__temp_birthday = birthday
         return None
     
     def check_phone_number(self, phone):
         """Check if phone number is valid. Returns an error message if phone
         number has letters or punctuation in it"""
+
         phone = phone.replace("-", "")
         for letter in phone:
-            if letter in (string.ascii_letters + string.punctuation):
+            if letter in (string.ascii_letters + string.punctuation) or phone.strip() == '':
                 return "Phone number not valid. Please use only numbers."
         self.__temp_phone = phone
 
     def check_license(self, driver_license):
         """Check if driver license categories given are valid. Returns an 
         error message if categories given are not valid."""
+
         valid_categories = ["a", "a1", "b", "be", "c1", "c1e", "c", "ce", "d1", "d1e", "d", "de"]
         driver_license = driver_license.split()
         for char in driver_license:
@@ -75,25 +80,27 @@ class CustomerManager:
     def check_email(self, email):
         """Check if email address is valid. Returns an error message if email
         does not have an '@' in it"""
-        if "@" not in email:
+
+        if "@" not in email or len(email) < 6 or '.' not in email:
             return "Email not valid. Please try again"
         self.__temp_email = email
     
     def check_credit_card(self, credit_card):
         """Check if credit card number is valid. Returns an error message if 
         credit card number has letters or punctuation in it"""
-        credit_card = credit_card.replace("-", "").replace(' ', '')
 
+        credit_card = credit_card.replace("-", "").replace(' ', '') 
         for letter in credit_card:
-            if letter in (string.ascii_letters + string.punctuation):
-                return "Credit card number not valid. Please use only numbers."
-        if len(credit_card) != 16:
-            return "Credit card number not valid. Please try again."
+            if letter in (string.ascii_letters + string.punctuation) or len(credit_card) != 16:
+                return "Credit card number not valid. Please try again."
         self.__temp_credit_card = credit_card
     
     def check_address(self, address):
         #missing check for invalid address
+        if address.strip() == '':
+            return 'Home address not valid. Please try again.'
         self.__temp_address = address
+
 
     def find_customer_by_name(self, name):
         customer_list = self.__customer_repo.get_customer_list()

@@ -118,19 +118,19 @@ class Menu:
 
 
     def check_if_valid(self, to_enter, to_check):
-        type_mistake = 0
+        mistake = 0
         error = "check if valid"
         while error:
-            check_type = input("Enter " + to_enter + ': ')
-            error = to_check(check_type)
-            if not type_mistake and error:
+            user_input = input("Enter " + to_enter + ': ')
+            error = to_check(user_input)
+            if error and not mistake:
                 self.invalid_input(error)
-                type_mistake = 1
-            elif type_mistake and error:
+                mistake = 1
+            elif error:
                 self.frame.delete_last_lines()
-            elif type_mistake and not error:
+            elif mistake and not error:
                 self.frame.delete_last_lines(2)
-                print("Enter " + to_enter + ': ' + check_type)
+                print("Enter " + to_enter + ': ' + user_input)
 
     def register_customer(self):
         self.frame.delete_last_lines(7)
