@@ -42,7 +42,7 @@ class Frame:
         os.system('cls' if os.name == 'nt' else 'clear')
 
     def boot_loop(self, iteration, total, prefix, suffix, length, decimals = 1, fill = '█'):
-        """
+            """
             Loopa fyrir "boot system progress"
         """
         percent = ("{0:." + str(decimals) + "f}").format(100 * (iteration / float(total)))
