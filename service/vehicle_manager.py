@@ -1,8 +1,11 @@
 from repos.vehicle_repo import VehicleRepo
+import datetime
 from models.vehicle import Vehicle
 import string
-class VehicleManager:
+import time
 
+class VehicleManager:
+    
     def __init__(self):
         self.__vehicle_repo = VehicleRepo()
         self.__temp_car_type = ""
@@ -59,16 +62,32 @@ class VehicleManager:
         self.__temp_model = model
 
     def check_year(self,year):
+        OLDEST_CAR = 1940
+        present_year = datetime.datetime.today().year
         """Check if year is valid. Returns an error message if year
         has letters or punctuation in it"""
 
         year = year.replace("-", "")
         if year.strip() == '':
             return self.error("Year")
+        year_int = ""
         for letter in year:
-            if letter in (string.ascii_letters + string.punctuation):
-                return self.error('Year')
-        self.__temp_year = year
+            if letter.isdigit():
+                year_int += letter
+            else:
+                return self.error("Year")
+        if int(year_int) > present_year:
+            return self.newer(present_year)
+        elif int(year_int) < OLDEST_CAR:
+            return self.older(OLDEST_CAR)
+        else:
+            self.__temp_year = year
+            
+        # older code, i am keeping it just in case the team is not convinced
+        # for letter in year:
+        #    if letter in (string.ascii_letters + string.punctuation):
+        #        return self.error('Year')
+        # self.__temp_year = year
 
     def check_number_of_seats(self,number_of_seats):
         """Check if number of seats is valid. Returns an error message if number of seats
@@ -136,4 +155,10 @@ class VehicleManager:
 
     def error(self, input_type):
         return '{} not valid. Please try again.'.format(input_type)
+    
+    def newer(self,year_inputed):
+        return 'Year not valid. Please do not enter newer car than {}.'.format(year_inputed)
+
+    def older(self,year_inputed):
+        return 'Year not valid. Please do not enter older car than {}.'.format(year_inputed)
     
