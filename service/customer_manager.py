@@ -78,12 +78,12 @@ class CustomerManager:
 
         valid_categories = ["a", "a1", "b", "be", "c1", "c1e", "c", "ce", "d1", "d1e", "d", "de"]
         driver_license = driver_license.split()
-        if driver_license.strip() == '':
+        if not driver_license:
             return self.error('Driver license category')
         for char in driver_license:
             if char.lower() not in valid_categories:
                 return self.error('Driver license category')
-        self.__temp_driver_license = driver_license
+        self.__temp_driver_license = driver_license[0]
     
     def check_email(self, email):
         """Check if email address is valid. Returns an error message if email 
@@ -128,6 +128,9 @@ class CustomerManager:
             customer_ssn = customer.get_ssn().replace("-", "")
             if customer_ssn == ssn:
                 return customer
+    
+    def delete_customer(self, customer):
+        self.__customer_repo.delete_customer(customer) 
 
     def error(self, input_type):
         return '{} not valid. Please try again.'.format(input_type)
