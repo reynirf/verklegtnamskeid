@@ -90,7 +90,7 @@ class CustomerManager:
 
         valid_categories = ["a", "a1", "b", "be", "c1", "c1e", "c", "ce", "d1", "d1e", "d", "de"]
         driver_license = driver_license.split()
-        if driver_license.strip() == '':
+        if not driver_license:
             return self.error('Driver license category')
         for char in driver_license:
             if char.lower() not in valid_categories:
