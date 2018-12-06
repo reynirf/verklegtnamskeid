@@ -174,6 +174,7 @@ class Menu:
 
     def find_customer_by_name(self):
         name = input("Enter name: ")
+        print()
         customer = self.customer_manager.find_customer_by_name(name)
         if customer == None:
             print('{}'.format(self.color.return_colored("Customer not found", 'red')))
@@ -181,8 +182,9 @@ class Menu:
             self.frame.delete_last_lines(2)
             self.find_customer()
         else:
-            for person in customer:
-                print("Customer: " + person.__str__())
+            for i,person in enumerate(customer):
+                print("Customer " + str(i+1) + ": " + person.__str__())
+            print()
             if len(customer) == 1:
                 found_customer_list = self.nocco_list.choose_one('Choose an action',
                     ['Edit customer', 'Unsubscribe customer', 'Go back'], 'action')
@@ -191,6 +193,7 @@ class Menu:
                     'found customer')
             else:
                 print("{}".format(self.color.return_colored("There are multiple customers with that name!", 'red')))
+                print()
                 found_multiple_customers = self.nocco_list.choose_one('Choose an action',
                     ['Try again', 'Go back'], 'action')
                 self.frame.delete_last_lines(len(customer) + 1)
@@ -352,11 +355,11 @@ class Menu:
         ######################################################
         if menu_type == 'found multiple customers':
             if prompt.lower() == 'try again':
-                self.frame.delete_last_lines(5)
-                pass
-            elif prompt.lower() == 'go back':
-                self.frame.delete_last_lines(5)
+                self.frame.delete_last_lines(8)
                 self.find_customer()
+            elif prompt.lower() == 'go back':
+                self.frame.delete_last_lines(8)
+                self.customer()
 
         ######################################################    
         #                    FOUND CUSTOMER                  #                    
@@ -422,6 +425,7 @@ class Menu:
                 self.frame.delete_last_lines(5)
                 self.save_new_order()
                 self.order()
+<<<<<<< HEAD
         ######################################################    
         #                    FIND CAR                        #                    
         ######################################################
@@ -438,3 +442,6 @@ class Menu:
                 self.frame.delete_last_lines(5)
                 self.cars()
 
+=======
+    
+>>>>>>> c1008600a7399c46e3a613226daf88c7550eb255
