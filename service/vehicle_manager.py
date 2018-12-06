@@ -56,9 +56,10 @@ class VehicleManager:
     def find_car_by_number_plate(self, number_plate):
         cars_list = self.__vehicle_repo.get_vehicle_list()
         cars = []
-        for car in cars_list:
-            if car.__str__().lower == number_plate.lower():
-                cars.append(car)
+        for vehicle in cars_list:
+            car_licence = vehicle.get_licence().lower()
+            if car_licence == number_plate.lower():
+                cars.append(vehicle)
         if cars != []:
             return cars
 
@@ -71,7 +72,7 @@ class VehicleManager:
         if cars != []:
             return cars
 
-    def find_car_by_number_type(self, type_of_car):
+    def find_car_by_car_type(self, type_of_car):
         cars_list = self.__vehicle_repo.get_vehicle_list()
         cars = []
         for car in cars_list:
