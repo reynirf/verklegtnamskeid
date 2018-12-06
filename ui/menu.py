@@ -423,7 +423,7 @@ class Menu:
         if menu_type == 'found customer':
             if prompt.lower() == 'print customer details':
                 customer_details = self.customer_manager.return_details()
-                self.frame.delete_last_lines(14)
+                self.frame.delete_last_lines(4)
                 for detail, value in customer_details.items():
                     print("{}: {}".format(detail, value))
                 self.nocco_list.single_list('Go back')
