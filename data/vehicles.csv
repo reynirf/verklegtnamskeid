@@ -1,7 +1,7 @@
 licence,make,year,type,color,seats,maintainance
 AB123,Toyota,2009,small car,white,4, ,,,,,,,
 123,Ford,2010,sedan,red,4,none
-0,0,0,0,0,0,0
+licence,make,year,type,0,0,0
 ,,,,,,,
 ,,,,,,,
 ,,,,,,,

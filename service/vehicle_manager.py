@@ -114,7 +114,7 @@ class VehicleManager:
         if cars != []:
             return cars
 
-    def find_car_by_number_make(self, make):
+    def find_car_by_make(self, make):
         cars_list = self.__vehicle_repo.get_vehicle_list()
         cars = []
         for vehicle in cars_list:
@@ -124,7 +124,7 @@ class VehicleManager:
         if cars != []:
             return cars
 
-    def find_car_by_car_type(self, type_of_car):
+    def find_car_by_type(self, type_of_car):
         cars_list = self.__vehicle_repo.get_vehicle_list()
         cars = []
         for vehicle in cars_list:

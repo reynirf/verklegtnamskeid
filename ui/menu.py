@@ -320,34 +320,44 @@ class Menu:
         if cars == None:
             print('{}'.format(self.color.return_colored("Car not found!", 'red')))
             time.sleep(2)
-            self.frame.delete_last_lines(2)
+            self.frame.delete_last_lines(4)
+            print()
             self.find_cars()
         else:
-            pass
+            for i,car in enumerate(cars):
+                print("Car "+ str(i+1) +": "+ car.get_licence())
+                time.sleep(2)
+            print()
     
-    def find_cars_by_number_make(self):
+    def find_cars_by_make(self):
         make = input("Enter make: ")
         print()
-        cars = self.vehicle_manager.find_car_by_number_make(make)
+        cars = self.vehicle_manager.find_car_by_make(make)
         if cars == None:
             print('{}'.format(self.color.return_colored("Car not found!", 'red')))
             time.sleep(2)
             self.frame.delete_last_lines(2)
             self.find_cars()
         else:
-            pass
+            for i,car in enumerate(cars):
+                print("Car "+ str(i+1) +": "+ car.get_make())
+                time.sleep(2)
+            print()
 
-    def find_cars_by_number_type(self):
+    def find_cars_by_type(self):
         type_of_car = input("Enter type: ")
         print()
-        cars = self.vehicle_manager.find_car_by_car_type(type_of_car)
+        cars = self.vehicle_manager.find_car_by_type(type_of_car)
         if cars == None:
             print('{}'.format(self.color.return_colored("Car not found!", 'red')))
             time.sleep(2)
             self.frame.delete_last_lines(2)
             self.find_cars()
         else:
-            pass
+            for i,car in enumerate(cars):
+                print("Car "+ str(i+1) +": "+ car.get_vehicle_type())
+                time.sleep(2)
+            print()
 
     def register_car(self):
         self.frame.delete_last_lines(8)
@@ -572,10 +582,10 @@ class Menu:
                 self.find_cars_by_number_plate()
             elif prompt.lower() == 'find car by make':
                 self.frame.delete_last_lines(5)
-                self.find_cars_by_number_make()
+                self.find_cars_by_make()
             elif prompt.lower() == 'find car by type':
                 self.frame.delete_last_lines(5)
-                self.find_cars_by_number_type()
+                self.find_cars_by_type()
             elif prompt.lower() == 'go back':
                 self.frame.delete_last_lines(5)
                 # It goes in cars menu if clicking go back!
