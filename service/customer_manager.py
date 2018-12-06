@@ -82,11 +82,12 @@ class CustomerManager:
     def check_credit_card(self, credit_card):
         """Check if credit card number is valid. Returns an error message if 
         credit card number has letters or punctuation in it"""
-        credit_card = credit_card.replace("-", "")
+        credit_card = credit_card.replace("-", "").replace(' ', '')
+
         for letter in credit_card:
             if letter in (string.ascii_letters + string.punctuation):
                 return "Credit card number not valid. Please use only numbers."
-        if len(credit_card) < 16:
+        if len(credit_card) != 16:
             return "Credit card number not valid. Please try again."
         self.__temp_credit_card = credit_card
     
