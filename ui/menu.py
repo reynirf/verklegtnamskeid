@@ -286,28 +286,30 @@ class Menu:
             pass
 
     def register_car(self):
-        self.frame.delete_last_lines(7)
-        car_type = input("Enter Type: ")
-        self.vehicle_manager.check_type(car_type)
-        make = input("Enter Make: ")
-        self.vehicle_manager.check_make(make)
-        model = input("Enter Model: ")
-        self.vehicle_manager.check_model(model)
-        year = input("Enter Year: ")
-        self.vehicle_manager.check_year(year)
-        number_of_seats = input("Enter Number: ")
-        self.vehicle_manager.check_number_of_seats(number_of_seats)
-        number_plate = input("Enter Number Plate: ")
-        self.vehicle_manager.check_number_plate(number_plate)
-        fuel = input("Enter Fuel: ")
-        self.vehicle_manager.check_fuel(fuel)
-        driving_transmission = input("Enter Driving Transmission: ")
-        self.vehicle_manager.check_driving_transmission(driving_transmission)
+        self.frame.delete_last_lines(8)
+
+        self.check_if_valid('Car type', self.vehicle_manager.check_type)
+
+        self.check_if_valid('Make', self.vehicle_manager.check_make)
+
+        self.check_if_valid('Model', self.vehicle_manager.check_model)
+
+        self.check_if_valid('Year', self.vehicle_manager.check_year)
+
+        self.check_if_valid('Car type', self.vehicle_manager.check_type)
+    
+        self.check_if_valid('Number of seats', self.vehicle_manager.check_number_of_seats)
+
+        self.check_if_valid('Number plate', self.vehicle_manager.check_number_plate)
+
+        self.check_if_valid('Fuel', self.vehicle_manager.check_fuel)
+
+        self.check_if_valid('Driving transmission', self.vehicle_manager.check_driving_transmission)
         print()
         register_car = self.nocco_list.choose_one('Choose an action', 
             ['Save','Print information','Cancel'],
             'action')
-        self.handle_answer_from_menu(register_car['action'], 'cars')
+        self.handle_answer_from_menu(register_car['action'], 'register car')
 
 
     def init_menu(self):
@@ -446,12 +448,6 @@ class Menu:
                 self.find_cars()
                 self.cars()
 
-            elif prompt.lower() == 'save':
-                self.frame.delete_last_lines(14)
-                self.save_new_car()
-                print("\n" * 6)
-                self.cars()
-
             elif prompt.lower() == 'show all available cars':
                 self.frame.delete_last_lines(9)
                 self.show_all_available_cars()
@@ -503,7 +499,7 @@ class Menu:
         ######################################################    
         #                    FOUND CAR                       #                    
         ######################################################
-        if menu_type == 'found car':
+        elif menu_type == 'found car':
             if prompt.lower() == 'edit car':
                 self.frame.delete_last_lines(5)
                 # TODO edit car
@@ -515,3 +511,14 @@ class Menu:
                 self.frame.delete_last_lines(5)
                 self.find_cars()
 
+
+        #commentið
+        elif menu_type == 'register car':
+            if prompt.lower() == 'save':
+                self.frame.delete_last_lines(16)
+                self.save_new_car()
+                print("\n" * 7)
+                self.cars()
+            if prompt.lower() == 'cancel':
+                self.frame.delete_last_lines(10)
+                self.cars()

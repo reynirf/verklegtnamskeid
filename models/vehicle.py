@@ -15,4 +15,13 @@ class Vehicle:
     def __str__(self):
         return "{} {}".format(self.__licence, self.__make)
 
+    def get_licence(self):
+        return self.__licence
+    
+    def get_make(self):
+        return self.__make
+
+    def get_vehicle_type(self):
+        return self.__type_of_vehicle
+
 
