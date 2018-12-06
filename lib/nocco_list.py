@@ -52,6 +52,8 @@ class NoccoList:
                     alternative_index += 1
             elif key == 'enter' or key == 'right':
                 return {answer_key:alternatives[alternative_index]}
+            elif key == 'left':
+                pass
             elif key not in self.ALPHABET:
                 return {answer_key:alternatives[alternative_index]}
             self.frame.delete_last_lines(n=len(alternatives)+2)
