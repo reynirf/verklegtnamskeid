@@ -175,17 +175,27 @@ class Menu:
     def find_customer_by_name(self):
         name = input("Enter name: ")
         customer = self.customer_manager.find_customer_by_name(name)
-        if customer != None:
-            print("Customer: " + customer.__str__())
-            found_customer_list = self.nocco_list.choose_one('Choose an action',
-                ['Edit customer', 'Unsubscribe customer', 'Go back'], 'action')
+        if customer == None:
+            print('{}'.format(self.color.return_colored("Customer not found", 'red')))
+            time.sleep(2)
             self.frame.delete_last_lines(2)
-            self.handle_answer_from_menu(found_customer_list['action'], 
-                'find customer by name')
-        print('{}'.format(self.color.return_colored("Customer not found", 'red')))
-        time.sleep(2)
-        self.frame.delete_last_lines(2)
-        self.find_customer()
+            self.find_customer()
+        else:
+            for person in customer:
+                print("Customer: " + person.__str__())
+            if len(customer) == 1:
+                found_customer_list = self.nocco_list.choose_one('Choose an action',
+                    ['Edit customer', 'Unsubscribe customer', 'Go back'], 'action')
+                self.frame.delete_last_lines(2)
+                self.handle_answer_from_menu(found_customer_list['action'], 
+                    'found customer')
+            else:
+                print("{}".format(self.color.return_colored("There are multiple customers with that name!", 'red')))
+                found_multiple_customers = self.nocco_list.choose_one('Choose an action',
+                    ['Try again', 'Go back'], 'action')
+                self.frame.delete_last_lines(len(customer) + 1)
+                self.handle_answer_from_menu(found_multiple_customers['action'], 
+                    'found multiple customers')
 
     def save_new_car(self):
         self.vehicle_manager.save_new_car()
@@ -331,9 +341,20 @@ class Menu:
                 self.customer()
 
         ######################################################    
-        #                FIND CUSTOMER BY NAME               #                    
+        #               FOUND MULTIPLE CUSTOMERS             #                    
         ######################################################
-        if menu_type == 'find customer by name':
+        if menu_type == 'found multiple customers':
+            if prompt.lower() == 'try again':
+                self.frame.delete_last_lines(5)
+                pass
+            elif prompt.lower() == 'go back':
+                self.frame.delete_last_lines(5)
+                self.find_customer()
+
+        ######################################################    
+        #                    FOUND CUSTOMER                  #                    
+        ######################################################
+        if menu_type == 'found customer':
             if prompt.lower() == 'edit customer':
                 self.frame.delete_last_lines(5)
                 pass
