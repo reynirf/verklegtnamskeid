@@ -62,7 +62,7 @@ class VehicleManager:
     def check_make(self,make):
         """Check if make is valid. Returns an error message if make
         has numbers or punctuation in it"""
-
+        # TODO list of valid makes
         if make.strip() == '':
             return self.error("Make")
 
@@ -72,6 +72,7 @@ class VehicleManager:
         self.__temp_make = make
     
     def check_model(self,model):
+        # TODO list of valid models
         if model.strip() == '':
             return self.error("Model")
         self.__temp_model = model
@@ -107,7 +108,10 @@ class VehicleManager:
     def check_number_of_seats(self,number_of_seats):
         """Check if number of seats is valid. Returns an error message if number of seats
         has letters or punctuation in it"""
-
+        """ I constrained the number of seats from 2-14
+         as for 2 seater as the smallest car that you can rent,
+         up to 14 seats as a small bus.
+        """
         if number_of_seats.strip() == '':
             return self.error("Number of seats")
         number_of_seats = number_of_seats.replace("-", "")
@@ -119,7 +123,6 @@ class VehicleManager:
                 return self.error("Number of seats")
         if int(seats_int) < 1 or int(seats_int) > 15:
             return self.nr_seats()
-            time.sleep(2)
         else:
             self.__temp_number_of_seats = number_of_seats
 
@@ -144,9 +147,25 @@ class VehicleManager:
         self.__temp_number_plate = number_plate
 
     def check_fuel(self,fuel):
+        """
+        Fuel can either be: bensin, diesel, electric and hybrid.
+        """
+        fuels = ["bensin","diesel","electric","hybrid"]
+        fuel_type = ""
         if fuel.strip() == '':
             return self.error("Fuel")
-        self.__temp_fuel = fuel
+        else:
+            for letter in fuel:
+                if letter.isalpha():
+                    fuel_type += letter.lower()
+                else:
+                    return self.error("Fuel")
+        if fuel_type in fuels:
+            self.__temp_fuel = fuel
+        else:
+            # TODO error handling for fuels allowed
+            return self.fuels_allowed()
+        
 
     def check_driving_transmission(self,driving_transmission):
         if driving_transmission.strip() == '':
@@ -197,3 +216,6 @@ class VehicleManager:
     
     def vehicle_type(self):
         return "Please enter either Sedan, Bus, Off Road or Small Car."
+    
+    def fuels_allowed(self):
+        return "Fuel can be: Bensin, Diesel, Electric or Hybrid."
