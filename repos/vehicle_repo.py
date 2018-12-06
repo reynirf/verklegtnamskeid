@@ -31,3 +31,18 @@ class VehicleRepo:
             csv_writer = csv.writer(vehicle_file)
             csv_writer.writerow([car_type,make,model,year,number_of_seats,number_plate,
             fuel,driving_transmission])
+    
+    def delete_vehicle(self, vehicle):
+        """
+        Basically copy/paste from delete customer.
+        """
+        file_content = []
+        with open(self.VEHICLE_FILE, 'r') as vehicle_file:
+            csv_reader = csv.reader(vehicle_file)
+            for line in csv_reader:
+                if line[1] != vehicle.get_licence():
+                    file_content.append(line)
+        with open(self.VEHICLE_FILE, 'w', newline='') as updated_file:
+            csv_writer = csv.writer(updated_file)
+            for line in file_content:
+                csv_writer.writerow(line)

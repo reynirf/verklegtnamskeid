@@ -63,6 +63,14 @@ class VehicleManager:
         """Check if make is valid. Returns an error message if make
         has numbers or punctuation in it"""
         # TODO list of valid makes
+        """
+        This and the the model are going to be a pain, because a car
+        can have several models, like toyota can have, yaris, auris, corolla,
+        land cruiser, hilux, aygo, rav4 etc. 
+        and audi can have, a3, a4, a6, a8, q7, q5 etc etc. 
+        So maybe we should use dictionaries to store as makes as keys and 
+        models as values.
+        """
         if make.strip() == '':
             return self.error("Make")
 
@@ -99,12 +107,6 @@ class VehicleManager:
         else:
             self.__temp_year = year
 
-        # older code, i am keeping it just in case the team is not convinced
-        # for letter in year:
-        #    if letter in (string.ascii_letters + string.punctuation):
-        #        return self.error('Year')
-        # self.__temp_year = year
-
     def check_number_of_seats(self,number_of_seats):
         """Check if number of seats is valid. Returns an error message if number of seats
         has letters or punctuation in it"""
@@ -125,14 +127,6 @@ class VehicleManager:
             return self.nr_seats()
         else:
             self.__temp_number_of_seats = number_of_seats
-
-        """
-        will discuss tomorrow if it is better like this or not
-        for letter in number_of_seats:
-            if letter in (string.ascii_letters + string.punctuation):
-                return self.error('Number of seats')
-        self.__temp_number_of_seats = number_of_seats
-        """
 
     def check_number_plate(self,number_plate):
         """Check if number plate is valid. Returns an error message if number plate
@@ -215,6 +209,9 @@ class VehicleManager:
                 cars.append(vehicle)
         if cars != []:
             return cars
+
+    def delete_vehicle(self, car):
+        self.__vehicle_repo.delete_vehicle(car)
 
     def error(self, input_type):
         return '{} not valid. Please try again.'.format(input_type)

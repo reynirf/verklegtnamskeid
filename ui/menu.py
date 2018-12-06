@@ -24,6 +24,7 @@ class Menu:
         self.vehicle_manager = VehicleManager()
         self.order_manager = OrderManager()
         self.__current_customer = ""
+        self.__current_vehicle = ""
 
     def get_employees(self):
         employee_list = self.employee_manager.get_employee_list()
@@ -357,10 +358,26 @@ class Menu:
             self.find_cars()
         else:
             for i,car in enumerate(cars):
-                print("Car "+ str(i+1) +": "+ car.get_vehicle_type())
-                time.sleep(2)
+                print("Car "+ str(i+1) +": "+ car.get_licence())
+                # time.sleep(2)
+            print()     
+                # this does not work properly, because we need to handle
+                # even when there are more than one car.
+            if len(cars) == 1:
+                self.__current_vehicle = cars[0]
+                print("somethin trying")
                 # TODO we need to figure out how to handle this
-            print()
+                found_cars_list = self.nocco_list.choose_one("Choose an action",
+                ["Edit car","Remove car", "Go back"], "action")
+                self.frame.delete_last_lines(2)
+                self.handle_answer_from_menu(found_cars_list["action"],"found car")
+    
+    def delete_vehicle(self):
+        self.vehicle_manager.delete_vehicle(self.__current_vehicle)
+        self.frame.delete_last_lines(1)
+        print('{}'.format(self.color.return_colored("Car removed from file", 'red')))
+        time.sleep(2)
+        self.cars()
 
     def register_car(self):
         self.frame.delete_last_lines(8)
@@ -372,8 +389,6 @@ class Menu:
         self.check_if_valid('Model', self.vehicle_manager.check_model)
 
         self.check_if_valid('Year', self.vehicle_manager.check_year)
-
-        # self.check_if_valid('Car type', self.vehicle_manager.check_type)
     
         self.check_if_valid('Number of seats', self.vehicle_manager.check_number_of_seats)
 
@@ -523,6 +538,7 @@ class Menu:
 
             elif prompt.lower() == 'edit customer':
                 self.frame.delete_last_lines(5)
+                # TODO edit customer
                 pass
             elif prompt.lower() == 'unsubscribe customer':
                 self.frame.delete_last_lines(5)
@@ -603,8 +619,8 @@ class Menu:
                 # TODO edit car
                 pass
             elif prompt.lower() == 'remove car':
-                # TODO remove car
-                pass
+                self.frame.delete_last_lines(5)
+                self.delete_vehicle()
             elif prompt.lower() == 'go back':
                 self.frame.delete_last_lines(5)
                 self.find_cars()
