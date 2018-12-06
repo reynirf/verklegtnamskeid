@@ -71,7 +71,7 @@ class Menu:
     
     def customer(self):
         customer_list = self.nocco_list.choose_one('Choose an action', 
-            ['Register customer','Edit list of customer', 'Find customer','Go back'],
+            ['Register customer','Edit customer', 'Find customer','Go back'],
             'action')
         self.handle_answer_from_menu(customer_list['action'], 'customer')
     
@@ -169,7 +169,7 @@ class Menu:
         
     def find_customer(self):
         find_customer_list = self.nocco_list.choose_one('Choose an action', 
-            ['Find customer by name', 'Find customer by SSN', 'Go back'], 'action')
+            ['Find customer by Name', 'Find customer by SSN', 'Go back'], 'action')
         self.handle_answer_from_menu(find_customer_list['action'], 'find customer')
 
     def find_customer_by_name(self):
@@ -248,6 +248,42 @@ class Menu:
          'Find car by type','Go back'], 'action')
         print()
         self.handle_answer_from_menu(find_cars['action'], 'find car')
+    
+    def find_cars_by_number_plate(self):
+        number_pl = input("Enter number plate: ")
+        print()
+        cars = self.vehicle_manager.find_car_by_number_plate(number_pl)
+        if cars == None:
+            print('{}'.format(self.color.return_colored("Car not found!", 'red')))
+            time.sleep(2)
+            self.frame.delete_last_lines(2)
+            self.find_cars()
+        else:
+            pass
+    
+    def find_cars_by_number_make(self):
+        make = input("Enter make: ")
+        print()
+        cars = self.vehicle_manager.find_car_by_make(make)
+        if cars == None:
+            print('{}'.format(self.color.return_colored("Car not found!", 'red')))
+            time.sleep(2)
+            self.frame.delete_last_lines(2)
+            self.find_cars()
+        else:
+            pass
+
+    def find_cars_by_number_type(self):
+        type_of_car = input("Enter type: ")
+        print()
+        cars = self.vehicle_manager.find_car_by_type(type_of_car)
+        if cars == None:
+            print('{}'.format(self.color.return_colored("Car not found!", 'red')))
+            time.sleep(2)
+            self.frame.delete_last_lines(2)
+            self.find_cars()
+        else:
+            pass
 
     def register_car(self):
         self.frame.delete_last_lines(7)
@@ -334,6 +370,8 @@ class Menu:
             elif prompt.lower() == 'register customer':
                 print()
                 self.register_customer()
+            elif prompt.lower() == 'edit customer':
+                pass
             elif prompt.lower() == 'find customer':
                 self.frame.delete_last_lines(6)
                 self.find_customer()
@@ -426,7 +464,7 @@ class Menu:
                 self.init_menu()
 
         ########################################################
-        #                Register new order                    #
+        #                REGISTER NEW ORDER                    #
         ########################################################
         elif menu_type == 'register_order':
             if prompt.lower() == 'cancel':
@@ -450,16 +488,30 @@ class Menu:
         elif menu_type == 'find car':
             if prompt.lower() == 'find car by number plate':
                 self.frame.delete_last_lines(5)
-                # TODO find car by number plate
-                self.init_menu()
-            elif prompt.lower() == 'find customer by make':
-                # TODO Find customer by make
-                pass
-            elif prompt.lower() == 'find customer by type':
-                # TODO find customer by type
-                pass
+                self.find_cars_by_number_plate()
+            elif prompt.lower() == 'find car by make':
+                self.frame.delete_last_lines(5)
+                self.find_cars_by_number_make()
+            elif prompt.lower() == 'find car by type':
+                self.frame.delete_last_lines(5)
+                self.find_cars_by_number_type()
             elif prompt.lower() == 'go back':
                 self.frame.delete_last_lines(5)
                 # It goes in cars menu if clicking go back!
                 self.cars()
+
+        ######################################################    
+        #                    FOUND CAR                       #                    
+        ######################################################
+        if menu_type == 'found car':
+            if prompt.lower() == 'edit car':
+                self.frame.delete_last_lines(5)
+                # TODO edit car
+                pass
+            elif prompt.lower() == 'remove car':
+                # TODO remove car
+                pass
+            elif prompt.lower() == 'go back':
+                self.frame.delete_last_lines(5)
+                self.find_cars()
 

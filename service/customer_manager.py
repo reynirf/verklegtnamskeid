@@ -36,7 +36,7 @@ class CustomerManager:
 
         for letter in name.strip():
             if letter in (string.digits + string.punctuation):
-                return "Name not valid. Please use only letters."
+                return "Name not valid. Please try again."
         self.__temp_name = name
     
     def check_ssn(self, ssn):
@@ -63,7 +63,7 @@ class CustomerManager:
         phone = phone.replace("-", "")
         for letter in phone:
             if letter in (string.ascii_letters + string.punctuation) or phone.strip() == '':
-                return "Phone number not valid. Please use only numbers."
+                return "Phone number not valid. Please try again."
         self.__temp_phone = phone
 
     def check_license(self, driver_license):

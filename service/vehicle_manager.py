@@ -61,4 +61,22 @@ class VehicleManager:
                 cars.append(car)
         if cars != []:
             return cars
+
+    def find_car_by_number_make(self, make):
+        cars_list = self.__vehicle_repo.get_vehicle_list()
+        cars = []
+        for car in cars_list:
+            if car.__str__().lower == make.lower():
+                cars.append(car)
+        if cars != []:
+            return cars
+
+    def find_car_by_number_type(self, type_of_car):
+        cars_list = self.__vehicle_repo.get_vehicle_list()
+        cars = []
+        for car in cars_list:
+            if car.__str__().lower == type_of_car.lower():
+                cars.append(car)
+        if cars != []:
+            return cars
     
