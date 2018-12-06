@@ -177,7 +177,7 @@ class Menu:
         customer = self.customer_manager.find_customer_by_name(name)
         if customer != None:
             print("Customer: " + customer.__str__())
-            found_customer_list = self.nocco_list.choose_one('choose an action',
+            found_customer_list = self.nocco_list.choose_one('Choose an action',
                 ['Edit customer', 'Unsubscribe customer', 'Go back'], 'action')
             self.frame.delete_last_lines(2)
             self.handle_answer_from_menu(found_customer_list['action'], 
