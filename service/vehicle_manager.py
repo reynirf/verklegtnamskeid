@@ -82,7 +82,7 @@ class VehicleManager:
             return self.older(OLDEST_CAR)
         else:
             self.__temp_year = year
-            
+
         # older code, i am keeping it just in case the team is not convinced
         # for letter in year:
         #    if letter in (string.ascii_letters + string.punctuation):
@@ -96,10 +96,25 @@ class VehicleManager:
         if number_of_seats.strip() == '':
             return self.error("Number of seats")
         number_of_seats = number_of_seats.replace("-", "")
+        seats_int = ""
+        for letter in number_of_seats:
+            if letter.isdigit():
+                seats_int += letter
+            else:
+                return self.error("Number of seats")
+        if int(seats_int) < 1 or int(seats_int) > 15:
+            return self.nr_seats()
+            time.sleep(2)
+        else:
+            self.__temp_number_of_seats = number_of_seats
+
+        """
+        will discuss tomorrow if it is better like this or not
         for letter in number_of_seats:
             if letter in (string.ascii_letters + string.punctuation):
                 return self.error('Number of seats')
         self.__temp_number_of_seats = number_of_seats
+        """
 
     def check_number_plate(self,number_plate):
         """Check if number plate is valid. Returns an error message if number plate
@@ -161,4 +176,7 @@ class VehicleManager:
 
     def older(self,year_inputed):
         return 'Year not valid. Please do not enter older car than {}.'.format(year_inputed)
+    
+    def nr_seats(self):
+        return "Please enter from 2 to 14 seats."
     
