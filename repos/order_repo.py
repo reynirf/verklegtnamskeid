@@ -1,4 +1,5 @@
 from models.employee import Employee
+from models.order import Order
 import csv
 
 class OrderRepo:
@@ -18,7 +19,7 @@ class OrderRepo:
                     order = Order(
                         line['id'],
                         line['ssn'],
-                        line['car'], 
+                        line['vehicle'], 
                         line['starting date'], 
                         line['ending date'].
                         line['pick up time'],
