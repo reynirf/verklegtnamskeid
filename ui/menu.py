@@ -441,7 +441,7 @@ class Menu:
                 self.frame.delete_last_lines(5)
                 self.save_new_order()
                 self.order()
-<<<<<<< HEAD
+                
         ######################################################    
         #                    FIND CAR                        #                    
         ######################################################
@@ -458,6 +458,3 @@ class Menu:
                 self.frame.delete_last_lines(5)
                 self.cars()
 
-=======
-    
->>>>>>> c1008600a7399c46e3a613226daf88c7550eb255
