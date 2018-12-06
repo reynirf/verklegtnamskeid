@@ -177,7 +177,7 @@ class Menu:
         print()
         customer = self.customer_manager.find_customer_by_name(name)
         if customer == None:
-            print('{}'.format(self.color.return_colored("Customer not found", 'red')))
+            print('{}'.format(self.color.return_colored("Customer not found!", 'red')))
             time.sleep(2)
             self.frame.delete_last_lines(2)
             self.find_customer()
@@ -202,7 +202,7 @@ class Menu:
 
     def save_new_car(self):
         self.vehicle_manager.save_new_car()
-        print("{}".format(self.color.return_colored("New customer registered", 'green')))
+        print("{}".format(self.color.return_colored("New car registered!", 'green')))
         time.sleep(2)
         self.frame.delete_last_lines(2)
 
@@ -425,23 +425,22 @@ class Menu:
                 self.frame.delete_last_lines(5)
                 self.save_new_order()
                 self.order()
-<<<<<<< HEAD
         ######################################################    
         #                    FIND CAR                        #                    
         ######################################################
         elif menu_type == 'find car':
             if prompt.lower() == 'find car by number plate':
                 self.frame.delete_last_lines(5)
-                #self.find_customer_by_name()
+                # TODO find car by number plate
                 self.init_menu()
             elif prompt.lower() == 'find customer by make':
+                # TODO Find customer by make
                 pass
             elif prompt.lower() == 'find customer by type':
+                # TODO find customer by type
                 pass
             elif prompt.lower() == 'go back':
                 self.frame.delete_last_lines(5)
+                # It goes in cars menu if clicking go back!
                 self.cars()
 
-=======
-    
->>>>>>> c1008600a7399c46e3a613226daf88c7550eb255

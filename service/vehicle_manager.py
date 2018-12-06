@@ -52,6 +52,13 @@ class VehicleManager:
 
     def check_driving_transmission(self,driving_transmission):
         self.__temp_driving_transmission = driving_transmission
-
     
+    def find_car_by_number_plate(self, number_plate):
+        cars_list = self.__vehicle_repo.get_vehicle_list()
+        cars = []
+        for car in cars_list:
+            if car.__str__().lower == number_plate.lower():
+                cars.append(car)
+        if cars != []:
+            return cars
     
