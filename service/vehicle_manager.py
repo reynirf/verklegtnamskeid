@@ -1,6 +1,6 @@
 from repos.vehicle_repo import VehicleRepo
 from models.vehicle import Vehicle
-
+import string
 class VehicleManager:
 
     def __init__(self):
@@ -30,27 +30,78 @@ class VehicleManager:
             self.__temp_driving_transmission)
 
     def check_type(self,car_type):
+        """Check if type is valid. Returns an error message if type
+        has numbers or punctuation in it"""
+
+        if car_type.strip() == '':
+            return self.error("Car type")
+
+        for letter in car_type.strip():
+            if letter in (string.digits + string.punctuation):
+                return self.error('Car type')
         self.__temp_car_type = car_type
 
     def check_make(self,make):
+        """Check if make is valid. Returns an error message if make
+        has numbers or punctuation in it"""
+
+        if make.strip() == '':
+            return self.error("Make")
+
+        for letter in make.strip():
+            if letter in (string.digits + string.punctuation):
+                return self.error('Make')
         self.__temp_make = make
     
     def check_model(self,model):
+        if model.strip() == '':
+            return self.error("Model")
         self.__temp_model = model
 
     def check_year(self,year):
+        """Check if year is valid. Returns an error message if year
+        has letters or punctuation in it"""
+
+        year = year.replace("-", "")
+        if year.strip() == '':
+            return self.error("Year")
+        for letter in year:
+            if letter in (string.ascii_letters + string.punctuation):
+                return self.error('Year')
         self.__temp_year = year
 
     def check_number_of_seats(self,number_of_seats):
+        """Check if number of seats is valid. Returns an error message if number of seats
+        has letters or punctuation in it"""
+
+        if number_of_seats.strip() == '':
+            return self.error("Number of seats")
+        number_of_seats = number_of_seats.replace("-", "")
+        for letter in number_of_seats:
+            if letter in (string.ascii_letters + string.punctuation):
+                return self.error('Number of seats')
         self.__temp_number_of_seats = number_of_seats
 
     def check_number_plate(self,number_plate):
+        """Check if number plate is valid. Returns an error message if number plate
+        has punctuation in it"""
+
+        if number_plate.strip() == '':
+            return self.error("Number plate")
+
+        for letter in number_plate:
+            if letter in (string.punctuation):
+                return self.error('Number of seats')
         self.__temp_number_plate = number_plate
 
     def check_fuel(self,fuel):
+        if fuel.strip() == '':
+            return self.error("Fuel")
         self.__temp_fuel = fuel
 
     def check_driving_transmission(self,driving_transmission):
+        if driving_transmission.strip() == '':
+            return self.error("Driving transmission")
         self.__temp_driving_transmission = driving_transmission
     
     def find_car_by_number_plate(self, number_plate):
@@ -82,4 +133,7 @@ class VehicleManager:
                 cars.append(vehicle)
         if cars != []:
             return cars
+
+    def error(self, input_type):
+        return '{} not valid. Please try again.'.format(input_type)
     
