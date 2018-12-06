@@ -210,6 +210,9 @@ class Menu:
             self.frame.delete_last_lines(3)
             self.find_customer()
         else:
+            self.frame.delete_last_lines(2)
+            print("Customer : " + customer.__str__())
+            print()
             found_customer_list = self.nocco_list.choose_one('Choose an action',
                     ['Edit customer', 'Unsubscribe customer', 'Go back'], 'action')
             self.frame.delete_last_lines(2)
@@ -441,7 +444,7 @@ class Menu:
                 self.frame.delete_last_lines(5)
                 self.save_new_order()
                 self.order()
-                
+
         ######################################################    
         #                    FIND CAR                        #                    
         ######################################################
