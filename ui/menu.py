@@ -392,7 +392,7 @@ class Menu:
         ######################################################
         elif menu_type == 'register customer':
             if prompt.lower() == 'save':
-                self.frame.delete_last_lines(14)
+                self.frame.delete_last_lines(13)
                 self.save_new_customer()
                 # print('\n' * 6)
                 self.customer()
@@ -431,12 +431,12 @@ class Menu:
         ######################################################
         if menu_type == 'found customer':
             if prompt.lower() == 'print customer details':
-                customer_details = self.customer_manager.return_details()
-                self.frame.delete_last_lines(4)
+                customer_details = self.__current_customer.return_details()
+                self.frame.delete_last_lines(6)
                 for detail, value in customer_details.items():
                     print("{}: {}".format(detail, value))
                 self.nocco_list.single_list('Go back')
-                self.frame.delete_last_lines(12)
+                self.frame.delete_last_lines(10)
                 self.customer()
 
             elif prompt.lower() == 'edit customer':

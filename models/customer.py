@@ -16,3 +16,15 @@ class Customer:
 
     def get_ssn(self):
         return self.__ssn
+
+    def return_details(self):
+        return {
+            "Name": self.__name,
+            "SSN": self.__ssn,
+            "Birthday": self.__birthday,
+            "Phone number": self.__phone,
+            "Email address": self.__email,
+            "Home address": self.__address,
+            "Driver license category": self.__driver_license,
+            "Credit card number": self.__credit_card
+        }
