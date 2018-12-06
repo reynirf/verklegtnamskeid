@@ -87,30 +87,30 @@ class Menu:
 
     def register_order(self):
         self.frame.delete_last_lines(7)
-        ID = input("Id of order: ")
-        self.order_manager.check_id(ID)
-        ssn = input("Enter Customer SSN: ")
-        self.order_manager.check_ssn(ssn)
-        car = input("Enter car: ")
-        self.order_manager.check_car(car)
-        start_date = input("Enter start date: ")
-        self.order_manager.check_start_date(start_date)
-        ending_date = input("Enter end date: ")
-        self.order_manager.check_ending_date(ending_date)
-        pick_up_time = input("Enter pick up time: ")
-        self.order_manager.check_pick_up_time(pick_up_time)
-        returning_time = input("Enter returning time: ")
-        self.order_manager.check_returning_time(returning_time)
-        pick_up_location = input("Enter pick up location: ")
-        self.order_manager.check_pick_up_location(pick_up_location)
-        return_location = input("Enter return location: ")
-        self.order_manager.check_return_location(return_location)
-        number_of_seats = input("Enter number of seats: ")
-        self.order_manager.check_number_of_seats(number_of_seats)
-        number_plate = input("Enter Number Plate: ")
-        self.order_manager.check_number_plate(number_plate)
-        insurance = input("Enter insurance: ")
-        self.order_manager.check_insurance(insurance)
+
+        self.check_if_valid('ID', self.order_manager.check_ID)
+
+        self.check_if_valid('SSN', self.order_manager.check_ssn)
+
+        self.check_if_valid('Make', self.order_manager.check_make)
+
+        self.check_if_valid('Start date', self.order_manager.check_start_date)
+
+        self.check_if_valid('Ending date', self.order_manager.check_ending_date)
+
+        self.check_if_valid('Pick up time', self.order_manager.check_pick_up_time)
+
+        self.check_if_valid('Returning time', self.order_manager.check_returning_time)
+
+        self.check_if_valid('Pick up location', self.order_manager.check_pick_up_location)
+
+        self.check_if_valid('Return location', self.order_manager.check_return_location)
+
+        self.check_if_valid('Number of seats', self.order_manager.check_number_of_seats)
+
+        self.check_if_valid('Number plate', self.order_manager.check_number_plate)
+
+        self.check_if_valid('Insurance', self.order_manager.check_insurance)
         print()
         register_order_list = self.nocco_list.choose_one("Choose an action",["Save", "Print order",
         "Show all available cars", "Cancel"], "action")
@@ -118,19 +118,19 @@ class Menu:
 
 
     def check_if_valid(self, to_enter, to_check):
-        type_mistake = 0
+        mistake = 0
         error = "check if valid"
         while error:
-            check_type = input("Enter " + to_enter + ': ')
-            error = to_check(check_type)
-            if not type_mistake and error:
+            user_input = input("Enter " + to_enter + ': ')
+            error = to_check(user_input)
+            if error and not mistake:
                 self.invalid_input(error)
-                type_mistake = 1
-            elif type_mistake and error:
+                mistake = 1
+            elif error:
                 self.frame.delete_last_lines()
-            elif type_mistake and not error:
+            elif mistake and not error:
                 self.frame.delete_last_lines(2)
-                print("Enter " + to_enter + ': ' + check_type)
+                print("Enter " + to_enter + ': ' + user_input)
 
     def register_customer(self):
         self.frame.delete_last_lines(7)
