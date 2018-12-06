@@ -34,9 +34,11 @@ class CustomerManager:
         """check if name is valid. Returns an error message if name
         has numbers or punctuation in it"""
 
+        if name.strip() == '':
+                return self.error('Name')
         for letter in name.strip():
             if letter in (string.digits + string.punctuation):
-                return "Name not valid. Please try again."
+                return self.error('Name')
         self.__temp_name = name
     
     def check_ssn(self, ssn):
@@ -44,15 +46,17 @@ class CustomerManager:
         has letters or punctuation in it"""
 
         ssn = ssn.replace("-", "")
+        if ssn.strip() == '':
+            return self.error('SSN')
         for letter in ssn:
-            if letter in (string.ascii_letters + string.punctuation) or ssn.strip() == '':
-                return "SSN not valid. Please try again."
+            if letter in (string.ascii_letters + string.punctuation):
+                return self.error('SSN')
         self.__temp_ssn = ssn
 
     def check_birthday(self, birthday):
         #missing check for invalid birthday
         if birthday.strip() == '':
-            return 'Birthday not valid. Please try Again'
+            return self.error('Birthday')
         self.__temp_birthday = birthday
         return None
     
@@ -61,9 +65,11 @@ class CustomerManager:
         number has letters or punctuation in it"""
 
         phone = phone.replace("-", "")
+        if phone.strip() == '':
+            return self.error('Phone number')
         for letter in phone:
-            if letter in (string.ascii_letters + string.punctuation) or phone.strip() == '':
-                return "Phone number not valid. Please try again."
+            if letter in (string.ascii_letters + string.punctuation):
+                return self.error('Phone number')
         self.__temp_phone = phone
 
     def check_license(self, driver_license):
@@ -72,9 +78,11 @@ class CustomerManager:
 
         valid_categories = ["a", "a1", "b", "be", "c1", "c1e", "c", "ce", "d1", "d1e", "d", "de"]
         driver_license = driver_license.split()
+        if driver_license.strip() == '':
+            return self.error('Driver license category')
         for char in driver_license:
             if char.lower() not in valid_categories:
-                return "Driver license category not valid. Please try again."
+                return self.error('Driver license category')
         self.__temp_driver_license = driver_license
     
     def check_email(self, email):
@@ -82,7 +90,7 @@ class CustomerManager:
         does not have an '@' in it"""
 
         if "@" not in email or len(email) < 6 or '.' not in email:
-            return "Email not valid. Please try again"
+            return self.error('Email')
         self.__temp_email = email
     
     def check_credit_card(self, credit_card):
@@ -90,15 +98,17 @@ class CustomerManager:
         credit card number has letters or punctuation in it"""
 
         credit_card = credit_card.replace("-", "").replace(' ', '') 
+        if len(credit_card) != 16:
+            return self.error('Credit card number')
         for letter in credit_card:
-            if letter in (string.ascii_letters + string.punctuation) or len(credit_card) != 16:
-                return "Credit card number not valid. Please try again."
+            if letter in (string.ascii_letters + string.punctuation):
+                return self.error('Credit card number')
         self.__temp_credit_card = credit_card
     
     def check_address(self, address):
         #missing check for invalid address
         if address.strip() == '':
-            return 'Home address not valid. Please try again.'
+            return self.error('Home address')
         self.__temp_address = address
 
 
@@ -118,3 +128,6 @@ class CustomerManager:
             customer_ssn = customer.get_ssn().replace("-", "")
             if customer_ssn == ssn:
                 return customer
+
+    def error(self, input_type):
+        return '{} not valid. Please try again.'.format(input_type)
