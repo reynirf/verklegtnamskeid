@@ -23,3 +23,9 @@ class Employee:
             self.color.return_colored(self.__title, 'bold'), 
             self.color.return_colored(self.__name,'bold')
         )
+    
+    def delete_employee(self, employee):
+        pass
+        """
+        Maybe should focus in finishing the important one first.
+        """

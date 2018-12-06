@@ -243,7 +243,7 @@ class Menu:
             if len(customer) == 1:
                 self.__current_customer = customer[0]
                 found_customer_list = self.nocco_list.choose_one('Choose an action',
-                    ['Edit customer', 'Unsubscribe customer', 'Go back'], 'action')
+                    ['Print customer details','Edit customer', 'Unsubscribe customer', 'Go back'], 'action')
                 self.frame.delete_last_lines(2)
                 self.handle_answer_from_menu(found_customer_list['action'], 
                     'found customer')
@@ -326,10 +326,15 @@ class Menu:
             self.find_cars()
         else:
             for i,car in enumerate(cars):
-                print("Car "+ str(i+1) +": "+ car.get_licence())
-                time.sleep(2)
                 # TODO we need to figure out how to handle this 
+                print("Car "+ str(i+1) +": "+ car.get_licence())
             print()
+            if len(cars) == 1:
+                self.__current_vehicle == cars[0]
+                found_cars_list = self.nocco_list.choose_one("Choose an action",["Edit car", "Remove car", "Go back"],"action") 
+                self.frame.delete_last_lines(2)
+                self.handle_answer_from_menu(found_cars_list['action'],
+                'found car')
     
     def find_cars_by_make(self):
         make = input("Enter make: ")
@@ -370,7 +375,7 @@ class Menu:
                 found_cars_list = self.nocco_list.choose_one("Choose an action",
                 ["Edit car","Remove car", "Go back"], "action")
                 self.frame.delete_last_lines(2)
-                self.handle_answer_from_menu(found_cars_list["action"],"found car")
+                self.handle_answer_from_menu(found_cars_list['action'],'found car')
     
     def delete_vehicle(self):
         self.vehicle_manager.delete_vehicle(self.__current_vehicle)
@@ -445,9 +450,11 @@ class Menu:
             if prompt.lower() == 'go back':
                 self.frame.delete_last_lines(6)
                 self.init_menu()
+
             elif prompt.lower() == 'register order':
                 print()
                 self.register_order()
+
             elif prompt.lower() == 'find order':
                 print()
                 self.frame.delete_last_lines(7)
@@ -459,9 +466,11 @@ class Menu:
             if prompt.lower() == 'find order by id':
                 self.frame.delete_last_lines(5)
                 self.find_order_by_id()
+
             elif prompt.lower() == 'find order by ssn':
                 self.frame.delete_last_lines(5)
                 self.find_customer_by_ssn()
+
             elif prompt.lower() == 'go back':
                 self.frame.delete_last_lines(5)
                 self.order()
@@ -475,11 +484,15 @@ class Menu:
             if prompt.lower() == 'go back':
                 self.frame.delete_last_lines(6)
                 self.init_menu()
+
             elif prompt.lower() == 'register customer':
                 print()
                 self.register_customer()
+
             elif prompt.lower() == 'edit customer':
-                pass
+                # TODO implementing edit customer
+                self.init_menu()
+
             elif prompt.lower() == 'find customer':
                 self.frame.delete_last_lines(6)
                 self.find_customer()
@@ -491,7 +504,6 @@ class Menu:
             if prompt.lower() == 'save':
                 self.frame.delete_last_lines(13)
                 self.save_new_customer()
-                # print('\n' * 6)
                 self.customer()
 
             elif prompt.lower() == 'cancel':
@@ -505,9 +517,11 @@ class Menu:
             if prompt.lower() == 'find customer by name':
                 self.frame.delete_last_lines(5)
                 self.find_customer_by_name()
+
             elif prompt.lower() == 'find customer by ssn':
                 self.frame.delete_last_lines(5)
                 self.find_customer_by_ssn()
+
             elif prompt.lower() == 'go back':
                 self.frame.delete_last_lines(5)
                 self.customer()
@@ -519,6 +533,7 @@ class Menu:
             if prompt.lower() == 'try again':
                 self.frame.delete_last_lines(8)
                 self.find_customer()
+
             elif prompt.lower() == 'go back':
                 self.frame.delete_last_lines(8)
                 self.customer()
@@ -539,10 +554,12 @@ class Menu:
             elif prompt.lower() == 'edit customer':
                 self.frame.delete_last_lines(5)
                 # TODO edit customer
-                pass
+                self.init_menu()
+
             elif prompt.lower() == 'unsubscribe customer':
                 self.frame.delete_last_lines(5)
                 self.delete_customer()
+
             elif prompt.lower() == 'go back':
                 self.frame.delete_last_lines(6)
                 self.find_customer()
@@ -599,12 +616,15 @@ class Menu:
             if prompt.lower() == 'find car by number plate':
                 self.frame.delete_last_lines(5)
                 self.find_cars_by_number_plate()
+
             elif prompt.lower() == 'find car by make':
                 self.frame.delete_last_lines(5)
                 self.find_cars_by_make()
+
             elif prompt.lower() == 'find car by type':
                 self.frame.delete_last_lines(5)
                 self.find_cars_by_type()
+
             elif prompt.lower() == 'go back':
                 self.frame.delete_last_lines(5)
                 # It goes in cars menu if clicking go back!
@@ -616,11 +636,13 @@ class Menu:
         elif menu_type == 'found car':
             if prompt.lower() == 'edit car':
                 self.frame.delete_last_lines(5)
+                self.init_menu()
                 # TODO edit car
-                pass
+
             elif prompt.lower() == 'remove car':
                 self.frame.delete_last_lines(5)
                 self.delete_vehicle()
+
             elif prompt.lower() == 'go back':
                 self.frame.delete_last_lines(5)
                 self.find_cars()
@@ -634,6 +656,7 @@ class Menu:
                 self.save_new_car()
                 print("\n" * 7)
                 self.cars()
+
             if prompt.lower() == 'cancel':
                 self.frame.delete_last_lines(10)
                 self.cars()
