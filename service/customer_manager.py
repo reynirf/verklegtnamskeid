@@ -128,6 +128,9 @@ class CustomerManager:
             customer_ssn = customer.get_ssn().replace("-", "")
             if customer_ssn == ssn:
                 return customer
+    
+    def delete_customer(self, customer):
+        self.__customer_repo.delete_customer(customer) 
 
     def error(self, input_type):
         return '{} not valid. Please try again.'.format(input_type)
