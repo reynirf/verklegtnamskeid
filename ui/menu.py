@@ -309,11 +309,8 @@ class Menu:
                 # print('\n' * 6)
                 self.customer()
 
-            elif prompt.lower() == 'print information':
-                pass
-
             elif prompt.lower() == 'cancel':
-                self.frame.delete_last_lines(14)
+                self.frame.delete_last_lines(15)
                 self.customer()
         
         ######################################################    
