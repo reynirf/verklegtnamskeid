@@ -21,7 +21,7 @@ class CustomerRepo:
                         line['phone'],
                         line['email'],
                         line['address'], 
-                        line['driver licence'], 
+                        line['driver license'], 
                         line['credit card'])
                     self.__customer_list.append(customer)
         return self.__customer_list

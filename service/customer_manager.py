@@ -30,18 +30,6 @@ class CustomerManager:
             self.__temp_driver_license,
             self.__temp_credit_card)
     
-    def return_details(self):
-        return {
-            "Name": self.__temp_name,
-            "SSN": self.__temp_ssn,
-            "Birthday": self.__temp_birthday,
-            "Phone number": self.__temp_phone,
-            "Email address": self.__temp_email,
-            "Home address": self.__temp_address,
-            "Driver license category": self.__temp_driver_license,
-            "Credit card number": self.__temp_credit_card
-        }
-    
     def check_name(self, name):
         """check if name is valid. Returns an error message if name
         has numbers or punctuation in it"""

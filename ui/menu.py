@@ -79,6 +79,58 @@ class Menu:
     def order(self):
         order_list = self.nocco_list.choose_one("Choose an action",["Register order","Find order","Calculate order", "Go back"], "action")
         self.handle_answer_from_menu(order_list['action'],'order')
+    
+    def find_order_by_id(self):
+        ID = input("Enter ID: ")
+        print()
+        order = self.order_manager.find_order_by_id(ID)
+        if order == None:
+            print('{}'.format(self.color.return_colored("Order not found!", 'red')))
+            time.sleep(2)
+            self.frame.delete_last_lines(2)
+            self.find_order()
+        else:
+            for i,person in enumerate(order):
+                print("Order " + str(i+1) + ": " + person.__str__())
+            print()
+            if len(order) == 1:
+                found_order_list = self.nocco_list.choose_one('Choose an action',
+                    ['Edit order', 'Unsubscribe order', 'Go back'], 'action')
+                self.frame.delete_last_lines(2)
+                self.handle_answer_from_menu(found_order_list['action'], 
+                    'found order')
+            else:
+                print("{}".format(self.color.return_colored("There are multiple orders with that ID!", 'red')))
+                print()
+                found_multiple_orders = self.nocco_list.choose_one('Choose an action',
+                    ['Try again', 'Go back'], 'action')
+                self.frame.delete_last_lines(len(order) + 1)
+                self.handle_answer_from_menu(found_multiple_orders['action'], 
+                    'found multiple orders')
+    
+    def find_order_by_ssn(self):
+        ssn = input("Enter SSN: ")
+        print()
+        order = self.order_manager.find_order_by_ssn(ssn)
+        if order == None:
+            print('{}'.format(self.color.return_colored("Order not found", 'red')))
+            time.sleep(2)
+            self.frame.delete_last_lines(3)
+            self.find_order()
+        else:
+            self.frame.delete_last_lines(2)
+            print("Order : " + order.__str__())
+            print()
+            found_order_list = self.nocco_list.choose_one('Choose an action',
+                    ['Edit order', 'Delete order', 'Go back'], 'action')
+            self.frame.delete_last_lines(2)
+            self.handle_answer_from_menu(found_order_list['action'], 
+                    'found order') 
+
+    def find_order(self):
+        find_order_list = self.nocco_list.choose_one('Choose an action', 
+            ['Find order by ID', 'Find order by SSN', 'Go back'], 'action')
+        self.handle_answer_from_menu(find_order_list['action'], 'find order')
 
     def save_new_order(self):
         self.order_manager.save_new_order()
@@ -366,9 +418,23 @@ class Menu:
                 print()
                 self.register_order()
             elif prompt.lower() == 'find order':
-                pass
-            elif prompt.lower() == 'calculate order':
-                pass     
+                print()
+                self.frame.delete_last_lines(7)
+                self.find_order()    
+        ######################################################    
+        #                      FIND ORDER                    #
+        ######################################################
+        elif menu_type == 'find order':
+            if prompt.lower() == 'find order by id':
+                self.frame.delete_last_lines(5)
+                self.find_order_by_id()
+            elif prompt.lower() == 'find order by ssn':
+                self.frame.delete_last_lines(5)
+                self.find_customer_by_ssn()
+            elif prompt.lower() == 'go back':
+                self.frame.delete_last_lines(5)
+                self.order()
+
 
         ######################################################    
         #                      CUSTOMER                      #
@@ -392,7 +458,7 @@ class Menu:
         ######################################################
         elif menu_type == 'register customer':
             if prompt.lower() == 'save':
-                self.frame.delete_last_lines(14)
+                self.frame.delete_last_lines(13)
                 self.save_new_customer()
                 # print('\n' * 6)
                 self.customer()
@@ -431,12 +497,12 @@ class Menu:
         ######################################################
         if menu_type == 'found customer':
             if prompt.lower() == 'print customer details':
-                customer_details = self.customer_manager.return_details()
-                self.frame.delete_last_lines(4)
+                customer_details = self.__current_customer.return_details()
+                self.frame.delete_last_lines(6)
                 for detail, value in customer_details.items():
                     print("{}: {}".format(detail, value))
                 self.nocco_list.single_list('Go back')
-                self.frame.delete_last_lines(12)
+                self.frame.delete_last_lines(10)
                 self.customer()
 
             elif prompt.lower() == 'edit customer':
@@ -526,7 +592,6 @@ class Menu:
             elif prompt.lower() == 'go back':
                 self.frame.delete_last_lines(5)
                 self.find_cars()
-
 
         ######################################################    
         #                    REGISTER CAR                    #                    
