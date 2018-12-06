@@ -1,5 +1,6 @@
 from repos.order_repo import OrderRepo
 from models.order import Order
+import string
 
 class OrderManager:
 
@@ -36,25 +37,66 @@ class OrderManager:
             self.__temp_number_plate,
             self.__temp_insurance)
 
-    def check_id(self,ID):
+    def check_ID(self,ID):
+        """Check if ssn is valid. Returns an error message if ssn
+        has letters or punctuation in it"""
+        ID = ID.replace("-", "")
+        for letter in ID:
+            if letter in (string.ascii_letters + string.punctuation):
+                return "ID not valid. Please use only numbers."
         self.__temp_ID = ID
 
     def check_ssn(self,ssn):
+        """Check if ssn is valid. Returns an error message if ssn
+        has letters or punctuation in it"""
+        ssn = ssn.replace("-", "")
+        for letter in ssn:
+            if letter in (string.ascii_letters + string.punctuation):
+                return "SSN not valid. Please use only numbers."
         self.__temp_ssn = ssn
     
-    def check_car(self,car):
-        self.__temp_car = car
+    def check_make(self,make):
+        """check if make is valid. Returns an error message if make
+        has numbers or punctuation in it"""
+        for letter in make.strip():
+            if letter in (string.digits + string.punctuation):
+                return "Make not valid. Please use only letters."
+        self.__temp_car = make
 
     def check_start_date(self,start_date):
+        """Check if start date is valid. Returns an error message if start date
+        has letters in it"""
+        start_date = start_date.replace("-", "")
+        for letter in start_date:
+            if letter in (string.ascii_letters):
+                return "Start date not valid. Please use only numbers."
         self.__temp_start_date = start_date
 
     def check_ending_date(self,end_date):
+        """Check if ending date is valid. Returns an error message if ending date
+        has letters in it"""
+        end_date = end_date.replace("-", "")
+        for letter in end_date:
+            if letter in (string.ascii_letters):
+                return "Ending date not valid. Please use only numbers."
         self.__temp_end_date = end_date
 
     def check_pick_up_time(self,pick_up_time):
+        """Check if pick up time is valid. Returns an error message if pick up time
+        has letters in it"""
+        pick_up_time = pick_up_time.replace("-", "")
+        for letter in pick_up_time:
+            if letter in (string.ascii_letters):
+                return "Pick up time not valid. Please use only numbers."
         self.__temp_pick_up_time = pick_up_time
 
     def check_returning_time(self,returning_time):
+        """Check if returning time is valid. Returns an error message if returning time
+        has letters in it"""
+        returning_time = returning_time.replace("-", "")
+        for letter in returning_time:
+            if letter in (string.ascii_letters):
+                return "Returning time not valid. Please use only numbers."
         self.__temp_returning_time = returning_time
 
     def check_pick_up_location(self,pick_up_location):
@@ -64,6 +106,12 @@ class OrderManager:
         self.__temp_return_location = return_location
     
     def check_number_of_seats(self,number_of_seats):
+        """Check if number of seats is valid. Returns an error message if number of seats
+        has letters or punctuation in it"""
+        number_of_seats = number_of_seats.replace("-", "")
+        for letter in number_of_seats:
+            if letter in (string.ascii_letters + string.punctuation):
+                return "Number of seats not valid. Please use only numbers."
         self.__temp_number_of_seats = number_of_seats
 
     def check_number_plate(self,number_plate):

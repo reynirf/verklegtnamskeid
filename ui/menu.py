@@ -87,30 +87,30 @@ class Menu:
 
     def register_order(self):
         self.frame.delete_last_lines(7)
-        ID = input("Id of order: ")
-        self.order_manager.check_id(ID)
-        ssn = input("Enter Customer SSN: ")
-        self.order_manager.check_ssn(ssn)
-        car = input("Enter car: ")
-        self.order_manager.check_car(car)
-        start_date = input("Enter start date: ")
-        self.order_manager.check_start_date(start_date)
-        ending_date = input("Enter end date: ")
-        self.order_manager.check_ending_date(ending_date)
-        pick_up_time = input("Enter pick up time: ")
-        self.order_manager.check_pick_up_time(pick_up_time)
-        returning_time = input("Enter returning time: ")
-        self.order_manager.check_returning_time(returning_time)
-        pick_up_location = input("Enter pick up location: ")
-        self.order_manager.check_pick_up_location(pick_up_location)
-        return_location = input("Enter return location: ")
-        self.order_manager.check_return_location(return_location)
-        number_of_seats = input("Enter number of seats: ")
-        self.order_manager.check_number_of_seats(number_of_seats)
-        number_plate = input("Enter Number Plate: ")
-        self.order_manager.check_number_plate(number_plate)
-        insurance = input("Enter insurance: ")
-        self.order_manager.check_insurance(insurance)
+
+        self.check_if_valid('ID', self.order_manager.check_ID)
+
+        self.check_if_valid('SSN', self.order_manager.check_ssn)
+
+        self.check_if_valid('Make', self.order_manager.check_make)
+
+        self.check_if_valid('Start date', self.order_manager.check_start_date)
+
+        self.check_if_valid('Ending date', self.order_manager.check_ending_date)
+
+        self.check_if_valid('Pick up time', self.order_manager.check_pick_up_time)
+
+        self.check_if_valid('Returning time', self.order_manager.check_returning_time)
+
+        self.check_if_valid('Pick up location', self.order_manager.check_pick_up_location)
+
+        self.check_if_valid('Return location', self.order_manager.check_return_location)
+
+        self.check_if_valid('Number of seats', self.order_manager.check_number_of_seats)
+
+        self.check_if_valid('Number plate', self.order_manager.check_number_plate)
+
+        self.check_if_valid('Insurance', self.order_manager.check_insurance)
         print()
         register_order_list = self.nocco_list.choose_one("Choose an action",["Save", "Print order",
         "Show all available cars", "Cancel"], "action")
@@ -199,6 +199,22 @@ class Menu:
                 self.frame.delete_last_lines(len(customer) + 1)
                 self.handle_answer_from_menu(found_multiple_customers['action'], 
                     'found multiple customers')
+    
+    def find_customer_by_ssn(self):
+        ssn = input("Enter SSN: ")
+        print()
+        customer = self.customer_manager.find_customer_by_ssn(ssn)
+        if customer == None:
+            print('{}'.format(self.color.return_colored("Customer not found", 'red')))
+            time.sleep(2)
+            self.frame.delete_last_lines(3)
+            self.find_customer()
+        else:
+            found_customer_list = self.nocco_list.choose_one('Choose an action',
+                    ['Edit customer', 'Unsubscribe customer', 'Go back'], 'action')
+            self.frame.delete_last_lines(2)
+            self.handle_answer_from_menu(found_customer_list['action'], 
+                    'found customer') 
 
     def save_new_car(self):
         self.vehicle_manager.save_new_car()
@@ -222,6 +238,13 @@ class Menu:
             'Show cars in service', 'Show cars that require maintance', 'Show cars that must be checked',
             'Go back'], 'action')
         self.handle_answer_from_menu(car['action'], 'cars')
+    
+    def find_cars(self):
+        self.frame.delete_last_lines(7)
+        find_cars = self.nocco_list.choose_one('Choose an action', ['Find car by number plate', 'Find car by make',
+         'Find car by type','Go back'], 'action')
+        print()
+        self.handle_answer_from_menu(find_cars['action'], 'find car')
 
     def register_car(self):
         self.frame.delete_last_lines(7)
@@ -251,7 +274,7 @@ class Menu:
     def init_menu(self):
             prompt = self.nocco_list.choose_one(
                 'Choose an action', 
-                ['Order','Customer','Cars', 'Report an error','Logout'],
+                ['Order','Customer','Cars', 'Report an error','Log out'],
                 'action'
             )
             self.handle_answer_from_menu(prompt['action'], 'main_menu')
@@ -337,8 +360,8 @@ class Menu:
                 self.frame.delete_last_lines(5)
                 self.find_customer_by_name()
             elif prompt.lower() == 'find customer by ssn':
-                pass
-
+                self.frame.delete_last_lines(5)
+                self.find_customer_by_ssn()
             elif prompt.lower() == 'go back':
                 self.frame.delete_last_lines(5)
                 self.customer()
@@ -377,6 +400,11 @@ class Menu:
                 self.register_car()
                 self.cars()
 
+            if prompt.lower() == 'find car':
+                self.frame.delete_last_lines(1)
+                self.find_cars()
+                self.cars()
+
             elif prompt.lower() == 'save':
                 self.frame.delete_last_lines(14)
                 self.save_new_car()
@@ -413,4 +441,20 @@ class Menu:
                 self.frame.delete_last_lines(5)
                 self.save_new_order()
                 self.order()
-    
+                
+        ######################################################    
+        #                    FIND CAR                        #                    
+        ######################################################
+        elif menu_type == 'find car':
+            if prompt.lower() == 'find car by number plate':
+                self.frame.delete_last_lines(5)
+                #self.find_customer_by_name()
+                self.init_menu()
+            elif prompt.lower() == 'find customer by make':
+                pass
+            elif prompt.lower() == 'find customer by type':
+                pass
+            elif prompt.lower() == 'go back':
+                self.frame.delete_last_lines(5)
+                self.cars()
+

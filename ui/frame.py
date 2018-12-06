@@ -11,7 +11,7 @@ class Frame:
         self.color = Color()
         self.get_size_of_screen()
         self.list_of_boot_length = list(range(0,10)) #when debuggin
-        # self.list_of_boot_length = list(range(0,50))
+        #self.list_of_boot_length = list(range(0,50))
         self.logo = """  
      ____    _   _           _          _                 
     | __ )  (_) | |   __ _  | |   ___  (_)   __ _    __ _ 

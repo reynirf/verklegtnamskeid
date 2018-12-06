@@ -110,3 +110,11 @@ class CustomerManager:
                 customers.append(customer)
         if customers != []:
             return customers
+
+    def find_customer_by_ssn(self, ssn):
+        customer_list = self.__customer_repo.get_customer_list()
+        ssn = ssn.replace("-", "")
+        for customer in customer_list:
+            customer_ssn = customer.get_ssn().replace("-", "")
+            if customer_ssn == ssn:
+                return customer
