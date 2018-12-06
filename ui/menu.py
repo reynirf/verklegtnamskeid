@@ -278,7 +278,10 @@ class Menu:
 
     def delete_customer(self):
         self.customer_manager.delete_customer(self.__current_customer)
+        self.frame.delete_last_lines(1)
         print('{}'.format(self.color.return_colored("Customer removed from file", 'red')))
+        time.sleep(2)
+        self.customer()
 
     def save_new_car(self):
         self.vehicle_manager.save_new_car()
@@ -512,7 +515,7 @@ class Menu:
                 self.frame.delete_last_lines(5)
                 self.delete_customer()
             elif prompt.lower() == 'go back':
-                self.frame.delete_last_lines(5)
+                self.frame.delete_last_lines(6)
                 self.find_customer()
 
         ######################################################    

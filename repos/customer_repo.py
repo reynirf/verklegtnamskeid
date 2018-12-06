@@ -39,10 +39,11 @@ class CustomerRepo:
         with open(self.CUSTOMER_FILE, 'r') as customer_file:
             csv_reader = csv.reader(customer_file)
             for line in csv_reader:
+                #line = line.split(",")
                 if line[1] != customer.get_ssn():
                     file_content.append(line)
-        with open(self.CUSTOMER_FILE, 'w', newline='') as customer_file:
-            csv_writer = csv.writer(customer_file)
+        with open(self.CUSTOMER_FILE, 'w', newline='') as updated_file:
+            csv_writer = csv.writer(updated_file)
             for line in file_content:
                 csv_writer.writerow(line)
         
