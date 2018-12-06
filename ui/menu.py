@@ -154,7 +154,7 @@ class Menu:
 
         print()
         register_customer_list = self.nocco_list.choose_one('Choose an action', 
-            ['Save','Print information','Cancel'],
+            ['Save','Cancel'],
             'action')
         self.handle_answer_from_menu(register_customer_list['action'], 'register customer')
     
@@ -179,8 +179,9 @@ class Menu:
         customer = self.customer_manager.find_customer_by_name(name)
         if customer == None:
             print('{}'.format(self.color.return_colored("Customer not found!", 'red')))
-            time.sleep(2)
-            self.frame.delete_last_lines(2)
+            time.sleep(1.5)
+            self.frame.delete_last_lines(4)
+            print()
             self.find_customer()
         else:
             for i,person in enumerate(customer):
@@ -208,8 +209,9 @@ class Menu:
         customer = self.customer_manager.find_customer_by_ssn(ssn)
         if customer == None:
             print('{}'.format(self.color.return_colored("Customer not found", 'red')))
-            time.sleep(2)
-            self.frame.delete_last_lines(3)
+            time.sleep(1.5)
+            self.frame.delete_last_lines(4)
+            print()
             self.find_customer()
         else:
             self.frame.delete_last_lines(2)
@@ -217,7 +219,7 @@ class Menu:
             print("Customer : " + customer.__str__())
             print()
             found_customer_list = self.nocco_list.choose_one('Choose an action',
-                    ['Edit customer', 'Unsubscribe customer', 'Go back'], 'action')
+                    ['Print customer details', 'Edit customer', 'Unsubscribe customer', 'Go back'], 'action')
             self.frame.delete_last_lines(2)
             self.handle_answer_from_menu(found_customer_list['action'], 
                     'found customer') 
@@ -293,28 +295,30 @@ class Menu:
             pass
 
     def register_car(self):
-        self.frame.delete_last_lines(7)
-        car_type = input("Enter Type: ")
-        self.vehicle_manager.check_type(car_type)
-        make = input("Enter Make: ")
-        self.vehicle_manager.check_make(make)
-        model = input("Enter Model: ")
-        self.vehicle_manager.check_model(model)
-        year = input("Enter Year: ")
-        self.vehicle_manager.check_year(year)
-        number_of_seats = input("Enter Number: ")
-        self.vehicle_manager.check_number_of_seats(number_of_seats)
-        number_plate = input("Enter Number Plate: ")
-        self.vehicle_manager.check_number_plate(number_plate)
-        fuel = input("Enter Fuel: ")
-        self.vehicle_manager.check_fuel(fuel)
-        driving_transmission = input("Enter Driving Transmission: ")
-        self.vehicle_manager.check_driving_transmission(driving_transmission)
+        self.frame.delete_last_lines(8)
+
+        self.check_if_valid('Car type', self.vehicle_manager.check_type)
+
+        self.check_if_valid('Make', self.vehicle_manager.check_make)
+
+        self.check_if_valid('Model', self.vehicle_manager.check_model)
+
+        self.check_if_valid('Year', self.vehicle_manager.check_year)
+
+        self.check_if_valid('Car type', self.vehicle_manager.check_type)
+    
+        self.check_if_valid('Number of seats', self.vehicle_manager.check_number_of_seats)
+
+        self.check_if_valid('Number plate', self.vehicle_manager.check_number_plate)
+
+        self.check_if_valid('Fuel', self.vehicle_manager.check_fuel)
+
+        self.check_if_valid('Driving transmission', self.vehicle_manager.check_driving_transmission)
         print()
         register_car = self.nocco_list.choose_one('Choose an action', 
-            ['Save','Print information','Cancel'],
+            ['Save','Cancel'],
             'action')
-        self.handle_answer_from_menu(register_car['action'], 'cars')
+        self.handle_answer_from_menu(register_car['action'], 'register car')
 
 
     def init_menu(self):
@@ -393,11 +397,8 @@ class Menu:
                 # print('\n' * 6)
                 self.customer()
 
-            elif prompt.lower() == 'print information':
-                pass
-
             elif prompt.lower() == 'cancel':
-                self.frame.delete_last_lines(14)
+                self.frame.delete_last_lines(15)
                 self.customer()
         
         ######################################################    
@@ -429,7 +430,16 @@ class Menu:
         #                    FOUND CUSTOMER                  #                    
         ######################################################
         if menu_type == 'found customer':
-            if prompt.lower() == 'edit customer':
+            if prompt.lower() == 'print customer details':
+                customer_details = self.customer_manager.return_details()
+                self.frame.delete_last_lines(4)
+                for detail, value in customer_details.items():
+                    print("{}: {}".format(detail, value))
+                self.nocco_list.single_list('Go back')
+                self.frame.delete_last_lines(12)
+                self.customer()
+
+            elif prompt.lower() == 'edit customer':
                 self.frame.delete_last_lines(5)
                 pass
             elif prompt.lower() == 'unsubscribe customer':
@@ -451,12 +461,6 @@ class Menu:
             if prompt.lower() == 'find car':
                 self.frame.delete_last_lines(1)
                 self.find_cars()
-                self.cars()
-
-            elif prompt.lower() == 'save':
-                self.frame.delete_last_lines(14)
-                self.save_new_car()
-                print("\n" * 6)
                 self.cars()
 
             elif prompt.lower() == 'show all available cars':
@@ -489,6 +493,7 @@ class Menu:
                 self.frame.delete_last_lines(5)
                 self.save_new_order()
                 self.order()
+                
         ######################################################    
         #                    FIND CAR                        #                    
         ######################################################
@@ -510,7 +515,7 @@ class Menu:
         ######################################################    
         #                    FOUND CAR                       #                    
         ######################################################
-        if menu_type == 'found car':
+        elif menu_type == 'found car':
             if prompt.lower() == 'edit car':
                 self.frame.delete_last_lines(5)
                 # TODO edit car
@@ -522,3 +527,16 @@ class Menu:
                 self.frame.delete_last_lines(5)
                 self.find_cars()
 
+
+        ######################################################    
+        #                    REGISTER CAR                    #                    
+        ######################################################
+        elif menu_type == 'register car':
+            if prompt.lower() == 'save':
+                self.frame.delete_last_lines(16)
+                self.save_new_car()
+                print("\n" * 7)
+                self.cars()
+            if prompt.lower() == 'cancel':
+                self.frame.delete_last_lines(10)
+                self.cars()
