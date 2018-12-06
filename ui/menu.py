@@ -153,7 +153,7 @@ class Menu:
 
         print()
         register_customer_list = self.nocco_list.choose_one('Choose an action', 
-            ['Save','Print information','Cancel'],
+            ['Save','Cancel'],
             'action')
         self.handle_answer_from_menu(register_customer_list['action'], 'register customer')
     
@@ -214,7 +214,7 @@ class Menu:
             print("Customer : " + customer.__str__())
             print()
             found_customer_list = self.nocco_list.choose_one('Choose an action',
-                    ['Edit customer', 'Unsubscribe customer', 'Go back'], 'action')
+                    ['Print customer details', 'Edit customer', 'Unsubscribe customer', 'Go back'], 'action')
             self.frame.delete_last_lines(2)
             self.handle_answer_from_menu(found_customer_list['action'], 
                     'found customer') 
@@ -307,7 +307,7 @@ class Menu:
         self.check_if_valid('Driving transmission', self.vehicle_manager.check_driving_transmission)
         print()
         register_car = self.nocco_list.choose_one('Choose an action', 
-            ['Save','Print information','Cancel'],
+            ['Save','Cancel'],
             'action')
         self.handle_answer_from_menu(register_car['action'], 'register car')
 
@@ -388,9 +388,6 @@ class Menu:
                 # print('\n' * 6)
                 self.customer()
 
-            elif prompt.lower() == 'print information':
-                pass
-
             elif prompt.lower() == 'cancel':
                 self.frame.delete_last_lines(14)
                 self.customer()
@@ -424,12 +421,15 @@ class Menu:
         #                    FOUND CUSTOMER                  #                    
         ######################################################
         if menu_type == 'found customer':
-            if prompt.lower() == 'edit customer':
+            if prompt.lower() == 'print customer details':
+                pass
+
+            elif prompt.lower() == 'edit customer':
                 self.frame.delete_last_lines(5)
                 pass
             elif prompt.lower() == 'unsubscribe customer':
                 pass
-
+                
             elif prompt.lower() == 'go back':
                 self.frame.delete_last_lines(5)
                 self.find_customer()
@@ -478,6 +478,7 @@ class Menu:
                 self.frame.delete_last_lines(5)
                 self.save_new_order()
                 self.order()
+                
         ######################################################    
         #                    FIND CAR                        #                    
         ######################################################
