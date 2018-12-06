@@ -174,18 +174,31 @@ class Menu:
 
     def find_customer_by_name(self):
         name = input("Enter name: ")
+        print()
         customer = self.customer_manager.find_customer_by_name(name)
-        if customer != None:
-            print("Customer: " + customer.__str__())
-            found_customer_list = self.nocco_list.choose_one('Choose an action',
-                ['Edit customer', 'Unsubscribe customer', 'Go back'], 'action')
+        if customer == None:
+            print('{}'.format(self.color.return_colored("Customer not found", 'red')))
+            time.sleep(2)
             self.frame.delete_last_lines(2)
-            self.handle_answer_from_menu(found_customer_list['action'], 
-                'find customer by name')
-        print('{}'.format(self.color.return_colored("Customer not found", 'red')))
-        time.sleep(2)
-        self.frame.delete_last_lines(2)
-        self.find_customer()
+            self.find_customer()
+        else:
+            for i,person in enumerate(customer):
+                print("Customer " + str(i+1) + ": " + person.__str__())
+            print()
+            if len(customer) == 1:
+                found_customer_list = self.nocco_list.choose_one('Choose an action',
+                    ['Edit customer', 'Unsubscribe customer', 'Go back'], 'action')
+                self.frame.delete_last_lines(2)
+                self.handle_answer_from_menu(found_customer_list['action'], 
+                    'found customer')
+            else:
+                print("{}".format(self.color.return_colored("There are multiple customers with that name!", 'red')))
+                print()
+                found_multiple_customers = self.nocco_list.choose_one('Choose an action',
+                    ['Try again', 'Go back'], 'action')
+                self.frame.delete_last_lines(len(customer) + 1)
+                self.handle_answer_from_menu(found_multiple_customers['action'], 
+                    'found multiple customers')
 
     def save_new_car(self):
         self.vehicle_manager.save_new_car()
@@ -209,6 +222,13 @@ class Menu:
             'Show cars in service', 'Show cars that require maintance', 'Show cars that must be checked',
             'Go back'], 'action')
         self.handle_answer_from_menu(car['action'], 'cars')
+    
+    def find_cars(self):
+        self.frame.delete_last_lines(7)
+        find_cars = self.nocco_list.choose_one('Choose an action', ['Find car by number plate', 'Find car by make',
+         'Find car by type','Go back'], 'action')
+        print()
+        self.handle_answer_from_menu(find_cars['action'], 'find car')
 
     def register_car(self):
         self.frame.delete_last_lines(7)
@@ -238,7 +258,7 @@ class Menu:
     def init_menu(self):
             prompt = self.nocco_list.choose_one(
                 'Choose an action', 
-                ['Order','Customer','Cars', 'Report an error','Logout'],
+                ['Order','Customer','Cars', 'Report an error','Log out'],
                 'action'
             )
             self.handle_answer_from_menu(prompt['action'], 'main_menu')
@@ -331,9 +351,20 @@ class Menu:
                 self.customer()
 
         ######################################################    
-        #                FIND CUSTOMER BY NAME               #                    
+        #               FOUND MULTIPLE CUSTOMERS             #                    
         ######################################################
-        if menu_type == 'find customer by name':
+        if menu_type == 'found multiple customers':
+            if prompt.lower() == 'try again':
+                self.frame.delete_last_lines(8)
+                self.find_customer()
+            elif prompt.lower() == 'go back':
+                self.frame.delete_last_lines(8)
+                self.customer()
+
+        ######################################################    
+        #                    FOUND CUSTOMER                  #                    
+        ######################################################
+        if menu_type == 'found customer':
             if prompt.lower() == 'edit customer':
                 self.frame.delete_last_lines(5)
                 pass
@@ -351,6 +382,11 @@ class Menu:
             if prompt.lower() == 'register car':
                 self.frame.delete_last_lines(1)
                 self.register_car()
+                self.cars()
+
+            if prompt.lower() == 'find car':
+                self.frame.delete_last_lines(1)
+                self.find_cars()
                 self.cars()
 
             elif prompt.lower() == 'save':
@@ -389,5 +425,19 @@ class Menu:
                 self.frame.delete_last_lines(5)
                 self.save_new_order()
                 self.order()
-
+        ######################################################    
+        #                    FIND CAR                        #                    
+        ######################################################
+        elif menu_type == 'find car':
+            if prompt.lower() == 'find car by number plate':
+                self.frame.delete_last_lines(5)
+                #self.find_customer_by_name()
+                self.init_menu()
+            elif prompt.lower() == 'find customer by make':
+                pass
+            elif prompt.lower() == 'find customer by type':
+                pass
+            elif prompt.lower() == 'go back':
+                self.frame.delete_last_lines(5)
+                self.cars()
 

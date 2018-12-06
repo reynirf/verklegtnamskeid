@@ -37,7 +37,7 @@ class OrderManager:
             self.__temp_number_plate,
             self.__temp_insurance)
 
-    def check_id(self,ID):
+    def check_ID(self,ID):
         """Check if ssn is valid. Returns an error message if ssn
         has letters or punctuation in it"""
         ID = ID.replace("-", "")
