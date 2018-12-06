@@ -38,7 +38,7 @@ class CustomerManager:
             "Phone number": self.__temp_phone,
             "Email address": self.__temp_email,
             "Home address": self.__temp_address,
-            "Driver license category": self.__temp_driver_license[0],
+            "Driver license category": self.__temp_driver_license,
             "Credit card number": self.__temp_credit_card
         }
     
@@ -95,7 +95,7 @@ class CustomerManager:
         for char in driver_license:
             if char.lower() not in valid_categories:
                 return self.error('Driver license category')
-        self.__temp_driver_license = driver_license
+        self.__temp_driver_license = driver_license[0]
     
     def check_email(self, email):
         """Check if email address is valid. Returns an error message if email 
