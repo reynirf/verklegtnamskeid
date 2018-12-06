@@ -71,7 +71,7 @@ class Menu:
     
     def customer(self):
         customer_list = self.nocco_list.choose_one('Choose an action', 
-            ['Register customer','Edit list of customer', 'Find customer','Go back'],
+            ['Register customer','Edit customer', 'Find customer','Go back'],
             'action')
         self.handle_answer_from_menu(customer_list['action'], 'customer')
     
@@ -331,6 +331,8 @@ class Menu:
             elif prompt.lower() == 'register customer':
                 print()
                 self.register_customer()
+            elif prompt.lower() == 'edit customer':
+                pass
             elif prompt.lower() == 'find customer':
                 self.frame.delete_last_lines(6)
                 self.find_customer()
