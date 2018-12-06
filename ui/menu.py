@@ -219,6 +219,13 @@ class Menu:
             'Show cars in service', 'Show cars that require maintance', 'Show cars that must be checked',
             'Go back'], 'action')
         self.handle_answer_from_menu(car['action'], 'cars')
+    
+    def find_cars(self):
+        self.frame.delete_last_lines(7)
+        find_cars = self.nocco_list.choose_one('Choose an action', ['Find car by number plate', 'Find car by make',
+         'Find car by type','Go back'], 'action')
+        print()
+        self.handle_answer_from_menu(find_cars['action'], 'find car')
 
     def register_car(self):
         self.frame.delete_last_lines(7)
@@ -248,7 +255,7 @@ class Menu:
     def init_menu(self):
             prompt = self.nocco_list.choose_one(
                 'Choose an action', 
-                ['Order','Customer','Cars', 'Report an error','Logout'],
+                ['Order','Customer','Cars', 'Report an error','Log out'],
                 'action'
             )
             self.handle_answer_from_menu(prompt['action'], 'main_menu')
@@ -374,6 +381,11 @@ class Menu:
                 self.register_car()
                 self.cars()
 
+            if prompt.lower() == 'find car':
+                self.frame.delete_last_lines(1)
+                self.find_cars()
+                self.cars()
+
             elif prompt.lower() == 'save':
                 self.frame.delete_last_lines(14)
                 self.save_new_car()
@@ -410,5 +422,19 @@ class Menu:
                 self.frame.delete_last_lines(5)
                 self.save_new_order()
                 self.order()
-
+        ######################################################    
+        #                    FIND CAR                        #                    
+        ######################################################
+        elif menu_type == 'find car':
+            if prompt.lower() == 'find car by number plate':
+                self.frame.delete_last_lines(5)
+                #self.find_customer_by_name()
+                self.init_menu()
+            elif prompt.lower() == 'find customer by make':
+                pass
+            elif prompt.lower() == 'find customer by type':
+                pass
+            elif prompt.lower() == 'go back':
+                self.frame.delete_last_lines(5)
+                self.cars()
 
