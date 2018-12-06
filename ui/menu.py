@@ -178,8 +178,9 @@ class Menu:
         customer = self.customer_manager.find_customer_by_name(name)
         if customer == None:
             print('{}'.format(self.color.return_colored("Customer not found!", 'red')))
-            time.sleep(2)
-            self.frame.delete_last_lines(2)
+            time.sleep(1.5)
+            self.frame.delete_last_lines(4)
+            print()
             self.find_customer()
         else:
             for i,person in enumerate(customer):
@@ -206,8 +207,9 @@ class Menu:
         customer = self.customer_manager.find_customer_by_ssn(ssn)
         if customer == None:
             print('{}'.format(self.color.return_colored("Customer not found", 'red')))
-            time.sleep(2)
-            self.frame.delete_last_lines(3)
+            time.sleep(1.5)
+            self.frame.delete_last_lines(4)
+            print()
             self.find_customer()
         else:
             self.frame.delete_last_lines(2)
@@ -427,6 +429,7 @@ class Menu:
                 for detail, value in customer_details.items():
                     print("{}: {}".format(detail, value))
                 self.nocco_list.single_list('Go back')
+                self.frame.delete_last_lines(12)
                 self.customer()
 
             elif prompt.lower() == 'edit customer':
