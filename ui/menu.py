@@ -81,6 +81,11 @@ class Menu:
         order_list = self.nocco_list.choose_one("Choose an action",["Register order","Find order","Calculate order", "Go back"], "action")
         self.handle_answer_from_menu(order_list['action'],'order')
     
+    def calculate_order(self):
+        self.order_manager.calculate_order()
+
+
+    
     def find_order_by_id(self):
         ID = input("Enter ID: ")
         print()
@@ -535,7 +540,7 @@ class Menu:
             elif prompt.lower() == 'cancel':
                 self.frame.delete_last_lines(15)
                 self.customer()
-        
+
         ######################################################    
         #                    FIND CUSTOMER                   #                    
         ######################################################
@@ -654,6 +659,13 @@ class Menu:
                 self.frame.delete_last_lines(5)
                 self.save_new_order()
                 self.order()
+            elif prompt.lower() == 'calculate order':
+                self.frame.delete_last_lines(14)
+                self.frame.delete_last_lines(5)
+                self.calculate_order()
+
+
+
                 
         ######################################################    
         #                    FIND CAR                        #                    
