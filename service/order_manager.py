@@ -2,7 +2,7 @@ from repos.order_repo import OrderRepo
 from models.order import Order
 import string
 from models.vehicle import Vehicle
-import datetime
+from datetime import timedelta
 from datetime import date
 import time
 
@@ -61,10 +61,10 @@ class OrderManager:
     def get_order_dates(self):
         dates = []
         working_date = self.__temp_start_date
+        one_day = timedelta(days=1)
         while working_date <= self.__temp_end_date:
             dates.append(working_date)
-            x = working_date.day + 1
-            working_date.replace(day=x)
+            working_date += one_day
         return dates, self.__temp_number_plate
 
     def calculate_order(self):
@@ -75,8 +75,8 @@ class OrderManager:
         
         price_per_day=order_instance.get_price_per_day()
 
-        start_date_time_obj = datetime.date(start_date_Input[2],start_date_Input[1],start_date_Input[0])
-        end_date_time_obj = datetime.date(end_date_Input[2],end_date_Input[1],end_date_Input[0])
+        start_date_time_obj = date(start_date_Input[2],start_date_Input[1],start_date_Input[0])
+        end_date_time_obj = date(end_date_Input[2],end_date_Input[1],end_date_Input[0])
 
         diffrence = end_date_time_obj - start_date_time_obj
         return "Price is: {}".format(price_per_day*diffrence.days)
@@ -119,12 +119,12 @@ class OrderManager:
     def check_start_date(self,start_date, ignore_empty_value = False, current_value = ''):
         """Check if start date is valid. Returns an error message if start date
         can not be converted to a datetime object"""
-        present_day = datetime.date.today()
+        present_day = date.today()
         try:
             year = start_date[6:]
             month = start_date[3:5]
             day = start_date[:2]
-            date_object = datetime.date(int(year), int(month), int(day))
+            date_object = date(int(year), int(month), int(day))
             if date_object < present_day:
                 raise ValueError
             self.__temp_start_date = date_object
@@ -138,7 +138,7 @@ class OrderManager:
             year = end_date[6:]
             month = end_date[3:5]
             day = end_date[:2]
-            date_object = datetime.date(int(year), int(month), int(day))
+            date_object = date(int(year), int(month), int(day))
             if date_object < self.__temp_start_date:
                 raise ValueError
             self.__temp_end_date = date_object
