@@ -352,11 +352,9 @@ class Menu:
             print()
             self.find_cars()
         else:
-            for i,car in enumerate(cars):
-                # TODO we need to figure out how to handle this 
-                print("Car "+ str(i+1) +": "+ car.get_licence())
-                print()
-        if len(cars) > 0:
+            # TODO we need to figure out how to handle this 
+            print("Car " + ": " + cars.get_licence())
+            print()
             self.__current_vehicle = cars
             found_cars_list = self.nocco_list.choose_one("Choose an action",["Edit car", "Remove car", "Go back"],"action") 
             self.frame.delete_last_lines(2)
