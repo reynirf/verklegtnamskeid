@@ -30,85 +30,113 @@ class CustomerManager:
             self.__temp_driver_license,
             self.__temp_credit_card)
     
-    def check_name(self, name):
+    def check_name(self, name, ignore_empty_value = False, current_value = ''):
         """check if name is valid. Returns an error message if name
         has numbers or punctuation in it"""
 
-        if name.strip() == '':
-                return self.error('Name')
+        if name.strip() == '' and not ignore_empty_value:
+            return self.error('Name')
+        elif name.strip() == '':
+            self.__temp_name = current_value
+            return None
         for letter in name.strip():
             if letter in (string.digits + string.punctuation):
                 return self.error('Name')
         self.__temp_name = name
     
-    def check_ssn(self, ssn):
+    def check_ssn(self, ssn, ignore_empty_value = False, current_value = ''):
         """Check if ssn is valid. Returns an error message if ssn
         has letters or punctuation in it"""
 
         ssn = ssn.replace("-", "")
-        if ssn.strip() == '':
+        if ssn.strip() == '' and not ignore_empty_value:
             return self.error('SSN')
+        elif ssn.strip() == '':
+            self.__temp_ssn = current_value
+            return None
         for letter in ssn:
             if letter in (string.ascii_letters + string.punctuation):
                 return self.error('SSN')
         self.__temp_ssn = ssn
 
-    def check_birthday(self, birthday):
+    def check_birthday(self, birthday, ignore_empty_value = False, current_value = ''):
         #missing check for invalid birthday
-        if birthday.strip() == '':
+        if birthday.strip() == '' and not ignore_empty_value:
             return self.error('Birthday')
+        elif birthday.strip() == '':
+            self.__temp_birthday = current_value
+            return None
         self.__temp_birthday = birthday
         return None
     
-    def check_phone_number(self, phone):
+    def check_phone_number(self, phone, ignore_empty_value = False, current_value = ''):
         """Check if phone number is valid. Returns an error message if phone
         number has letters or punctuation in it"""
 
         phone = phone.replace("-", "")
-        if phone.strip() == '':
+        if phone.strip() == '' and not ignore_empty_value:
             return self.error('Phone number')
+        elif phone.strip() == '':
+            self.__temp_phone = current_value
+            return None
         for letter in phone:
             if letter in (string.ascii_letters + string.punctuation):
                 return self.error('Phone number')
         self.__temp_phone = phone
 
-    def check_license(self, driver_license):
+    def check_license(self, driver_license, ignore_empty_value = False, current_value = ''):
         """Check if driver license categories given are valid. Returns an 
         error message if categories given are not valid."""
 
         valid_categories = ["a", "a1", "b", "be", "c1", "c1e", "c", "ce", "d1", "d1e", "d", "de"]
         driver_license = driver_license.split()
-        if not driver_license:
+        if not driver_license and not ignore_empty_value:
             return self.error('Driver license category')
+        elif not driver_license:
+            self.__temp_driver_license = current_value
+            return None
         for char in driver_license:
             if char.lower() not in valid_categories:
                 return self.error('Driver license category')
         self.__temp_driver_license = driver_license[0]
     
-    def check_email(self, email):
+    def check_email(self, email, ignore_empty_value = False, current_value=''):
         """Check if email address is valid. Returns an error message if email 
         does not have an @ in it"""
-
-        if "@" not in email or len(email) < 6 or '.' not in email:
+        condition = "@" not in email or len(email) < 6 or '.' not in email
+        if condition and not ignore_empty_value:
+            return self.error('Email')
+        elif email == '' and ignore_empty_value:
+            self.__temp_email = current_value
+            return None
+        elif condition:
             return self.error('Email')
         self.__temp_email = email
     
-    def check_credit_card(self, credit_card):
+    def check_credit_card(self, credit_card, ignore_empty_value = False, current_value=''):
         """Check if credit card number is valid. Returns an error message if 
         credit card number has letters or punctuation in it"""
 
         credit_card = credit_card.replace("-", "").replace(' ', '') 
-        if len(credit_card) != 16:
+        if len(credit_card) != 16 and not ignore_empty_value:
+            return self.error('Credit card number')
+        elif len(credit_card) == 0:
+            self.__temp_credit_card = current_value
+            return None
+        elif len(credit_card) != 16:
             return self.error('Credit card number')
         for letter in credit_card:
             if letter in (string.ascii_letters + string.punctuation):
                 return self.error('Credit card number')
         self.__temp_credit_card = credit_card
     
-    def check_address(self, address):
+    def check_address(self, address, ignore_empty_value = False, current_value = ''):
         #missing check for invalid address
-        if address.strip() == '':
+        if address.strip() == '' and not ignore_empty_value:
             return self.error('Home address')
+        elif address.strip() == '':
+            self.__temp_address = current_value
+            return None
         self.__temp_address = address
 
 
