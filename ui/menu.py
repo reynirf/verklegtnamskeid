@@ -185,7 +185,6 @@ class Menu:
         , "Print order", "Show all available cars", "Cancel"], "action")
         self.handle_answer_from_menu(register_order_list['action'], 'register_order')
 
-
     def check_if_valid(self, to_enter, to_check, editing = False, current_value = ''):
         mistake = 0
         error = "check if valid"
@@ -193,7 +192,10 @@ class Menu:
             if not editing and not current_value:
                 user_input = input("Enter " + to_enter + ": ")
             else:
-                user_input = input("Enter " + to_enter + " [" + current_value + "]: ")
+                if to_enter == 'Credit card number':
+                    user_input = input("Enter " + to_enter + " [**** **** **** " + current_value[12:] + "]: ")
+                else:
+                    user_input = input("Enter " + to_enter + " [" + current_value + "]: ")
             error = to_check(user_input, editing, current_value)
             if editing and current_value and not error:
                 if mistake: 
@@ -201,9 +203,15 @@ class Menu:
                 else:
                     self.frame.delete_last_lines()
                 if user_input != '':
-                    print("Enter " + to_enter + " [" + current_value + "]: " + user_input)
+                    if to_enter == 'Credit card number':
+                        print("Enter " + to_enter + " [**** **** **** " + current_value[12:] + "]: " + user_input)
+                    else:
+                        print("Enter " + to_enter + " [" + current_value + "]: " + user_input)
                 else:
-                    print("Enter " + to_enter + " [" + current_value + "]: " + current_value)
+                    if to_enter == 'Credit card number':
+                        print("Enter " + to_enter + " [**** **** **** " + current_value[12:] + "]: " + "**** **** **** " + current_value[12:])
+                    else:
+                        print("Enter " + to_enter + " [" + current_value + "]: " + current_value)
             elif error and not mistake:
                 self.invalid_input(error)
                 mistake = 1
@@ -306,6 +314,7 @@ class Menu:
             self.frame.delete_last_lines(2)
             if len(customers) == 1:
                 self.__current_customer = customers[0]
+                print('Customer: {}\n'.format(self.__current_customer.__str__()))
                 self.found_customer()
             else:
                 print("{}".format(self.color.return_colored("There are multiple customers with that name!", 'red')))
@@ -340,7 +349,7 @@ class Menu:
     def delete_customer(self):
         self.customer_manager.delete_customer(self.__current_customer)
         self.frame.delete_last_lines()
-        print('{}'.format(self.color.return_colored("Customer removed from file", 'red')))
+        print('{}'.format(self.color.return_colored("Customer removed", 'red')))
         time.sleep(1.5)
         self.frame.delete_last_lines()
         self.customer()
@@ -462,7 +471,7 @@ class Menu:
     def delete_vehicle(self):
         self.vehicle_manager.delete_vehicle(self.__current_vehicle)
         self.frame.delete_last_lines(1)
-        print('{}'.format(self.color.return_colored("Car removed from file", 'red')))
+        print('{}'.format(self.color.return_colored("Car removed", 'red')))
         time.sleep(1.5)
         self.cars()
 
@@ -535,9 +544,11 @@ class Menu:
 
             elif prompt.lower() == 'register order':
                 print()
+                print()
                 self.register_order()
 
             elif prompt.lower() == 'find order':
+                print()
                 print()
                 self.frame.delete_last_lines(7)
                 self.find_order()    
@@ -593,7 +604,7 @@ class Menu:
                 self.customer()
 
             elif prompt.lower() == 'cancel':
-                self.frame.delete_last_lines(15)
+                self.frame.delete_last_lines(13)
                 self.customer()
                 
         ######################################################    
@@ -603,8 +614,8 @@ class Menu:
             if prompt.lower() == 'save':
                 self.frame.delete_last_lines(15)
                 self.save_edited_customer()
-                print('Customer: {}\n'.format(self.__current_customer.__str__()))
-                self.found_customer()
+                # print('Customer: {}\n'.format(self.__current_customer.__str__()))
+                self.customer()
 
             elif prompt.lower() == 'cancel':
                 self.frame.delete_last_lines(15)
@@ -634,12 +645,12 @@ class Menu:
             chosen,customers = prompt
             if chosen['customer'].lower() != 'go back':
                 self.__current_customer = customers[chosen['index']]
-                self.frame.delete_last_lines(8)
+                self.frame.delete_last_lines(7)
                 print('Customer: ' + self.__current_customer.__str__())
                 print()
                 self.found_customer()
             else:
-                self.frame.delete_last_lines(8)
+                self.frame.delete_last_lines(7)
                 self.customer()
 
         ######################################################    

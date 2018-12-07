@@ -51,5 +51,4 @@ class Vehicle:
         return self.__rented_dates
 
     def get_attributes(self):
-        return self.__licence, self.__make, self.__year, self.__type_of_vehicle, 
-        self.__color, self.__seats, self.__maintainance
+        return self.__licence, self.__make, self.__year, self.__type_of_vehicle, self.__color, self.__seats, self.__maintainance

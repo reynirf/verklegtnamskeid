@@ -82,7 +82,7 @@ class OrderManager:
         return "Price is: {}".format(price_per_day*diffrence.days)
 
 
-    def check_ID(self,ID):
+    def check_ID(self,ID, ignore_empty_value = False, current_value = ''):
         """Check if ssn is valid. Returns an error message if ssn
         has letters or punctuation in it"""
         ID = ID.replace("-", "")
@@ -91,7 +91,7 @@ class OrderManager:
                 return "ID not valid. Please use only numbers."
         self.__temp_ID = ID
 
-    def check_ssn(self,ssn):
+    def check_ssn(self,ssn, ignore_empty_value = False, current_value = ''):
         """Check if ssn is valid. Returns an error message if ssn
         has letters or punctuation in it"""
         ssn = ssn.replace("-", "")
@@ -100,7 +100,7 @@ class OrderManager:
                 return "SSN not valid. Please use only numbers."
         self.__temp_ssn = ssn
     
-    def check_make(self,make):
+    def check_make(self,make, ignore_empty_value = False, current_value = ''):
         """check if make is valid. Returns an error message if make
         has numbers or punctuation in it"""
         for letter in make.strip():
@@ -108,7 +108,7 @@ class OrderManager:
                 return "Make not valid. Please use only letters."
         self.__temp_car = make
 
-    def check_type_of_vehicle(self,type_of_vehicle):
+    def check_type_of_vehicle(self,type_of_vehicle, ignore_empty_value = False, current_value = ''):
         """check if make is valid. Returns an error message if make
         has numbers or punctuation in it"""
         for letter in type_of_vehicle.strip():
@@ -116,7 +116,7 @@ class OrderManager:
                 return "Make not valid. Please use only letters."
         self.__temp_type_of_vehicle = type_of_vehicle
 
-    def check_start_date(self,start_date):
+    def check_start_date(self,start_date, ignore_empty_value = False, current_value = ''):
         """Check if start date is valid. Returns an error message if start date
         can not be converted to a datetime object"""
         present_day = datetime.date.today()
@@ -131,7 +131,7 @@ class OrderManager:
         except ValueError:
             return "Start date not valid. Please try again."
         
-    def check_ending_date(self,end_date):
+    def check_ending_date(self,end_date, ignore_empty_value = False, current_value = ''):
         """Check if end date is valid. Returns an error message if end date
         can not be converted to a datetime object"""
         try:
@@ -145,7 +145,7 @@ class OrderManager:
         except ValueError:
             return "End date not valid. Please try again."
 
-    def check_pick_up_time(self,pick_up_time):
+    def check_pick_up_time(self,pick_up_time, ignore_empty_value = False, current_value = ''):
         """Check if pick up time is valid. Returns an error message if pick up time
         has letters in it"""
         pick_up_time = pick_up_time.replace("-", "").strip()
@@ -173,13 +173,13 @@ class OrderManager:
                 return "Returning time not valid. Please use only numbers."
         self.__temp_returning_time = returning_time
 
-    def check_pick_up_location(self,pick_up_location):
+    def check_pick_up_location(self,pick_up_location, ignore_empty_value = False, current_value = ''):
         self.__temp_pick_up_location = pick_up_location
     
-    def check_return_location(self,return_location):
+    def check_return_location(self,return_location, ignore_empty_value = False, current_value = ''):
         self.__temp_return_location = return_location
     
-    def check_number_of_seats(self,number_of_seats):
+    def check_number_of_seats(self,number_of_seats, ignore_empty_value = False, current_value = ''):
         """Check if number of seats is valid. Returns an error message if number of seats
         has letters or punctuation in it"""
         number_of_seats = number_of_seats.replace("-", "")
@@ -188,10 +188,10 @@ class OrderManager:
                 return "Number of seats not valid. Please use only numbers."
         self.__temp_number_of_seats = number_of_seats
 
-    def check_number_plate(self,number_plate):
+    def check_number_plate(self,number_plate, ignore_empty_value = False, current_value = ''):
         self.__temp_number_plate = number_plate
     
-    def check_insurance(self,insurance):
+    def check_insurance(self,insurance, ignore_empty_value = False, current_value = ''):
         self.__temp_insurance = insurance
 
 

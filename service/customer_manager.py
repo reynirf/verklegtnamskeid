@@ -54,6 +54,8 @@ class CustomerManager:
         elif ssn.strip() == '':
             self.__temp_ssn = current_value
             return None
+        elif len(ssn.strip()) < 7:
+            return self.error('SSN')
         for letter in ssn:
             if letter in (string.ascii_letters + string.punctuation):
                 return self.error('SSN')
