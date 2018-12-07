@@ -44,19 +44,21 @@ class OrderManager:
             self.__temp_type_of_vehicle)
 
     def get_inputted_order(self):
-        print("{}".format(self.__temp_ID))
-        print("{}".format(self.__temp_ssn))
-        print("{}".format(self.__temp_car))
-        #print("{}".format(self.__temp_start_date))
-        #print("{}".format(self.__temp_end_date))
-        print("{}".format(self.__temp_pick_up_time))
-        print("{}".format(self.__temp_returning_time))
-        print("{}".format(self.__temp_pick_up_location))
-        print("{}".format(self.__temp_return_location))
-        print("{}".format(self.__temp_number_of_seats))
-        print("{}".format(self.__temp_number_plate))
-        print("{}".format(self.__temp_insurance))
-        print("{}".format(self.__temp_type_of_vehicle))
+        print("Enter ID: {}".format(self.__temp_ID))
+        print("Enter SSN: {}".format(self.__temp_ssn))
+        print("Enter Make: {}".format(self.__temp_car))
+        print("Enter start date: {}".format(self.__temp_start_date))
+        print("Enter ending date: {}".format(self.__temp_end_date))
+        print("Enter pick up time: {}".format(self.__temp_pick_up_time))
+        print("Enter returning time: {}".format(self.__temp_returning_time))
+        print("Enter pick up location: {}".format(self.__temp_pick_up_location))
+        print("Enter return location: {}".format(self.__temp_return_location))
+        print("Enter number of seats: {}".format(self.__temp_number_of_seats))
+        print("Enter number plate: {}".format(self.__temp_number_plate))
+        print("Enter Insurance: {}".format(self.__temp_insurance))
+        print("Enter type of vehicle: {}".format(self.__temp_type_of_vehicle))
+        print()
+        
 
     def get_order_dates(self):
         dates = []
