@@ -43,6 +43,21 @@ class OrderManager:
             self.__temp_insurance,
             self.__temp_type_of_vehicle)
 
+    def get_inputted_order(self):
+        print("{}".format(self.__temp_ID))
+        print("{}".format(self.__temp_ssn))
+        print("{}".format(self.__temp_car))
+        print("{}".format(self.__temp_start_date))
+        print("{}".format(self.__temp_end_date))
+        print("{}".format(self.__temp_pick_up_time))
+        print("{}".format(self.__temp_returning_time))
+        print("{}".format(self.__temp_pick_up_location))
+        print("{}".format(self.__temp_return_location))
+        print("{}".format(self.__temp_number_of_seats))
+        print("{}".format(self.__temp_number_plate))
+        print("{}".format(self.__temp_insurance))
+        print("{}".format(self.__temp_type_of_vehicle))
+
     def get_order_dates(self):
         dates = []
         working_date = self.__temp_start_date
@@ -60,8 +75,8 @@ class OrderManager:
         
         price_per_day=order_instance.get_price_per_day()
 
-        start_date_time_obj = datetime.date(start_date_Input[0],start_date_Input[1],start_date_Input[2])
-        end_date_time_obj = datetime.date(end_date_Input[0],end_date_Input[1],end_date_Input[2])
+        start_date_time_obj = datetime.date(start_date_Input[2],start_date_Input[1],start_date_Input[0])
+        end_date_time_obj = datetime.date(end_date_Input[2],end_date_Input[1],end_date_Input[0])
 
         diffrence = end_date_time_obj - start_date_time_obj
         return "Price is: {}".format(price_per_day*diffrence.days)
