@@ -1,8 +1,8 @@
 from repos.vehicle_repo import VehicleRepo
-import datetime
 from models.vehicle import Vehicle
 import string
 import time
+import datetime
 
 class VehicleManager:
     
@@ -23,12 +23,12 @@ class VehicleManager:
     def save_new_car(self):
         #uses the temp values to save the new car 
         self.__vehicle_repo.save_new_car(
-            self.__temp_car_type,
+            self.__temp_number_plate,
             self.__temp_make,
             self.__temp_model,
             self.__temp_year,
+            self.__temp_car_type,
             self.__temp_number_of_seats,
-            self.__temp_number_plate,
             self.__temp_fuel,
             self.__temp_driving_transmission)
 
@@ -210,8 +210,9 @@ class VehicleManager:
     def save_order_dates(self, dates, vehicle_number):
         vehicle = self.find_car_by_number_plate(vehicle_number)
         self.__vehicle_repo.delete_vehicle(vehicle)
-        a,b,c,d,e,f,g = vehicle.get_attributes().split(',')
-        self.__vehicle_repo.save_new_car(a,b,c,d,e,f,g)
+        a,b,c,d,e,f,g,h = vehicle.get_attributes().split(',')
+        vehicle_dates = vehicle.get_rented_dates()
+        self.__vehicle_repo.save_new_car(a,b,c,d,e,f,g,h)
 
     def delete_vehicle(self, car):
         self.__vehicle_repo.delete_vehicle(car)
