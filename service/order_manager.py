@@ -1,11 +1,8 @@
 from repos.order_repo import OrderRepo
 from models.order import Order
 import string
-<<<<<<< HEAD
 from models.vehicle import Vehicle
-=======
 import datetime
->>>>>>> a477c13f62b4e972f35a33659ecae1814a57b04d
 
 class OrderManager:
 
