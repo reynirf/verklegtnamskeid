@@ -72,26 +72,13 @@ class OrderManager:
         start_date_Input = self.__temp_start_date
         end_date_Input = self.__temp_end_date
 
-<<<<<<< HEAD
-        order_instance = Vehicle(0, self.__temp_car, 0, self.__temp_type_of_vehicle, 0, self.__temp_number_of_seats, 0,
-                                 0)
-=======
         order_instance=Vehicle(0,0,0,0,self.__temp_type_of_vehicle,self.__temp_number_of_seats,0,0)
         
         price_per_day=order_instance.get_price_per_day()
->>>>>>> 3414779e132ee30749b87bf4424fd11e4f108865
 
         price_per_day = order_instance.get_price_per_day()
 
-<<<<<<< HEAD
-        diffrence = end_date_Input - start_date_Input
-        total = diffrence.days + 1
-        return "Price is: {}".format(price_per_day * total)
-
-    def check_ID(self, ID, ignore_empty_value=False, current_value=''):
-=======
     def check_ID(self,ID, ignore_empty_value = False, current_value = ''):
->>>>>>> 3414779e132ee30749b87bf4424fd11e4f108865
         """Check if ssn is valid. Returns an error message if ssn
         has letters or punctuation in it"""
         ID = ID.replace("-", "")
