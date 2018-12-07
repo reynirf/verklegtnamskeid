@@ -166,8 +166,8 @@ class Menu:
 
         self.check_if_valid('Insurance', self.order_manager.check_insurance)
         print()
-        register_order_list = self.nocco_list.choose_one("Choose an action",["Save", "Print order",
-        "Show all available cars", "Cancel"], "action")
+        register_order_list = self.nocco_list.choose_one("Choose an action",["Save", "Calculate order" 
+        , "Print order", "Show all available cars", "Cancel"], "action")
         self.handle_answer_from_menu(register_order_list['action'], 'register_order')
 
 
@@ -501,6 +501,21 @@ class Menu:
                 self.frame.delete_last_lines(5)
                 self.order()
 
+        ######################################################    
+        #                   Register order                   #
+        ######################################################
+        elif menu_type == 'Register order':
+            if prompt.lower() == 'calculate order':
+                pass
+            elif prompt.lower() == 'print order':
+                pass
+            elif prompt.lower() == 'save':
+                pass
+            elif prompt.lower() == 'show all available cars':
+                pass
+            elif prompt.lower() == 'Cancel':
+                self.frame.delete_last_lines(17)
+                self.order
 
         ######################################################    
         #                      CUSTOMER                      #
@@ -648,7 +663,9 @@ class Menu:
                 self.show_all_available_cars()
                 self.frame.delete_last_lines(5)
                 self.order()
-
+            
+            elif prompt.lower() == 'calculate order':
+                pass
             elif prompt.lower() == 'save':
                 self.frame.delete_last_lines(14)
                 self.frame.delete_last_lines(5)
