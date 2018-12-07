@@ -1,14 +1,16 @@
 from datetime import date
 
 class Vehicle:
-    def __init__(self, licence, make, year, type_of_vehicle, 
-                color, seats, maintainance, dates=[]):
+    def __init__(self, licence, make, model, year, type_of_vehicle, 
+                 seats, fuel, transmission, maintainance=0, dates=[]):
         self.__licence = licence
         self.__make = make
+        self.__model = model
         self.__year = year
         self.__type_of_vehicle = type_of_vehicle
-        self.__color = color
         self.__seats = seats
+        self.__fuel = fuel
+        self.__transmission = transmission
         self.__maintainance = maintainance
         self.__rented_dates = []
         #self.set_rented_dates(dates)
@@ -32,6 +34,9 @@ class Vehicle:
                 day = date[8:]
                 self.__rented_dates.append(date(int(year), int(month), int(day)))
 
+    def get_rented_dates(self):
+        return self.__rented_dates
+
     def __str__(self):
         return "{} {}".format(self.__licence, self.__make)
 
@@ -51,4 +56,4 @@ class Vehicle:
         return self.__rented_dates
 
     def get_attributes(self):
-        return self.__licence, self.__make, self.__year, self.__type_of_vehicle, self.__color, self.__seats, self.__maintainance
+        return self.__licence, self.__make, self.__model, self.__year, self.__type_of_vehicle, self.__seats, self.__fuel, self.__transmission, self.__maintainance 
