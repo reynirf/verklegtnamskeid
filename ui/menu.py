@@ -255,9 +255,7 @@ class Menu:
             else:
                 print("{}".format(self.color.return_colored("There are multiple customers with that name!", 'red')))
                 print()
-
-
-                printable_customers = ['{} - {}'.format(customer.__str__(), customer.get_ssn()) for customer in customers]
+                printable_customers = ['{} | {}-{}'.format(customer.__str__(), customer.get_ssn()[:6], customer.get_ssn()[6:]) for customer in customers]
 
                 printable_customers.append('Go back')
                 
@@ -559,13 +557,12 @@ class Menu:
         ######################################################
         if menu_type == 'found multiple customers':
             chosen,customers = prompt
-            if chosen['customer'] != 'go back':
+            if chosen['customer'].lower() != 'go back':
                 self.__current_customer = customers[chosen['index']]
                 self.frame.delete_last_lines(7)
                 print('Customer: ' + self.__current_customer.__str__())
                 print()
                 self.found_customer()
-
             else:
                 self.frame.delete_last_lines(7)
                 self.customer()
@@ -578,10 +575,17 @@ class Menu:
                 customer_details = self.__current_customer.return_details()
                 self.frame.delete_last_lines(6)
                 for detail, value in customer_details.items():
+                    if detail == 'Credit card number':
+                        print("{}: **** **** **** {}".format(detail, value[12:]))
+                        continue
+                    if detail == 'SSN':
+                        print('{}: {}-{}'.format(detail, value[:6], value[6:]))
+                        continue
                     print("{}: {}".format(detail, value))
                 self.nocco_list.single_list('Go back')
                 self.frame.delete_last_lines(10)
-                self.customer()
+                print('Customer: ' + self.__current_customer.__str__() +'\n')
+                self.found_customer()
 
             elif prompt.lower() == 'edit customer':
                 self.frame.delete_last_lines(5)
