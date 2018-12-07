@@ -12,7 +12,7 @@ class VehicleRepo:
         """Returns a list of all vehicles on file"""
         if self.__vehicle_list == []:
             with open(self.VEHICLE_FILE, 'r') as vehicle_file:
-                csv_reader = csv.DictReader(vehicle_file)
+                csv_reader = csv.DictReader(vehicle_file, delimiter=';')
                 for line in csv_reader:
                     vehicle = Vehicle(
                         line['licence'],
@@ -29,8 +29,8 @@ class VehicleRepo:
     def save_new_car(self, car_type, make, model, year, 
     number_of_seats, number_plate, fuel, driving_transmission):
         with open(self.VEHICLE_FILE, 'a') as vehicle_file:
-            csv_writer = csv.writer(vehicle_file)
-            csv_writer.writerow([car_type,make,model,year,number_of_seats,number_plate,
+            csv_writer = csv.writer(vehicle_file, delimiter=';')
+            csv_writer.writerow([number_plate,car_type,make,model,year,number_of_seats,
             fuel,driving_transmission])
     
     def delete_vehicle(self, vehicle):
@@ -39,7 +39,7 @@ class VehicleRepo:
         """
         file_content = []
         with open(self.VEHICLE_FILE, 'r') as vehicle_file:
-            csv_reader = csv.reader(vehicle_file)
+            csv_reader = csv.reader(vehicle_file, delimiter=';')
             for line in csv_reader:
                 if line[0] != vehicle.get_licence():
                     file_content.append(line)

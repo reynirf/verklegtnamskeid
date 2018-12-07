@@ -12,7 +12,7 @@ class OrderManager:
         self.__order_repo = OrderRepo()
         self.__temp_id = ""
         self.__temp_customer = ""
-        self.__temp_starting_date = ""
+        self.__temp_start_date = ""
         self.__temp_ending_date = ""
         self.__temp_pick_up_time = ""
         self.__temp_returning_time = ""
@@ -42,6 +42,15 @@ class OrderManager:
             self.__temp_number_plate,
             self.__temp_insurance,
             self.__temp_type_of_vehicle)
+
+    def get_order_dates(self):
+        dates = []
+        working_date = self.__temp_start_date
+        while working_date <= self.__temp_end_date:
+            dates.append(working_date)
+            x = working_date.day + 1
+            working_date.replace(day=x)
+        return dates, self.__temp_number_plate
 
     def calculate_order(self):
         start_date_Input = list(map(int,(self.__temp_start_date).split("-")))
@@ -94,26 +103,34 @@ class OrderManager:
 
     def check_start_date(self,start_date):
         """Check if start date is valid. Returns an error message if start date
-        has letters in it"""
+        can not be converted to a datetime object"""
         present_day = datetime.date.today()
-        #start_date = start_date.replace("-", "")
-        for letter in start_date:
-            if letter in (string.ascii_letters):
-                return "Start date not valid. Please use only numbers."
-        self.__temp_start_date = start_date
-
+        try:
+            year = start_date[6:]
+            month = start_date[3:5]
+            day = start_date[:2]
+            date_object = datetime.date(int(year), int(month), int(day))
+            if date_object < present_day:
+                raise ValueError
+            self.__temp_start_date = date_object
+        except ValueError:
+            return "Start date not valid. Please try again."
+        
     def check_ending_date(self,end_date):
-        """Check if ending date is valid. Returns an error message if ending date
-        has letters in it"""
-        #end_date = end_date.replace("-", "")
-        for letter in end_date:
-            if letter in (string.ascii_letters):
-                return "Ending date not valid. Please use only numbers."
-        self.__temp_end_date = end_date
+        """Check if end date is valid. Returns an error message if end date
+        can not be converted to a datetime object"""
+        try:
+            year = end_date[6:]
+            month = end_date[3:5]
+            day = end_date[:2]
+            date_object = datetime.date(int(year), int(month), int(day))
+            if date_object < self.__temp_start_date:
+                raise ValueError
+            self.__temp_end_date = date_object
+        except ValueError:
+            return "End date not valid. Please try again."
 
     def check_pick_up_time(self,pick_up_time):
-
-        present_day = datetime.datetime.today()
         """Check if pick up time is valid. Returns an error message if pick up time
         has letters in it"""
         pick_up_time = pick_up_time.replace("-", "").strip()
@@ -123,14 +140,14 @@ class OrderManager:
                 return "Pick up time not valid. Please use only numbers."
             else:
                 time_correct_format += letter
-        if len(time_correct_format) < 8:
+        '''if len(time_correct_format) < 8:
             return "Not a valid date."
-        # time_correct_format = time_correct_format[4:] + "-"+time_correct_format[2:4]+ "-" +time_correct_format[:2]
-        #datetime_object = datetime.datetime.strptime(time_correct_format, "%Y-%m-%d")
-        #if datetime_object < present_day:
-        # return "Check another date."
-        else:
-            self.__temp_pick_up_time = time_correct_format
+        time_correct_format = time_correct_format[4:] + "-"+time_correct_format[2:4]+ "-" +time_correct_format[:2]
+        datetime_object = datetime.datetime.strptime(time_correct_format, "%Y-%m-%d")
+        if datetime_object < present_day:
+            return "Check another date."
+        else:'''
+        self.__temp_pick_up_time = time_correct_format
 
     def check_returning_time(self,returning_time):
         """Check if returning time is valid. Returns an error message if returning time
