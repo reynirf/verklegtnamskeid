@@ -149,7 +149,7 @@ class OrderManager:
         else:'''
         self.__temp_pick_up_time = time_correct_format
 
-    def check_returning_time(self,returning_time):
+    def check_returning_time(self,returning_time, ignore_empty_value = False, current_value = ''):
         """Check if returning time is valid. Returns an error message if returning time
         has letters in it"""
         returning_time = returning_time.replace("-", "")

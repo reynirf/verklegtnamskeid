@@ -212,7 +212,8 @@ class VehicleManager:
         self.__vehicle_repo.delete_vehicle(vehicle)
         a,b,c,d,e,f,g,h = vehicle.get_attributes().split(',')
         vehicle_dates = vehicle.get_rented_dates()
-        self.__vehicle_repo.save_new_car(a,b,c,d,e,f,g,h)
+        vehicle_dates.extend(dates)
+        self.__vehicle_repo.save_new_car(a,b,c,d,e,f,g,h,dates_rented=vehicle_dates)
 
     def delete_vehicle(self, car):
         self.__vehicle_repo.delete_vehicle(car)
