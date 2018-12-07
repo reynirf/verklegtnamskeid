@@ -355,13 +355,13 @@ class Menu:
             for i,car in enumerate(cars):
                 # TODO we need to figure out how to handle this 
                 print("Car "+ str(i+1) +": "+ car.get_licence())
-            print()
-            if len(cars) == 1:
-                self.__current_vehicle == cars[0]
-                found_cars_list = self.nocco_list.choose_one("Choose an action",["Edit car", "Remove car", "Go back"],"action") 
-                self.frame.delete_last_lines(2)
-                self.handle_answer_from_menu(found_cars_list['action'],
-                'found car')
+                print()
+        if len(cars) > 0:
+            self.__current_vehicle = cars
+            found_cars_list = self.nocco_list.choose_one("Choose an action",["Edit car", "Remove car", "Go back"],"action") 
+            self.frame.delete_last_lines(2)
+            self.handle_answer_from_menu(found_cars_list['action'],
+            'found car')
     
     def find_cars_by_make(self):
         make = input("Enter make: ")
@@ -396,8 +396,7 @@ class Menu:
                 # this does not work properly, because we need to handle
                 # even when there are more than one car.
             if len(cars) == 1:
-                self.__current_vehicle = cars[0]
-                print("somethin trying")
+                self.__current_vehicle = cars
                 # TODO we need to figure out how to handle this
                 found_cars_list = self.nocco_list.choose_one("Choose an action",
                 ["Edit car","Remove car", "Go back"], "action")
