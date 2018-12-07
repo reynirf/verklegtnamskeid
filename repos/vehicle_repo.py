@@ -21,7 +21,8 @@ class VehicleRepo:
                         line['type'],
                         line['color'],
                         line['seats'], 
-                        line['maintainance'])
+                        line['maintainance'],
+                        line['dates rented'])
                     self.__vehicle_list.append(vehicle)
         return self.__vehicle_list
 

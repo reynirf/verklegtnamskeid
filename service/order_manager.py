@@ -38,6 +38,11 @@ class OrderManager:
             self.__temp_number_plate,
             self.__temp_insurance)
 
+    def calculate_order(self):
+        print(self.__temp_ID)
+        print(self.__temp_ssn,)
+
+
     def check_ID(self,ID):
         """Check if ssn is valid. Returns an error message if ssn
         has letters or punctuation in it"""
