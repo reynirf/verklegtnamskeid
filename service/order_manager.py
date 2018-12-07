@@ -47,8 +47,8 @@ class OrderManager:
         print("{}".format(self.__temp_ID))
         print("{}".format(self.__temp_ssn))
         print("{}".format(self.__temp_car))
-        print("{}".format(self.__temp_start_date))
-        print("{}".format(self.__temp_end_date))
+        #print("{}".format(self.__temp_start_date))
+        #print("{}".format(self.__temp_end_date))
         print("{}".format(self.__temp_pick_up_time))
         print("{}".format(self.__temp_returning_time))
         print("{}".format(self.__temp_pick_up_location))
@@ -68,18 +68,16 @@ class OrderManager:
         return dates, self.__temp_number_plate
 
     def calculate_order(self):
-        start_date_Input = list(map(int,(self.__temp_start_date).split("-")))
-        end_date_Input = list(map(int,(self.__temp_end_date).split("-")))
+        start_date_Input = self.__temp_start_date
+        end_date_Input = self.__temp_end_date
 
         order_instance=Vehicle(0,self.__temp_car,0,self.__temp_type_of_vehicle,0,self.__temp_number_of_seats,0,0)
         
         price_per_day=order_instance.get_price_per_day()
 
-        start_date_time_obj = datetime.date(start_date_Input[2],start_date_Input[1],start_date_Input[0])
-        end_date_time_obj = datetime.date(end_date_Input[2],end_date_Input[1],end_date_Input[0])
-
-        diffrence = end_date_time_obj - start_date_time_obj
-        return "Price is: {}".format(price_per_day*diffrence.days)
+        diffrence = end_date_Input - start_date_Input 
+        total=diffrence.days + 1
+        return "Price is: {}".format(price_per_day*total)
 
 
     def check_ID(self,ID, ignore_empty_value = False, current_value = ''):
@@ -164,7 +162,7 @@ class OrderManager:
         else:'''
         self.__temp_pick_up_time = time_correct_format
 
-    def check_returning_time(self,returning_time):
+    def check_returning_time(self,returning_time, ignore_empty_value = False, current_value = ''):
         """Check if returning time is valid. Returns an error message if returning time
         has letters in it"""
         returning_time = returning_time.replace("-", "")
