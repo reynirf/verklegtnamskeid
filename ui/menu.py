@@ -502,22 +502,6 @@ class Menu:
                 self.order()
 
         ######################################################    
-        #                   Register order                   #
-        ######################################################
-        elif menu_type == 'Register order':
-            if prompt.lower() == 'calculate order':
-                pass
-            elif prompt.lower() == 'print order':
-                pass
-            elif prompt.lower() == 'save':
-                pass
-            elif prompt.lower() == 'show all available cars':
-                pass
-            elif prompt.lower() == 'Cancel':
-                self.frame.delete_last_lines(17)
-                self.order
-
-        ######################################################    
         #                      CUSTOMER                      #
         ######################################################
 
