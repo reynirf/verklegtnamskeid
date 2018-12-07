@@ -370,6 +370,9 @@ class Menu:
         self.frame.delete_last_lines(2)
 
     def show_all_available_cars(self):
+        date = input('Enter a date: ')
+        self.vehicle_manager.show_all_available_cars(date)
+ 
         test_data = [['Toyota', 'Huyndai', 'Ford', 'Reynir', 'Sixarinn'],
                      ['Renault', 'Viddi', 'Peugot', 'Guðrún', 'Ermir'], ['Nike', 'Subaru', 'Volvo', 'Bíll', 'Hilux']]
 
@@ -380,6 +383,9 @@ class Menu:
         self.nocco_list.single_list('Go back')
 
     def show_cars_in_service(self):
+        date = input('Enter a date: ')
+        self.vehicle_manager.show_cars_in_service(date)
+
         test_data = [['Toyota', 'Huyndai', 'Ford', 'Reynir', 'Sixarinn'],
                      ['Renault', 'Viddi', 'Peugot', 'Guðrún', 'Ermir'], ['Nike', 'Subaru', 'Volvo', 'Bíll', 'Hilux']]
 

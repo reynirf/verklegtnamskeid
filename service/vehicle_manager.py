@@ -207,6 +207,20 @@ class VehicleManager:
         if cars != []:
             return cars
 
+    def show_all_available_cars(self, date):
+        vehicles = self.get_vehicle_list()
+        available_cars = []
+        for car in vehicles:
+            dates = car.get_rented_dates()
+            pass
+
+    def show_cars_in_service(self, date):
+        vehicles = self.get_vehicle_list()
+        rented_cars = []
+        for car in vehicles:
+            dates = car.get_rented_dates()
+            pass
+
     def save_order_dates(self, dates, vehicle_number):
         vehicle = self.find_car_by_number_plate(vehicle_number)
         self.__vehicle_repo.delete_vehicle(vehicle)
