@@ -1,6 +1,7 @@
 from repos.order_repo import OrderRepo
 from models.order import Order
 import string
+from models.vehicle import Vehicle
 
 class OrderManager:
 
@@ -38,8 +39,9 @@ class OrderManager:
             self.__temp_insurance)
 
     def calculate_order(self):
-        print(self.__temp_ID)
-        print(self.__temp_ssn,)
+        price_per_day = Vehicle.get_price_per_day(self.__temp_number_plate)
+        start = self.__temp_start_date
+        end = self.__temp_ending_date
 
 
     def check_ID(self,ID):

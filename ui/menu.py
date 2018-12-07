@@ -83,6 +83,7 @@ class Menu:
     
     def calculate_order(self):
         self.order_manager.calculate_order()
+        print("lollll")
 
 
     
@@ -653,8 +654,6 @@ class Menu:
                 self.frame.delete_last_lines(5)
                 self.order()
             
-            elif prompt.lower() == 'calculate order':
-                pass
             elif prompt.lower() == 'save':
                 self.frame.delete_last_lines(14)
                 self.frame.delete_last_lines(5)
