@@ -28,7 +28,7 @@ class OrderRepo:
                         line['return location'],
                         line['number of seats'],
                         line['number plate'],
-                        line['insurance']
+                        line['insurance'],
                         line['type_of_vehicle'])
                     self.__order_list.append(order)
         return self.__order_list
