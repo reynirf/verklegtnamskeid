@@ -21,7 +21,7 @@ class VehicleManager:
         return self.__vehicle_repo.get_vehicle_list()
 
     def save_new_car(self):
-        #uses the temp values to save the new customer and then clears them 
+        #uses the temp values to save the new car 
         self.__vehicle_repo.save_new_car(
             self.__temp_car_type,
             self.__temp_make,
@@ -206,6 +206,12 @@ class VehicleManager:
                 cars.append(vehicle)
         if cars != []:
             return cars
+
+    def save_order_dates(self, dates, vehicle_number):
+        vehicle = self.find_car_by_number_plate(vehicle_number)
+        self.__vehicle_repo.delete_vehicle(vehicle)
+        a,b,c,d,e,f,g = vehicle.get_attributes().split(',')
+        self.__vehicle_repo.save_new_car(a,b,c,d,e,f,g)
 
     def delete_vehicle(self, car):
         self.__vehicle_repo.delete_vehicle(car)
