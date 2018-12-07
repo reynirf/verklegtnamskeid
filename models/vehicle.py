@@ -52,4 +52,4 @@ class Vehicle:
 
     def get_attributes(self):
         return self.__licence, self.__make, self.__year, self.__type_of_vehicle, 
-            self.__color, self.__seats, self.__maintainance
+        self.__color, self.__seats, self.__maintainance

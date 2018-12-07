@@ -87,7 +87,7 @@ class Menu:
         print(self.order_manager.calculate_order())
         print()
         calculate_order_list = self.nocco_list.choose_one("Choose an action",["Go back"], "action")
-        self.handle_answer_from_menu(calculate_order_list['action'],'order')
+        self.handle_answer_from_menu(calculate_order_list['action'],'calculate_order')
 
     
     def find_order_by_id(self):
@@ -556,6 +556,15 @@ class Menu:
             elif prompt.lower() == 'go back':
                 self.frame.delete_last_lines(5)
                 self.order()
+
+
+        ######################################################    
+        #                      CALCULATE ORDER               #
+        ######################################################
+        elif menu_type == 'calculate_order':
+            if prompt.lower() == 'go back':
+                self.frame.delete_last_lines(6)
+                self.init_menu()   
 
         ######################################################    
         #                      CUSTOMER                      #
