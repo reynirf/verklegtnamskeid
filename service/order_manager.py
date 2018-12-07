@@ -1,6 +1,7 @@
 from repos.order_repo import OrderRepo
 from models.order import Order
 import string
+import datetime
 
 class OrderManager:
 
@@ -71,6 +72,7 @@ class OrderManager:
     def check_start_date(self,start_date):
         """Check if start date is valid. Returns an error message if start date
         has letters in it"""
+        present_day = datetime.date.today()
         start_date = start_date.replace("-", "")
         for letter in start_date:
             if letter in (string.ascii_letters):
@@ -87,13 +89,25 @@ class OrderManager:
         self.__temp_end_date = end_date
 
     def check_pick_up_time(self,pick_up_time):
+
+        present_day = datetime.datetime.today()
         """Check if pick up time is valid. Returns an error message if pick up time
         has letters in it"""
-        pick_up_time = pick_up_time.replace("-", "")
+        pick_up_time = pick_up_time.replace("-", "").strip()
+        time_correct_format = ""
         for letter in pick_up_time:
             if letter in (string.ascii_letters):
                 return "Pick up time not valid. Please use only numbers."
-        self.__temp_pick_up_time = pick_up_time
+            else:
+                time_correct_format += letter
+        if len(time_correct_format) < 8:
+            return "Not a valid date."
+        time_correct_format = time_correct_format[4:] + "-"+time_correct_format[2:4]+ "-" +time_correct_format[:2]
+        datetime_object = datetime.datetime.strptime(time_correct_format, "%Y-%m-%d")
+        if datetime_object < present_day:
+            return "Check another date."
+        else:
+            self.__temp_pick_up_time = time_correct_format
 
     def check_returning_time(self,returning_time):
         """Check if returning time is valid. Returns an error message if returning time

@@ -351,19 +351,16 @@ class Menu:
     def find_cars_by_number_plate(self):
         number_pl = input("Enter number plate: ")
         print()
-        cars = self.vehicle_manager.find_car_by_number_plate(number_pl)
-        if cars == None:
+        car = self.vehicle_manager.find_car_by_number_plate(number_pl)
+        if car == None:
             print('{}'.format(self.color.return_colored("Car not found!", 'red')))
             self.frame.delete_last_lines(3)
             time.sleep(2)
             self.find_cars()
         else:
-            for i,car in enumerate(cars):
-                # TODO we need to figure out how to handle this 
-                print("Car "+ str(i+1) +": "+ car.get_licence())
-                print()
-        if len(cars) > 0:
-            self.__current_vehicle = cars
+            print("Car: "+ car.get_licence())
+            print()
+            self.__current_vehicle = car
             found_cars_list = self.nocco_list.choose_one("Choose an action",["Edit car", "Remove car", "Go back"],"action") 
             self.frame.delete_last_lines(2)
             self.handle_answer_from_menu(found_cars_list['action'],

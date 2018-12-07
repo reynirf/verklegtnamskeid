@@ -21,7 +21,8 @@ class VehicleRepo:
                         line['type'],
                         line['color'],
                         line['seats'], 
-                        line['maintainance'])
+                        line['maintainance'],
+                        line['dates rented'])
                     self.__vehicle_list.append(vehicle)
         return self.__vehicle_list
 
@@ -43,6 +44,6 @@ class VehicleRepo:
                 if line[0] != vehicle.get_licence():
                     file_content.append(line)
         with open(self.VEHICLE_FILE, 'w', newline='') as vehicle_file:
-            csv_writer = csv.writer(vehicle_file)
+            csv_writer = csv.writer(vehicle_file, delimiter=';')
             for line in file_content:
                 csv_writer.writerow(line)
