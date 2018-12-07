@@ -10,8 +10,18 @@ class Vehicle:
         self.__color = color
         self.__seats = seats
         self.__maintainance = maintainance
-        self.__created = datetime(now.year, now.month, now.day, now.hour, now.minute, now.second)
+        self.set_price()
     
+    def set_price(self):
+        if self.__type_of_vehicle == "small car":
+            self.__price_per_day = 9000
+        elif self.__type_of_vehicle == "sedan":
+            self.__price_per_day = 10000
+        elif self.__type_of_vehicle == "offroad":
+            self.__price_per_day = 12000
+        elif self.__type_of_vehicle == "bus":
+            self.__price_per_day = 13000
+
     def __str__(self):
         return "{} {}".format(self.__licence, self.__make)
 
@@ -23,5 +33,8 @@ class Vehicle:
 
     def get_vehicle_type(self):
         return self.__type_of_vehicle
+    
+    def get_price_per_day(self):
+        return self.__price_per_day
 
 

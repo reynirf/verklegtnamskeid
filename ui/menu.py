@@ -81,6 +81,11 @@ class Menu:
         order_list = self.nocco_list.choose_one("Choose an action",["Register order","Find order","Calculate order", "Go back"], "action")
         self.handle_answer_from_menu(order_list['action'],'order')
     
+    def calculate_order(self):
+        self.order_manager.calculate_order()
+
+
+    
     def find_order_by_id(self):
         ID = input("Enter ID: ")
         print()
@@ -166,8 +171,8 @@ class Menu:
 
         self.check_if_valid('Insurance', self.order_manager.check_insurance)
         print()
-        register_order_list = self.nocco_list.choose_one("Choose an action",["Save", "Print order",
-        "Show all available cars", "Cancel"], "action")
+        register_order_list = self.nocco_list.choose_one("Choose an action",["Save", "Calculate order" 
+        , "Print order", "Show all available cars", "Cancel"], "action")
         self.handle_answer_from_menu(register_order_list['action'], 'register_order')
 
 
@@ -361,13 +366,13 @@ class Menu:
             for i,car in enumerate(cars):
                 # TODO we need to figure out how to handle this 
                 print("Car "+ str(i+1) +": "+ car.get_licence())
-            print()
-            if len(cars) == 1:
-                self.__current_vehicle == cars[0]
-                found_cars_list = self.nocco_list.choose_one("Choose an action",["Edit car", "Remove car", "Go back"],"action") 
-                self.frame.delete_last_lines(2)
-                self.handle_answer_from_menu(found_cars_list['action'],
-                'found car')
+                print()
+        if len(cars) > 0:
+            self.__current_vehicle = cars
+            found_cars_list = self.nocco_list.choose_one("Choose an action",["Edit car", "Remove car", "Go back"],"action") 
+            self.frame.delete_last_lines(2)
+            self.handle_answer_from_menu(found_cars_list['action'],
+            'found car')
     
     def find_cars_by_make(self):
         make = input("Enter make: ")
@@ -402,8 +407,7 @@ class Menu:
                 # this does not work properly, because we need to handle
                 # even when there are more than one car.
             if len(cars) == 1:
-                self.__current_vehicle = cars[0]
-                print("somethin trying")
+                self.__current_vehicle = cars
                 # TODO we need to figure out how to handle this
                 found_cars_list = self.nocco_list.choose_one("Choose an action",
                 ["Edit car","Remove car", "Go back"], "action")
@@ -508,7 +512,6 @@ class Menu:
                 self.frame.delete_last_lines(5)
                 self.order()
 
-
         ######################################################    
         #                      CUSTOMER                      #
         ######################################################
@@ -542,7 +545,7 @@ class Menu:
             elif prompt.lower() == 'cancel':
                 self.frame.delete_last_lines(15)
                 self.customer()
-        
+
         ######################################################    
         #                    FIND CUSTOMER                   #                    
         ######################################################
@@ -661,12 +664,21 @@ class Menu:
                 self.show_all_available_cars()
                 self.frame.delete_last_lines(5)
                 self.order()
-
+            
+            elif prompt.lower() == 'calculate order':
+                pass
             elif prompt.lower() == 'save':
                 self.frame.delete_last_lines(14)
                 self.frame.delete_last_lines(5)
                 self.save_new_order()
                 self.order()
+            elif prompt.lower() == 'calculate order':
+                self.frame.delete_last_lines(14)
+                self.frame.delete_last_lines(5)
+                self.calculate_order()
+
+
+
                 
         ######################################################    
         #                    FIND CAR                        #                    
