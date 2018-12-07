@@ -1,8 +1,8 @@
-from datetime import datetime
-now = datetime.now()
+from datetime import date
 
 class Vehicle:
-    def __init__(self, licence, make, year, type_of_vehicle, color, seats, maintainance):
+    def __init__(self, licence, make, year, type_of_vehicle, 
+                color, seats, maintainance, dates=[]):
         self.__licence = licence
         self.__make = make
         self.__year = year
@@ -10,6 +10,8 @@ class Vehicle:
         self.__color = color
         self.__seats = seats
         self.__maintainance = maintainance
+        self.__rented_dates = []
+        #self.set_rented_dates(dates)
         self.set_price()
     
     def set_price(self):
@@ -21,6 +23,14 @@ class Vehicle:
             self.__price_per_day = 12000
         elif self.__type_of_vehicle == "bus":
             self.__price_per_day = 13000
+    
+    def set_rented_dates(self, dates):
+        if dates != "":
+            for date in dates:
+                year = date[:4]
+                month = date[5:7]
+                day = date[8:]
+                self.__rented_dates.append(date(int(year), int(month), int(day)))
 
     def __str__(self):
         return "{} {}".format(self.__licence, self.__make)
@@ -36,5 +46,8 @@ class Vehicle:
     
     def get_price_per_day(self):
         return self.__price_per_day
+    
+    def get_rented_dates(self):
+        return self.__rented_dates
 
 

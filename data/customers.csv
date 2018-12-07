@@ -1,9 +1,6 @@
 name,ssn,birthday,phone,email,address,driver license,credit card
-John Johnson,1234567890,010190,5555555,mail@email.com,some street 89 some town somewhere,b,1111222233334444
 Tom Tomson,0101010101,231298,7777777,tom@mail.com,a street 23 a town,b,1234123412341234
  ,,,,@,3,[],43432432432432432
-Reynir,,,,@,@,[],44432423423432423
-,,re,,@,,[],432432423432432423
-,,,,@,,[],4534543534543543
-Reynir,,re,,@,,[],3423432423432432
-addada,44444,a,4444,@email,adada,['a'],4645646564646464654
+Reynir,2311992929,re,,@,,[],3423432423432432
+Reynir,4545454,re,,@,,[],3423432423432432
+e,4,4,4,b@gmail.com,4,b,4444444444444444
