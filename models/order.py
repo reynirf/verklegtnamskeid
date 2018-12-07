@@ -16,3 +16,9 @@ class Order:
     
     def __str__(self):
         return self.__order_id
+    
+    def get_ssn(self):
+        return self.__ssn
+    
+    def get_dates(self):
+        return self.__start_date + '-' + self.__end_date

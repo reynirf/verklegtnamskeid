@@ -199,16 +199,15 @@ class OrderManager:
     def find_order_by_ssn(self, ssn):
         order_list = self.__order_repo.get_order_list()
         ssn = ssn.replace("-", "")
+        orders = []
         for order in order_list:
             order_ssn = order.get_ssn().replace("-", "")
             if order_ssn == ssn:
-                return order
+                orders.append(order)
+        return orders
 
     def find_order_by_id(self, ID):
         order_list = self.__order_repo.get_order_list()
-        orders = []
         for order in order_list:
             if order.__str__().lower() == ID.lower():
-                orders.append(order)
-        if orders:
-            return orders
+                return order

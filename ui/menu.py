@@ -24,6 +24,7 @@ class Menu:
         self.order_manager = OrderManager()
         self.__current_customer = ""
         self.__current_vehicle = ""
+        self.__current_order = ""
 
     def get_employees(self):
         employee_list = self.employee_manager.get_employee_list()
@@ -99,47 +100,48 @@ class Menu:
             self.frame.delete_last_lines(2)
             self.find_order()
         else:
-            for i, person in enumerate(order):
-                print("Order " + str(i + 1) + ": " + person.__str__())
+            print("Order: " + order.__str__())
             print()
-            if len(order) == 1:
-                found_order_list = self.nocco_list.choose_one('Choose an action',
-                                                              ['Edit order', 'Unsubscribe order', 'Go back'], 'action')
-                self.frame.delete_last_lines(2)
-                self.handle_answer_from_menu(found_order_list['action'],
-                                             'found order')
-            else:
-                print("{}".format(self.color.return_colored("There are multiple orders with that ID!", 'red')))
-                print()
-                found_multiple_orders = self.nocco_list.choose_one('Choose an action',
-                                                                   ['Try again', 'Go back'], 'action')
-                self.frame.delete_last_lines(len(order) + 1)
-                self.handle_answer_from_menu(found_multiple_orders['action'],
-                                             'found multiple orders')
+            self.found_order()
 
     def find_order_by_ssn(self):
         ssn = input("Enter SSN: ")
         print()
-        order = self.order_manager.find_order_by_ssn(ssn)
-        if order == None:
+        orders = self.order_manager.find_order_by_ssn(ssn)
+        if orders == []:
             print('{}'.format(self.color.return_colored("Order not found", 'red')))
             time.sleep(1.5)
             self.frame.delete_last_lines(3)
             self.find_order()
         else:
             self.frame.delete_last_lines(2)
-            print("Order : " + order.__str__())
-            print()
-            found_order_list = self.nocco_list.choose_one('Choose an action',
-                                                          ['Edit order', 'Delete order', 'Go back'], 'action')
-            self.frame.delete_last_lines(2)
-            self.handle_answer_from_menu(found_order_list['action'],
-                                         'found order')
+            if len(orders) == 1:
+                print("Order : " + orders[0].__str__())
+                print()
+                self.found_order()
+            else:
+                print("{}".format(self.color.return_colored("There are multiple orders with that SSN!", 'red')))
+                print()
+                printable_orders = ['ID: {} SSN: {} Dates: {}'.format(
+                    order.__str__(),order.get_ssn(), order.get_dates()) for order in orders]
+                printable_orders.append('Go back')
+
+                found_multiple_orders = self.nocco_list.choose_one('Choose an order',
+                        printable_orders, 'order', True)
+                self.frame.delete_last_lines(len(orders) + 1)
+                self.handle_answer_from_menu((found_multiple_orders, orders), 
+                        'found multiple orders')
 
     def find_order(self):
         find_order_list = self.nocco_list.choose_one('Choose an action',
-                                                     ['Find order by ID', 'Find order by SSN', 'Go back'], 'action')
+                        ['Find order by ID', 'Find order by SSN', 'Go back'], 'action')
         self.handle_answer_from_menu(find_order_list['action'], 'find order')
+
+    def found_order(self):
+        found_order_list = self.nocco_list.choose_one('Choose an action',
+                        ['Edit order', 'Delete order', 'Go back'], 'action')
+        self.frame.delete_last_lines(2)
+        self.handle_answer_from_menu(found_order_list['action'], 'found order')
 
     def get_inputted_order(self):
         self.order_manager.get_inputted_order()
@@ -560,7 +562,7 @@ class Menu:
 
             elif prompt.lower() == 'find order':
                 print()
-                self.frame.delete_last_lines(7)
+                self.frame.delete_last_lines(6)
                 self.find_order()
         ######################################################    
         #                      FIND ORDER                    #
@@ -572,12 +574,38 @@ class Menu:
 
             elif prompt.lower() == 'find order by ssn':
                 self.frame.delete_last_lines(5)
-                self.find_customer_by_ssn()
+                self.find_order_by_ssn()
 
             elif prompt.lower() == 'go back':
                 self.frame.delete_last_lines(5)
                 self.order()
 
+        ######################################################    
+        #                     FOUND ORDER                    #
+        ######################################################
+        elif menu_type == 'found order':
+            if prompt.lower() == 'edit order':
+                pass
+            elif prompt.lower() == 'delete order':
+                pass
+            elif prompt.lower() == 'go back':
+                self.frame.delete_last_lines(5)
+                self.find_order()
+
+        ######################################################    
+        #                 FOUND MULTIPLE ORDERS              #                    
+        ######################################################
+        if menu_type == 'found multiple orders':
+            chosen, orders = prompt
+            if chosen['order'].lower() != 'go back':
+                self.__current_order = orders[chosen['index']]
+                self.frame.delete_last_lines(4)
+                print('Order: ' + self.__current_order.__str__())
+                print()
+                self.found_order()
+            else:
+                self.frame.delete_last_lines(2)
+                self.order()
 
         ######################################################    
         #                   CALCULATE ORDER                  #
