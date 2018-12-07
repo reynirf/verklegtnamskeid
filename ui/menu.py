@@ -748,6 +748,7 @@ class Menu:
             elif prompt.lower() == 'show all available cars':
                 self.frame.delete_last_lines(9)
                 self.show_all_available_cars()
+                self.frame.delete_last_lines(1)
                 print()
                 print()
                 self.cars()
@@ -755,9 +756,11 @@ class Menu:
             elif prompt.lower() == 'show cars in service':
                 self.frame.delete_last_lines(9)
                 self.show_cars_in_service()
+                self.frame.delete_last_lines(1)
                 print()
                 print()
                 self.cars()
+
             elif prompt.lower() == 'show cars that require maintenance':
                 self.frame.delete_last_lines(9)
                 self.show_cars_that_require_maintenance()
@@ -795,13 +798,11 @@ class Menu:
                 self.frame.delete_last_lines(5)
                 self.save_new_order()
                 self.order()
+
             elif prompt.lower() == 'calculate order':
                 self.frame.delete_last_lines(14)
                 self.frame.delete_last_lines(5)
                 self.calculate_order()
-
-
-
 
         ######################################################    
         #                    FIND CAR                        #                    
@@ -830,7 +831,6 @@ class Menu:
             if prompt.lower() == 'edit car':
                 self.frame.delete_last_lines(5)
                 self.init_menu()
-                # TODO edit car
 
             elif prompt.lower() == 'remove car':
                 self.frame.delete_last_lines(5)
