@@ -263,11 +263,6 @@ class Menu:
                 
                 found_multiple_customers = self.nocco_list.choose_one('Choose customer',
                     printable_customers, 'customer', True)
-                # found_multiple_customers = self.nocco_list.choose_one('Choose an action',
-                #     ['Try again', 'Go back'], 'action')
-
-                # self.frame.delete_last_lines(len(customer) + 1)
-                
 
                 self.handle_answer_from_menu((found_multiple_customers, customers), 
                     'found multiple customers')
