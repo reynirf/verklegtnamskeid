@@ -61,7 +61,7 @@ class Menu:
         print('{} has been logged out'.format(
             self.color.return_colored(employee.get_name(), 'red'
         )))
-        time.sleep(2)
+        time.sleep(1.5)
         self.frame.delete_last_lines(3)
         self.authenticate_v2()
 
@@ -72,10 +72,10 @@ class Menu:
         self.frame.delete_last_lines(3)
     
     def customer(self):
-        customer_list = self.nocco_list.choose_one('Choose an action', 
-            ['Register customer','Edit customer', 'Find customer','Go back'],
+        customer = self.nocco_list.choose_one('Choose an action', 
+            ['Register customer', 'Find customer','Go back'],
             'action')
-        self.handle_answer_from_menu(customer_list['action'], 'customer')
+        self.handle_answer_from_menu(customer['action'], 'customer')
     
     def order(self):
         order_list = self.nocco_list.choose_one("Choose an action",["Register order","Find order","Calculate order", "Go back"], "action")
@@ -93,7 +93,7 @@ class Menu:
         order = self.order_manager.find_order_by_id(ID)
         if order == None:
             print('{}'.format(self.color.return_colored("Order not found!", 'red')))
-            time.sleep(2)
+            time.sleep(1.5)
             self.frame.delete_last_lines(2)
             self.find_order()
         else:
@@ -121,7 +121,7 @@ class Menu:
         order = self.order_manager.find_order_by_ssn(ssn)
         if order == None:
             print('{}'.format(self.color.return_colored("Order not found", 'red')))
-            time.sleep(2)
+            time.sleep(1.5)
             self.frame.delete_last_lines(3)
             self.find_order()
         else:
@@ -142,7 +142,7 @@ class Menu:
     def save_new_order(self):
         self.order_manager.save_new_order()
         print("{}".format(self.color.return_colored("New order registered", 'green')))
-        time.sleep(2)
+        time.sleep(1.5)
         self.frame.delete_last_lines(1)
 
     def register_order(self):
@@ -177,23 +177,35 @@ class Menu:
         self.handle_answer_from_menu(register_order_list['action'], 'register_order')
 
 
-    def check_if_valid(self, to_enter, to_check):
+    def check_if_valid(self, to_enter, to_check, editing = False, current_value = ''):
         mistake = 0
         error = "check if valid"
         while error:
-            user_input = input("Enter " + to_enter + ': ')
-            error = to_check(user_input)
-            if error and not mistake:
+            if not editing and not current_value:
+                user_input = input("Enter " + to_enter + ": ")
+            else:
+                user_input = input("Enter " + to_enter + " [" + current_value + "]: ")
+            error = to_check(user_input, editing, current_value)
+            if editing and current_value and not error:
+                if mistake: 
+                    self.frame.delete_last_lines(2)
+                else:
+                    self.frame.delete_last_lines()
+                if user_input != '':
+                    print("Enter " + to_enter + " [" + current_value + "]: " + user_input)
+                else:
+                    print("Enter " + to_enter + " [" + current_value + "]: " + current_value)
+            elif error and not mistake:
                 self.invalid_input(error)
                 mistake = 1
             elif error:
                 self.frame.delete_last_lines()
             elif mistake and not error:
                 self.frame.delete_last_lines(2)
-                print("Enter " + to_enter + ': ' + user_input)
+                print("Enter " + to_enter + ": " + user_input)
 
     def register_customer(self):
-        self.frame.delete_last_lines(7)
+        self.frame.delete_last_lines(6)
 
         self.check_if_valid('Name', self.customer_manager.check_name)
 
@@ -203,20 +215,46 @@ class Menu:
 
         self.check_if_valid('Phone number', self.customer_manager.check_phone_number)
 
-        self.check_if_valid('Driving License Category', self.customer_manager.check_license)
+        self.check_if_valid('Driver license category', self.customer_manager.check_license)
 
-        self.check_if_valid('Email', self.customer_manager.check_email)
+        self.check_if_valid('Email address', self.customer_manager.check_email)
 
-        self.check_if_valid('Credit Card Number', self.customer_manager.check_credit_card)
+        self.check_if_valid('Credit card number', self.customer_manager.check_credit_card)
         
-        self.check_if_valid('Home Address', self.customer_manager.check_address)
+        self.check_if_valid('Home address', self.customer_manager.check_address)
 
         print()
-        register_customer_list = self.nocco_list.choose_one('Choose an action', 
+        register_customer = self.nocco_list.choose_one('Choose an action', 
             ['Save','Cancel'],
             'action')
-        self.handle_answer_from_menu(register_customer_list['action'], 'register customer')
+        self.handle_answer_from_menu(register_customer['action'], 'register customer')
     
+    def edit_customer(self):
+        customer = self.__current_customer.return_details()
+        print('{}\n'.format(self.color.return_colored('Leave input empty to keep the value the same', 'green')))
+
+        self.check_if_valid('Name', self.customer_manager.check_name, True, customer['Name'])
+
+        self.check_if_valid('SSN', self.customer_manager.check_ssn, True, customer['SSN'])
+        
+        self.check_if_valid('Birthday', self.customer_manager.check_birthday, True, customer['Birthday'])
+
+        self.check_if_valid('Phone number', self.customer_manager.check_phone_number, True, customer['Phone number'])
+
+        self.check_if_valid('Driver license category', self.customer_manager.check_license, True, customer['Driver license category'])
+
+        self.check_if_valid('Email address', self.customer_manager.check_email, True, customer['Email address'])
+
+        self.check_if_valid('Credit card number', self.customer_manager.check_credit_card, True, customer['Credit card number'])
+        
+        self.check_if_valid('Home address', self.customer_manager.check_address, True, customer['Home address'])
+
+        print()
+        save_edited_customer = self.nocco_list.choose_one('Choose an action', 
+            ['Save','Cancel'],
+            'action')
+        self.handle_answer_from_menu(save_edited_customer['action'], 'save edited customer')
+
     def invalid_input(self, message):
         self.frame.delete_last_lines(1)
         print('{}'.format(self.color.return_colored(message, 'red')))
@@ -224,19 +262,26 @@ class Menu:
     def save_new_customer(self):
         self.customer_manager.save_new_customer()
         print("{}".format(self.color.return_colored("New customer registered", 'green')))
-        time.sleep(2)
+        time.sleep(1.5)
         self.frame.delete_last_lines(1)
         
+    def save_edited_customer(self):
+        self.customer_manager.delete_customer(self.__current_customer)
+        self.customer_manager.save_new_customer()
+        print("{}".format(self.color.return_colored("Customer updated", 'green')))
+        time.sleep(1.5)
+        self.frame.delete_last_lines(1)
+
     def find_customer(self):
-        find_customer_list = self.nocco_list.choose_one('Choose an action', 
+        find_customer = self.nocco_list.choose_one('Choose an action', 
             ['Find customer by Name', 'Find customer by SSN', 'Go back'], 'action')
-        self.handle_answer_from_menu(find_customer_list['action'], 'find customer')
+        self.handle_answer_from_menu(find_customer['action'], 'find customer')
 
     def found_customer(self):
-        found_customer_list = self.nocco_list.choose_one('Choose an action',
+        found_customer = self.nocco_list.choose_one('Choose an action',
             ['Print customer details', 'Edit customer', 'Unsubscribe customer', 'Go back'], 'action')
         self.frame.delete_last_lines(2)
-        self.handle_answer_from_menu(found_customer_list['action'], 'found customer')
+        self.handle_answer_from_menu(found_customer['action'], 'found customer')
 
     def find_customer_by_name(self):
         name = input("Enter name: ")
@@ -287,14 +332,14 @@ class Menu:
         self.customer_manager.delete_customer(self.__current_customer)
         self.frame.delete_last_lines()
         print('{}'.format(self.color.return_colored("Customer removed from file", 'red')))
-        time.sleep(2)
+        time.sleep(1.5)
         self.frame.delete_last_lines()
         self.customer()
 
     def save_new_car(self):
         self.vehicle_manager.save_new_car()
         print("{}".format(self.color.return_colored("New car registered!", 'green')))
-        time.sleep(2)
+        time.sleep(1.5)
         self.frame.delete_last_lines(2)
 
     def show_all_available_cars(self):
@@ -354,7 +399,7 @@ class Menu:
         if car == None:
             print('{}'.format(self.color.return_colored("Car not found!", 'red')))
             self.frame.delete_last_lines(3)
-            time.sleep(2)
+            time.sleep(1.5)
             self.find_cars()
         else:
             print("Car: "+ car.get_licence())
@@ -393,7 +438,7 @@ class Menu:
         else:
             for i,car in enumerate(cars):
                 print("Car "+ str(i+1) +": "+ car.get_licence())
-                # time.sleep(2)
+                # time.sleep(1.5)
             print()     
                 # this does not work properly, because we need to handle
                 # even when there are more than one car.
@@ -409,7 +454,7 @@ class Menu:
         self.vehicle_manager.delete_vehicle(self.__current_vehicle)
         self.frame.delete_last_lines(1)
         print('{}'.format(self.color.return_colored("Car removed from file", 'red')))
-        time.sleep(2)
+        time.sleep(1.5)
         self.cars()
 
     def register_car(self):
@@ -509,19 +554,15 @@ class Menu:
 
         elif menu_type == 'customer':
             if prompt.lower() == 'go back':
-                self.frame.delete_last_lines(6)
+                self.frame.delete_last_lines(5)
                 self.init_menu()
 
             elif prompt.lower() == 'register customer':
                 print()
                 self.register_customer()
 
-            elif prompt.lower() == 'edit customer':
-                # TODO implementing edit customer
-                self.init_menu()
-
             elif prompt.lower() == 'find customer':
-                self.frame.delete_last_lines(6)
+                self.frame.delete_last_lines(5)
                 self.find_customer()
         
         ######################################################    
@@ -536,6 +577,21 @@ class Menu:
             elif prompt.lower() == 'cancel':
                 self.frame.delete_last_lines(15)
                 self.customer()
+                
+        ######################################################    
+        #                  SAVE EDITED CUSTOMER              #                    
+        ######################################################
+        elif menu_type == 'save edited customer':
+            if prompt.lower() == 'save':
+                self.frame.delete_last_lines(15)
+                self.save_edited_customer()
+                print('Customer: {}\n'.format(self.__current_customer.__str__()))
+                self.found_customer()
+
+            elif prompt.lower() == 'cancel':
+                self.frame.delete_last_lines(15)
+                print('Customer: {}\n'.format(self.__current_customer.__str__()))
+                self.found_customer()
 
         ######################################################    
         #                    FIND CUSTOMER                   #                    
@@ -560,12 +616,12 @@ class Menu:
             chosen,customers = prompt
             if chosen['customer'].lower() != 'go back':
                 self.__current_customer = customers[chosen['index']]
-                self.frame.delete_last_lines(7)
+                self.frame.delete_last_lines(8)
                 print('Customer: ' + self.__current_customer.__str__())
                 print()
                 self.found_customer()
             else:
-                self.frame.delete_last_lines(7)
+                self.frame.delete_last_lines(8)
                 self.customer()
 
         ######################################################    
@@ -589,9 +645,8 @@ class Menu:
                 self.found_customer()
 
             elif prompt.lower() == 'edit customer':
-                self.frame.delete_last_lines(5)
-                # TODO edit customer
-                self.init_menu()
+                self.frame.delete_last_lines(6)
+                self.edit_customer()
 
             elif prompt.lower() == 'unsubscribe customer':
                 self.frame.delete_last_lines(5)
