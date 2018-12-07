@@ -78,13 +78,16 @@ class Menu:
         self.handle_answer_from_menu(customer['action'], 'customer')
     
     def order(self):
-        order_list = self.nocco_list.choose_one("Choose an action",["Register order","Find order","Calculate order", "Go back"], "action")
+        order_list = self.nocco_list.choose_one("Choose an action",["Register order","Find order", "Go back"], "action")
         self.handle_answer_from_menu(order_list['action'],'order')
     
     def calculate_order(self):
-        self.order_manager.calculate_order()
-        print("lollll")
-
+        #self.order_manager.calculate_order()
+        self.frame.delete_last_lines(2)
+        print(self.order_manager.calculate_order())
+        print()
+        calculate_order_list = self.nocco_list.choose_one("Choose an action",["Go back"], "action")
+        self.handle_answer_from_menu(calculate_order_list['action'],'order')
 
     
     def find_order_by_id(self):
@@ -173,6 +176,10 @@ class Menu:
         self.check_if_valid('Number plate', self.order_manager.check_number_plate)
 
         self.check_if_valid('Insurance', self.order_manager.check_insurance)
+
+        self.check_if_valid('Type of vehicle', self.order_manager.check_type_of_vehicle)
+
+        
         print()
         register_order_list = self.nocco_list.choose_one("Choose an action",["Save", "Calculate order" 
         , "Print order", "Show all available cars", "Cancel"], "action")
