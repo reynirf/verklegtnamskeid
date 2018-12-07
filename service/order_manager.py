@@ -3,6 +3,8 @@ from models.order import Order
 import string
 from models.vehicle import Vehicle
 import datetime
+from datetime import date
+import time
 
 class OrderManager:
 
@@ -19,6 +21,7 @@ class OrderManager:
         self.__temp_number_of_seats = ""
         self.__temp_car_number = ""
         self.__temp_insurence = ""
+        self.__temp_type_of_vehicle = ""
     
     def get_order_list(self):
         return self.__order_repo.get_order_list()
@@ -37,12 +40,22 @@ class OrderManager:
             self.__temp_return_location,
             self.__temp_number_of_seats,
             self.__temp_number_plate,
-            self.__temp_insurance)
+            self.__temp_insurance,
+            self.__temp_type_of_vehicle)
 
     def calculate_order(self):
-        price_per_day = Vehicle.get_price_per_day(self.__temp_number_plate)
-        start = self.__temp_start_date
-        end = self.__temp_ending_date
+        start_date_Input = list(map(int,(self.__temp_start_date).split("-")))
+        end_date_Input = list(map(int,(self.__temp_end_date).split("-")))
+
+        order_instance=Vehicle(0,self.__temp_car,0,self.__temp_type_of_vehicle,0,self.__temp_number_of_seats,0,0)
+        
+        price_per_day=order_instance.get_price_per_day()
+
+        start_date_time_obj = datetime.date(start_date_Input[0],start_date_Input[1],start_date_Input[2])
+        end_date_time_obj = datetime.date(end_date_Input[0],end_date_Input[1],end_date_Input[2])
+
+        diffrence = end_date_time_obj - start_date_time_obj
+        return "Price is: {}".format(price_per_day*diffrence.days)
 
 
     def check_ID(self,ID):
@@ -71,11 +84,19 @@ class OrderManager:
                 return "Make not valid. Please use only letters."
         self.__temp_car = make
 
+    def check_type_of_vehicle(self,type_of_vehicle):
+        """check if make is valid. Returns an error message if make
+        has numbers or punctuation in it"""
+        for letter in type_of_vehicle.strip():
+            if letter in (string.digits + string.punctuation):
+                return "Make not valid. Please use only letters."
+        self.__temp_type_of_vehicle = type_of_vehicle
+
     def check_start_date(self,start_date):
         """Check if start date is valid. Returns an error message if start date
         has letters in it"""
         present_day = datetime.date.today()
-        start_date = start_date.replace("-", "")
+        #start_date = start_date.replace("-", "")
         for letter in start_date:
             if letter in (string.ascii_letters):
                 return "Start date not valid. Please use only numbers."
@@ -84,7 +105,7 @@ class OrderManager:
     def check_ending_date(self,end_date):
         """Check if ending date is valid. Returns an error message if ending date
         has letters in it"""
-        end_date = end_date.replace("-", "")
+        #end_date = end_date.replace("-", "")
         for letter in end_date:
             if letter in (string.ascii_letters):
                 return "Ending date not valid. Please use only numbers."
@@ -104,10 +125,10 @@ class OrderManager:
                 time_correct_format += letter
         if len(time_correct_format) < 8:
             return "Not a valid date."
-        time_correct_format = time_correct_format[4:] + "-"+time_correct_format[2:4]+ "-" +time_correct_format[:2]
-        datetime_object = datetime.datetime.strptime(time_correct_format, "%Y-%m-%d")
-        if datetime_object < present_day:
-            return "Check another date."
+        # time_correct_format = time_correct_format[4:] + "-"+time_correct_format[2:4]+ "-" +time_correct_format[:2]
+        #datetime_object = datetime.datetime.strptime(time_correct_format, "%Y-%m-%d")
+        #if datetime_object < present_day:
+        # return "Check another date."
         else:
             self.__temp_pick_up_time = time_correct_format
 
