@@ -1,8 +1,8 @@
 from models.customer import Customer
 import csv
 
-class CustomerRepo:
 
+class CustomerRepo:
     CUSTOMER_FILE = "./data/customers.csv"
 
     def __init__(self):
@@ -16,31 +16,30 @@ class CustomerRepo:
                 for line in csv_reader:
                     customer = Customer(
                         line['name'],
-                        line['ssn'], 
-                        line['birthday'], 
+                        line['ssn'],
+                        line['birthday'],
                         line['phone'],
                         line['email'],
-                        line['address'], 
-                        line['driver license'], 
+                        line['address'],
+                        line['driver license'],
                         line['credit card'])
                     self.__customer_list.append(customer)
         return self.__customer_list
-    
-    def save_new_customer(self, name, ssn, birthday, phone, 
-    email, address, driver_licence, credit_card):
+
+    def save_new_customer(self, name, ssn, birthday, phone,
+                          email, address, driver_licence, credit_card):
         with open(self.CUSTOMER_FILE, 'a', newline='') as customer_file:
             csv_writer = csv.writer(customer_file)
-            csv_writer.writerow([name,ssn,birthday,phone,email,address,
-            driver_licence,credit_card])
+            csv_writer.writerow([name, ssn, birthday, phone, email, address,
+                                 driver_licence, credit_card])
         self.__customer_list = []
-    
+
     def delete_customer(self, customer):
-        #delete customer from csv file
+        """deletes customer from file"""
         file_content = []
         with open(self.CUSTOMER_FILE, 'r') as customer_file:
             csv_reader = csv.reader(customer_file)
             for line in csv_reader:
-                #line = line.split(",")
                 if line[1] != customer.get_ssn():
                     file_content.append(line)
         with open(self.CUSTOMER_FILE, 'w', newline='') as updated_file:
@@ -48,4 +47,3 @@ class CustomerRepo:
             for line in file_content:
                 csv_writer.writerow(line)
         self.__customer_list = []
-        

@@ -1,7 +1,8 @@
 from datetime import date
 
+
 class Vehicle:
-    def __init__(self, licence, make, model, year, type_of_vehicle, 
+    def __init__(self, licence, make, model, year, type_of_vehicle,
                  seats, fuel, transmission, maintainance=0, dates=[]):
         self.__licence = licence
         self.__make = make
@@ -13,9 +14,9 @@ class Vehicle:
         self.__transmission = transmission
         self.__maintainance = maintainance
         self.__rented_dates = []
-        #self.set_rented_dates(dates)
+        # self.set_rented_dates(dates)
         self.set_price()
-    
+
     def set_price(self):
         if self.__type_of_vehicle == "small car":
             self.__price_per_day = 9000
@@ -25,7 +26,7 @@ class Vehicle:
             self.__price_per_day = 12000
         elif self.__type_of_vehicle == "bus":
             self.__price_per_day = 13000
-    
+
     def set_rented_dates(self, dates):
         if dates != "":
             for date in dates:
@@ -42,18 +43,15 @@ class Vehicle:
 
     def get_licence(self):
         return self.__licence
-    
+
     def get_make(self):
         return self.__make
 
     def get_vehicle_type(self):
         return self.__type_of_vehicle
-    
+
     def get_price_per_day(self):
         return self.__price_per_day
-    
-    def get_rented_dates(self):
-        return self.__rented_dates
 
     def get_attributes(self):
-        return self.__licence, self.__make, self.__model, self.__year, self.__type_of_vehicle, self.__seats, self.__fuel, self.__transmission, self.__maintainance 
+        return self.__licence, self.__make, self.__model, self.__year, self.__type_of_vehicle, self.__seats, self.__fuel, self.__transmission, self.__maintainance
