@@ -1,6 +1,7 @@
 import sys
 import os
 
+
 class NoccoKey:
     def __init__(self):
         pass
@@ -19,7 +20,7 @@ class NoccoKey:
                 char = sys.stdin.read(1)
             finally:
                 termios.tcsetattr(fd, termios.TCSADRAIN,
-                        old_settings)
+                                  old_settings)
                 return char
         except ModuleNotFoundError:
             import msvcrt
@@ -35,14 +36,14 @@ class NoccoKey:
 
     def getKey(self):
         firstChar = self.get_character()
-        if firstChar == '\x1b': # looks like this: ^[
-            return {    
+        if firstChar == '\x1b':  # looks like this: ^[
+            return {
 
                 '[A': 'up',
                 '[B': 'down',
                 '[C': 'right',
                 '[D': 'left',
-                }[self.get_character() + self.get_character()]
+            }[self.get_character() + self.get_character()]
         elif os.name == 'nt':
             if firstChar == 0:
                 return 'up'

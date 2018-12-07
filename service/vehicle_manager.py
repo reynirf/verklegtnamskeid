@@ -4,8 +4,9 @@ import string
 import time
 import datetime
 
+
 class VehicleManager:
-    
+
     def __init__(self):
         self.__vehicle_repo = VehicleRepo()
         self.__temp_car_type = ""
@@ -16,12 +17,12 @@ class VehicleManager:
         self.__temp_number_plate = ""
         self.__temp_fuel = ""
         self.__temp_driving_transmission = ""
-    
+
     def get_vehicle_list(self):
         return self.__vehicle_repo.get_vehicle_list()
 
     def save_new_car(self):
-        #uses the temp values to save the new car 
+        # uses the temp values to save the new car 
         self.__vehicle_repo.save_new_car(
             self.__temp_number_plate,
             self.__temp_make,
@@ -32,8 +33,8 @@ class VehicleManager:
             self.__temp_fuel,
             self.__temp_driving_transmission)
 
-    def check_type(self, car_type, ignore_empty_value = False, current_value = ''):
-        car_types = ["sedan", "offroad", "smallcar","bus"]
+    def check_type(self, car_type, ignore_empty_value=False, current_value=''):
+        car_types = ["sedan", "offroad", "smallcar", "bus"]
         """Check if type is valid. Returns an error message if type
         has numbers or punctuation in it"""
         inputed_car = ""
@@ -46,7 +47,7 @@ class VehicleManager:
                 pass
             else:
                 return self.error("Car type")
-        
+
         if inputed_car in car_types:
             self.__temp_car_type = inputed_car
         else:
@@ -59,7 +60,7 @@ class VehicleManager:
         self.__temp_car_type = car_type
         """
 
-    def check_make(self, make, ignore_empty_value = False, current_value = ''):
+    def check_make(self, make, ignore_empty_value=False, current_value=''):
         """Check if make is valid. Returns an error message if make
         has numbers or punctuation in it"""
         # TODO list of valid makes
@@ -78,14 +79,14 @@ class VehicleManager:
             if letter in (string.digits + string.punctuation):
                 return self.error('Make')
         self.__temp_make = make
-    
-    def check_model(self,model, ignore_empty_value = False, current_value = ''):
+
+    def check_model(self, model, ignore_empty_value=False, current_value=''):
         # TODO list of valid models
         if model.strip() == '':
             return self.error("Model")
         self.__temp_model = model
 
-    def check_year(self, year, ignore_empty_value = False, current_value = ''):
+    def check_year(self, year, ignore_empty_value=False, current_value=''):
         OLDEST_CAR = 1940
         present_year = datetime.datetime.today().year
         """Check if year is valid. Returns an error message if year
@@ -107,7 +108,7 @@ class VehicleManager:
         else:
             self.__temp_year = year
 
-    def check_number_of_seats(self, number_of_seats, ignore_empty_value = False, current_value = ''):
+    def check_number_of_seats(self, number_of_seats, ignore_empty_value=False, current_value=''):
         """Check if number of seats is valid. Returns an error message if number of seats
         has letters or punctuation in it"""
         """ I constrained the number of seats from 2-14
@@ -128,7 +129,7 @@ class VehicleManager:
         else:
             self.__temp_number_of_seats = number_of_seats
 
-    def check_number_plate(self,number_plate, ignore_empty_value = False, current_value = ''):
+    def check_number_plate(self, number_plate, ignore_empty_value=False, current_value=''):
         """Check if number plate is valid. Returns an error message if number plate
         has punctuation in it"""
 
@@ -140,11 +141,11 @@ class VehicleManager:
                 return self.error('Number of seats')
         self.__temp_number_plate = number_plate
 
-    def check_fuel(self,fuel, ignore_empty_value = False, current_value = ''):
+    def check_fuel(self, fuel, ignore_empty_value=False, current_value=''):
         """
         Fuel can either be: bensin, diesel, electric and hybrid.
         """
-        fuels = ["bensin","diesel","electric","hybrid"]
+        fuels = ["bensin", "diesel", "electric", "hybrid"]
         fuel_type = ""
         if fuel.strip() == '':
             return self.error("Fuel")
@@ -158,14 +159,13 @@ class VehicleManager:
             self.__temp_fuel = fuel
         else:
             return self.fuels_allowed()
-        
 
-    def check_driving_transmission(self,driving_transmission, ignore_empty_value = False, current_value = ''):
+    def check_driving_transmission(self, driving_transmission, ignore_empty_value=False, current_value=''):
         """
         Driving transmission allowed: Automatic, Manual, 
         we don't have any other high tech crappy something.
         """
-        transmissions = ["automatic","manual"]
+        transmissions = ["automatic", "manual"]
         inputed_transmission = ""
         if driving_transmission.strip() == '':
             return self.error("Driving transmission")
@@ -179,7 +179,7 @@ class VehicleManager:
             self.__temp_driving_transmission = driving_transmission
         else:
             return self.transmission_allowed()
-    
+
     def find_car_by_number_plate(self, number_plate):
         cars_list = self.__vehicle_repo.get_vehicle_list()
         for vehicle in cars_list:
@@ -210,29 +210,29 @@ class VehicleManager:
     def save_order_dates(self, dates, vehicle_number):
         vehicle = self.find_car_by_number_plate(vehicle_number)
         self.__vehicle_repo.delete_vehicle(vehicle)
-        a,b,c,d,e,f,g,h = vehicle.get_attributes().split(',')
+        a, b, c, d, e, f, g, h = vehicle.get_attributes().split(',')
         vehicle_dates = vehicle.get_rented_dates()
         vehicle_dates.extend(dates)
-        self.__vehicle_repo.save_new_car(a,b,c,d,e,f,g,h,dates_rented=vehicle_dates)
+        self.__vehicle_repo.save_new_car(a, b, c, d, e, f, g, h, dates_rented=vehicle_dates)
 
     def delete_vehicle(self, car):
         self.__vehicle_repo.delete_vehicle(car)
 
     def error(self, input_type):
         return '{} not valid. Please try again.'.format(input_type)
-    
-    def newer(self,year_inputed):
+
+    def newer(self, year_inputed):
         return 'Year not valid. Please do not enter newer car than {}.'.format(year_inputed)
 
-    def older(self,year_inputed):
+    def older(self, year_inputed):
         return 'Year not valid. Please do not enter older car than {}.'.format(year_inputed)
-    
+
     def nr_seats(self):
         return "Please enter from 2 to 14 seats."
-    
+
     def vehicle_type(self):
         return "Please enter either Sedan, Bus, Off Road or Small Car."
-    
+
     def fuels_allowed(self):
         return "Fuel can be: Bensin, Diesel, Electric or Hybrid."
 

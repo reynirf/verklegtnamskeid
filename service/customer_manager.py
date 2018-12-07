@@ -2,6 +2,7 @@ from repos.customer_repo import CustomerRepo
 from models.customer import Customer
 import string
 
+
 class CustomerManager:
 
     def __init__(self):
@@ -14,12 +15,12 @@ class CustomerManager:
         self.__temp_email = ""
         self.__temp_credit_card = ""
         self.__temp_address = ""
-    
+
     def get_customer_list(self):
         return self.__customer_repo.get_customer_list()
-    
+
     def save_new_customer(self):
-        #uses the temp values to save the new customer 
+        # uses the temp values to save the new customer 
         self.__customer_repo.save_new_customer(
             self.__temp_name,
             self.__temp_ssn,
@@ -29,8 +30,8 @@ class CustomerManager:
             self.__temp_address,
             self.__temp_driver_license,
             self.__temp_credit_card)
-    
-    def check_name(self, name, ignore_empty_value = False, current_value = ''):
+
+    def check_name(self, name, ignore_empty_value=False, current_value=''):
         """check if name is valid. Returns an error message if name
         has numbers or punctuation in it"""
 
@@ -43,8 +44,8 @@ class CustomerManager:
             if letter in (string.digits + string.punctuation):
                 return self.error('Name')
         self.__temp_name = name
-    
-    def check_ssn(self, ssn, ignore_empty_value = False, current_value = ''):
+
+    def check_ssn(self, ssn, ignore_empty_value=False, current_value=''):
         """Check if ssn is valid. Returns an error message if ssn
         has letters or punctuation in it"""
 
@@ -61,8 +62,8 @@ class CustomerManager:
                 return self.error('SSN')
         self.__temp_ssn = ssn
 
-    def check_birthday(self, birthday, ignore_empty_value = False, current_value = ''):
-        #missing check for invalid birthday
+    def check_birthday(self, birthday, ignore_empty_value=False, current_value=''):
+        # missing check for invalid birthday
         if birthday.strip() == '' and not ignore_empty_value:
             return self.error('Birthday')
         elif birthday.strip() == '':
@@ -70,8 +71,8 @@ class CustomerManager:
             return None
         self.__temp_birthday = birthday
         return None
-    
-    def check_phone_number(self, phone, ignore_empty_value = False, current_value = ''):
+
+    def check_phone_number(self, phone, ignore_empty_value=False, current_value=''):
         """Check if phone number is valid. Returns an error message if phone
         number has letters or punctuation in it"""
 
@@ -86,7 +87,7 @@ class CustomerManager:
                 return self.error('Phone number')
         self.__temp_phone = phone
 
-    def check_license(self, driver_license, ignore_empty_value = False, current_value = ''):
+    def check_license(self, driver_license, ignore_empty_value=False, current_value=''):
         """Check if driver license categories given are valid. Returns an 
         error message if categories given are not valid."""
 
@@ -101,8 +102,8 @@ class CustomerManager:
             if char.lower() not in valid_categories:
                 return self.error('Driver license category')
         self.__temp_driver_license = driver_license[0]
-    
-    def check_email(self, email, ignore_empty_value = False, current_value=''):
+
+    def check_email(self, email, ignore_empty_value=False, current_value=''):
         """Check if email address is valid. Returns an error message if email 
         does not have an @ in it"""
         condition = "@" not in email or len(email) < 6 or '.' not in email
@@ -114,12 +115,12 @@ class CustomerManager:
         elif condition:
             return self.error('Email')
         self.__temp_email = email
-    
-    def check_credit_card(self, credit_card, ignore_empty_value = False, current_value=''):
+
+    def check_credit_card(self, credit_card, ignore_empty_value=False, current_value=''):
         """Check if credit card number is valid. Returns an error message if 
         credit card number has letters or punctuation in it"""
 
-        credit_card = credit_card.replace("-", "").replace(' ', '') 
+        credit_card = credit_card.replace("-", "").replace(' ', '')
         if len(credit_card) != 16 and not ignore_empty_value:
             return self.error('Credit card number')
         elif len(credit_card) == 0:
@@ -131,16 +132,15 @@ class CustomerManager:
             if letter in (string.ascii_letters + string.punctuation):
                 return self.error('Credit card number')
         self.__temp_credit_card = credit_card
-    
-    def check_address(self, address, ignore_empty_value = False, current_value = ''):
-        #missing check for invalid address
+
+    def check_address(self, address, ignore_empty_value=False, current_value=''):
+        # missing check for invalid address
         if address.strip() == '' and not ignore_empty_value:
             return self.error('Home address')
         elif address.strip() == '':
             self.__temp_address = current_value
             return None
         self.__temp_address = address
-
 
     def find_customer_by_name(self, name):
         customer_list = self.__customer_repo.get_customer_list()
@@ -158,9 +158,9 @@ class CustomerManager:
             customer_ssn = customer.get_ssn().replace("-", "")
             if customer_ssn == ssn:
                 return customer
-    
+
     def delete_customer(self, customer):
-        self.__customer_repo.delete_customer(customer) 
+        self.__customer_repo.delete_customer(customer)
 
     def error(self, input_type):
         return '{} not valid. Please try again.'.format(input_type)
