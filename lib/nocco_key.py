@@ -37,6 +37,7 @@ class NoccoKey:
         firstChar = self.get_character()
         if firstChar == '\x1b': # looks like this: ^[
             return {    
+
                 '[A': 'up',
                 '[B': 'down',
                 '[C': 'right',

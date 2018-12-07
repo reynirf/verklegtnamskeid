@@ -35,7 +35,7 @@ class NoccoList:
                 print('     {}'.format(alternative))
 
             
-    def choose_one(self, question, alternatives, answer_key):
+    def choose_one(self, question, alternatives, answer_key, get_chosen_index = False):
         alternative_index = 0
         self.print_alternatives(
             question, 
@@ -51,11 +51,17 @@ class NoccoList:
                 if alternative_index != len(alternatives)-1:
                     alternative_index += 1
             elif key == 'enter' or key == 'right':
-                return {answer_key:alternatives[alternative_index]}
+                if get_chosen_index:
+                    return {answer_key:alternatives[alternative_index], 'index': alternative_index}
+                else:
+                    return {answer_key:alternatives[alternative_index]}
             elif key == 'left':
                 pass
             elif key not in self.ALPHABET:
-                return {answer_key:alternatives[alternative_index]}
+                if get_chosen_index:
+                    return {answer_key:alternatives[alternative_index], 'index': alternative_index}
+                else:
+                    return {answer_key:alternatives[alternative_index]}            
             self.frame.delete_last_lines(n=len(alternatives)+2)
             self.print_alternatives(
                 question, 
