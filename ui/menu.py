@@ -191,12 +191,7 @@ class Menu:
             , "Print order", "Show all available cars", "Cancel"], "action")
         self.handle_answer_from_menu(register_order_list['action'], 'register_order')
 
-<<<<<<< HEAD
-
-    def check_if_valid(self, to_enter, to_check, editing = False, current_value = ''):
-=======
     def check_if_valid(self, to_enter, to_check, editing=False, current_value=''):
->>>>>>> 610a4da76ef6726404e732f78be1aa33e637e870
         mistake = 0
         error = "check if valid"
         while error:
@@ -213,16 +208,12 @@ class Menu:
                 if user_input != '':
                     print("Enter " + to_enter + " [" + current_value + "]: " + user_input)
                 else:
-<<<<<<< HEAD
-                    print("Enter " + to_enter + " [" + current_value + "]: " + current_value)
-=======
                     if to_enter == 'Credit card number':
                         print("Enter " + to_enter + " [**** **** **** " + current_value[
                                                                           12:] + "]: " + "**** **** **** " + current_value[
                                                                                                              12:])
                     else:
                         print("Enter " + to_enter + " [" + current_value + "]: " + current_value)
->>>>>>> 610a4da76ef6726404e732f78be1aa33e637e870
             elif error and not mistake:
                 self.invalid_input(error)
                 mistake = 1
@@ -571,7 +562,7 @@ class Menu:
                 print()
                 self.frame.delete_last_lines(7)
                 self.find_order()
-                ######################################################    
+        ######################################################    
         #                      FIND ORDER                    #
         ######################################################
         elif menu_type == 'find order':
@@ -593,15 +584,10 @@ class Menu:
         ######################################################
         elif menu_type == 'calculate_order':
             if prompt.lower() == 'go back':
-<<<<<<< HEAD
                 self.frame.delete_last_lines(5)
                 self.get_inputted_order()   
-=======
-                self.frame.delete_last_lines(6)
-                self.init_menu()
->>>>>>> 610a4da76ef6726404e732f78be1aa33e637e870
 
-                ######################################################    
+        ######################################################    
         #                      CUSTOMER                      #
         ######################################################
 

@@ -45,7 +45,6 @@ class OrderManager:
             self.__temp_type_of_vehicle)
 
     def get_inputted_order(self):
-<<<<<<< HEAD
         print("Enter ID: {}".format(self.__temp_ID))
         print("Enter SSN: {}".format(self.__temp_ssn))
         print("Enter Make: {}".format(self.__temp_car))
@@ -61,21 +60,6 @@ class OrderManager:
         print("Enter type of vehicle: {}".format(self.__temp_type_of_vehicle))
         print()
         
-=======
-        print("{}".format(self.__temp_ID))
-        print("{}".format(self.__temp_ssn))
-        print("{}".format(self.__temp_car))
-        # print("{}".format(self.__temp_start_date))
-        # print("{}".format(self.__temp_end_date))
-        print("{}".format(self.__temp_pick_up_time))
-        print("{}".format(self.__temp_returning_time))
-        print("{}".format(self.__temp_pick_up_location))
-        print("{}".format(self.__temp_return_location))
-        print("{}".format(self.__temp_number_of_seats))
-        print("{}".format(self.__temp_number_plate))
-        print("{}".format(self.__temp_insurance))
-        print("{}".format(self.__temp_type_of_vehicle))
->>>>>>> 610a4da76ef6726404e732f78be1aa33e637e870
 
     def get_order_dates(self):
         dates = []
