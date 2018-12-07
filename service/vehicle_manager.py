@@ -32,7 +32,7 @@ class VehicleManager:
             self.__temp_fuel,
             self.__temp_driving_transmission)
 
-    def check_type(self,car_type):
+    def check_type(self, car_type, ignore_empty_value = False, current_value = ''):
         car_types = ["sedan", "offroad", "smallcar","bus"]
         """Check if type is valid. Returns an error message if type
         has numbers or punctuation in it"""
@@ -59,7 +59,7 @@ class VehicleManager:
         self.__temp_car_type = car_type
         """
 
-    def check_make(self,make):
+    def check_make(self, make, ignore_empty_value = False, current_value = ''):
         """Check if make is valid. Returns an error message if make
         has numbers or punctuation in it"""
         # TODO list of valid makes
@@ -79,13 +79,13 @@ class VehicleManager:
                 return self.error('Make')
         self.__temp_make = make
     
-    def check_model(self,model):
+    def check_model(self,model, ignore_empty_value = False, current_value = ''):
         # TODO list of valid models
         if model.strip() == '':
             return self.error("Model")
         self.__temp_model = model
 
-    def check_year(self,year):
+    def check_year(self, year, ignore_empty_value = False, current_value = ''):
         OLDEST_CAR = 1940
         present_year = datetime.datetime.today().year
         """Check if year is valid. Returns an error message if year
@@ -107,7 +107,7 @@ class VehicleManager:
         else:
             self.__temp_year = year
 
-    def check_number_of_seats(self,number_of_seats):
+    def check_number_of_seats(self, number_of_seats, ignore_empty_value = False, current_value = ''):
         """Check if number of seats is valid. Returns an error message if number of seats
         has letters or punctuation in it"""
         """ I constrained the number of seats from 2-14
@@ -128,7 +128,7 @@ class VehicleManager:
         else:
             self.__temp_number_of_seats = number_of_seats
 
-    def check_number_plate(self,number_plate):
+    def check_number_plate(self,number_plate, ignore_empty_value = False, current_value = ''):
         """Check if number plate is valid. Returns an error message if number plate
         has punctuation in it"""
 
@@ -140,7 +140,7 @@ class VehicleManager:
                 return self.error('Number of seats')
         self.__temp_number_plate = number_plate
 
-    def check_fuel(self,fuel):
+    def check_fuel(self,fuel, ignore_empty_value = False, current_value = ''):
         """
         Fuel can either be: bensin, diesel, electric and hybrid.
         """
@@ -160,7 +160,7 @@ class VehicleManager:
             return self.fuels_allowed()
         
 
-    def check_driving_transmission(self,driving_transmission):
+    def check_driving_transmission(self,driving_transmission, ignore_empty_value = False, current_value = ''):
         """
         Driving transmission allowed: Automatic, Manual, 
         we don't have any other high tech crappy something.
