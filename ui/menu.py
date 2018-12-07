@@ -544,9 +544,11 @@ class Menu:
 
             elif prompt.lower() == 'register order':
                 print()
+                print()
                 self.register_order()
 
             elif prompt.lower() == 'find order':
+                print()
                 print()
                 self.frame.delete_last_lines(7)
                 self.find_order()    
