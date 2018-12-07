@@ -11,7 +11,7 @@ class Vehicle:
         self.__seats = seats
         self.__maintainance = maintainance
         self.__rented_dates = []
-        self.set_rented_dates()
+        #self.set_rented_dates(dates)
         self.set_price()
     
     def set_price(self):
@@ -24,12 +24,13 @@ class Vehicle:
         elif self.__type_of_vehicle == "bus":
             self.__price_per_day = 13000
     
-    def set_rented_dates(self):
-        for date in dates:
-            year = date[:4]
-            month = date[5:7]
-            day = date[8:]
-            self.__rented_dates.append(date(year, month, day))
+    def set_rented_dates(self, dates):
+        if dates != "":
+            for date in dates:
+                year = date[:4]
+                month = date[5:7]
+                day = date[8:]
+                self.__rented_dates.append(date(int(year), int(month), int(day)))
 
     def __str__(self):
         return "{} {}".format(self.__licence, self.__make)
