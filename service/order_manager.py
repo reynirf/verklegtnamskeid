@@ -39,6 +39,15 @@ class OrderManager:
             self.__temp_number_plate,
             self.__temp_insurance)
 
+    def get_order_dates(self):
+        dates = []
+        working_date = self.__temp_start_date
+        while working_date <= self.__temp_end_date:
+            dates.append(working_date)
+            x = working_date.day + 1
+            working_date.replace(day=x)
+        return dates, self.__temp_number_plate
+
     def calculate_order(self):
         price_per_day = Vehicle.get_price_per_day(self.__temp_number_plate)
         start = self.__temp_start_date

@@ -144,6 +144,8 @@ class Menu:
         print("{}".format(self.color.return_colored("New order registered", 'green')))
         time.sleep(2)
         self.frame.delete_last_lines(1)
+        dates, vehicle = self.order_manager.get_order_dates()
+        self.vehicle_manager.save_order_dates(dates, vehicle)
 
     def register_order(self):
         self.frame.delete_last_lines(7)

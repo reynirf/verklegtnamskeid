@@ -32,6 +32,7 @@ class CustomerRepo:
             csv_writer = csv.writer(customer_file)
             csv_writer.writerow([name,ssn,birthday,phone,email,address,
             driver_licence,credit_card])
+        self.__customer_list = []
     
     def delete_customer(self, customer):
         #delete customer from csv file
@@ -46,4 +47,5 @@ class CustomerRepo:
             csv_writer = csv.writer(updated_file)
             for line in file_content:
                 csv_writer.writerow(line)
+        self.__customer_list = []
         

@@ -30,7 +30,7 @@ class VehicleRepo:
     number_of_seats, number_plate, fuel, driving_transmission):
         with open(self.VEHICLE_FILE, 'a') as vehicle_file:
             csv_writer = csv.writer(vehicle_file, delimiter=';')
-            csv_writer.writerow([car_type,make,model,year,number_of_seats,number_plate,
+            csv_writer.writerow([number_plate,car_type,make,model,year,number_of_seats,
             fuel,driving_transmission])
     
     def delete_vehicle(self, vehicle):
