@@ -35,12 +35,11 @@ class CustomerRepo:
         self.__customer_list = []
 
     def delete_customer(self, customer):
-        # delete customer from csv file
+        """deletes customer from file"""
         file_content = []
         with open(self.CUSTOMER_FILE, 'r') as customer_file:
             csv_reader = csv.reader(customer_file)
             for line in csv_reader:
-                # line = line.split(",")
                 if line[1] != customer.get_ssn():
                     file_content.append(line)
         with open(self.CUSTOMER_FILE, 'w', newline='') as updated_file:

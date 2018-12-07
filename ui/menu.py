@@ -24,6 +24,7 @@ class Menu:
         self.order_manager = OrderManager()
         self.__current_customer = ""
         self.__current_vehicle = ""
+        self.__current_order = ""
 
     def get_employees(self):
         employee_list = self.employee_manager.get_employee_list()
@@ -99,53 +100,62 @@ class Menu:
             self.frame.delete_last_lines(2)
             self.find_order()
         else:
-            for i, person in enumerate(order):
-                print("Order " + str(i + 1) + ": " + person.__str__())
+            print("Order: " + order.__str__())
             print()
-            if len(order) == 1:
-                found_order_list = self.nocco_list.choose_one('Choose an action',
-                                                              ['Edit order', 'Unsubscribe order', 'Go back'], 'action')
-                self.frame.delete_last_lines(2)
-                self.handle_answer_from_menu(found_order_list['action'],
-                                             'found order')
-            else:
-                print("{}".format(self.color.return_colored("There are multiple orders with that ID!", 'red')))
-                print()
-                found_multiple_orders = self.nocco_list.choose_one('Choose an action',
-                                                                   ['Try again', 'Go back'], 'action')
-                self.frame.delete_last_lines(len(order) + 1)
-                self.handle_answer_from_menu(found_multiple_orders['action'],
-                                             'found multiple orders')
+            self.found_order()
 
     def find_order_by_ssn(self):
         ssn = input("Enter SSN: ")
         print()
-        order = self.order_manager.find_order_by_ssn(ssn)
-        if order == None:
+        orders = self.order_manager.find_order_by_ssn(ssn)
+        if orders == []:
             print('{}'.format(self.color.return_colored("Order not found", 'red')))
             time.sleep(1.5)
             self.frame.delete_last_lines(3)
             self.find_order()
         else:
             self.frame.delete_last_lines(2)
-            print("Order : " + order.__str__())
-            print()
-            found_order_list = self.nocco_list.choose_one('Choose an action',
-                                                          ['Edit order', 'Delete order', 'Go back'], 'action')
-            self.frame.delete_last_lines(2)
-            self.handle_answer_from_menu(found_order_list['action'],
-                                         'found order')
+            if len(orders) == 1:
+                print("Order : " + orders[0].__str__())
+                print()
+                self.found_order()
+            else:
+                print("{}".format(self.color.return_colored("There are multiple orders with that SSN!", 'red')))
+                print()
+                printable_orders = ['ID: {} SSN: {} Dates: {}'.format(
+                    order.__str__(),order.get_ssn(), order.get_dates()) for order in orders]
+                printable_orders.append('Go back')
+
+                found_multiple_orders = self.nocco_list.choose_one('Choose an order',
+                        printable_orders, 'order', True)
+                self.frame.delete_last_lines(len(orders) + 1)
+                self.handle_answer_from_menu((found_multiple_orders, orders), 
+                        'found multiple orders')
 
     def find_order(self):
         find_order_list = self.nocco_list.choose_one('Choose an action',
-                                                     ['Find order by ID', 'Find order by SSN', 'Go back'], 'action')
+                        ['Find order by ID', 'Find order by SSN', 'Go back'], 'action')
         self.handle_answer_from_menu(find_order_list['action'], 'find order')
+
+    def found_order(self):
+        found_order_list = self.nocco_list.choose_one('Choose an action',
+                        ['Edit order', 'Delete order', 'Go back'], 'action')
+        self.frame.delete_last_lines(2)
+        self.handle_answer_from_menu(found_order_list['action'], 'found order')
+
+    def get_inputted_order(self):
+        self.order_manager.get_inputted_order()
+        register_order_list = self.nocco_list.choose_one("Choose an action",["Save", "Calculate order" 
+        , "Print order", "Show all available cars", "Cancel"], "action")
+        self.handle_answer_from_menu(register_order_list['action'], 'register_order')
+
+
 
     def save_new_order(self):
         self.order_manager.save_new_order()
         print("{}".format(self.color.return_colored("New order registered", 'green')))
-        time.sleep(1.5)
-        self.frame.delete_last_lines(1)
+        time.sleep(2)
+        self.frame.delete_last_lines(3)
         dates, vehicle = self.order_manager.get_order_dates()
         self.vehicle_manager.save_order_dates(dates, vehicle)
 
@@ -190,10 +200,7 @@ class Menu:
             if not editing and not current_value:
                 user_input = input("Enter " + to_enter + ": ")
             else:
-                if to_enter == 'Credit card number':
-                    user_input = input("Enter " + to_enter + " [**** **** **** " + current_value[12:] + "]: ")
-                else:
-                    user_input = input("Enter " + to_enter + " [" + current_value + "]: ")
+                user_input = input("Enter " + to_enter + " [" + current_value + "]: ")
             error = to_check(user_input, editing, current_value)
             if editing and current_value and not error:
                 if mistake:
@@ -201,10 +208,7 @@ class Menu:
                 else:
                     self.frame.delete_last_lines()
                 if user_input != '':
-                    if to_enter == 'Credit card number':
-                        print("Enter " + to_enter + " [**** **** **** " + current_value[12:] + "]: " + user_input)
-                    else:
-                        print("Enter " + to_enter + " [" + current_value + "]: " + user_input)
+                    print("Enter " + to_enter + " [" + current_value + "]: " + user_input)
                 else:
                     if to_enter == 'Credit card number':
                         print("Enter " + to_enter + " [**** **** **** " + current_value[
@@ -318,7 +322,6 @@ class Menu:
             self.frame.delete_last_lines(2)
             if len(customers) == 1:
                 self.__current_customer = customers[0]
-                print('Customer: {}\n'.format(self.__current_customer.__str__()))
                 self.found_customer()
             else:
                 print("{}".format(self.color.return_colored("There are multiple customers with that name!", 'red')))
@@ -355,7 +358,7 @@ class Menu:
     def delete_customer(self):
         self.customer_manager.delete_customer(self.__current_customer)
         self.frame.delete_last_lines()
-        print('{}'.format(self.color.return_colored("Customer removed", 'red')))
+        print('{}'.format(self.color.return_colored("Customer removed from file", 'red')))
         time.sleep(1.5)
         self.frame.delete_last_lines()
         self.customer()
@@ -367,6 +370,9 @@ class Menu:
         self.frame.delete_last_lines(2)
 
     def show_all_available_cars(self):
+        date = input('Enter a date: ')
+        self.vehicle_manager.show_all_available_cars(date)
+ 
         test_data = [['Toyota', 'Huyndai', 'Ford', 'Reynir', 'Sixarinn'],
                      ['Renault', 'Viddi', 'Peugot', 'Guðrún', 'Ermir'], ['Nike', 'Subaru', 'Volvo', 'Bíll', 'Hilux']]
 
@@ -377,6 +383,9 @@ class Menu:
         self.nocco_list.single_list('Go back')
 
     def show_cars_in_service(self):
+        date = input('Enter a date: ')
+        self.vehicle_manager.show_cars_in_service(date)
+
         test_data = [['Toyota', 'Huyndai', 'Ford', 'Reynir', 'Sixarinn'],
                      ['Renault', 'Viddi', 'Peugot', 'Guðrún', 'Ermir'], ['Nike', 'Subaru', 'Volvo', 'Bíll', 'Hilux']]
 
@@ -483,7 +492,7 @@ class Menu:
     def delete_vehicle(self):
         self.vehicle_manager.delete_vehicle(self.__current_vehicle)
         self.frame.delete_last_lines(1)
-        print('{}'.format(self.color.return_colored("Car removed", 'red')))
+        print('{}'.format(self.color.return_colored("Car removed from file", 'red')))
         time.sleep(1.5)
         self.cars()
 
@@ -555,15 +564,13 @@ class Menu:
 
             elif prompt.lower() == 'register order':
                 print()
-                print()
                 self.register_order()
 
             elif prompt.lower() == 'find order':
                 print()
-                print()
-                self.frame.delete_last_lines(7)
+                self.frame.delete_last_lines(6)
                 self.find_order()
-                ######################################################    
+        ######################################################    
         #                      FIND ORDER                    #
         ######################################################
         elif menu_type == 'find order':
@@ -573,22 +580,48 @@ class Menu:
 
             elif prompt.lower() == 'find order by ssn':
                 self.frame.delete_last_lines(5)
-                self.find_customer_by_ssn()
+                self.find_order_by_ssn()
 
             elif prompt.lower() == 'go back':
                 self.frame.delete_last_lines(5)
                 self.order()
 
+        ######################################################    
+        #                     FOUND ORDER                    #
+        ######################################################
+        elif menu_type == 'found order':
+            if prompt.lower() == 'edit order':
+                pass
+            elif prompt.lower() == 'delete order':
+                pass
+            elif prompt.lower() == 'go back':
+                self.frame.delete_last_lines(5)
+                self.find_order()
 
         ######################################################    
-        #                      CALCULATE ORDER               #
+        #                 FOUND MULTIPLE ORDERS              #                    
+        ######################################################
+        if menu_type == 'found multiple orders':
+            chosen, orders = prompt
+            if chosen['order'].lower() != 'go back':
+                self.__current_order = orders[chosen['index']]
+                self.frame.delete_last_lines(4)
+                print('Order: ' + self.__current_order.__str__())
+                print()
+                self.found_order()
+            else:
+                self.frame.delete_last_lines(2)
+                self.order()
+
+        ######################################################    
+        #                   CALCULATE ORDER                  #
         ######################################################
         elif menu_type == 'calculate_order':
             if prompt.lower() == 'go back':
-                self.frame.delete_last_lines(6)
-                self.init_menu()
+                self.frame.delete_last_lines(5)
+                self.get_inputted_order()   
 
-                ######################################################    
+        ######################################################    
         #                      CUSTOMER                      #
         ######################################################
 
@@ -615,7 +648,7 @@ class Menu:
                 self.customer()
 
             elif prompt.lower() == 'cancel':
-                self.frame.delete_last_lines(13)
+                self.frame.delete_last_lines(15)
                 self.customer()
 
         ######################################################    
@@ -625,8 +658,8 @@ class Menu:
             if prompt.lower() == 'save':
                 self.frame.delete_last_lines(15)
                 self.save_edited_customer()
-                # print('Customer: {}\n'.format(self.__current_customer.__str__()))
-                self.customer()
+                print('Customer: {}\n'.format(self.__current_customer.__str__()))
+                self.found_customer()
 
             elif prompt.lower() == 'cancel':
                 self.frame.delete_last_lines(15)
@@ -656,12 +689,12 @@ class Menu:
             chosen, customers = prompt
             if chosen['customer'].lower() != 'go back':
                 self.__current_customer = customers[chosen['index']]
-                self.frame.delete_last_lines(7)
+                self.frame.delete_last_lines(8)
                 print('Customer: ' + self.__current_customer.__str__())
                 print()
                 self.found_customer()
             else:
-                self.frame.delete_last_lines(7)
+                self.frame.delete_last_lines(8)
                 self.customer()
 
         ######################################################    
@@ -748,11 +781,11 @@ class Menu:
         ########################################################
         elif menu_type == 'register_order':
             if prompt.lower() == 'cancel':
-                self.frame.delete_last_lines(19)
+                self.frame.delete_last_lines(1)
                 self.order()
 
             elif prompt.lower() == 'show all available cars':
-                self.frame.delete_last_lines(19)
+                self.frame.delete_last_lines(21)
                 self.show_all_available_cars()
                 self.frame.delete_last_lines(5)
                 self.order()

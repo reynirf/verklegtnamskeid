@@ -2,7 +2,7 @@ from repos.order_repo import OrderRepo
 from models.order import Order
 import string
 from models.vehicle import Vehicle
-import datetime
+from datetime import timedelta
 from datetime import date
 import time
 
@@ -45,27 +45,29 @@ class OrderManager:
             self.__temp_type_of_vehicle)
 
     def get_inputted_order(self):
-        print("{}".format(self.__temp_ID))
-        print("{}".format(self.__temp_ssn))
-        print("{}".format(self.__temp_car))
-        # print("{}".format(self.__temp_start_date))
-        # print("{}".format(self.__temp_end_date))
-        print("{}".format(self.__temp_pick_up_time))
-        print("{}".format(self.__temp_returning_time))
-        print("{}".format(self.__temp_pick_up_location))
-        print("{}".format(self.__temp_return_location))
-        print("{}".format(self.__temp_number_of_seats))
-        print("{}".format(self.__temp_number_plate))
-        print("{}".format(self.__temp_insurance))
-        print("{}".format(self.__temp_type_of_vehicle))
+        print("Enter ID: {}".format(self.__temp_ID))
+        print("Enter SSN: {}".format(self.__temp_ssn))
+        print("Enter Make: {}".format(self.__temp_car))
+        print("Enter start date: {}".format(self.__temp_start_date))
+        print("Enter ending date: {}".format(self.__temp_end_date))
+        print("Enter pick up time: {}".format(self.__temp_pick_up_time))
+        print("Enter returning time: {}".format(self.__temp_returning_time))
+        print("Enter pick up location: {}".format(self.__temp_pick_up_location))
+        print("Enter return location: {}".format(self.__temp_return_location))
+        print("Enter number of seats: {}".format(self.__temp_number_of_seats))
+        print("Enter number plate: {}".format(self.__temp_number_plate))
+        print("Enter Insurance: {}".format(self.__temp_insurance))
+        print("Enter type of vehicle: {}".format(self.__temp_type_of_vehicle))
+        print()
+        
 
     def get_order_dates(self):
         dates = []
         working_date = self.__temp_start_date
+        one_day = timedelta(days=1)
         while working_date <= self.__temp_end_date:
             dates.append(working_date)
-            x = working_date.day + 1
-            working_date.replace(day=x)
+            working_date += one_day
         return dates, self.__temp_number_plate
 
     def calculate_order(self):
@@ -78,7 +80,15 @@ class OrderManager:
 
         price_per_day = order_instance.get_price_per_day()
 
+<<<<<<< HEAD
     def check_ID(self,ID, ignore_empty_value = False, current_value = ''):
+=======
+        diffrence = end_date_Input - start_date_Input
+        total = diffrence.days + 1
+        return "Price is: {}".format(price_per_day * total)
+
+    def check_ID(self, ID, ignore_empty_value=False, current_value=''):
+>>>>>>> b40b24aae4b4417f8784611497f53cd39c215679
         """Check if ssn is valid. Returns an error message if ssn
         has letters or punctuation in it"""
         ID = ID.replace("-", "")
@@ -115,12 +125,12 @@ class OrderManager:
     def check_start_date(self, start_date, ignore_empty_value=False, current_value=''):
         """Check if start date is valid. Returns an error message if start date
         can not be converted to a datetime object"""
-        present_day = datetime.date.today()
+        present_day = date.today()
         try:
             year = start_date[6:]
             month = start_date[3:5]
             day = start_date[:2]
-            date_object = datetime.date(int(year), int(month), int(day))
+            date_object = date(int(year), int(month), int(day))
             if date_object < present_day:
                 raise ValueError
             self.__temp_start_date = date_object
@@ -134,7 +144,7 @@ class OrderManager:
             year = end_date[6:]
             month = end_date[3:5]
             day = end_date[:2]
-            date_object = datetime.date(int(year), int(month), int(day))
+            date_object = date(int(year), int(month), int(day))
             if date_object < self.__temp_start_date:
                 raise ValueError
             self.__temp_end_date = date_object
@@ -193,16 +203,15 @@ class OrderManager:
     def find_order_by_ssn(self, ssn):
         order_list = self.__order_repo.get_order_list()
         ssn = ssn.replace("-", "")
+        orders = []
         for order in order_list:
             order_ssn = order.get_ssn().replace("-", "")
             if order_ssn == ssn:
-                return order
+                orders.append(order)
+        return orders
 
     def find_order_by_id(self, ID):
         order_list = self.__order_repo.get_order_list()
-        orders = []
         for order in order_list:
             if order.__str__().lower() == ID.lower():
-                orders.append(order)
-        if orders:
-            return orders
+                return order

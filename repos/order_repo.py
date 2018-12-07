@@ -19,17 +19,17 @@ class OrderRepo:
                     order = Order(
                         line['id'],
                         line['ssn'],
-                        line['vehicle'],
-                        line['starting date'],
-                        line['ending date'].
-                            line['pick up time'],
+                        line['vehicle'], 
+                        line['starting date'], 
+                        line['ending date'],
+                        line['pick up time'],
                         line['returning time'],
                         line['pick up location'],
                         line['return location'],
                         line['number of seats'],
                         line['number plate'],
                         line['insurance'],
-                        line['type_of_vehicle'])
+                        line['type of vehicle'])
                     self.__order_list.append(order)
         return self.__order_list
 
