@@ -28,7 +28,8 @@ class OrderRepo:
                         line['return location'],
                         line['number of seats'],
                         line['number plate'],
-                        line['insurance'])
+                        line['insurance']
+                        line['type_of_vehicle'])
                     self.__order_list.append(order)
         return self.__order_list
     
@@ -39,8 +40,8 @@ class OrderRepo:
         return self.__current_order
 
     def save_new_order(self, ID, ssn, car, starting_date, ending_date, pick_up_time, 
-    returning_time, pick_up_location, return_location, number_of_seats, car_number, insurance):
+    returning_time, pick_up_location, return_location, number_of_seats, car_number, insurance, type_of_vehicle):
         with open(self.ORDER_FILE, 'a') as order_file:
             csv_writer = csv.writer(order_file)
             csv_writer.writerow([ID, ssn, car, starting_date, ending_date, pick_up_time, 
-    returning_time, pick_up_location, return_location, number_of_seats, car_number, insurance])
+    returning_time, pick_up_location, return_location, number_of_seats, car_number, insurance, type_of_vehicle])
