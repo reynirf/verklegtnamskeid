@@ -379,9 +379,7 @@ class Menu:
         print('-'*29)
         for car in car_list:
             print(car.availability_string())
-        #test_data = [['Toyota', 'Huyndai', 'Ford', 'Reynir', 'Sixarinn'],
-        #             ['Renault', 'Viddi', 'Peugot', 'Guðrún', 'Ermir'], ['Nike', 'Subaru', 'Volvo', 'Bíll', 'Hilux']]
-
+       
         #col_width = max(len(word) for row in test_data for word in row) + 2
         #for row in test_data:
         #    print("".join(word.ljust(col_width) for word in row))
@@ -390,17 +388,22 @@ class Menu:
         self.frame.delete_last_lines(len(car_list) + 1)
 
     def show_cars_in_service(self):
-        date = input('Enter a date: ')
-        self.vehicle_manager.show_cars_in_service(date)
-
-        test_data = [['Toyota', 'Huyndai', 'Ford', 'Reynir', 'Sixarinn'],
-                     ['Renault', 'Viddi', 'Peugot', 'Guðrún', 'Ermir'], ['Nike', 'Subaru', 'Volvo', 'Bíll', 'Hilux']]
-
-        col_width = max(len(word) for row in test_data for word in row) + 2
-        for row in test_data:
-            print("".join(word.ljust(col_width) for word in row))
+        self.check_if_valid('a start date', self.order_manager.check_start_date)
+        self.check_if_valid('a end date', self.order_manager.check_ending_date)
+        start_date, end_date = self.order_manager.get_dates()
+        car_list = self.vehicle_manager.show_car_availability(start_date, end_date, 'rented')
+        print() 
+        print('{:<7} {:<10} {:<10}'.format('Licence', 'Make', 'Model'))
+        print('-'*29)
+        for car in car_list:
+            print(car.availability_string())
+       
+        #col_width = max(len(word) for row in test_data for word in row) + 2
+        #for row in test_data:
+        #    print("".join(word.ljust(col_width) for word in row))
 
         self.nocco_list.single_list('Go back')
+        self.frame.delete_last_lines(len(car_list) + 1)
 
     def show_cars_that_require_maintenance(self):
         test_data = [['Toyota', 'Huyndai', 'Ford', 'Reynir', 'Sixarinn'],
