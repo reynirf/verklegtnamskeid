@@ -369,29 +369,11 @@ class Menu:
         time.sleep(1.5)
         self.frame.delete_last_lines(2)
 
-    def show_all_available_cars(self):
+    def show_car_availability(self, prompt):
         self.check_if_valid('a start date', self.order_manager.check_start_date)
         self.check_if_valid('a end date', self.order_manager.check_ending_date)
         start_date, end_date = self.order_manager.get_dates()
-        car_list = self.vehicle_manager.show_car_availability(start_date, end_date, 'available')
-        print() 
-        print('{:<7} {:<10} {:<10}'.format('Licence', 'Make', 'Model'))
-        print('-'*29)
-        for car in car_list:
-            print(car.availability_string())
-       
-        #col_width = max(len(word) for row in test_data for word in row) + 2
-        #for row in test_data:
-        #    print("".join(word.ljust(col_width) for word in row))
-
-        self.nocco_list.single_list('Go back')
-        self.frame.delete_last_lines(len(car_list) + 1)
-
-    def show_cars_in_service(self):
-        self.check_if_valid('a start date', self.order_manager.check_start_date)
-        self.check_if_valid('a end date', self.order_manager.check_ending_date)
-        start_date, end_date = self.order_manager.get_dates()
-        car_list = self.vehicle_manager.show_car_availability(start_date, end_date, 'rented')
+        car_list = self.vehicle_manager.show_car_availability(start_date, end_date, prompt)
         print() 
         print('{:<7} {:<10} {:<10}'.format('Licence', 'Make', 'Model'))
         print('-'*29)
@@ -757,7 +739,7 @@ class Menu:
 
             elif prompt.lower() == 'show all available cars':
                 self.frame.delete_last_lines(9)
-                self.show_all_available_cars()
+                self.show_car_availability('available')
                 self.frame.delete_last_lines(1)
                 print()
                 print()
@@ -765,7 +747,7 @@ class Menu:
 
             elif prompt.lower() == 'show cars in service':
                 self.frame.delete_last_lines(9)
-                self.show_cars_in_service()
+                self.show_car_availability('rented')
                 self.frame.delete_last_lines(1)
                 print()
                 print()
