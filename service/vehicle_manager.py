@@ -212,7 +212,9 @@ class VehicleManager:
         available_cars = []
         for car in vehicles:
             dates = car.get_rented_dates()
-            pass
+            if date not in dates:
+                available_cars.append(car)
+        return available_cars
 
     def show_cars_in_service(self, date):
         vehicles = self.get_vehicle_list()
@@ -224,10 +226,10 @@ class VehicleManager:
     def save_order_dates(self, dates, vehicle_number):
         vehicle = self.find_car_by_number_plate(vehicle_number)
         self.__vehicle_repo.delete_vehicle(vehicle)
-        a, b, c, d, e, f, g, h = vehicle.get_attributes().split(',')
+        a, b, c, d, e, f, g, h, i = vehicle.get_attributes()
         vehicle_dates = vehicle.get_rented_dates()
         vehicle_dates.extend(dates)
-        self.__vehicle_repo.save_new_car(a, b, c, d, e, f, g, h, dates_rented=vehicle_dates)
+        self.__vehicle_repo.save_new_car(a, b, c, d, e, f, g, h, i, dates_rented=vehicle_dates)
 
     def delete_vehicle(self, car):
         self.__vehicle_repo.delete_vehicle(car)

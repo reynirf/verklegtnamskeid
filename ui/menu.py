@@ -370,15 +370,18 @@ class Menu:
         self.frame.delete_last_lines(2)
 
     def show_all_available_cars(self):
-        date = input('Enter a date: ')
-        self.vehicle_manager.show_all_available_cars(date)
- 
-        test_data = [['Toyota', 'Huyndai', 'Ford', 'Reynir', 'Sixarinn'],
-                     ['Renault', 'Viddi', 'Peugot', 'Guðrún', 'Ermir'], ['Nike', 'Subaru', 'Volvo', 'Bíll', 'Hilux']]
+        #date = input('Enter a date: ')
+        self.check_if_valid('a date', self.order_manager.check_start_date)
+        date = self.order_manager.get_date()
+        car_list = self.vehicle_manager.show_all_available_cars(date)
+        for car in car_list:
+            print(car)
+        #test_data = [['Toyota', 'Huyndai', 'Ford', 'Reynir', 'Sixarinn'],
+        #             ['Renault', 'Viddi', 'Peugot', 'Guðrún', 'Ermir'], ['Nike', 'Subaru', 'Volvo', 'Bíll', 'Hilux']]
 
-        col_width = max(len(word) for row in test_data for word in row) + 2
-        for row in test_data:
-            print("".join(word.ljust(col_width) for word in row))
+        #col_width = max(len(word) for row in test_data for word in row) + 2
+        #for row in test_data:
+        #    print("".join(word.ljust(col_width) for word in row))
 
         self.nocco_list.single_list('Go back')
 

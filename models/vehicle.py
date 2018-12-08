@@ -14,7 +14,7 @@ class Vehicle:
         self.__transmission = transmission
         self.__maintainance = maintainance
         self.__rented_dates = []
-        # self.set_rented_dates(dates)
+        self.set_rented_dates(dates)
         self.set_price()
 
     def set_price(self):
@@ -28,12 +28,14 @@ class Vehicle:
             self.__price_per_day = 13000
 
     def set_rented_dates(self, dates):
-        if dates != "":
-            for date in dates:
-                year = date[:4]
-                month = date[5:7]
-                day = date[8:]
+        try:
+            for d in dates:
+                year = d[:4]
+                month = d[5:7]
+                day = d[8:]
                 self.__rented_dates.append(date(int(year), int(month), int(day)))
+        except ValueError:
+            pass
 
     def get_rented_dates(self):
         return self.__rented_dates
