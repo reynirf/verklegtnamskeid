@@ -787,11 +787,11 @@ class Menu:
         ########################################################
         elif menu_type == 'register_order':
             if prompt.lower() == 'cancel':
-                self.frame.delete_last_lines(1)
+                self.frame.delete_last_lines(21)
                 self.order()
 
             elif prompt.lower() == 'show all available cars':
-                self.frame.delete_last_lines(21)
+                self.frame.delete_last_lines(20)
                 self.show_all_available_cars()
                 self.frame.delete_last_lines(5)
                 self.order()
