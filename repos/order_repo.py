@@ -42,7 +42,7 @@ class OrderRepo:
     def save_new_order(self, ID, ssn, car, starting_date, ending_date, pick_up_time,
                        returning_time, pick_up_location, return_location, number_of_seats, car_number, insurance,
                        type_of_vehicle):
-        with open(self.ORDER_FILE, 'a') as order_file:
+        with open(self.ORDER_FILE, 'a', newline='') as order_file:
             csv_writer = csv.writer(order_file)
             csv_writer.writerow([ID, ssn, car, starting_date, ending_date, pick_up_time,
                                  returning_time, pick_up_location, return_location, number_of_seats, car_number,
