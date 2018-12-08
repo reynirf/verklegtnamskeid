@@ -19,30 +19,31 @@ class OrderManager:
         self.__temp_returning_time = ""
         self.__temp_pick_up_location = ""
         self.__temp_return_location = ""
-        self.__temp_number_of_seats = ""
         self.__temp_car_number = ""
         self.__temp_insurence = ""
         self.__temp_type_of_vehicle = ""
         self.__locations = ["reykjavik", "akureyri"]
+    
     def get_order_list(self):
         return self.__order_repo.get_order_list()
 
     def get_dates(self):
         return self.__temp_start_date, self.__temp_end_date
 
+    def get_type(self):
+        return self.__temp_type_of_vehicle
+
     def save_new_order(self):
-        # uses the temp values to save the new customer and then clears them
+        # uses the temp values to save the new customer
         self.__order_repo.save_new_order(
             self.__temp_ID,
             self.__temp_ssn,
-            self.__temp_car,
             self.__temp_start_date,
             self.__temp_end_date,
             self.__temp_pick_up_time,
             self.__temp_returning_time,
             self.__temp_pick_up_location,
             self.__temp_return_location,
-            self.__temp_number_of_seats,
             self.__temp_number_plate,
             self.__temp_insurance,
             self.__temp_type_of_vehicle)
@@ -50,17 +51,15 @@ class OrderManager:
     def get_inputted_order(self):
         print("Enter ID: {}".format(self.__temp_ID))
         print("Enter SSN: {}".format(self.__temp_ssn))
-        print("Enter Make: {}".format(self.__temp_car))
         print("Enter start date: {}".format(self.__temp_start_date))
         print("Enter ending date: {}".format(self.__temp_end_date))
         print("Enter pick up time: {}".format(self.__temp_pick_up_time))
         print("Enter returning time: {}".format(self.__temp_returning_time))
         print("Enter pick up location: {}".format(self.__temp_pick_up_location))
         print("Enter return location: {}".format(self.__temp_return_location))
-        print("Enter number of seats: {}".format(self.__temp_number_of_seats))
+        print("Enter type of vehicle: {}".format(self.__temp_type_of_vehicle))
         print("Enter number plate: {}".format(self.__temp_number_plate))
         print("Enter Insurance: {}".format(self.__temp_insurance))
-        print("Enter type of vehicle: {}".format(self.__temp_type_of_vehicle))
         print()
         
 
@@ -77,7 +76,7 @@ class OrderManager:
         start_date_Input = self.__temp_start_date
         end_date_Input = self.__temp_end_date
 
-        order_instance=Vehicle(0,0,0,0,self.__temp_type_of_vehicle,self.__temp_number_of_seats,0,0)
+        order_instance=Vehicle(0,0,0,0,self.__temp_type_of_vehicle,0,0,0)
         
         price_per_day=order_instance.get_price_per_day()
 
@@ -105,21 +104,14 @@ class OrderManager:
                 return "SSN not valid. Please use only numbers."
         self.__temp_ssn = ssn
 
-    def check_make(self, make, ignore_empty_value=False, current_value=''):
-        """check if make is valid. Returns an error message if make
-        has numbers or punctuation in it"""
-        for letter in make.strip():
-            if letter in (string.digits + string.punctuation):
-                return "Make not valid. Please use only letters."
-        self.__temp_car = make
-
     def check_type_of_vehicle(self, type_of_vehicle, ignore_empty_value=False, current_value=''):
-        """check if make is valid. Returns an error message if make
-        has numbers or punctuation in it"""
-        for letter in type_of_vehicle.strip():
-            if letter in (string.digits + string.punctuation):
-                return "Make not valid. Please use only letters."
-        self.__temp_type_of_vehicle = type_of_vehicle
+        """check if type of car is valid."""
+        car_types = ["sedan", "offroad", "smallcar", "bus"]
+        type_of_vehicle.replace(' ', '')
+        if type_of_vehicle.lower() in car_types:
+            self.__temp_type_of_vehicle = type_of_vehicle
+        else:
+            return "Type not valid. Please enter one of the given types."
 
     def check_start_date(self, start_date, ignore_empty_value=False, current_value=''):
         """Check if start date is valid. Returns an error message if start date
@@ -182,29 +174,13 @@ class OrderManager:
         if pick_up_location in self.__locations:
             self.__temp_pick_up_location = pick_up_location
         else:
-            return "Please enter any of our locations."
+            return "Please enter one of our locations."
 
     def check_return_location(self, return_location, ignore_empty_value=False, current_value=''):
         if return_location in self.__locations:
             self.__temp_return_location = return_location
         else:
-            return "Please enter any of our locations."
-
-    def check_number_of_seats(self, number_of_seats, ignore_empty_value=False, current_value=''):
-        """
-        Check if number of seats is valid. Returns an error message if number of seats
-        has letters or punctuation in it
-        """
-        number_of_seats = number_of_seats.strip()
-        for letter in number_of_seats:
-            if letter in (string.ascii_letters + string.punctuation):
-                return "Number of seats not valid. Please use only numbers."
-        if int(number_of_seats) < 2:
-            return "The car must have at least 2 seats."
-        elif int(number_of_seats) > 14:
-            return "The car can not have more than 14 seats."
-        else:
-            self.__temp_number_of_seats = number_of_seats
+            return "Please enter one of our locations."
 
     def check_number_plate(self, number_plate, ignore_empty_value=False, current_value=''):
         number_plate = number_plate.replace("-", "")

@@ -1,6 +1,6 @@
 class Order:
     def __init__(self, order_id, ssn, vehicle, 
-        start_date, end_date, pick_up_time, return_time, pick_up_location, return_location, number_of_seats, number_plate, insurance, vehicle_type):
+        start_date, end_date, pick_up_time, return_time, pick_up_location, return_location, number_plate, insurance, vehicle_type):
         self.__order_id = order_id
         self.__ssn = ssn
         self.__vehicle = vehicle
@@ -10,7 +10,6 @@ class Order:
         self.__return_time = return_time
         self.__pick_up_location = pick_up_location
         self.__return_location = return_location
-        self.__number_of_seats = number_of_seats
         self.__number_plate = number_plate 
         self.__insurance = insurance
     

@@ -155,43 +155,58 @@ class Menu:
         self.order_manager.save_new_order()
         print("{}".format(self.color.return_colored("New order registered", 'green')))
         time.sleep(2)
-        self.frame.delete_last_lines(3)
+        self.frame.delete_last_lines(1)
         dates, vehicle = self.order_manager.get_order_dates()
         self.vehicle_manager.save_order_dates(dates, vehicle)
 
     def register_order(self):
-        self.frame.delete_last_lines(7)
+        self.frame.delete_last_lines(6)
 
-        self.check_if_valid('ID', self.order_manager.check_ID)
+        self.check_if_valid('order ID', self.order_manager.check_ID)
 
-        self.check_if_valid('SSN', self.order_manager.check_ssn)
+        self.check_if_valid('customer SSN', self.order_manager.check_ssn)
 
-        self.check_if_valid('Make', self.order_manager.check_make)
+        self.check_if_valid('start date (DD MM YYYY)', self.order_manager.check_start_date)
 
-        self.check_if_valid('Start date', self.order_manager.check_start_date)
+        self.check_if_valid('ending date (DD MM YYYY)', self.order_manager.check_ending_date)
 
-        self.check_if_valid('Ending date', self.order_manager.check_ending_date)
+        self.check_if_valid('pick up time', self.order_manager.check_pick_up_time)
 
-        self.check_if_valid('Pick up time', self.order_manager.check_pick_up_time)
+        self.check_if_valid('returning time', self.order_manager.check_returning_time)
 
-        self.check_if_valid('Returning time', self.order_manager.check_returning_time)
+        self.check_if_valid('pick up location (Reykjavik or Akureyri)', self.order_manager.check_pick_up_location)
 
-        self.check_if_valid('Pick up location', self.order_manager.check_pick_up_location)
-
-        self.check_if_valid('Return location', self.order_manager.check_return_location)
-
-        self.check_if_valid('Number of seats', self.order_manager.check_number_of_seats)
-
-        self.check_if_valid('Number plate', self.order_manager.check_number_plate)
-
-        self.check_if_valid('Insurance', self.order_manager.check_insurance)
-
-        self.check_if_valid('Type of vehicle', self.order_manager.check_type_of_vehicle)
-
+        self.check_if_valid('return location (Reykjavik or Akureyri)', self.order_manager.check_return_location)
+        
+        self.check_if_valid('type of vehicle (Small car, sedan, offroad or bus)', self.order_manager.check_type_of_vehicle)
+        
+        start_date, end_date = self.order_manager.get_dates()
+        car_list = self.vehicle_manager.show_car_availability(start_date, end_date, 'available')
+        car_type = self.order_manager.get_type()
+        filtered_list = self.vehicle_manager.find_car_by_type(car_type, car_list)
         print()
-        register_order_list = self.nocco_list.choose_one("Choose an action", ["Save", "Calculate order"
-            , "Print order", "Show all available cars", "Cancel"], "action")
-        self.handle_answer_from_menu(register_order_list['action'], 'register_order')
+        if filtered_list == None:
+            print("No vehicle of type {} available on these dates".format(self.color.return_colored(car_type, 'red')))
+            self.nocco_list.single_list('Go back')
+            self.frame.delete_last_lines(12)
+        else:
+            print('Available cars:')
+            print()
+            print('{:<7} {:<10} {:<10}'.format('Licence', 'Make', 'Model'))
+            print('-'*29)
+            for car in filtered_list:
+                print(car.availability_string())
+            print()
+
+            self.check_if_valid('licence plate', self.order_manager.check_number_plate)
+
+            self.check_if_valid('insurance (yes or no)', self.order_manager.check_insurance)
+
+            print()
+            register_order_list = self.nocco_list.choose_one("Choose an action", ["Save", "Calculate order"
+                , "Print order", "Cancel"], "action")
+            self.frame.delete_last_lines(len(filtered_list) + 5)
+            self.handle_answer_from_menu(register_order_list['action'], 'register_order')
 
     def check_if_valid(self, to_enter, to_check, editing=False, current_value=''):
         mistake = 0
@@ -762,7 +777,7 @@ class Menu:
 
             elif prompt.lower() == 'show cars that must be checked':
                 self.frame.delete_last_lines(9)
-                self.show_cars_in_service()
+                self.show_that_must_be_checked()
                 print()
                 print()
                 self.cars()
@@ -776,13 +791,7 @@ class Menu:
         ########################################################
         elif menu_type == 'register_order':
             if prompt.lower() == 'cancel':
-                self.frame.delete_last_lines(21)
-                self.order()
-
-            elif prompt.lower() == 'show all available cars':
                 self.frame.delete_last_lines(20)
-                self.show_all_available_cars()
-                self.frame.delete_last_lines(5)
                 self.order()
 
             elif prompt.lower() == 'save':

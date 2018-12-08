@@ -26,7 +26,6 @@ class OrderRepo:
                         line['returning time'],
                         line['pick up location'],
                         line['return location'],
-                        line['number of seats'],
                         line['number plate'],
                         line['insurance'],
                         line['type of vehicle'])
@@ -39,11 +38,11 @@ class OrderRepo:
     def get_current_order(self):
         return self.__current_order
 
-    def save_new_order(self, ID, ssn, car, starting_date, ending_date, pick_up_time,
-                       returning_time, pick_up_location, return_location, number_of_seats, car_number, insurance,
+    def save_new_order(self, ID, ssn, starting_date, ending_date, pick_up_time,
+                       returning_time, pick_up_location, return_location, car_number, insurance,
                        type_of_vehicle):
         with open(self.ORDER_FILE, 'a', newline='') as order_file:
             csv_writer = csv.writer(order_file)
-            csv_writer.writerow([ID, ssn, car, starting_date, ending_date, pick_up_time,
-                                 returning_time, pick_up_location, return_location, number_of_seats, car_number,
+            csv_writer.writerow([ID, ssn, starting_date, ending_date, pick_up_time,
+                                 returning_time, pick_up_location, return_location, car_number,
                                  insurance, type_of_vehicle])

@@ -197,8 +197,9 @@ class VehicleManager:
         if cars != []:
             return cars
 
-    def find_car_by_type(self, type_of_car):
-        cars_list = self.__vehicle_repo.get_vehicle_list()
+    def find_car_by_type(self, type_of_car, cars_list=''):
+        if cars_list == '':
+            cars_list = self.__vehicle_repo.get_vehicle_list()
         cars = []
         for vehicle in cars_list:
             car_type = vehicle.get_vehicle_type().lower()
@@ -244,9 +245,9 @@ class VehicleManager:
         self.__vehicle_repo.delete_vehicle(vehicle)
         a, b, c, d, e, f, g, h, i = vehicle.get_attributes()
         vehicle_dates = vehicle.get_rented_dates()
-        vehicle_dates.extend(dates)
-        dates_rented = [date.isoformat() for date in vehicle_dates]
-        self.__vehicle_repo.save_new_car(a, b, c, d, e, f, g, h, i, dates_rented=dates_rented)
+        iso_dates = [date.isoformat() for date in dates]
+        vehicle_dates.extend(iso_dates)
+        self.__vehicle_repo.save_new_car(a, b, c, d, e, f, g, h, i, dates_rented=vehicle_dates)
 
     def delete_vehicle(self, car):
         self.__vehicle_repo.delete_vehicle(car)
