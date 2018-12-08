@@ -207,18 +207,34 @@ class VehicleManager:
         if cars != []:
             return cars
 
-    def show_all_available_cars(self, date):
+    def show_car_availability(self, start_date, end_date, prompt):
         vehicles = self.get_vehicle_list()
         available_cars = []
+        rented_cars = []
+
+        dates = set()
+        working_date = start_date
+        one_day = datetime.timedelta(days=1)
+        while working_date <= end_date:
+            dates.add(working_date.isoformat())
+            working_date += one_day
+        
         for car in vehicles:
-            dates = car.get_rented_dates()
-            if date.isoformat() not in dates:
+            car_dates = set(car.get_rented_dates())
+            check = car_dates & dates
+            if len(check) == 0:
                 available_cars.append(car)
-        return available_cars
+            else:
+                rented_cars.append(car)
+
+        if prompt == 'available':
+            return available_cars
+        else:
+            return rented_cars
 
     def show_cars_in_service(self, date):
         vehicles = self.get_vehicle_list()
-        rented_cars = []
+        
         for car in vehicles:
             dates = car.get_rented_dates()
             pass

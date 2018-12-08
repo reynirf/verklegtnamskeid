@@ -370,11 +370,11 @@ class Menu:
         self.frame.delete_last_lines(2)
 
     def show_all_available_cars(self):
-        #date = input('Enter a date: ')
-        self.check_if_valid('a date', self.order_manager.check_start_date)
-        date = self.order_manager.get_date()
-        car_list = self.vehicle_manager.show_all_available_cars(date)
-        print()
+        self.check_if_valid('a start date', self.order_manager.check_start_date)
+        self.check_if_valid('a end date', self.order_manager.check_ending_date)
+        start_date, end_date = self.order_manager.get_dates()
+        car_list = self.vehicle_manager.show_car_availability(start_date, end_date, 'available')
+        print() 
         print('{:<7} {:<10} {:<10}'.format('Licence', 'Make', 'Model'))
         print('-'*29)
         for car in car_list:
@@ -387,7 +387,7 @@ class Menu:
         #    print("".join(word.ljust(col_width) for word in row))
 
         self.nocco_list.single_list('Go back')
-        self.frame.delete_last_lines(len(car_list))
+        self.frame.delete_last_lines(len(car_list) + 1)
 
     def show_cars_in_service(self):
         date = input('Enter a date: ')

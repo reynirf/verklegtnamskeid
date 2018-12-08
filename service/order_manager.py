@@ -14,7 +14,7 @@ class OrderManager:
         self.__temp_id = ""
         self.__temp_customer = ""
         self.__temp_start_date = ""
-        self.__temp_ending_date = ""
+        self.__temp_end_date = ""
         self.__temp_pick_up_time = ""
         self.__temp_returning_time = ""
         self.__temp_pick_up_location = ""
@@ -27,8 +27,8 @@ class OrderManager:
     def get_order_list(self):
         return self.__order_repo.get_order_list()
 
-    def get_date(self):
-        return self.__temp_start_date
+    def get_dates(self):
+        return self.__temp_start_date, self.__temp_end_date
 
     def save_new_order(self):
         # uses the temp values to save the new customer and then clears them
