@@ -8,7 +8,7 @@ import time
 
 
 class OrderManager:
-
+    
     def __init__(self):
         self.__order_repo = OrderRepo()
         self.__temp_id = ""
@@ -23,7 +23,7 @@ class OrderManager:
         self.__temp_car_number = ""
         self.__temp_insurence = ""
         self.__temp_type_of_vehicle = ""
-
+        self.__locations = ["reykjavik", "akureyri"]
     def get_order_list(self):
         return self.__order_repo.get_order_list()
 
@@ -179,25 +179,46 @@ class OrderManager:
         self.__temp_returning_time = returning_time
 
     def check_pick_up_location(self, pick_up_location, ignore_empty_value=False, current_value=''):
-        self.__temp_pick_up_location = pick_up_location
+        if pick_up_location in self.__locations:
+            self.__temp_pick_up_location = pick_up_location
+        else:
+            return "Please enter any of our locations."
 
     def check_return_location(self, return_location, ignore_empty_value=False, current_value=''):
-        self.__temp_return_location = return_location
+        if return_location in self.__locations:
+            self.__temp_return_location = return_location
+        else:
+            return "Please enter any of our locations."
 
     def check_number_of_seats(self, number_of_seats, ignore_empty_value=False, current_value=''):
-        """Check if number of seats is valid. Returns an error message if number of seats
-        has letters or punctuation in it"""
-        number_of_seats = number_of_seats.replace("-", "")
+        """
+        Check if number of seats is valid. Returns an error message if number of seats
+        has letters or punctuation in it
+        """
+        number_of_seats = number_of_seats.strip()
         for letter in number_of_seats:
             if letter in (string.ascii_letters + string.punctuation):
                 return "Number of seats not valid. Please use only numbers."
-        self.__temp_number_of_seats = number_of_seats
+        if int(number_of_seats) < 2:
+            return "The car must have at least 2 seats."
+        elif int(number_of_seats) > 14:
+            return "The car can not have more than 14 seats."
+        else:
+            self.__temp_number_of_seats = number_of_seats
 
     def check_number_plate(self, number_plate, ignore_empty_value=False, current_value=''):
+        number_plate = number_plate.replace("-", "")
+        for letter in number_plate:
+            if letter in (string.punctuation):
+                return "Number plate not valid. Please use only letters and numbers."
         self.__temp_number_plate = number_plate
 
     def check_insurance(self, insurance, ignore_empty_value=False, current_value=''):
-        self.__temp_insurance = insurance
+        insurance = insurance.strip()
+        if insurance.lower() == "yes" or insurance.lower() == "no":
+            self.__temp_insurance = insurance
+        else:
+            return "Please enter either Yes or No for insurance."
 
     def find_order_by_ssn(self, ssn):
         order_list = self.__order_repo.get_order_list()
