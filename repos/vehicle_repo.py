@@ -14,8 +14,11 @@ class VehicleRepo:
             with open(self.VEHICLE_FILE, 'r') as vehicle_file:
                 csv_reader = csv.DictReader(vehicle_file, delimiter=';')
                 for line in csv_reader:
-                    if line['dates rented'] == None:
-                        line['dates rented'] = ''
+                    try:
+                        dates = line['dates rented'][1:-1].split(',')
+                        rented_dates = [date[1:-1] for date in dates]
+                    except TypeError:
+                        dates = ''
                     vehicle = Vehicle(
                         line['licence'],
                         line['make'],
@@ -26,7 +29,7 @@ class VehicleRepo:
                         line['fuel'],
                         line['transmission'], 
                         line['maintainance'],
-                        line['dates rented'].split(','))
+                        rented_dates)
                     self.__vehicle_list.append(vehicle)
         return self.__vehicle_list
 
@@ -36,6 +39,7 @@ class VehicleRepo:
             csv_writer = csv.writer(vehicle_file, delimiter=';')
             csv_writer.writerow([number_plate,make,model,year,car_type,number_of_seats,
             fuel,driving_transmission, maintainance, dates_rented])
+        self.__vehicle_list = []
     
     def delete_vehicle(self, vehicle):
         """Deletes vehicle from file"""
@@ -50,3 +54,4 @@ class VehicleRepo:
             csv_writer = csv.writer(updated_file, delimiter=';')
             for line in file_content:
                 csv_writer.writerow(line)
+        self.__vehicle_list = []

@@ -212,7 +212,7 @@ class VehicleManager:
         available_cars = []
         for car in vehicles:
             dates = car.get_rented_dates()
-            if date not in dates:
+            if date.isoformat() not in dates:
                 available_cars.append(car)
         return available_cars
 
@@ -229,7 +229,8 @@ class VehicleManager:
         a, b, c, d, e, f, g, h, i = vehicle.get_attributes()
         vehicle_dates = vehicle.get_rented_dates()
         vehicle_dates.extend(dates)
-        self.__vehicle_repo.save_new_car(a, b, c, d, e, f, g, h, i, dates_rented=vehicle_dates)
+        dates_rented = [date.isoformat() for date in vehicle_dates]
+        self.__vehicle_repo.save_new_car(a, b, c, d, e, f, g, h, i, dates_rented=dates_rented)
 
     def delete_vehicle(self, car):
         self.__vehicle_repo.delete_vehicle(car)

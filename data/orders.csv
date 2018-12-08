@@ -54,3 +54,6 @@ id,ssn,vehicle,starting date,ending date,pick up time,returning time,pick up loc
 89651,5123,ford,2019-06-06,2019-06-08,4,6,d,d,4,123,0,sedan
 1564,213,ford,2019-05-13,2019-05-15,65,2,k,j,4,123,0,sedan
 5612,5612,ford,2019-06-13,2019-06-15,5,6,d,s,4,123,0,sedan
+46,13,sldkf,2019-11-11,2019-11-13,4,5,akureyri,akureyri,4,ab123,no,small car
+988465,5461,t,2019-03-23,2019-03-26,4,5,akureyri,reykjavik,4,asdf,no,sedan
+654,651,df,2019-03-23,2019-03-26,4,5,akureyri,akureyri,4,asdf,no,sedan
