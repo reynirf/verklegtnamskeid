@@ -1,12 +1,11 @@
 licence;make;model;year;type;seats;fuel;transmission;maintainance;dates rented
 FGO78;Dacia;Duster;2011;offroad;5;bensin;manual;;
-NE352;Kia;Picanto;2011;smallcar;4;bensin;manual;;
 HDE79;Toyota;Landcruiser;2011;offroad;5;bensin;automatic;;
 OSV08;Skoda;Octavia;2012;sedan;5;bensin;automatic;;
 YTT67;Kia;Sorento;2013;offroad;5;bensin;automatic;;
 TU564;Toyota;Yaris;2010;smallcar;4;bensin;automatic;;
 JO695;Renault;Trafic;2010;bus;9;diesel;manual;;
-AB123;Toyota;Corolla;2009;sedan;5;bensin;manual;;
-FPR89;Ford;Focus;2011;sedan;5;bensin;automatic;;20190101,20190102,
-PO389;Suzuki;Jimny;2010;offroad;4;bensin;manual;;20190101,20190102,20190203,20190204,20190205,
+FPR89;Ford;Focus;2011;sedan;5;bensin;automatic;;
+PO389;Suzuki;Jimny;2010;offroad;4;bensin;manual;;
+NE352;Kia;Picanto;2011;smallcar;4;bensin;manual;;20181220,20181221,
 
