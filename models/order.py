@@ -2,7 +2,7 @@ from datetime import date
 
 class Order:
     def __init__(self, order_id, ssn, start_date, end_date, 
-            pick_up_time, return_time, pick_up_location, return_location, number_plate, insurance, vehicle_type):
+            pick_up_time, return_time, pick_up_location, return_location, license_plate, insurance, vehicle_type):
         self.__order_id = order_id
         self.__ssn = ssn
         self.__start_date = date(int(start_date[:4]), int(start_date[4:6]), int(start_date[6:]))
@@ -11,7 +11,7 @@ class Order:
         self.__return_time = return_time
         self.__pick_up_location = pick_up_location
         self.__return_location = return_location
-        self.__number_plate = number_plate 
+        self.__license_plate = license_plate 
         self.__insurance = insurance
         self.__vehicle_type = vehicle_type
     
@@ -24,8 +24,8 @@ class Order:
     def get_dates(self):
         return self.__start_date, self.__end_date
     
-    def get_number_plate(self):
-        return self.__number_plate
+    def get_license_plate(self):
+        return self.__license_plate
     
     def return_details(self):
         """Returns the details needed for editing the order"""
@@ -41,7 +41,7 @@ class Order:
             "Pick up location": self.__pick_up_location,
             "Return location": self.__return_location,
             "Type": self.__vehicle_type,
-            "Number plate": self.__number_plate,
+            "Number plate": self.__license_plate,
             "Insurance": self.__insurance
         }
 
