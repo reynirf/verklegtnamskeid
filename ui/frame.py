@@ -42,6 +42,7 @@ class Frame:
     def clear(self):
         os.system('cls' if os.name == 'nt' else 'clear')
 
+
     def boot_loop(self, iteration, total, prefix, suffix, length, decimals = 1, fill = '█'):
         """
             Loopa fyrir "boot system progress"
