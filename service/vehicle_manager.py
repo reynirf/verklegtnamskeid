@@ -34,44 +34,23 @@ class VehicleManager:
             self.__temp_driving_transmission)
 
     def check_type(self, car_type, ignore_empty_value=False, current_value=''):
-        car_types = ["sedan", "offroad", "smallcar", "bus"]
         """Check if type is valid. Returns an error message if type
         has numbers or punctuation in it"""
+        car_types = ["sedan", "offroad", "smallcar", "bus"]
         inputed_car = ""
         if car_type.strip() == '':
             return self.error("Car type")
-        for letter in car_type.strip():
-            if letter.isalpha():
-                inputed_car += letter
-            elif letter == "":
-                pass
-            else:
-                return self.error("Car type")
-
-        if inputed_car in car_types:
-            self.__temp_car_type = inputed_car
+        
+        car_type.replace(' ', '')
+        if car_type.strip().lower() in car_types:
+            self.__temp_car_type = car_type
         else:
-            return self.vehicle_type()
-
-        """
-        for letter in car_type.strip():
-            if letter in (string.digits + string.punctuation):
-                return self.error('Car type')
-        self.__temp_car_type = car_type
-        """
+            return self.error("Car type")
 
     def check_make(self, make, ignore_empty_value=False, current_value=''):
         """Check if make is valid. Returns an error message if make
         has numbers or punctuation in it"""
-        # TODO list of valid makes
-        """
-        This and the the model are going to be a pain, because a car
-        can have several models, like toyota can have, yaris, auris, corolla,
-        land cruiser, hilux, aygo, rav4 etc. 
-        and audi can have, a3, a4, a6, a8, q7, q5 etc etc. 
-        So maybe we should use dictionaries to store as makes as keys and 
-        models as values.
-        """
+
         if make.strip() == '':
             return self.error("Make")
 
@@ -81,53 +60,45 @@ class VehicleManager:
         self.__temp_make = make
 
     def check_model(self, model, ignore_empty_value=False, current_value=''):
-        # TODO list of valid models
+        """Checks if model is valid. Returns an error if it has punctuation in it"""
         if model.strip() == '':
             return self.error("Model")
+        for letter in model.strip():
+            if letter in string.punctuation:
+                return self.error('Model')
         self.__temp_model = model
 
     def check_year(self, year, ignore_empty_value=False, current_value=''):
+        """Check if year is valid. Returns an error message if not"""
         OLDEST_CAR = 1940
         present_year = datetime.datetime.today().year
-        """Check if year is valid. Returns an error message if year
-        has letters or punctuation in it"""
-
-        year = year.replace("-", "")
+        
         if year.strip() == '':
             return self.error("Year")
-        year_int = ""
-        for letter in year:
-            if letter.isdigit():
-                year_int += letter
-            else:
-                return self.error("Year")
-        if int(year_int) > present_year:
-            return self.newer(present_year)
-        elif int(year_int) < OLDEST_CAR:
-            return self.older(OLDEST_CAR)
-        else:
-            self.__temp_year = year
+        
+        try:
+            int(year.strip())
+            if year > present_year or year < OLDEST_CAR:
+                raise ValueError
+        except ValueError:
+            return self.error("Year")
+
+        self.__temp_year = year
 
     def check_number_of_seats(self, number_of_seats, ignore_empty_value=False, current_value=''):
-        """Check if number of seats is valid. Returns an error message if number of seats
-        has letters or punctuation in it"""
-        """ I constrained the number of seats from 2-14
-         as for 2 seater as the smallest car that you can rent,
-         up to 14 seats as a small bus.
-        """
+        """Check if number of seats is between 2 and 14. Returns an error message if not"""
+
         if number_of_seats.strip() == '':
             return self.error("Number of seats")
-        number_of_seats = number_of_seats.replace("-", "")
-        seats_int = ""
-        for letter in number_of_seats:
-            if letter.isdigit():
-                seats_int += letter
-            else:
-                return self.error("Number of seats")
-        if int(seats_int) < 1 or int(seats_int) > 15:
-            return self.nr_seats()
-        else:
-            self.__temp_number_of_seats = number_of_seats
+
+        try:
+            int(number_of_seats.strip())
+            if number_of_seats < 2 or number_of_seats > 14:
+                raise ValueError
+        except ValueError:
+            return self.error("Number of seats")
+
+        self.__temp_number_of_seats = number_of_seats
 
     def check_number_plate(self, number_plate, ignore_empty_value=False, current_value=''):
         """Check if number plate is valid. Returns an error message if number plate
@@ -136,29 +107,26 @@ class VehicleManager:
         if number_plate.strip() == '':
             return self.error("Number plate")
 
+        if len(number_plate) < 5 or len(number_plate) > 6:
+            return self.error('Number plate')
+        
         for letter in number_plate:
             if letter in (string.punctuation):
-                return self.error('Number of seats')
+                return self.error('Number plate')
         self.__temp_number_plate = number_plate
 
     def check_fuel(self, fuel, ignore_empty_value=False, current_value=''):
-        """
-        Fuel can either be: bensin, diesel, electric and hybrid.
-        """
+        """Checks that input fuel is valid. Returns an error if it is not
+        in our list of fuels"""
         fuels = ["bensin", "diesel", "electric", "hybrid"]
-        fuel_type = ""
+
         if fuel.strip() == '':
             return self.error("Fuel")
         else:
-            for letter in fuel:
-                if letter.isalpha():
-                    fuel_type += letter.lower()
-                else:
-                    return self.error("Fuel")
-        if fuel_type in fuels:
-            self.__temp_fuel = fuel
-        else:
-            return self.fuels_allowed()
+            if fuel.lower().strip() in fuels:
+                self.__temp_fuel = fuel
+            else:
+                return self.error("Fuel")
 
     def check_driving_transmission(self, driving_transmission, ignore_empty_value=False, current_value=''):
         """
@@ -166,19 +134,14 @@ class VehicleManager:
         we don't have any other high tech crappy something.
         """
         transmissions = ["automatic", "manual"]
-        inputed_transmission = ""
+
         if driving_transmission.strip() == '':
             return self.error("Driving transmission")
         else:
-            for letter in driving_transmission:
-                if letter.isalpha():
-                    inputed_transmission += letter.lower()
-                else:
-                    return self.error("Driving transmission")
-        if inputed_transmission in transmissions:
-            self.__temp_driving_transmission = driving_transmission
-        else:
-            return self.transmission_allowed()
+            if driving_transmission.lower().strip() in transmissions:
+                self.__temp_driving_transmission = driving_transmission
+            else:
+                return self.error("Driving transmission")
 
     def find_car_by_number_plate(self, number_plate):
         cars_list = self.__vehicle_repo.get_vehicle_list()
@@ -272,21 +235,3 @@ class VehicleManager:
 
     def error(self, input_type):
         return '{} not valid. Please try again.'.format(input_type)
-
-    def newer(self, year_inputed):
-        return 'Year not valid. Please do not enter newer car than {}.'.format(year_inputed)
-
-    def older(self, year_inputed):
-        return 'Year not valid. Please do not enter older car than {}.'.format(year_inputed)
-
-    def nr_seats(self):
-        return "Please enter from 2 to 14 seats."
-
-    def vehicle_type(self):
-        return "Please enter either Sedan, Bus, Off Road or Small Car."
-
-    def fuels_allowed(self):
-        return "Fuel can be: Bensin, Diesel, Electric or Hybrid."
-
-    def transmission_allowed(self):
-        return "Please enter either Automatic or Manual transmissions."
