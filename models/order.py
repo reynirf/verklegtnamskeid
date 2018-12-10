@@ -20,4 +20,7 @@ class Order:
         return self.__ssn
     
     def get_dates(self):
-        return self.__start_date + '-' + self.__end_date
+        return self.__start_date, self.__end_date
+    
+    def get_number_plate(self):
+        return self.__number_plate
