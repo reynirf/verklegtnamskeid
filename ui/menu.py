@@ -235,13 +235,13 @@ class Menu:
 		else:
 			print('Available cars:')
 			print()
-			print('{:<20} {:<20} {:<20} {:<20}'.format('Licence', 'Make', 'Model', 'Seats'))
+			print('{:<20} {:<20} {:<20} {:<20}'.format('License', 'Make', 'Model', 'Seats'))
 			print('-'*70)
 			for car in filtered_list:
 				print(car.availability_string())
 			print()
 
-			self.check_if_valid('licence plate', self.order_manager.check_license_plate)
+			self.check_if_valid('license plate', self.order_manager.check_license_plate)
 
 			self.check_if_valid('insurance (yes or no)', self.order_manager.check_insurance)
 
@@ -290,7 +290,7 @@ class Menu:
 		else:
 			print('Available cars:')
 			print()
-			print('{:<20} {:<20} {:<20} {:<20}'.format('Licence', 'Make', 'Model', 'Seats'))
+			print('{:<20} {:<20} {:<20} {:<20}'.format('License', 'Make', 'Model', 'Seats'))
 			print('-'*70)
 			for car in filtered_list:
 				print(car.availability_string())
@@ -497,7 +497,7 @@ class Menu:
 		start_date, end_date = self.order_manager.get_dates()
 		car_list = self.vehicle_manager.show_car_availability(start_date, end_date, prompt)
 		print() 
-		print('{:<20} {:<20} {:<20} {:<20}'.format('Licence', 'Make', 'Model', 'Seats'))
+		print('{:<20} {:<20} {:<20} {:<20}'.format('License', 'Make', 'Model', 'Seats'))
 		print('-'*70)
 		for car in car_list:
 			print(car.availability_string())
@@ -572,7 +572,7 @@ class Menu:
 			time.sleep(1.5)
 			self.find_cars()
 		else:
-			print("Car: " + car.get_licence())
+			print("Car: " + car.get_license())
 			print()
 			self.__current_vehicle = car
 			found_cars_list = self.nocco_list.choose_one(
@@ -613,7 +613,7 @@ class Menu:
 			self.find_cars()
 		else:
 			for i, car in enumerate(cars):
-				print("Car " + str(i + 1) + ": " + car.get_licence())
+				print("Car " + str(i + 1) + ": " + car.get_license())
 				# time.sleep(1.5)
 			print()
 			if len(cars) == 1:
@@ -650,7 +650,7 @@ class Menu:
 
 		self.check_if_valid('Number of seats', self.vehicle_manager.check_number_of_seats)
 
-		self.check_if_valid('Licence plate', self.vehicle_manager.check_license_plate)
+		self.check_if_valid('License plate', self.vehicle_manager.check_license_plate)
 
 		self.check_if_valid('Fuel (gasoline, diesel, electric or hybrid)', self.vehicle_manager.check_fuel)
 
