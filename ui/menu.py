@@ -227,7 +227,10 @@ class Menu:
             if not editing and not current_value:
                 user_input = input("Enter " + to_enter + ": ")
             else:
-                user_input = input("Enter " + to_enter + " [" + current_value + "]: ")
+                if to_enter == 'Credit card number':
+                    user_input = input("Enter " + to_enter + " [**** **** **** " + current_value[12:] + "]: ")
+                else:
+                    user_input = input("Enter " + to_enter + " [" + current_value + "]: ")
             error = to_check(user_input, editing, current_value)
             if editing and current_value and not error:
                 if mistake:
@@ -238,9 +241,7 @@ class Menu:
                     print("Enter " + to_enter + " [" + current_value + "]: " + user_input)
                 else:
                     if to_enter == 'Credit card number':
-                        print("Enter " + to_enter + " [**** **** **** " + current_value[
-                                                                          12:] + "]: " + "**** **** **** " + current_value[
-                                                                                                             12:])
+                        print("Enter " + to_enter + " [**** **** **** " + current_value[12:] + "]: " + "**** **** **** " + current_value[12:])
                     else:
                         print("Enter " + to_enter + " [" + current_value + "]: " + current_value)
             elif error and not mistake:
@@ -349,6 +350,8 @@ class Menu:
             self.frame.delete_last_lines(2)
             if len(customers) == 1:
                 self.__current_customer = customers[0]
+                print("Customer: " + self.__current_customer.__str__())
+                print()
                 self.found_customer()
             else:
                 print("{}".format(self.color.return_colored("There are multiple customers with that name!", 'red')))
