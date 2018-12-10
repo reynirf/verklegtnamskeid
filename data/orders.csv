@@ -15,3 +15,4 @@ id,ssn,starting date,ending date,pick up time,returning time,pick up location,re
 8964512,01568542,2019-01-01,2019-01-02,10,19,akureyri,akureyri,FPR89,no,sedan
 84651,1568432,2019-01-01,2019-01-02,10,19,akureyri,akureyri,PO389,yes,offroad
 798465,1216846,2019-02-03,2019-02-05,10,19,akureyri,akureyri,PO389,no,offroad
+,,2019-10-10,2019-10-10,10.10.2019,10.10.2019,akureyri,akureyri,ugb859,yes,smallcar
