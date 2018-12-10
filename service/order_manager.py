@@ -56,7 +56,7 @@ class OrderManager:
             new_dates += '0' + str(dates.month) 
         else:
             new_dates += str(dates.month)
-        if v_day.day < 10:
+        if dates.day < 10:
             new_dates += '0' + str(dates.day) + ','
         else:
             new_dates += str(dates.day) + ','
