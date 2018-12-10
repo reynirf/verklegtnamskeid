@@ -224,8 +224,8 @@ class Menu:
         else:
             print('Available cars:')
             print()
-            print('{:<7} {:<10} {:<10}'.format('Licence', 'Make', 'Model'))
-            print('-'*29)
+            print('{:<20} {:<20} {:<20} {:<20}'.format('Licence', 'Make', 'Model', 'Seats'))
+            print('-'*70)
             for car in filtered_list:
                 print(car.availability_string())
             print()
@@ -425,11 +425,10 @@ class Menu:
         start_date, end_date = self.order_manager.get_dates()
         car_list = self.vehicle_manager.show_car_availability(start_date, end_date, prompt)
         print() 
-        print('{:<7} {:<10} {:<10}'.format('Licence', 'Make', 'Model'))
-        print('-'*29)
+        print('{:<20} {:<20} {:<20} {:<20}'.format('Licence', 'Make', 'Model', 'Seats'))
+        print('-'*70)
         for car in car_list:
             print(car.availability_string())
-       
         #col_width = max(len(word) for row in test_data for word in row) + 2
         #for row in test_data:
         #    print("".join(word.ljust(col_width) for word in row))
