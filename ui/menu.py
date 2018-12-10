@@ -178,7 +178,7 @@ class Menu:
 		self.frame.delete_last_lines(2)
 		print('{}'.format(self.color.return_colored("Order removed from file", 'red')))
 		time.sleep(1.5)
-        self.frame.delete_last_lines(1)
+		self.frame.delete_last_lines(1)
 		self.order()
 
 	def save_new_order(self):
