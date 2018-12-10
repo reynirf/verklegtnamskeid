@@ -4,3 +4,4 @@ id,ssn,starting date,ending date,pick up time,returning time,pick up location,re
 2,2311992929,20191020,20191022,13,14,ak,ak,543t4,yes,smallcar
 1,2311992929,20191020,20191026,13,15,ak,ak,TU564,yes,smallcar
 4,2311992929,20191020,20191025,13,13,ak,ak,TU564,Yes,smallcar
+0156,0156151541,20190101,20190102,10,19,ak,ak,JO695,no,bus
