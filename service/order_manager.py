@@ -63,14 +63,22 @@ class OrderManager:
         print()
         
 
-    def get_order_dates(self):
+    def get_order_dates(self, start='', end=''):
+        if start == '':
+            start = self.__temp_start_date
+        if end == '':
+            end = self.__temp_end_date
+        
         dates = []
-        working_date = self.__temp_start_date
+        working_date = start
         one_day = timedelta(days=1)
-        while working_date <= self.__temp_end_date:
+        while working_date <= end:
             dates.append(working_date)
             working_date += one_day
-        return dates, self.__temp_number_plate
+        return dates 
+
+    def get_number_plate(self):
+        return self.__temp_number_plate
 
     def calculate_order(self):
         start_date_Input = self.__temp_start_date
@@ -107,7 +115,7 @@ class OrderManager:
     def check_type_of_vehicle(self, type_of_vehicle, ignore_empty_value=False, current_value=''):
         """check if type of car is valid."""
         car_types = ["sedan", "offroad", "smallcar", "bus"]
-        type_of_vehicle.replace(' ', '')
+        type_of_vehicle = type_of_vehicle.replace(' ', '')
         if type_of_vehicle.lower() in car_types:
             self.__temp_type_of_vehicle = type_of_vehicle
         else:
@@ -211,3 +219,6 @@ class OrderManager:
         for order in order_list:
             if order.__str__().lower() == ID.lower():
                 return order
+
+    def delete_order(self, order):
+        self.__order_repo.delete_order(order)

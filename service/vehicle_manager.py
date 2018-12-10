@@ -217,7 +217,7 @@ class VehicleManager:
         working_date = start_date
         one_day = datetime.timedelta(days=1)
         while working_date <= end_date:
-            dates.add(working_date.isoformat())
+            dates.add(working_date)
             working_date += one_day
         
         for car in vehicles:
@@ -233,21 +233,35 @@ class VehicleManager:
         else:
             return rented_cars
 
-    def show_cars_in_service(self, date):
-        vehicles = self.get_vehicle_list()
-        
-        for car in vehicles:
-            dates = car.get_rented_dates()
-            pass
-
     def save_order_dates(self, dates, vehicle_number):
         vehicle = self.find_car_by_number_plate(vehicle_number)
         self.__vehicle_repo.delete_vehicle(vehicle)
         a, b, c, d, e, f, g, h, i = vehicle.get_attributes()
         vehicle_dates = vehicle.get_rented_dates()
+
+        vehicle_dates.extend(dates)
+        new_dates = ''
+        for v_day in vehicle_dates:
+            new_dates += str(v_day.year)
+            if v_day.month <10:
+                new_dates += '0' + str(v_day.month) 
+            else:
+                new_dates += str(v_day.month)
+            if v_day.day < 10:
+                new_dates += '0' + str(v_day.day) + ','
+            else:
+                new_dates += str(v_day.day) + ','
+        
+        self.__vehicle_repo.save_new_car(a, b, c, d, e, f, g, h, i, dates_rented=new_dates)
+
+    def delete_order_dates(self, dates, vehicle_number):
+        vehicle = self.find_car_by_number_plate(vehicle_number)
+        a, b, c, d, e, f, g, h, i = vehicle.get_attributes()
+        vehicle_dates = vehicle.get_rented_dates()
         iso_dates = [date.isoformat() for date in dates]
-        vehicle_dates.extend(iso_dates)
-        self.__vehicle_repo.save_new_car(a, b, c, d, e, f, g, h, i, dates_rented=vehicle_dates)
+        self.__vehicle_repo.delete_vehicle(vehicle)
+        new_vehicle_dates = [date for date in vehicle_dates not in iso_dates]
+        self.__vehicle_repo.save_new_car(a, b, c, d, e, f, g, h, i, dates_rented=new_vehicle_dates)
 
     def delete_vehicle(self, car):
         self.__vehicle_repo.delete_vehicle(car)

@@ -73,12 +73,21 @@ class Menu:
 
     def customer(self):
         customer = self.nocco_list.choose_one('Choose an action',
-                                              ['Register customer', 'Find customer', 'Go back'],
+                                              [
+                                                'Register customer', 
+                                                'Find customer', 
+                                                'Go back'
+                                              ],
                                               'action')
         self.handle_answer_from_menu(customer['action'], 'customer')
 
     def order(self):
-        order_list = self.nocco_list.choose_one("Choose an action", ["Register order", "Find order", "Go back"],
+        order_list = self.nocco_list.choose_one("Choose an action",
+                                                [
+                                                    "Register order",
+                                                    "Find order", 
+                                                    "Go back"
+                                                ],
                                                 "action")
         self.handle_answer_from_menu(order_list['action'], 'order')
 
@@ -103,6 +112,7 @@ class Menu:
             self.__current_order = order
             print("Order: " + order.__str__())
             print()
+            self.__current_order = order
             self.found_order()
 
     def find_order_by_ssn(self):
@@ -119,11 +129,12 @@ class Menu:
             if len(orders) == 1:
                 print("Order : " + orders[0].__str__())
                 print()
+                self.__current_order = orders[0]
                 self.found_order()
             else:
                 print("{}".format(self.color.return_colored("There are multiple orders with that SSN!", 'red')))
                 print()
-                printable_orders = ['ID: {} SSN: {} Dates: {}'.format(
+                printable_orders = ['ID: {} SSN: {} Dates: {} - {}'.format(
                     order.__str__(),order.get_ssn(), order.get_dates()) for order in orders]
                 printable_orders.append('Go back')
 
@@ -150,12 +161,24 @@ class Menu:
         , "Print order", "Show all available cars", "Cancel"], "action")
         self.handle_answer_from_menu(register_order_list['action'], 'register_order')
 
+    def delete_order(self):
+        start_day, end_day = self.__current_order.get_dates()
+        dates = self.order_manager.get_order_dates(start_day, end_day)
+        car = self.__current_order.get_number_plate()
+        self.vehicle_manager.delete_order_dates(dates, car)
+        self.order_manager.delete_order(self.__current_order)
+        self.frame.delete_last_lines(1)
+        print('{}'.format(self.color.return_colored("Order removed from file", 'red')))
+        time.sleep(1.5)
+        self.order()
+
     def save_new_order(self):
         self.order_manager.save_new_order()
         print("{}".format(self.color.return_colored("New order registered", 'green')))
         time.sleep(2)
         self.frame.delete_last_lines(1)
-        dates, vehicle = self.order_manager.get_order_dates()
+        dates = self.order_manager.get_order_dates()
+        vehicle = self.order_manager.get_number_plate()
         self.vehicle_manager.save_order_dates(dates, vehicle)
 
     def register_order(self):
@@ -185,8 +208,19 @@ class Menu:
         filtered_list = self.vehicle_manager.find_car_by_type(car_type, car_list)
         print()
         if filtered_list == None:
-            print("No vehicle of type {} available on these dates".format(self.color.return_colored(car_type, 'red')))
-            self.nocco_list.single_list('Go back')
+            self.frame.delete_last_lines(1)
+            while filtered_list == None:
+                print("No vehicle of type {} available on these dates".format(self.color.return_colored(car_type, 'red')))
+                time.sleep(4)
+                self.frame.delete_last_lines(2)
+                self.check_if_valid('type of vehicle (Small car, sedan, offroad or bus)', self.order_manager.check_type_of_vehicle)
+                filtered_list=self.vehicle_manager.find_car_by_type(car_type,car_list)
+            register_order_list = self.nocco_list.choose_one("Choose an action", ["Save", "Calculate order"
+                , "Print order", "Cancel"], "action")
+            self.handle_answer_from_menu(register_order_list['action'], 'register_order')
+            #self.nocco_list.single_list('Go back')
+            
+
             self.frame.delete_last_lines(12)
         else:
             print('Available cars:')
@@ -421,8 +455,8 @@ class Menu:
         self.frame.delete_last_lines(2)
 
     def show_car_availability(self, prompt):
-        self.check_if_valid('a start date', self.order_manager.check_start_date)
-        self.check_if_valid('a end date', self.order_manager.check_ending_date)
+        self.check_if_valid('a start date [DD/MM/YYYY]', self.order_manager.check_start_date)
+        self.check_if_valid('an end date [DD/MM/YYYY]', self.order_manager.check_ending_date)
         start_date, end_date = self.order_manager.get_dates()
         car_list = self.vehicle_manager.show_car_availability(start_date, end_date, prompt)
         print() 
@@ -602,7 +636,7 @@ class Menu:
 
         elif menu_type == 'order':
             if prompt.lower() == 'go back':
-                self.frame.delete_last_lines(6)
+                self.frame.delete_last_lines(5)
                 self.init_menu()
 
             elif prompt.lower() == 'register order':
@@ -637,7 +671,8 @@ class Menu:
                 self.frame.delete_last_lines(6)
                 self.edit_order()
             elif prompt.lower() == 'delete order':
-                pass
+                self.frame.delete_last_lines(3)
+                self.delete_order()
             elif prompt.lower() == 'go back':
                 self.frame.delete_last_lines(5)
                 self.find_order()
