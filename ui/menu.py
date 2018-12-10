@@ -113,10 +113,16 @@ class Menu:
 		print()
 		with open("./data/prices_list.txt","r") as f:
 			for i in f:
+<<<<<<< HEAD
+				print("\t",i)
+		self.nocco_list.single_list("Go back")
+		self.frame.delete_last_lines(7)
+=======
 				print(i)
 		self.nocco_list.single_list("Go back")
 		self.frame.delete_last_lines(10)
 		self.order()
+>>>>>>> d17b8fd7571b2c4366e51ee49fe0397f8bf8b3d8
 
 	def find_order_by_id(self):
 		ID = input("Enter ID: ")
@@ -578,7 +584,6 @@ class Menu:
 			for i, car in enumerate(cars):
 				print("Car " + str(i + 1) + ": " + car.get_make())
 				time.sleep(1.5)
-				# TODO we need to figure out how to handle this
 			print()
 
 	def find_cars_by_type(self):
@@ -595,11 +600,8 @@ class Menu:
 				print("Car " + str(i + 1) + ": " + car.get_licence())
 				# time.sleep(1.5)
 			print()
-			# this does not work properly, because we need to handle
-			# even when there are more than one car.
 			if len(cars) == 1:
 				self.__current_vehicle = cars
-				# TODO we need to figure out how to handle this
 				found_cars_list = self.nocco_list.choose_one(
 																"Choose an action", 
 																[
@@ -892,6 +894,23 @@ class Menu:
 				print()
 				self.cars()
 
+<<<<<<< HEAD
+			elif prompt.lower() == 'show cars that require maintenance':
+				self.frame.delete_last_lines(9)
+				self.show_cars_that_require_maintenance()
+				print()
+				print()
+				self.cars()
+
+			elif prompt.lower() == 'show cars that must be checked':
+				self.frame.delete_last_lines(9)
+				self.show_cars_that_must_be_checked()
+				print()
+				print()
+				self.cars()
+
+=======
+>>>>>>> d17b8fd7571b2c4366e51ee49fe0397f8bf8b3d8
 			elif prompt.lower() == 'go back':
 				self.frame.delete_last_lines(7)
 				self.init_menu()
@@ -988,7 +1007,7 @@ class Menu:
 				self.cars()
 
 		######################################################    
-		#       CARS THAT REQUIRE MAINTENANCE               #                    
+		#       CARS THAT REQUIRE MAINTENANCE                #                    
 		######################################################
 		elif menu_type == 'show cars that require maintenance':
 			if prompt.lower() == 'save':
