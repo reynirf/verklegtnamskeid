@@ -18,8 +18,7 @@ class OrderRepo:
                 for line in csv_reader:
                     order = Order(
                         line['id'],
-                        line['ssn'],
-                        line['vehicle'], 
+                        line['ssn'], 
                         line['starting date'], 
                         line['ending date'],
                         line['pick up time'],
