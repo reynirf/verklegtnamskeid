@@ -167,7 +167,7 @@ class Menu:
 	def get_inputted_order(self):
 		self.order_manager.get_inputted_order()
 		register_order_list = self.nocco_list.choose_one("Choose an action",["Save", "Calculate order" 
-		, "Print order", "Show all available cars", "Cancel"], "action")
+		, "Print order", "Cancel"], "action")
 		self.handle_answer_from_menu(register_order_list['action'], 'register_order')
 
 	def delete_order(self):
