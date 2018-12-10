@@ -586,7 +586,7 @@ class Menu:
 		print()
 		cars = self.vehicle_manager.find_car_by_type(type_of_car)
 		if cars == None:
-			print('{}'.format(self.color.return_colored("Car not found!", 'red')))
+			print('{}'.format(self.color.return_colored("No cars found!", 'red')))
 			time.sleep(1.5)
 			self.frame.delete_last_lines(3)
 			self.find_cars()
@@ -632,7 +632,7 @@ class Menu:
 
 		self.check_if_valid('Number of seats', self.vehicle_manager.check_number_of_seats)
 
-		self.check_if_valid('Number plate', self.vehicle_manager.check_license_plate)
+		self.check_if_valid('Licence plate', self.vehicle_manager.check_number_plate)
 
 		self.check_if_valid('Fuel (bensin, diesel, electric or hybrid)', self.vehicle_manager.check_fuel)
 
