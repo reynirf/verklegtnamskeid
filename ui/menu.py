@@ -528,8 +528,15 @@ class Menu:
             print("Car: " + car.get_licence())
             print()
             self.__current_vehicle = car
-            found_cars_list = self.nocco_list.choose_one("Choose an action", ["Edit car", "Remove car", "Go back"],
-                                                         "action")
+            found_cars_list = self.nocco_list.choose_one(
+                                                        "Choose an action", 
+                                                        [
+                                                            "Edit car", 
+                                                            "Remove car", 
+                                                            "Go back"
+                                                        ], 
+                                                        "action"
+                                                        )
             self.frame.delete_last_lines(2)
             self.handle_answer_from_menu(found_cars_list['action'],
                                          'found car')
