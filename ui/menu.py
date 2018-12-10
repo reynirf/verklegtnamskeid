@@ -283,6 +283,14 @@ class Menu:
                                                           ['Save', 'Cancel'],
                                                           'action')
         self.handle_answer_from_menu(save_edited_order['action'], 'save edited order')
+    
+    def save_edited_order(self):
+        self.order_manager.delete_order(self.__current_customer)
+        self.order_manager.save_new_order()
+        print("{}".format(self.color.return_colored("Order updated", 'green')))
+        time.sleep(1.5)
+        self.frame.delete_last_lines(1)
+        ###Villa hér, kemur str obj has no attribute day.
 
     def check_if_valid(self, to_enter, to_check, editing=False, current_value=''):
         mistake = 0
@@ -689,6 +697,19 @@ class Menu:
             elif prompt.lower() == 'go back':
                 self.frame.delete_last_lines(5)
                 self.find_order()
+        
+        ######################################################    
+        #                    save edited order                   #
+        ######################################################
+        elif menu_type == 'save edited order':
+            if prompt.lower() == 'save':
+                self.frame.delete_last_lines(15)
+                self.save_edited_order()
+                print('Order: {}\n'.format(self.__current_order.__str__()))
+                self.edit_order()
+            if prompt.lower() == 'cancel':
+                self.frame.delete_last_lines(15)
+                self.find_order()
 
         ######################################################    
         #                 FOUND MULTIPLE ORDERS              #                    
@@ -869,7 +890,6 @@ class Menu:
             if prompt.lower() == 'go back':
                 self.frame.delete_last_lines(9)
                 self.order()
-
 
         ########################################################
         #                REGISTER NEW ORDER                    #

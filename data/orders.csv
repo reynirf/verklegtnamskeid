@@ -1,2 +1,3 @@
 id,ssn,starting date,ending date,pick up time,returning time,pick up location,return location,number plate,insurance,type of vehicle
 000,0486512,20.12.2018,21.12.2018,10,19,akureyri,akureyri,NE352,no,smallcar
+123456789,1107983699,10.12.2018,12.12.2018,12,12,akureyri,akureyri,TU564,yes,smallcar
