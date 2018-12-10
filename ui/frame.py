@@ -10,17 +10,18 @@ class Frame:
     def __init__(self): 
         self.color = Color()
         self.get_size_of_screen()
-        self.list_of_boot_length = list(range(0,10)) #when debuggin
+        self.list_of_boot_length = list(range(0,10)) #when debugging
         # self.list_of_boot_length = list(range(0,50))
-        self.logo = """  
-     ____    _   _           _          _                 
-    | __ )  (_) | |   __ _  | |   ___  (_)   __ _    __ _ 
-    |  _ \  | | | |  / _` | | |  / _ \ | |  / _` |  / _` |
-    | |_) | | | | | | (_| | | | |  __/ | | | (_| | | (_| |
-    |____/  |_| |_|  \__,_| |_|  \___| |_|  \__, |  \__,_|
-                                            |___/             
-"""
 
+        self.logo = """
+    .______    __   __          ___       __       _______  __    _______      ___      
+    |   _  \  |  | |  |        /   \     |  |     |   ____||  |  /  _____|    /   \     
+    |  |_)  | |  | |  |       /  ^  \    |  |     |  |__   |  | |  |  __     /  ^  \    
+    |   _  <  |  | |  |      /  /_\  \   |  |     |   __|  |  | |  | |_ |   /  /_\  \   
+    |  |_)  | |  | |  `----./  _____  \  |  `----.|  |____ |  | |  |__| |  /  _____  \  
+    |______/  |__| |_______/__/     \__\ |_______||_______||__|  \______| /__/     \__\ 
+                                                                                    
+"""
     def get_size_of_screen(self):
         if os.name == 'nt':
             import shutil

@@ -102,6 +102,7 @@ class Menu:
         else:
             print("Order: " + order.__str__())
             print()
+            self.__current_order = order
             self.found_order()
 
     def find_order_by_ssn(self):
@@ -118,11 +119,12 @@ class Menu:
             if len(orders) == 1:
                 print("Order : " + orders[0].__str__())
                 print()
+                self.__current_order = orders[0]
                 self.found_order()
             else:
                 print("{}".format(self.color.return_colored("There are multiple orders with that SSN!", 'red')))
                 print()
-                printable_orders = ['ID: {} SSN: {} Dates: {}'.format(
+                printable_orders = ['ID: {} SSN: {} Dates: {} - {}'.format(
                     order.__str__(),order.get_ssn(), order.get_dates()) for order in orders]
                 printable_orders.append('Go back')
 
@@ -149,14 +151,24 @@ class Menu:
         , "Print order", "Show all available cars", "Cancel"], "action")
         self.handle_answer_from_menu(register_order_list['action'], 'register_order')
 
-
+    def delete_order(self):
+        start_day, end_day = self.__current_order.get_dates()
+        dates = self.order_manager.get_order_dates(start_day, end_day)
+        car = self.__current_order.get_number_plate()
+        self.vehicle_manager.delete_order_dates(dates, car)
+        self.order_manager.delete_order(self.__current_order)
+        self.frame.delete_last_lines(1)
+        print('{}'.format(self.color.return_colored("Order removed from file", 'red')))
+        time.sleep(1.5)
+        self.order()
 
     def save_new_order(self):
         self.order_manager.save_new_order()
         print("{}".format(self.color.return_colored("New order registered", 'green')))
         time.sleep(2)
         self.frame.delete_last_lines(1)
-        dates, vehicle = self.order_manager.get_order_dates()
+        dates = self.order_manager.get_order_dates()
+        vehicle = self.order_manager.get_number_plate()
         self.vehicle_manager.save_order_dates(dates, vehicle)
 
     def register_order(self):
@@ -226,7 +238,10 @@ class Menu:
             if not editing and not current_value:
                 user_input = input("Enter " + to_enter + ": ")
             else:
-                user_input = input("Enter " + to_enter + " [" + current_value + "]: ")
+                if to_enter == 'Credit card number':
+                    user_input = input("Enter " + to_enter + " [**** **** **** " + current_value[12:] + "]: ")
+                else:
+                    user_input = input("Enter " + to_enter + " [" + current_value + "]: ")
             error = to_check(user_input, editing, current_value)
             if editing and current_value and not error:
                 if mistake:
@@ -237,9 +252,7 @@ class Menu:
                     print("Enter " + to_enter + " [" + current_value + "]: " + user_input)
                 else:
                     if to_enter == 'Credit card number':
-                        print("Enter " + to_enter + " [**** **** **** " + current_value[
-                                                                          12:] + "]: " + "**** **** **** " + current_value[
-                                                                                                             12:])
+                        print("Enter " + to_enter + " [**** **** **** " + current_value[12:] + "]: " + "**** **** **** " + current_value[12:])
                     else:
                         print("Enter " + to_enter + " [" + current_value + "]: " + current_value)
             elif error and not mistake:
@@ -348,6 +361,8 @@ class Menu:
             self.frame.delete_last_lines(2)
             if len(customers) == 1:
                 self.__current_customer = customers[0]
+                print("Customer: " + self.__current_customer.__str__())
+                print()
                 self.found_customer()
             else:
                 print("{}".format(self.color.return_colored("There are multiple customers with that name!", 'red')))
@@ -397,7 +412,7 @@ class Menu:
 
     def show_car_availability(self, prompt):
         self.check_if_valid('a start date', self.order_manager.check_start_date)
-        self.check_if_valid('a end date', self.order_manager.check_ending_date)
+        self.check_if_valid('an end date', self.order_manager.check_ending_date)
         start_date, end_date = self.order_manager.get_dates()
         car_list = self.vehicle_manager.show_car_availability(start_date, end_date, prompt)
         print() 
@@ -611,7 +626,8 @@ class Menu:
             if prompt.lower() == 'edit order':
                 pass
             elif prompt.lower() == 'delete order':
-                pass
+                self.frame.delete_last_lines(3)
+                self.delete_order()
             elif prompt.lower() == 'go back':
                 self.frame.delete_last_lines(5)
                 self.find_order()

@@ -15,10 +15,10 @@ class VehicleRepo:
                 csv_reader = csv.DictReader(vehicle_file, delimiter=';')
                 for line in csv_reader:
                     try:
-                        dates = line['dates rented'][1:-1].split(',')
-                        rented_dates = [date[1:-1] for date in dates]
-                    except TypeError:
-                        dates = ''
+                        dates = line['dates rented'].split(',')
+                       # rented_dates = [date[1:-1] for date in dates]
+                    except AttributeError:
+                        dates = []
                     vehicle = Vehicle(
                         line['licence'],
                         line['make'],
@@ -29,7 +29,7 @@ class VehicleRepo:
                         line['fuel'],
                         line['transmission'], 
                         line['maintainance'],
-                        rented_dates)
+                        dates)
                     self.__vehicle_list.append(vehicle)
         return self.__vehicle_list
 

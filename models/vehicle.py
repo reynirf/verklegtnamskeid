@@ -13,10 +13,9 @@ class Vehicle:
         self.__fuel = fuel
         self.__transmission = transmission
         self.__maintainance = maintainance
-        if type(dates) == list:
-            self.__rented_dates = dates
-        else:
-            self.__rented_dates = list(dates)
+        self.__rent_dates = dates
+        self.__rented_dates = []
+        self.set_rented_dates()
         self.set_price()
 
     def set_price(self):
@@ -29,6 +28,14 @@ class Vehicle:
         elif self.__type_of_vehicle == "bus":
             self.__price_per_day = 13000
 
+    def set_rented_dates(self):
+        try:
+            for d in self.__rent_dates:
+                rent_day = date(int(d[:4]), int(d[4:6]), int(d[6:]))
+                self.__rented_dates.append(rent_day)
+        except ValueError:
+            pass
+            
     def get_rented_dates(self):
         return self.__rented_dates
 
