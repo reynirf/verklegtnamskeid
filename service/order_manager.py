@@ -112,6 +112,11 @@ class OrderManager:
     def check_ID(self, ID, ignore_empty_value=False, current_value=''):
         """Check if ssn is valid. Returns an error message if ssn
         has letters or punctuation in it"""
+        if ID.strip() == '' and not ignore_empty_value:
+            return self.error('ID')
+        elif ID.strip() == '':
+            self.__temp_ID = current_value
+            return None
         ID = ID.replace("-", "")
         for letter in ID:
             if letter in (string.ascii_letters + string.punctuation):
@@ -121,6 +126,11 @@ class OrderManager:
     def check_ssn(self, ssn, ignore_empty_value=False, current_value=''):
         """Check if ssn is valid. Returns an error message if ssn
         has letters or punctuation in it"""
+        if ssn.strip() == '' and not ignore_empty_value:
+            return self.error('SSN')
+        elif ssn.strip() == '':
+            self.__temp_ssn = current_value
+            return None
         ssn = ssn.replace("-", "")
         for letter in ssn:
             if letter in (string.ascii_letters + string.punctuation):
@@ -129,6 +139,11 @@ class OrderManager:
 
     def check_type_of_vehicle(self, type_of_vehicle, ignore_empty_value=False, current_value=''):
         """check if type of car is valid."""
+        if type_of_vehicle.strip() == '' and not ignore_empty_value:
+            return self.error( 'Type' )
+        elif type_of_vehicle.strip() == '':
+            self.__temp_type_of_vehicle = current_value
+            return None
         car_types = ["sedan", "offroad", "smallcar", "bus"]
         type_of_vehicle = type_of_vehicle.replace(' ', '')
         if type_of_vehicle.lower() in car_types:
@@ -139,6 +154,11 @@ class OrderManager:
     def check_start_date(self, start_date, ignore_empty_value=False, current_value=''):
         """Check if start date is valid. Returns an error message if start date
         can not be converted to a datetime object"""
+        if start_date.strip() == '' and not ignore_empty_value:
+            return self.error('Start date')
+        elif start_date.strip() == '':
+            self.__temp_start_date = current_value
+            return None
         present_day = date.today()
         try:
             year = start_date[6:]
@@ -154,6 +174,11 @@ class OrderManager:
     def check_ending_date(self, end_date, ignore_empty_value=False, current_value=''):
         """Check if end date is valid. Returns an error message if end date
         can not be converted to a datetime object"""
+        if end_date.strip() == '' and not ignore_empty_value:
+            return self.error('End date')
+        elif end_date.strip() == '':
+            self.__temp_end_date = current_value
+            return None
         try:
             year = end_date[6:]
             month = end_date[3:5]
@@ -168,6 +193,11 @@ class OrderManager:
     def check_pick_up_time(self, pick_up_time, ignore_empty_value=False, current_value=''):
         """Check if pick up time is valid. Returns an error message if pick up time
         has letters in it"""
+        if pick_up_time.strip() == '' and not ignore_empty_value:
+            return self.error('Pick up time')
+        elif pick_up_time.strip() == '':
+            self.__temp_pick_up_time = current_value
+            return None
         pick_up_time = pick_up_time.replace("-", "").strip()
         time_correct_format = ""
         for letter in pick_up_time:
@@ -187,6 +217,11 @@ class OrderManager:
     def check_returning_time(self, returning_time, ignore_empty_value=False, current_value=''):
         """Check if returning time is valid. Returns an error message if returning time
         has letters in it"""
+        if returning_time.strip() == '' and not ignore_empty_value:
+            return self.error('Return time')
+        elif returning_time.strip() == '':
+            self.__temp_returning_time = current_value
+            return None
         returning_time = returning_time.replace("-", "")
         for letter in returning_time:
             if letter in (string.ascii_letters):
@@ -194,18 +229,34 @@ class OrderManager:
         self.__temp_returning_time = returning_time
 
     def check_pick_up_location(self, pick_up_location, ignore_empty_value=False, current_value=''):
+        if pick_up_location.strip() == '' and not ignore_empty_value:
+            return self.error('Pick up location')
+        elif pick_up_location.strip() == '':
+            self.__temp_pick_up_location = current_value
+            return None
         if pick_up_location.lower() in self.__locations:
             self.__temp_pick_up_location = pick_up_location
         else:
             return "Please enter one of our locations."
 
     def check_return_location(self, return_location, ignore_empty_value=False, current_value=''):
+        if return_location.strip() == '' and not ignore_empty_value:
+            return self.error('Return location')
+        elif return_location.strip() == '':
+            self.__temp_return_location = current_value
+            return None
         if return_location.lower() in self.__locations:
             self.__temp_return_location = return_location
         else:
             return "Please enter one of our locations."
 
     def check_number_plate(self, number_plate, ignore_empty_value=False, current_value=''):
+        if number_plate.strip() == '' and not ignore_empty_value:
+            return self.error('Number plate')
+        elif number_plate.strip() == '':
+            self.__temp_number_plate = current_value
+            return None
+
         number_plate = number_plate.replace("-", "")
         for letter in number_plate:
             if letter in (string.punctuation):
@@ -213,6 +264,11 @@ class OrderManager:
         self.__temp_number_plate = number_plate
 
     def check_insurance(self, insurance, ignore_empty_value=False, current_value=''):
+        if insurance.strip() == '' and not ignore_empty_value:
+            return self.error('Insurance')
+        elif insurance.strip() == '':
+            self.__temp_insurance = current_value
+            return None
         insurance = insurance.strip()
         if insurance.lower() == "yes" or insurance.lower() == "no":
             self.__temp_insurance = insurance
@@ -237,3 +293,6 @@ class OrderManager:
 
     def delete_order(self, order):
         self.__order_repo.delete_order(order)
+    
+    def error(self, input_type):
+        return '{} not valid. Please try again.'.format(input_type)

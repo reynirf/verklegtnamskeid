@@ -40,6 +40,7 @@ class Order:
             "Return time": self.__return_time,
             "Pick up location": self.__pick_up_location,
             "Return location": self.__return_location,
+            "Type": self.__vehicle_type,
             "Number plate": self.__number_plate,
             "Insurance": self.__insurance
         }
