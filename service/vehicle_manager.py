@@ -101,7 +101,7 @@ class VehicleManager:
         self.__temp_number_of_seats = number_of_seats
 
     def check_license_plate(self, license_plate, ignore_empty_value=False, current_value=''):
-        """Check if number plate is valid. Returns an error message if number plate
+        """Check if license plate is valid. Returns an error message if number plate
         has punctuation in it"""
 
         if license_plate.strip() == '':
@@ -113,12 +113,12 @@ class VehicleManager:
         for letter in license_plate:
             if letter in (string.punctuation):
                 return self.error('License plate')
-        self.__temp_licsense_plate = license_plate
+        self.__temp_license_plate = license_plate
 
     def check_fuel(self, fuel, ignore_empty_value=False, current_value=''):
         """Checks that input fuel is valid. Returns an error if it is not
         in our list of fuels"""
-        fuels = ["bensin", "diesel", "electric", "hybrid"]
+        fuels = ["gasoline", "diesel", "electric", "hybrid"]
 
         if fuel.strip() == '':
             return self.error("Fuel")

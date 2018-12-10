@@ -117,7 +117,7 @@ class OrderManager:
         has letters or punctuation in it"""
         if self.find_order_by_id(ID):
             return 'An order with that ID already exists. Choose another ID'
-        if ID.strip() == '' and not ignore_empty_value:
+        if ID.strip() == '': #and not ignore_empty_value:
             return self.error('ID')
         elif ID.strip() == '':
             self.__temp_ID = current_value

@@ -546,7 +546,7 @@ class Menu:
 
 		self.check_if_valid('Number of seats', self.vehicle_manager.check_number_of_seats, True, car['Number of seats'])
 
-		self.check_if_valid('License plate', self.vehicle_manager.check_license_plate, True, car['License plate'])
+		#self.check_if_valid('License plate', self.vehicle_manager.check_license_plate, True, car['License plate'])
 
 		self.check_if_valid('Fuel', self.vehicle_manager.check_fuel, True,
 							car['Fuel'])
@@ -598,8 +598,9 @@ class Menu:
 			self.find_cars()
 		else:
 			for i, car in enumerate(cars):
-				print("Car " + str(i + 1) + ": " + car.get_make())
-				time.sleep(1.5)
+				print(car.get_license())
+				print("Car " + str(i + 1) + ": " + car.get_license())
+				time.sleep(3)
 			print()
 
 	def find_cars_by_type(self):
@@ -613,8 +614,8 @@ class Menu:
 			self.find_cars()
 		else:
 			for i, car in enumerate(cars):
-				print("Car " + str(i + 1) + ": " + car.get_license())
-				# time.sleep(1.5)
+				print("Car " + str(i + 1) + ": " + car.get_vehicle_type())
+				time.sleep(1.5)
 			print()
 			if len(cars) == 1:
 				self.__current_vehicle = cars
