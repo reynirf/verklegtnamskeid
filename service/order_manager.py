@@ -22,7 +22,7 @@ class OrderManager:
         self.__temp_car_number = ""
         self.__temp_insurence = ""
         self.__temp_type_of_vehicle = ""
-        self.__locations = ["reykjavik", "akureyri"]
+        self.__locations = ["reykjavik", "akureyri", "ak", "rvk"]
     
     def get_order_list(self):
         return self.__order_repo.get_order_list()
@@ -182,13 +182,13 @@ class OrderManager:
         self.__temp_returning_time = returning_time
 
     def check_pick_up_location(self, pick_up_location, ignore_empty_value=False, current_value=''):
-        if pick_up_location in self.__locations:
+        if pick_up_location.lower() in self.__locations:
             self.__temp_pick_up_location = pick_up_location
         else:
             return "Please enter one of our locations."
 
     def check_return_location(self, return_location, ignore_empty_value=False, current_value=''):
-        if return_location in self.__locations:
+        if return_location.lower() in self.__locations:
             self.__temp_return_location = return_location
         else:
             return "Please enter one of our locations."
