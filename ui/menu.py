@@ -716,6 +716,8 @@ class Menu:
 				print()
 				self.frame.delete_last_lines(6)
 				self.show_pricing_list()
+				self.frame.delete_last_lines(6)
+				self.order()
 		######################################################    
 		#                      FIND ORDER                    #
 		######################################################
@@ -747,7 +749,7 @@ class Menu:
 				self.find_order()
 		
 		######################################################    
-		#                    save edited order                   #
+		#                    SAVE EDITED ORDER               #
 		######################################################
 		elif menu_type == 'save edited order':
 			if prompt.lower() == 'save':
@@ -913,13 +915,6 @@ class Menu:
 			elif prompt.lower() == 'go back':
 				self.frame.delete_last_lines(7)
 				self.init_menu()
-		########################################################
-		#                SHOW PRICING LIST                     #
-		########################################################
-		elif menu_type == 'show pricing list':
-			if prompt.lower() == 'go back':
-				self.frame.delete_last_lines(9)
-				self.order()
 
 		########################################################
 		#                REGISTER NEW ORDER                    #
