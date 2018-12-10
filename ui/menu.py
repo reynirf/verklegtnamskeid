@@ -531,8 +531,6 @@ class Menu:
 		self.frame.delete_last_lines(7)
 		car = self.nocco_list.choose_one('Choose an action', ['Register car', 'Find car', 'Show all available cars',
 															  'Show cars in service',
-															  'Show cars that require maintenance',
-															  'Show cars that must be checked',
 															  'Go back'], 'action')
 		self.handle_answer_from_menu(car['action'], 'cars')
 
@@ -622,7 +620,7 @@ class Menu:
 		self.cars()
 
 	def register_car(self):
-		self.frame.delete_last_lines(8)
+		self.frame.delete_last_lines(7)
 
 		self.check_if_valid('Car type (smallcar, sedan, offroad or bus)', self.vehicle_manager.check_type)
 
@@ -870,18 +868,16 @@ class Menu:
 		######################################################
 		elif menu_type == 'cars':
 			if prompt.lower() == 'register car':
-				self.frame.delete_last_lines(1)
 				self.register_car()
 				self.cars()
 
 			if prompt.lower() == 'find car':
-				self.frame.delete_last_lines(2)
 				self.frame.delete_last_lines(7)
 				self.find_cars()
 				self.cars()
 
 			elif prompt.lower() == 'show all available cars':
-				self.frame.delete_last_lines(9)
+				self.frame.delete_last_lines(7)
 				self.show_car_availability('available')
 				self.frame.delete_last_lines(1)
 				print()
@@ -889,29 +885,15 @@ class Menu:
 				self.cars()
 
 			elif prompt.lower() == 'show cars in service':
-				self.frame.delete_last_lines(9)
+				self.frame.delete_last_lines(7)
 				self.show_car_availability('rented')
 				self.frame.delete_last_lines(1)
 				print()
 				print()
 				self.cars()
 
-			elif prompt.lower() == 'show cars that require maintenance':
-				self.frame.delete_last_lines(9)
-				self.show_cars_that_require_maintenance()
-				print()
-				print()
-				self.cars()
-
-			elif prompt.lower() == 'show cars that must be checked':
-				self.frame.delete_last_lines(9)
-				self.show_that_must_be_checked()
-				print()
-				print()
-				self.cars()
-
 			elif prompt.lower() == 'go back':
-				self.frame.delete_last_lines(9)
+				self.frame.delete_last_lines(7)
 				self.init_menu()
 		########################################################
 		#                SHOW PRICING LIST                     #
