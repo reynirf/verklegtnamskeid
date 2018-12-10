@@ -13,6 +13,7 @@ class Order:
         self.__return_location = return_location
         self.__number_plate = number_plate 
         self.__insurance = insurance
+        self.__vehicle_type = vehicle_type
     
     def __str__(self):
         return self.__order_id
@@ -28,11 +29,13 @@ class Order:
     
     def return_details(self):
         """Returns the details needed for editing the order"""
+        start_day = str(self.__start_date.day) + '.' + str(self.__start_date.month) + '.' + str(self.__start_date.year)
+        end_day = str(self.__end_date.day) + '.' + str(self.__end_date.month) + '.' + str(self.__end_date.year)
         return {
             "ID": self.__order_id,
             "SSN": self.__ssn,
-            "Start date": self.__start_date,
-            "End date": self.__end_date,
+            "Start date": start_day,
+            "End date": end_day,
             "Pick up time": self.__pick_up_time,
             "Return time": self.__return_time,
             "Pick up location": self.__pick_up_location,

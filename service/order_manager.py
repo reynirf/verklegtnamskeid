@@ -55,8 +55,8 @@ class OrderManager:
         print("Enter SSN: {}".format(self.__temp_ssn))
         print("Enter start date: {}".format(self.__temp_start_date))
         print("Enter ending date: {}".format(self.__temp_end_date))
-        print("Enter pick up time: {}".format(self.__temp_pick_up_time))
-        print("Enter returning time: {}".format(self.__temp_returning_time))
+        print("Enter pick up time (24H): {}".format(self.__temp_pick_up_time))
+        print("Enter returning time (24H): {}".format(self.__temp_returning_time))
         print("Enter pick up location: {}".format(self.__temp_pick_up_location))
         print("Enter return location: {}".format(self.__temp_return_location))
         print("Enter type of vehicle: {}".format(self.__temp_type_of_vehicle))
@@ -88,12 +88,13 @@ class OrderManager:
 
         order_instance=Vehicle(0,0,0,0,self.__temp_type_of_vehicle,0,0,0)
         
-        price_per_day=order_instance.get_price_per_day()
 
         price_per_day = order_instance.get_price_per_day()
 
         diffrence = end_date_Input - start_date_Input
         total = diffrence.days + 1
+        insurence_cost = price_per_day * 1.05
+        price_per_day=price_per_day+insurence_cost
         return "Price is: {} ISK".format(price_per_day * total)
 
     def check_ID(self, ID, ignore_empty_value=False, current_value=''):
