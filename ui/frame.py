@@ -48,7 +48,7 @@ class Frame:
         """
         percent = ("{0:." + str(decimals) + "f}").format(100 * (iteration / float(total)))
         filled_length = int(length * iteration // total)
-        bar = fill * filled_length + '-' * (length - filled_length)
+        bar = self.color.return_colored(fill,'green') * filled_length + '-' * (length - filled_length)
         print('\r%s |%s| %s%% %s' % (prefix, bar, percent, suffix), end = '\r')
 
         if iteration == total: 
