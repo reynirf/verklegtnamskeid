@@ -644,11 +644,12 @@ class Menu:
 
         elif menu_type == 'order':
             if prompt.lower() == 'go back':
-                self.frame.delete_last_lines(5)
+                self.frame.delete_last_lines(6)
                 self.init_menu()
 
             elif prompt.lower() == 'register order':
                 print()
+                self.frame.delete_last_lines(2)
                 self.register_order()
 
             elif prompt.lower() == 'find order':
@@ -875,7 +876,7 @@ class Menu:
         ########################################################
         elif menu_type == 'register_order':
             if prompt.lower() == 'cancel':
-                self.frame.delete_last_lines(20)
+                self.frame.delete_last_lines(19)
                 self.order()
 
             elif prompt.lower() == 'save':
@@ -930,7 +931,7 @@ class Menu:
         ######################################################
         elif menu_type == 'register car':
             if prompt.lower() == 'save':
-                self.frame.delete_last_lines(16)
+                self.frame.delete_last_lines(13)
                 self.save_new_car()
                 print("\n" * 7)
                 self.cars()
