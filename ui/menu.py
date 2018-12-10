@@ -632,7 +632,7 @@ class Menu:
 
 		self.check_if_valid('Number of seats', self.vehicle_manager.check_number_of_seats)
 
-		self.check_if_valid('Licence plate', self.vehicle_manager.check_number_plate)
+		self.check_if_valid('Licence plate', self.vehicle_manager.check_license_plate)
 
 		self.check_if_valid('Fuel (bensin, diesel, electric or hybrid)', self.vehicle_manager.check_fuel)
 

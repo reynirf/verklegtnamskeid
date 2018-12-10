@@ -72,7 +72,7 @@ class OrderManager:
         print("Enter pick up location: {}".format(self.__temp_pick_up_location))
         print("Enter return location: {}".format(self.__temp_return_location))
         print("Enter type of vehicle: {}".format(self.__temp_type_of_vehicle))
-        print("Enter number plate: {}".format(self.__temp_license_plate))
+        print("Enter license plate: {}".format(self.__temp_license_plate))
         print("Enter Insurance: {}".format(self.__temp_insurance))
         print()
         
@@ -257,7 +257,7 @@ class OrderManager:
             return self.error('Pick up location')
 
     def check_license_plate(self, license_plate, ignore_empty_value=False, current_value=''):
-        """Check if number plate is valid. Returns an error message if number plate
+        """Check if license plate is valid. Returns an error message if license plate
         has punctuation in it"""
         if license_plate.strip() == '' and not ignore_empty_value:
             return self.error('License plate')
@@ -266,11 +266,11 @@ class OrderManager:
             return None
 
         if len(license_plate) < 5 or len(license_plate) > 6:
-            return self.error('Number plate')
+            return self.error('License plate')
         
         for letter in license_plate:
             if letter in (string.punctuation):
-                return self.error('Number plate')
+                return self.error('License plate')
         self.__temp_license_plate = license_plate
 
     def check_insurance(self, insurance, ignore_empty_value=False, current_value=''):
