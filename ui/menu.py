@@ -109,6 +109,7 @@ class Menu:
 
     def find_order_by_id(self):
         ID = input("Enter ID: ")
+        self.frame.delete_last_lines(2)
         print()
         order = self.order_manager.find_order_by_id(ID)
         if order == None:
@@ -654,7 +655,7 @@ class Menu:
 
             elif prompt.lower() == 'find order':
                 print()
-                self.frame.delete_last_lines(6)
+                self.frame.delete_last_lines(7)
                 self.find_order()
             elif prompt.lower() == 'show pricing list':
                 print()
@@ -937,7 +938,7 @@ class Menu:
                 self.cars()
 
             if prompt.lower() == 'cancel':
-                self.frame.delete_last_lines(10)
+                self.frame.delete_last_lines(6)
                 self.cars()
 
         ######################################################    
