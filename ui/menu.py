@@ -531,6 +531,30 @@ class Menu:
 															  'Show cars in service',
 															  'Go back'], 'action')
 		self.handle_answer_from_menu(car['action'], 'cars')
+	
+	def edit_car(self):
+		car = self.__current_vehicle.return_details()
+		print('{}\n'.format(self.color.return_colored('Leave input empty to keep the value the same', 'green')))
+
+		self.check_if_valid('Car type', self.vehicle_manager.check_type, True, car['Car type'])
+
+		self.check_if_valid('Make', self.vehicle_manager.check_make, True, car['Make'])
+
+		self.check_if_valid('Model', self.vehicle_manager.check_model, True, car['Model'])
+
+		self.check_if_valid('Year', self.vehicle_manager.check_year, True, car['Year'])
+
+		self.check_if_valid('Number of seats', self.vehicle_manager.check_number_of_seats, True, car['Number of seats'])
+
+		self.check_if_valid('License plate', self.vehicle_manager.check_license_plate, True, car['License plate'])
+
+		self.check_if_valid('Fuel', self.vehicle_manager.check_fuel, True,
+							car['Fuel'])
+
+		self.check_if_valid('Driving transmission', self.vehicle_manager.check_driving_transmission, True, 
+							car['Driving transmission'])
+		
+
 
 	def find_cars(self):
 		find_cars = self.nocco_list.choose_one('Choose an action', ['Find car by number plate', 'Find car by make',
@@ -628,7 +652,7 @@ class Menu:
 
 		self.check_if_valid('Licence plate', self.vehicle_manager.check_license_plate)
 
-		self.check_if_valid('Fuel (bensin, diesel, electric or hybrid)', self.vehicle_manager.check_fuel)
+		self.check_if_valid('Fuel (gasoline, diesel, electric or hybrid)', self.vehicle_manager.check_fuel)
 
 		self.check_if_valid('Driving transmission (manual or automatic)', self.vehicle_manager.check_driving_transmission)
 		print()
@@ -943,7 +967,7 @@ class Menu:
 		elif menu_type == 'found car':
 			if prompt.lower() == 'edit car':
 				self.frame.delete_last_lines(5)
-				self.init_menu()
+				self.edit_car()
 
 			elif prompt.lower() == 'remove car':
 				self.frame.delete_last_lines(5)
