@@ -1,6 +1,7 @@
 from repos.customer_repo import CustomerRepo
 from models.customer import Customer
 import string
+import datetime
 
 
 class CustomerManager:
@@ -34,12 +35,12 @@ class CustomerManager:
     def check_name(self, name, ignore_empty_value=False, current_value=''):
         """check if name is valid. Returns an error message if name
         has numbers or punctuation in it"""
-
         if name.strip() == '' and not ignore_empty_value:
             return self.error('Name')
         elif name.strip() == '':
             self.__temp_name = current_value
             return None
+        
         for letter in name.strip():
             if letter in (string.digits + string.punctuation):
                 return self.error('Name')
@@ -48,7 +49,6 @@ class CustomerManager:
     def check_ssn(self, ssn, ignore_empty_value=False, current_value=''):
         """Check if ssn is valid. Returns an error message if ssn
         has letters or punctuation in it"""
-
         ssn = ssn.replace("-", "")
         if ssn.strip() == '' and not ignore_empty_value:
             return self.error('SSN')
@@ -63,14 +63,27 @@ class CustomerManager:
         self.__temp_ssn = ssn
 
     def check_birthday(self, birthday, ignore_empty_value=False, current_value=''):
-        # missing check for invalid birthday
+        """Check if birthday can be converted to a date object and wether that date
+        was more than 18 years ago"""
         if birthday.strip() == '' and not ignore_empty_value:
             return self.error('Birthday')
         elif birthday.strip() == '':
             self.__temp_birthday = current_value
             return None
-        self.__temp_birthday = birthday
-        return None
+        
+        present_day = date.today()
+        legal_age = present_day.year - 18
+        legal_date = present_day.replace(year=legal_age)
+        try:
+            year = start_date[6:]
+            month = start_date[3:5]
+            day = start_date[:2]
+            date_object = date(int(year), int(month), int(day))
+            if date_object > legal_date:
+                raise ValueError
+            self.__temp_start_date = date_object
+        except ValueError:
+            return self.error('Birthday')
 
     def check_phone_number(self, phone, ignore_empty_value=False, current_value=''):
         """Check if phone number is valid. Returns an error message if phone
@@ -134,12 +147,14 @@ class CustomerManager:
         self.__temp_credit_card = credit_card
 
     def check_address(self, address, ignore_empty_value=False, current_value=''):
-        # missing check for invalid address
+        """Checks that address is at least 5 letters long"""
         if address.strip() == '' and not ignore_empty_value:
             return self.error('Home address')
         elif address.strip() == '':
             self.__temp_address = current_value
             return None
+        if len(address) < 5:
+            return self.error('Home address')
         self.__temp_address = address
 
     def find_customer_by_name(self, name):

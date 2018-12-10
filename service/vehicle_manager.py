@@ -37,7 +37,7 @@ class VehicleManager:
         """Check if type is valid. Returns an error message if type
         has numbers or punctuation in it"""
         car_types = ["sedan", "offroad", "smallcar", "bus"]
-        inputed_car = ""
+
         if car_type.strip() == '':
             return self.error("Car type")
         
