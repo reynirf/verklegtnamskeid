@@ -10,7 +10,7 @@ class Frame:
     def __init__(self): 
         self.color = Color()
         self.get_size_of_screen()
-        self.list_of_boot_length = list(range(0,1)) #when debugging
+        self.list_of_boot_length = list(range(0,3)) #when debugging
         # self.list_of_boot_length = list(range(0,50))
 
         self.logo = """
