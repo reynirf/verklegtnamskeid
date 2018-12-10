@@ -113,16 +113,9 @@ class Menu:
 		print()
 		with open("./data/prices_list.txt","r") as f:
 			for i in f:
-<<<<<<< HEAD
 				print("\t",i)
 		self.nocco_list.single_list("Go back")
 		self.frame.delete_last_lines(7)
-=======
-				print(i)
-		self.nocco_list.single_list("Go back")
-		self.frame.delete_last_lines(10)
-		self.order()
->>>>>>> d17b8fd7571b2c4366e51ee49fe0397f8bf8b3d8
 
 	def find_order_by_id(self):
 		ID = input("Enter ID: ")
@@ -894,23 +887,6 @@ class Menu:
 				print()
 				self.cars()
 
-<<<<<<< HEAD
-			elif prompt.lower() == 'show cars that require maintenance':
-				self.frame.delete_last_lines(9)
-				self.show_cars_that_require_maintenance()
-				print()
-				print()
-				self.cars()
-
-			elif prompt.lower() == 'show cars that must be checked':
-				self.frame.delete_last_lines(9)
-				self.show_cars_that_must_be_checked()
-				print()
-				print()
-				self.cars()
-
-=======
->>>>>>> d17b8fd7571b2c4366e51ee49fe0397f8bf8b3d8
 			elif prompt.lower() == 'go back':
 				self.frame.delete_last_lines(7)
 				self.init_menu()
