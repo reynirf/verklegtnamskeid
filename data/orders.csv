@@ -1,4 +1,5 @@
 id,ssn,starting date,ending date,pick up time,returning time,pick up location,return location,number plate,insurance,type of vehicle
+<<<<<<< HEAD
 4562,130589,2019-01-01,2019-01-03,14,15,ak,ak,AB123,0,small car
 7846,48651,2019-02-03,2019-02-06,1,56,akureyri,akureyri,AB123,yes,smallcar
 1234,89423,2019-01-21,2019-01-23,14,12,akureyri,akureyri,TU564,no,smallcar
@@ -16,3 +17,6 @@ id,ssn,starting date,ending date,pick up time,returning time,pick up location,re
 84651,1568432,2019-01-01,2019-01-02,10,19,akureyri,akureyri,PO389,yes,offroad
 798465,1216846,2019-02-03,2019-02-05,10,19,akureyri,akureyri,PO389,no,offroad
 123456789,1107983699,2018-12-10,2018-12-12,12:00,12:00,akureyri,akureyri,TU564,yes,smallcar
+=======
+000,0486512,20.12.2018,21.12.2018,10,19,akureyri,akureyri,NE352,no,smallcar
+>>>>>>> 5238db16b4e6aaab8406006d7175c4522e642c28

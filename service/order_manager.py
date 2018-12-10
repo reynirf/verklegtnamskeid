@@ -35,11 +35,13 @@ class OrderManager:
 
     def save_new_order(self):
         # uses the temp values to save the new customer
+        start_day = str(self.__temp_start_date.day) + '.' + str(self.__temp_start_date.month) + '.' + str(self.__temp_start_date.year)
+        end_day = str(self.__temp_end_date.day) + '.' + str(self.__temp_end_date.month) + '.' + str(self.__temp_end_date.year)
         self.__order_repo.save_new_order(
             self.__temp_ID,
             self.__temp_ssn,
-            self.__temp_start_date,
-            self.__temp_end_date,
+            start_day,
+            end_day,
             self.__temp_pick_up_time,
             self.__temp_returning_time,
             self.__temp_pick_up_location,
@@ -92,7 +94,7 @@ class OrderManager:
 
         diffrence = end_date_Input - start_date_Input
         total = diffrence.days + 1
-        return "Price is: {}".format(price_per_day * total)
+        return "Price is: {} ISK".format(price_per_day * total)
 
     def check_ID(self, ID, ignore_empty_value=False, current_value=''):
         """Check if ssn is valid. Returns an error message if ssn

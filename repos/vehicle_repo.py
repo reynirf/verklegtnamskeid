@@ -19,18 +19,19 @@ class VehicleRepo:
                        # rented_dates = [date[1:-1] for date in dates]
                     except AttributeError:
                         dates = []
-                    vehicle = Vehicle(
-                        line['licence'],
-                        line['make'],
-                        line['model'], 
-                        line['year'], 
-                        line['type'],
-                        line['seats'],
-                        line['fuel'],
-                        line['transmission'], 
-                        line['maintainance'],
-                        dates)
-                    self.__vehicle_list.append(vehicle)
+                    if line['licence'] != None:
+                        vehicle = Vehicle(
+                            line['licence'],
+                            line['make'],
+                            line['model'], 
+                            line['year'], 
+                            line['type'],
+                            line['seats'],
+                            line['fuel'],
+                            line['transmission'], 
+                            line['maintainance'],
+                            dates)
+                        self.__vehicle_list.append(vehicle)
         return self.__vehicle_list
 
     def save_new_car(self, number_plate, make, model, year, car_type, number_of_seats,
