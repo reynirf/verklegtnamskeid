@@ -73,12 +73,21 @@ class Menu:
 
     def customer(self):
         customer = self.nocco_list.choose_one('Choose an action',
-                                              ['Register customer', 'Find customer', 'Go back'],
+                                              [
+                                                'Register customer', 
+                                                'Find customer', 
+                                                'Go back'
+                                              ],
                                               'action')
         self.handle_answer_from_menu(customer['action'], 'customer')
 
     def order(self):
-        order_list = self.nocco_list.choose_one("Choose an action", ["Register order", "Find order", "Go back"],
+        order_list = self.nocco_list.choose_one("Choose an action",
+                                                [
+                                                    "Register order",
+                                                    "Find order", 
+                                                    "Go back"
+                                                ],
                                                 "action")
         self.handle_answer_from_menu(order_list['action'], 'order')
 
@@ -592,7 +601,7 @@ class Menu:
 
         elif menu_type == 'order':
             if prompt.lower() == 'go back':
-                self.frame.delete_last_lines(6)
+                self.frame.delete_last_lines(5)
                 self.init_menu()
 
             elif prompt.lower() == 'register order':
