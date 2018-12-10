@@ -94,12 +94,12 @@ class Menu:
 
 	def calculate_order(self):
 		print()
+		print()
 		print(self.order_manager.calculate_order())
 		self.nocco_list.single_list("Go back")
 
 	def show_pricing_list(self):
 		self.frame.delete_last_lines(2)
-		# print(self.order_manager.calculate_order())
 		print()
 		with open("./data/prices_list.txt","r") as f:
 			for i in f:
@@ -166,8 +166,7 @@ class Menu:
 
 	def get_inputted_order(self):
 		self.order_manager.get_inputted_order()
-		register_order_list = self.nocco_list.choose_one("Choose an action",["Save", "Calculate order" 
-		, "Print order", "Show all available cars", "Cancel"], "action")
+		register_order_list = self.nocco_list.choose_one("Choose an action",["Save", "Calculate order" , "Cancel"], "action")
 		self.handle_answer_from_menu(register_order_list['action'], 'register_order')
 
 	def delete_order(self):
@@ -245,8 +244,7 @@ class Menu:
 			self.check_if_valid('insurance (yes or no)', self.order_manager.check_insurance)
 
 			print()
-			register_order_list = self.nocco_list.choose_one("Choose an action", ["Save", "Calculate order"
-				, "Print order", "Cancel"], "action")
+			register_order_list = self.nocco_list.choose_one("Choose an action", ["Save", "Calculate order", "Cancel"], "action")
 			self.frame.delete_last_lines(len(filtered_list) + 5)
 			
 			self.handle_answer_from_menu(register_order_list['action'], 'register_order')
@@ -910,16 +908,16 @@ class Menu:
 		########################################################
 		elif menu_type == 'register_order':
 			if prompt.lower() == 'cancel':
-				self.frame.delete_last_lines(19)
+				self.frame.delete_last_lines(18)
 				self.order()
 
 			elif prompt.lower() == 'save':
-				self.frame.delete_last_lines(19)
+				self.frame.delete_last_lines(18)
 				self.save_new_order()
 				self.order()
 
 			elif prompt.lower() == 'calculate order':
-				self.frame.delete_last_lines(20)
+				self.frame.delete_last_lines(19)
 				self.calculate_order()
 				self.frame.delete_last_lines(3)
 				self.get_inputted_order()
