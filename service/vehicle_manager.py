@@ -250,7 +250,6 @@ class VehicleManager:
         vehicle_dates = set(vehicle.get_rented_dates())
         self.__vehicle_repo.delete_vehicle(vehicle)
         new_dates = vehicle_dates - set(dates)
-        #[day for day in vehicle_dates not in dates]
         new_vehicle_dates = self.dates_to_string(new_dates)
         self.__vehicle_repo.save_new_car(a, b, c, d, e, f, g, h, i, dates_rented=new_vehicle_dates)
 

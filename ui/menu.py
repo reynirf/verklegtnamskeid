@@ -176,9 +176,10 @@ class Menu:
 		car = self.__current_order.get_number_plate()
 		self.vehicle_manager.delete_order_dates(dates, car)
 		self.order_manager.delete_order(self.__current_order)
-		self.frame.delete_last_lines(1)
+		self.frame.delete_last_lines(2)
 		print('{}'.format(self.color.return_colored("Order removed from file", 'red')))
 		time.sleep(1.5)
+        self.frame.delete_last_lines(1)
 		self.order()
 
 	def save_new_order(self):

@@ -57,9 +57,9 @@ class OrderManager:
         else:
             new_dates += str(dates.month)
         if dates.day < 10:
-            new_dates += '0' + str(dates.day) + ','
+            new_dates += '0' + str(dates.day)
         else:
-            new_dates += str(dates.day) + ','
+            new_dates += str(dates.day)
         return new_dates
 
     def get_inputted_order(self):

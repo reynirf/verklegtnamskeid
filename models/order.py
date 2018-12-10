@@ -5,8 +5,8 @@ class Order:
             pick_up_time, return_time, pick_up_location, return_location, number_plate, insurance, vehicle_type):
         self.__order_id = order_id
         self.__ssn = ssn
-        self.__start_date = date(int(start_date[6:]), int(start_date[3:5]), int(start_date[:2]))
-        self.__end_date = date(int(end_date[6:]), int(end_date[3:5]), int(end_date[:2]))
+        self.__start_date = date(int(start_date[:4]), int(start_date[4:6]), int(start_date[6:]))
+        self.__end_date = date(int(end_date[:4]), int(end_date[4:6]), int(end_date[6:]))
         self.__pick_up_time = pick_up_time
         self.__return_time = return_time
         self.__pick_up_location = pick_up_location
