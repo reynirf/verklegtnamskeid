@@ -95,8 +95,18 @@ class Menu:
 	def calculate_order(self):
 		print()
 		print()
-		print(self.order_manager.calculate_order())
+		print('{:<20}{:>10}{:>12}'.format('Description', 'Per day', 'Amount'))
+		print('-'*42)
+		base_price, insurance, extra_ins, days = self.order_manager.calculate_order()
+		print('{:<20}{:>10}{:>12}'.format('Base price', base_price, base_price*days))
+		print('{:<20}{:>10}{:>12}'.format('Basic insurance', insurance, insurance*days))
+		print('{:<20}{:>10}{:>12}'.format('Extra insurance', extra_ins, extra_ins*days))
+		print('-'*42)
+		total = (base_price + insurance + extra_ins) * days
+		print('{:<20}{:>22}'.format('TOTAL ISK:', total))
+
 		self.nocco_list.single_list("Go back")
+		self.frame.delete_last_lines(7)
 
 	def show_pricing_list(self):
 		self.frame.delete_last_lines(2)
@@ -185,7 +195,6 @@ class Menu:
 		self.order_manager.save_new_order()
 		print("{}".format(self.color.return_colored("New order registered", 'green')))
 		time.sleep(2)
-		self.frame.delete_last_lines(1)
 		dates = self.order_manager.get_order_dates()
 		vehicle = self.order_manager.get_number_plate()
 		self.vehicle_manager.save_order_dates(dates, vehicle)

@@ -16,6 +16,7 @@ class Vehicle:
         self.__rented_dates = []
         self.set_rented_dates()
         self.set_price()
+        self.set_insurance()
 
     def set_price(self):
         if self.__type_of_vehicle == "smallcar":
@@ -26,6 +27,16 @@ class Vehicle:
             self.__price_per_day = 12000
         elif self.__type_of_vehicle == "bus":
             self.__price_per_day = 13000
+
+    def set_insurance(self):
+        if self.__type_of_vehicle == "smallcar":
+            self.__insurance_per_day = 1050
+        elif self.__type_of_vehicle == "sedan":
+            self.__insurance_per_day = 1150
+        elif self.__type_of_vehicle == "offroad":
+            self.__insurance_per_day = 1350
+        elif self.__type_of_vehicle == "bus":
+            self.__insurance_per_day = 1500
 
     def set_rented_dates(self):
         try:
@@ -55,6 +66,9 @@ class Vehicle:
 
     def get_price_per_day(self):
         return self.__price_per_day
+
+    def get_insurance_per_day(self):
+        return self.__insurance_per_day
 
     def get_attributes(self):
         return self.__licence, self.__make, self.__model, self.__year, self.__type_of_vehicle, self.__seats, self.__fuel, self.__transmission, self.__maintainance

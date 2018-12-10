@@ -20,7 +20,7 @@ class OrderManager:
         self.__temp_pick_up_location = ""
         self.__temp_return_location = ""
         self.__temp_car_number = ""
-        self.__temp_insurence = ""
+        self.__temp_insurance = ""
         self.__temp_type_of_vehicle = ""
         self.__locations = ["reykjavik", "akureyri", "ak", "rvk"]
     
@@ -97,17 +97,20 @@ class OrderManager:
     def calculate_order(self):
         start_date_Input = self.__temp_start_date
         end_date_Input = self.__temp_end_date
+        extra_insurance = self.__temp_insurance
 
         order_instance=Vehicle(0,0,0,0,self.__temp_type_of_vehicle,0,0,0)
-        
-
         price_per_day = order_instance.get_price_per_day()
 
+        if extra_insurance.lower() == 'yes':
+            extra_insurance_per_day = order_instance.get_insurance_per_day()
+        else:
+            extra_insurance_per_day = 0
+
         diffrence = end_date_Input - start_date_Input
-        total = diffrence.days + 1
-        insurance_cost = price_per_day * 1.05
-        price_per_day=price_per_day+insurance_cost
-        return "Price is: {} ISK".format(price_per_day * total)
+        total_days = diffrence.days + 1
+        basic_insurance_cost = int(price_per_day * 0.35)
+        return price_per_day, basic_insurance_cost, extra_insurance_per_day, total_days
 
     def check_ID(self, ID, ignore_empty_value=False, current_value=''):
         """Check if ssn is valid. Returns an error message if ssn
