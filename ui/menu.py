@@ -100,6 +100,7 @@ class Menu:
             self.frame.delete_last_lines(2)
             self.find_order()
         else:
+            self.__current_order = order
             print("Order: " + order.__str__())
             print()
             self.found_order()
@@ -148,8 +149,6 @@ class Menu:
         register_order_list = self.nocco_list.choose_one("Choose an action",["Save", "Calculate order" 
         , "Print order", "Show all available cars", "Cancel"], "action")
         self.handle_answer_from_menu(register_order_list['action'], 'register_order')
-
-
 
     def save_new_order(self):
         self.order_manager.save_new_order()
@@ -207,6 +206,40 @@ class Menu:
                 , "Print order", "Cancel"], "action")
             self.frame.delete_last_lines(len(filtered_list) + 5)
             self.handle_answer_from_menu(register_order_list['action'], 'register_order')
+    
+    def edit_order(self):
+        order = self.__current_order.return_details()
+        print('{}\n'.format(self.color.return_colored('Leave input empty to keep the value the same', 'green')))
+
+        self.check_if_valid('ID', self.order_manager.check_ID, True, order['ID'])
+
+        self.check_if_valid('SSN', self.order_manager.check_ssn, True, order['SSN'])
+
+        self.check_if_valid('Start date', self.order_manager.check_start_date, True, order['Start date'])
+
+        self.check_if_valid('End date', self.order_manager.check_ending_date, True, order['End date'])
+
+        self.check_if_valid('Pick up time', self.order_manager.check_pick_up_time, True, order['Pick up time'])
+
+        self.check_if_valid('Return time', self.order_manager.check_returning_time, True, order['Return time'])
+
+        self.check_if_valid('Pick up location', self.order_manager.check_pick_up_location, True,
+                            order['Pick up location'])
+
+        self.check_if_valid('Return location', self.order_manager.check_return_location, True, 
+                            order['Return location'])
+        
+        self.check_if_valid('Type', self.order_manager.check_type_of_vehicle, True, order['Type'])
+
+        self.check_if_valid('Number plate', self.order_manager.check_number_plate, True, order['Number plate'])
+
+        self.check_if_valid('Insurance', self.order_manager.check_insurance, True, order['Insurance'])
+
+        print()
+        save_edited_order = self.nocco_list.choose_one('Choose an action',
+                                                          ['Save', 'Cancel'],
+                                                          'action')
+        self.handle_answer_from_menu(save_edited_order['action'], 'save edited order')
 
     def check_if_valid(self, to_enter, to_check, editing=False, current_value=''):
         mistake = 0
@@ -601,7 +634,8 @@ class Menu:
         ######################################################
         elif menu_type == 'found order':
             if prompt.lower() == 'edit order':
-                pass
+                self.frame.delete_last_lines(6)
+                self.edit_order()
             elif prompt.lower() == 'delete order':
                 pass
             elif prompt.lower() == 'go back':

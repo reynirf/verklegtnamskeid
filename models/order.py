@@ -21,3 +21,18 @@ class Order:
     
     def get_dates(self):
         return self.__start_date + '-' + self.__end_date
+    
+    def return_details(self):
+        return {
+            "ID": self.__order_id,
+            "SSN": self.__ssn,
+            "Start date": self.__start_date,
+            "End date": self.__end_date,
+            "Pick up time": self.__pick_up_time,
+            "Return time": self.__return_time,
+            "Pick up location": self.__pick_up_location,
+            "Return location": self.__return_location,
+            "Type": self.__vehicle,
+            "Number plate": self.__number_plate,
+            "Insurance": self.__insurance
+        }

@@ -38,3 +38,4 @@ id,ssn,vehicle,starting date,ending date,pick up time,returning time,pick up loc
 65418,15684,2019-06-06,2019-06-06,12,21,akureyri,akureyri,TU564,no,smallcar
 798,651,2019-03-15,2019-03-16,06,21,akureyri,akureyri,AB123,yes,smallcar
 654,532,2019-10-10,2019-10-10,10,22,reykjavik,reykjavik,asdf,no,sedan
+123456789,1107983699,2018-12-10,2018-12-12,12:00,12:00,akureyri,akureyri,asdf,yes,sedan
