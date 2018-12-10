@@ -105,8 +105,8 @@ class OrderManager:
 
         diffrence = end_date_Input - start_date_Input
         total = diffrence.days + 1
-        insurence_cost = price_per_day * 1.05
-        price_per_day=price_per_day+insurence_cost
+        insurance_cost = price_per_day * 1.05
+        price_per_day=price_per_day+insurance_cost
         return "Price is: {} ISK".format(price_per_day * total)
 
     def check_ID(self, ID, ignore_empty_value=False, current_value=''):
