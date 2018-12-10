@@ -191,6 +191,7 @@ class Menu:
 
     def register_order(self):
         self.frame.delete_last_lines(6)
+        print()
 
         self.check_if_valid('order ID', self.order_manager.check_ID)
 
@@ -878,8 +879,7 @@ class Menu:
                 self.order()
 
             elif prompt.lower() == 'save':
-                self.frame.delete_last_lines(14)
-                self.frame.delete_last_lines(5)
+                self.frame.delete_last_lines(19)
                 self.save_new_order()
                 self.order()
 
@@ -888,7 +888,7 @@ class Menu:
                 self.calculate_order()
                 self.frame.delete_last_lines(3)
                 self.get_inputted_order()
-
+    
         ######################################################    
         #                    FIND CAR                        #                    
         ######################################################
