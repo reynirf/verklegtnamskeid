@@ -85,19 +85,27 @@ class Menu:
         order_list = self.nocco_list.choose_one("Choose an action",
                                                 [
                                                     "Register order",
-                                                    "Find order", 
+                                                    "Find order",
+                                                    "Show pricing list", 
                                                     "Go back"
                                                 ],
                                                 "action")
         self.handle_answer_from_menu(order_list['action'], 'order')
 
     def calculate_order(self):
-        # self.order_manager.calculate_order()
-        self.frame.delete_last_lines(2)
-        print(self.order_manager.calculate_order())
         print()
-        calculate_order_list = self.nocco_list.choose_one("Choose an action", ["Go back"], "action")
-        self.handle_answer_from_menu(calculate_order_list['action'], 'calculate_order')
+        print(self.order_manager.calculate_order())
+        self.nocco_list.single_list("Go back")
+
+    def show_pricing_list(self):
+        self.frame.delete_last_lines(2)
+        # print(self.order_manager.calculate_order())
+        print()
+        with open("./data/prices_list.txt","r") as f:
+            for i in f:
+                print(i)
+        self.nocco_list.single_list("go back")
+        self.frame.delete_last_lines(7)
 
     def find_order_by_id(self):
         ID = input("Enter ID: ")
@@ -109,6 +117,7 @@ class Menu:
             self.frame.delete_last_lines(2)
             self.find_order()
         else:
+            self.__current_order = order
             print("Order: " + order.__str__())
             print()
             self.__current_order = order
@@ -182,6 +191,7 @@ class Menu:
 
     def register_order(self):
         self.frame.delete_last_lines(6)
+        print()
 
         self.check_if_valid('order ID', self.order_manager.check_ID)
 
@@ -224,8 +234,8 @@ class Menu:
         else:
             print('Available cars:')
             print()
-            print('{:<7} {:<10} {:<10}'.format('Licence', 'Make', 'Model'))
-            print('-'*29)
+            print('{:<20} {:<20} {:<20} {:<20}'.format('Licence', 'Make', 'Model', 'Seats'))
+            print('-'*70)
             for car in filtered_list:
                 print(car.availability_string())
             print()
@@ -239,6 +249,40 @@ class Menu:
                 , "Print order", "Cancel"], "action")
             self.frame.delete_last_lines(len(filtered_list) + 5)
             self.handle_answer_from_menu(register_order_list['action'], 'register_order')
+    
+    def edit_order(self):
+        order = self.__current_order.return_details()
+        print('{}\n'.format(self.color.return_colored('Leave input empty to keep the value the same', 'green')))
+
+        self.check_if_valid('ID', self.order_manager.check_ID, True, order['ID'])
+
+        self.check_if_valid('SSN', self.order_manager.check_ssn, True, order['SSN'])
+
+        self.check_if_valid('Start date', self.order_manager.check_start_date, True, order['Start date'])
+
+        self.check_if_valid('End date', self.order_manager.check_ending_date, True, order['End date'])
+
+        self.check_if_valid('Pick up time', self.order_manager.check_pick_up_time, True, order['Pick up time'])
+
+        self.check_if_valid('Return time', self.order_manager.check_returning_time, True, order['Return time'])
+
+        self.check_if_valid('Pick up location', self.order_manager.check_pick_up_location, True,
+                            order['Pick up location'])
+
+        self.check_if_valid('Return location', self.order_manager.check_return_location, True, 
+                            order['Return location'])
+        
+        self.check_if_valid('Type', self.order_manager.check_type_of_vehicle, True, order['Type'])
+
+        self.check_if_valid('Number plate', self.order_manager.check_number_plate, True, order['Number plate'])
+
+        self.check_if_valid('Insurance', self.order_manager.check_insurance, True, order['Insurance'])
+
+        print()
+        save_edited_order = self.nocco_list.choose_one('Choose an action',
+                                                          ['Save', 'Cancel'],
+                                                          'action')
+        self.handle_answer_from_menu(save_edited_order['action'], 'save edited order')
 
     def check_if_valid(self, to_enter, to_check, editing=False, current_value=''):
         mistake = 0
@@ -425,11 +469,10 @@ class Menu:
         start_date, end_date = self.order_manager.get_dates()
         car_list = self.vehicle_manager.show_car_availability(start_date, end_date, prompt)
         print() 
-        print('{:<7} {:<10} {:<10}'.format('Licence', 'Make', 'Model'))
-        print('-'*29)
+        print('{:<20} {:<20} {:<20} {:<20}'.format('Licence', 'Make', 'Model', 'Seats'))
+        print('-'*70)
         for car in car_list:
             print(car.availability_string())
-       
         #col_width = max(len(word) for row in test_data for word in row) + 2
         #for row in test_data:
         #    print("".join(word.ljust(col_width) for word in row))
@@ -447,7 +490,7 @@ class Menu:
 
         self.nocco_list.single_list('Go back')
 
-    def show_that_must_be_checked(self):
+    def show_cars_that_must_be_checked(self):
         test_data = [['Toyota', 'Huyndai', 'Ford', 'Reynir', 'Sixarinn'],
                      ['Renault', 'Viddi', 'Peugot', 'Guðrún', 'Ermir'], ['Nike', 'Subaru', 'Volvo', 'Bíll', 'Hilux']]
 
@@ -612,6 +655,10 @@ class Menu:
                 print()
                 self.frame.delete_last_lines(6)
                 self.find_order()
+            elif prompt.lower() == 'show pricing list':
+                print()
+                self.frame.delete_last_lines(6)
+                self.show_pricing_list()
         ######################################################    
         #                      FIND ORDER                    #
         ######################################################
@@ -633,7 +680,8 @@ class Menu:
         ######################################################
         elif menu_type == 'found order':
             if prompt.lower() == 'edit order':
-                pass
+                self.frame.delete_last_lines(6)
+                self.edit_order()
             elif prompt.lower() == 'delete order':
                 self.frame.delete_last_lines(3)
                 self.delete_order()
@@ -654,15 +702,7 @@ class Menu:
                 self.found_order()
             else:
                 self.frame.delete_last_lines(2)
-                self.order()
-
-        ######################################################    
-        #                   CALCULATE ORDER                  #
-        ######################################################
-        elif menu_type == 'calculate_order':
-            if prompt.lower() == 'go back':
-                self.frame.delete_last_lines(5)
-                self.get_inputted_order()   
+                self.order()   
 
         ######################################################    
         #                      CUSTOMER                      #
@@ -821,6 +861,14 @@ class Menu:
             elif prompt.lower() == 'go back':
                 self.frame.delete_last_lines(9)
                 self.init_menu()
+        ########################################################
+        #                SHOW PRICING LIST                     #
+        ########################################################
+        elif menu_type == 'show pricing list':
+            if prompt.lower() == 'go back':
+                self.frame.delete_last_lines(9)
+                self.order()
+
 
         ########################################################
         #                REGISTER NEW ORDER                    #
@@ -831,16 +879,16 @@ class Menu:
                 self.order()
 
             elif prompt.lower() == 'save':
-                self.frame.delete_last_lines(14)
-                self.frame.delete_last_lines(5)
+                self.frame.delete_last_lines(19)
                 self.save_new_order()
                 self.order()
 
             elif prompt.lower() == 'calculate order':
-                self.frame.delete_last_lines(14)
-                self.frame.delete_last_lines(5)
+                self.frame.delete_last_lines(20)
                 self.calculate_order()
-
+                self.frame.delete_last_lines(3)
+                self.get_inputted_order()
+    
         ######################################################    
         #                    FIND CAR                        #                    
         ######################################################

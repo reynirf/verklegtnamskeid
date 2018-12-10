@@ -94,7 +94,7 @@ class OrderManager:
 
         diffrence = end_date_Input - start_date_Input
         total = diffrence.days + 1
-        return "Price is: {}".format(price_per_day * total)
+        return "Price is: {} ISK".format(price_per_day * total)
 
     def check_ID(self, ID, ignore_empty_value=False, current_value=''):
         """Check if ssn is valid. Returns an error message if ssn
