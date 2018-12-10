@@ -1,7 +1,7 @@
 from repos.customer_repo import CustomerRepo
 from models.customer import Customer
 import string
-import datetime
+from datetime import date
 
 
 class CustomerManager:
@@ -49,7 +49,9 @@ class CustomerManager:
     def check_ssn(self, ssn, ignore_empty_value=False, current_value=''):
         """Check if ssn is valid. Returns an error message if ssn
         has letters or punctuation in it"""
-        ssn = ssn.replace("-", "")
+        ssn = ssn.replace("-", "").replace(" ", "")
+        if self.find_customer_by_ssn(ssn):
+            return 'Customer with this SSN has already been registered'
         if ssn.strip() == '' and not ignore_empty_value:
             return self.error('SSN')
         elif ssn.strip() == '':
@@ -75,9 +77,9 @@ class CustomerManager:
         legal_age = present_day.year - 18
         legal_date = present_day.replace(year=legal_age)
         try:
-            year = start_date[6:]
-            month = start_date[3:5]
-            day = start_date[:2]
+            year = birthday[6:]
+            month = birthday[3:5]
+            day = birthday[:2]
             date_object = date(int(year), int(month), int(day))
             if date_object > legal_date:
                 raise ValueError

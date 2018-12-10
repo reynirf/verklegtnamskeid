@@ -1,4 +1,6 @@
 id,ssn,starting date,ending date,pick up time,returning time,pick up location,return location,number plate,insurance,type of vehicle
 023,135312,20190101,20190102,10,16,ak,ak,FPR89,no,sedan
-0011,135254651,20190606,20190606,6,23,ak,ak,OSV08,no,sedan
-045,1015054651,20190116,20190117,10,22,ak,ak,FPR89,yes,sedan
+0011,135254651,20190606,20190606,6,23,ak,ak,OSV08,no,sedan1,2311992929,20181220,20181225,13:20,15:20,ak,ak,TU564,yes,smallcar
+2,2311992929,20191020,20191022,13,14,ak,ak,543t4,yes,smallcar
+1,2311992929,20191020,20191026,13,15,ak,ak,TU564,yes,smallcar
+4,2311992929,20191020,20191025,13,13,ak,ak,TU564,Yes,smallcar
