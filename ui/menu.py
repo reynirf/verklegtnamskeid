@@ -420,8 +420,8 @@ class Menu:
         self.frame.delete_last_lines(2)
 
     def show_car_availability(self, prompt):
-        self.check_if_valid('a start date', self.order_manager.check_start_date)
-        self.check_if_valid('an end date', self.order_manager.check_ending_date)
+        self.check_if_valid('a start date [DD/MM/YYYY]', self.order_manager.check_start_date)
+        self.check_if_valid('an end date [DD/MM/YYYY]', self.order_manager.check_ending_date)
         start_date, end_date = self.order_manager.get_dates()
         car_list = self.vehicle_manager.show_car_availability(start_date, end_date, prompt)
         print() 
