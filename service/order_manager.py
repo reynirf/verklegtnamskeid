@@ -114,8 +114,8 @@ class OrderManager:
 
     def check_type_of_vehicle(self, type_of_vehicle, ignore_empty_value=False, current_value=''):
         """check if type of car is valid."""
-        car_types = ["sedan", "offroad", "small car", "bus"]
-        type_of_vehicle.replace(' ', '')
+        car_types = ["sedan", "offroad", "smallcar", "bus"]
+        type_of_vehicle = type_of_vehicle.replace(' ', '')
         if type_of_vehicle.lower() in car_types:
             self.__temp_type_of_vehicle = type_of_vehicle
         else:

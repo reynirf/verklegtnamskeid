@@ -1,9 +1,8 @@
 class Order:
-    def __init__(self, order_id, ssn, vehicle, 
+    def __init__(self, order_id, ssn,
         start_date, end_date, pick_up_time, return_time, pick_up_location, return_location, number_plate, insurance, vehicle_type):
         self.__order_id = order_id
         self.__ssn = ssn
-        self.__vehicle = vehicle
         self.__start_date = start_date
         self.__end_date = end_date
         self.__pick_up_time = pick_up_time
