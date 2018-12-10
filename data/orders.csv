@@ -1,22 +1,2 @@
 id,ssn,starting date,ending date,pick up time,returning time,pick up location,return location,number plate,insurance,type of vehicle
-<<<<<<< HEAD
-4562,130589,2019-01-01,2019-01-03,14,15,ak,ak,AB123,0,small car
-7846,48651,2019-02-03,2019-02-06,1,56,akureyri,akureyri,AB123,yes,smallcar
-1234,89423,2019-01-21,2019-01-23,14,12,akureyri,akureyri,TU564,no,smallcar
-65418,15684,2019-06-06,2019-06-06,12,21,akureyri,akureyri,TU564,no,smallcar
-798,651,2019-03-15,2019-03-16,06,21,akureyri,akureyri,AB123,yes,smallcar
-789,456,2019-01-01,2019-01-02,14,19,reykjavik,akureyri,TU564,no,smallcar
-4921,1642301835,2019-02-02,2019-02-04,10,18,akureyri,akureyri,OSV08,no,sedan
-15654,118946,2019-01-03,2019-01-04,10,16,reykjavik,reykjavik,YTT67,yes,offroad
-78465,15647,2019-03-02,2019-03-03,10,13,akureyri,akureyri,YTT67,no,offroad
-79651,15689843,2019-01-10,2019-01-11,10,20,akureyri,akureyri,TU564,no,smallcar
-789651,16523248,2019-02-20,2019-02-21,10,19,akureyri,akureyri,JO695,no,bus
-896453,126549832,2019-02-09,2019-02-10,10,16,akureyri,akureyri,AB123,no,sedan
-0155641,216843,2019-01-01,2019-01-02,08,21,akureyri,akureyri,FPR89,no,sedan
-8964512,01568542,2019-01-01,2019-01-02,10,19,akureyri,akureyri,FPR89,no,sedan
-84651,1568432,2019-01-01,2019-01-02,10,19,akureyri,akureyri,PO389,yes,offroad
-798465,1216846,2019-02-03,2019-02-05,10,19,akureyri,akureyri,PO389,no,offroad
-123456789,1107983699,2018-12-10,2018-12-12,12:00,12:00,akureyri,akureyri,TU564,yes,smallcar
-=======
 000,0486512,20.12.2018,21.12.2018,10,19,akureyri,akureyri,NE352,no,smallcar
->>>>>>> 5238db16b4e6aaab8406006d7175c4522e642c28
