@@ -36,6 +36,11 @@ class VehicleManager:
     def check_type(self, car_type, ignore_empty_value=False, current_value=''):
         """Check if type is valid. Returns an error message if type
         has numbers or punctuation in it"""
+        if car_type.strip() == '' and not ignore_empty_value:
+            return self.error('Car type')
+        elif car_type.strip() == '':
+            self.__temp_car_type = current_value
+            return None
         car_types = ["sedan", "offroad", "smallcar", "bus"]
 
         if car_type.strip() == '':
@@ -50,6 +55,11 @@ class VehicleManager:
     def check_make(self, make, ignore_empty_value=False, current_value=''):
         """Check if make is valid. Returns an error message if make
         has numbers or punctuation in it"""
+        if make.strip() == '' and not ignore_empty_value:
+            return self.error('Make')
+        elif make.strip() == '':
+            self.__temp_make = current_value
+            return None
 
         if make.strip() == '':
             return self.error("Make")
@@ -61,6 +71,12 @@ class VehicleManager:
 
     def check_model(self, model, ignore_empty_value=False, current_value=''):
         """Checks if model is valid. Returns an error if it has punctuation in it"""
+        if model.strip() == '' and not ignore_empty_value:
+            return self.error('Model')
+        elif model.strip() == '':
+            self.__temp_make = current_value
+            return None
+
         if model.strip() == '':
             return self.error("Model")
         for letter in model.strip():
@@ -70,6 +86,11 @@ class VehicleManager:
 
     def check_year(self, year, ignore_empty_value=False, current_value=''):
         """Check if year is valid. Returns an error message if not"""
+        if year.strip() == '' and not ignore_empty_value:
+            return self.error('Year')
+        elif year.strip() == '':
+            self.__temp_year = current_value
+            return None
         OLDEST_CAR = int(1940)
         present_year = int(datetime.datetime.today().year)
         
@@ -87,7 +108,11 @@ class VehicleManager:
 
     def check_number_of_seats(self, number_of_seats, ignore_empty_value=False, current_value=''):
         """Check if number of seats is between 2 and 14. Returns an error message if not"""
-
+        if number_of_seats.strip() == '' and not ignore_empty_value:
+            return self.error('Number of seats')
+        elif number_of_seats.strip() == '':
+            self.__temp_number_of_seats = current_value
+            return None
         if number_of_seats.strip() == '':
             return self.error("Number of seats")
 
@@ -103,6 +128,11 @@ class VehicleManager:
     def check_license_plate(self, license_plate, ignore_empty_value=False, current_value=''):
         """Check if number plate is valid. Returns an error message if number plate
         has punctuation in it"""
+        if license_plate.strip() == '' and not ignore_empty_value:
+            return self.error('License plate')
+        elif license_plate.strip() == '':
+            self.__temp_license_plate = current_value
+            return None
 
         if license_plate.strip() == '':
             return self.error("License plate")
@@ -118,6 +148,11 @@ class VehicleManager:
     def check_fuel(self, fuel, ignore_empty_value=False, current_value=''):
         """Checks that input fuel is valid. Returns an error if it is not
         in our list of fuels"""
+        if fuel.strip() == '' and not ignore_empty_value:
+            return self.error('Fuel')
+        elif fuel.strip() == '':
+            self.__temp_fuel = current_value
+            return None
         fuels = ["bensin", "diesel", "electric", "hybrid"]
 
         if fuel.strip() == '':
@@ -133,6 +168,11 @@ class VehicleManager:
         Driving transmission allowed: Automatic, Manual, 
         we don't have any other high tech crappy something.
         """
+        if driving_transmission.strip() == '' and not ignore_empty_value:
+            return self.error('Driving transmission')
+        elif driving_transmission.strip() == '':
+            self.__temp_driving_transmission = current_value
+            return None
         transmissions = ["automatic", "manual"]
 
         if driving_transmission.strip() == '':
