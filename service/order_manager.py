@@ -35,8 +35,8 @@ class OrderManager:
 
     def save_new_order(self):
         # uses the temp values to save the new customer
-        start_day = str(self.__temp_start_date.day) + '.' + str(self.__temp_start_date.month) + '.' + str(self.__temp_start_date.year)
-        end_day = str(self.__temp_end_date.day) + '.' + str(self.__temp_end_date.month) + '.' + str(self.__temp_end_date.year)
+        start_day = self.dates_to_string(self.__temp_start_date)
+        end_day = self.dates_to_string(self.__temp_end_date)
         self.__order_repo.save_new_order(
             self.__temp_ID,
             self.__temp_ssn,
@@ -49,6 +49,18 @@ class OrderManager:
             self.__temp_number_plate,
             self.__temp_insurance,
             self.__temp_type_of_vehicle)
+
+    def dates_to_string(self, dates):
+        new_dates = str(dates.year)
+        if dates.month <10:
+            new_dates += '0' + str(dates.month) 
+        else:
+            new_dates += str(dates.month)
+        if v_day.day < 10:
+            new_dates += '0' + str(dates.day) + ','
+        else:
+            new_dates += str(dates.day) + ','
+        return new_dates
 
     def get_inputted_order(self):
         print("Enter ID: {}".format(self.__temp_ID))
