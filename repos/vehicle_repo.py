@@ -16,7 +16,6 @@ class VehicleRepo:
                 for line in csv_reader:
                     try:
                         dates = line['dates rented'].split(',')
-                       # rented_dates = [date[1:-1] for date in dates]
                     except AttributeError:
                         dates = []
                     if line['licence'] != None:

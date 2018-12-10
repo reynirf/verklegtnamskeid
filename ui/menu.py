@@ -109,6 +109,7 @@ class Menu:
 
     def find_order_by_id(self):
         ID = input("Enter ID: ")
+        self.frame.delete_last_lines(2)
         print()
         order = self.order_manager.find_order_by_id(ID)
         if order == None:
@@ -528,11 +529,17 @@ class Menu:
             print("Car: " + car.get_licence())
             print()
             self.__current_vehicle = car
-            found_cars_list = self.nocco_list.choose_one("Choose an action", ["Edit car", "Remove car", "Go back"],
-                                                         "action")
+            found_cars_list = self.nocco_list.choose_one(
+                                                        "Choose an action", 
+                                                        [
+                                                            "Edit car", 
+                                                            "Remove car", 
+                                                            "Go back"
+                                                        ], 
+                                                        "action"
+                                                        )
             self.frame.delete_last_lines(2)
-            self.handle_answer_from_menu(found_cars_list['action'],
-                                         'found car')
+            self.handle_answer_from_menu(found_cars_list['action'], 'found car')
 
     def find_cars_by_make(self):
         make = input("Enter make: ")
@@ -569,8 +576,15 @@ class Menu:
             if len(cars) == 1:
                 self.__current_vehicle = cars
                 # TODO we need to figure out how to handle this
-                found_cars_list = self.nocco_list.choose_one("Choose an action",
-                                                             ["Edit car", "Remove car", "Go back"], "action")
+                found_cars_list = self.nocco_list.choose_one(
+                                                                "Choose an action", 
+                                                                [
+                                                                    "Edit car", 
+                                                                    "Remove car", 
+                                                                    "Go back"
+                                                                ], 
+                                                                "action"
+                                                            )
                 self.frame.delete_last_lines(2)
                 self.handle_answer_from_menu(found_cars_list['action'], 'found car')
 
@@ -654,7 +668,7 @@ class Menu:
 
             elif prompt.lower() == 'find order':
                 print()
-                self.frame.delete_last_lines(6)
+                self.frame.delete_last_lines(7)
                 self.find_order()
             elif prompt.lower() == 'show pricing list':
                 print()
@@ -937,7 +951,7 @@ class Menu:
                 self.cars()
 
             if prompt.lower() == 'cancel':
-                self.frame.delete_last_lines(10)
+                self.frame.delete_last_lines(6)
                 self.cars()
 
         ######################################################    

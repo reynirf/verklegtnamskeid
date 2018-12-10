@@ -2,8 +2,7 @@ from datetime import date
 
 
 class Vehicle:
-    def __init__(self, licence, make, model, year, type_of_vehicle,
-                 seats, fuel, transmission, maintainance=0, dates=[]):
+    def __init__(self, licence, make, model, year, type_of_vehicle, seats, fuel, transmission, maintainance=0, dates=[]):
         self.__licence = licence
         self.__make = make
         self.__model = model
