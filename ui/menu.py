@@ -93,12 +93,9 @@ class Menu:
         self.handle_answer_from_menu(order_list['action'], 'order')
 
     def calculate_order(self):
-        # self.order_manager.calculate_order()
-        self.frame.delete_last_lines(2)
-        print(self.order_manager.calculate_order())
         print()
-        calculate_order_list = self.nocco_list.choose_one("Choose an action", ["Go back"], "action")
-        self.handle_answer_from_menu(calculate_order_list['action'], 'calculate_order')
+        print(self.order_manager.calculate_order())
+        self.nocco_list.single_list("Go back")
 
     def show_pricing_list(self):
         self.frame.delete_last_lines(2)
@@ -705,15 +702,7 @@ class Menu:
                 self.found_order()
             else:
                 self.frame.delete_last_lines(2)
-                self.order()
-
-        ######################################################    
-        #                   CALCULATE ORDER                  #
-        ######################################################
-        elif menu_type == 'calculate_order':
-            if prompt.lower() == 'go back':
-                self.frame.delete_last_lines(5)
-                self.get_inputted_order()   
+                self.order()   
 
         ######################################################    
         #                      CUSTOMER                      #
@@ -895,9 +884,11 @@ class Menu:
                 self.order()
 
             elif prompt.lower() == 'calculate order':
-                self.frame.delete_last_lines(19)
+                self.frame.delete_last_lines(20)
                 self.calculate_order()
-
+                self.frame.delete_last_lines(3)
+                self.get_inputted_order()
+    
         ######################################################    
         #                    FIND CAR                        #                    
         ######################################################
