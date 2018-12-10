@@ -14,7 +14,7 @@ class VehicleManager:
         self.__temp_model = ""
         self.__temp_year = ""
         self.__temp_number_of_seats = ""
-        self.__temp_number_plate = ""
+        self.__temp_license_plate = ""
         self.__temp_fuel = ""
         self.__temp_driving_transmission = ""
 
@@ -24,7 +24,7 @@ class VehicleManager:
     def save_new_car(self):
         # uses the temp values to save the new car 
         self.__vehicle_repo.save_new_car(
-            self.__temp_number_plate,
+            self.__temp_license_plate,
             self.__temp_make,
             self.__temp_model,
             self.__temp_year,
@@ -100,20 +100,20 @@ class VehicleManager:
 
         self.__temp_number_of_seats = number_of_seats
 
-    def check_number_plate(self, number_plate, ignore_empty_value=False, current_value=''):
+    def check_license_plate(self, license_plate, ignore_empty_value=False, current_value=''):
         """Check if number plate is valid. Returns an error message if number plate
         has punctuation in it"""
 
-        if number_plate.strip() == '':
+        if license_plate.strip() == '':
             return self.error("Number plate")
 
-        if len(number_plate) < 5 or len(number_plate) > 6:
+        if len(license_plate) < 5 or len(license_plate) > 6:
             return self.error('Number plate')
         
-        for letter in number_plate:
+        for letter in license_plate:
             if letter in (string.punctuation):
                 return self.error('Number plate')
-        self.__temp_number_plate = number_plate
+        self.__temp_license_plate = license_plate
 
     def check_fuel(self, fuel, ignore_empty_value=False, current_value=''):
         """Checks that input fuel is valid. Returns an error if it is not
@@ -143,11 +143,11 @@ class VehicleManager:
             else:
                 return self.error("Driving transmission")
 
-    def find_car_by_number_plate(self, number_plate):
+    def find_car_by_license_plate(self, license_plate):
         cars_list = self.__vehicle_repo.get_vehicle_list()
         for vehicle in cars_list:
             car_licence = vehicle.get_licence().lower()
-            if car_licence == number_plate.lower():
+            if car_licence == license_plate.lower():
                 return vehicle
 
     def find_car_by_make(self, make):
@@ -197,7 +197,7 @@ class VehicleManager:
             return rented_cars
 
     def save_order_dates(self, dates, vehicle_number):
-        vehicle = self.find_car_by_number_plate(vehicle_number)
+        vehicle = self.find_car_by_license_plate(vehicle_number)
         self.__vehicle_repo.delete_vehicle(vehicle)
         a, b, c, d, e, f, g, h, i = vehicle.get_attributes()
         vehicle_dates = vehicle.get_rented_dates()
@@ -208,7 +208,7 @@ class VehicleManager:
         self.__vehicle_repo.save_new_car(a, b, c, d, e, f, g, h, i, dates_rented=new_dates)
 
     def delete_order_dates(self, dates, vehicle_number):
-        vehicle = self.find_car_by_number_plate(vehicle_number)
+        vehicle = self.find_car_by_license_plate(vehicle_number)
         a, b, c, d, e, f, g, h, i = vehicle.get_attributes()
         vehicle_dates = set(vehicle.get_rented_dates())
         self.__vehicle_repo.delete_vehicle(vehicle)

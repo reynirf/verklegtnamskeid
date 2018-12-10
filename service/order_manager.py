@@ -46,7 +46,7 @@ class OrderManager:
             self.__temp_returning_time,
             self.__temp_pick_up_location,
             self.__temp_return_location,
-            self.__temp_number_plate,
+            self.__temp_license_plate,
             self.__temp_insurance,
             self.__temp_type_of_vehicle)
 
@@ -72,7 +72,7 @@ class OrderManager:
         print("Enter pick up location: {}".format(self.__temp_pick_up_location))
         print("Enter return location: {}".format(self.__temp_return_location))
         print("Enter type of vehicle: {}".format(self.__temp_type_of_vehicle))
-        print("Enter number plate: {}".format(self.__temp_number_plate))
+        print("Enter number plate: {}".format(self.__temp_license_plate))
         print("Enter Insurance: {}".format(self.__temp_insurance))
         print()
         
@@ -91,8 +91,8 @@ class OrderManager:
             working_date += one_day
         return dates 
 
-    def get_number_plate(self):
-        return self.__temp_number_plate
+    def get_license_plate(self):
+        return self.__temp_license_plate
 
     def calculate_order(self):
         start_date_Input = self.__temp_start_date
@@ -115,6 +115,8 @@ class OrderManager:
     def check_ID(self, ID, ignore_empty_value=False, current_value=''):
         """Check if ssn is valid. Returns an error message if ssn
         has letters or punctuation in it"""
+        if self.find_order_by_id(ID):
+            return 'An order with that ID already exists. Choose another ID'
         if ID.strip() == '' and not ignore_empty_value:
             return self.error('ID')
         elif ID.strip() == '':
@@ -254,22 +256,22 @@ class OrderManager:
         else:
             return self.error('Pick up location')
 
-    def check_number_plate(self, number_plate, ignore_empty_value=False, current_value=''):
+    def check_license_plate(self, license_plate, ignore_empty_value=False, current_value=''):
         """Check if number plate is valid. Returns an error message if number plate
         has punctuation in it"""
-        if number_plate.strip() == '' and not ignore_empty_value:
-            return self.error('Number plate')
-        elif number_plate.strip() == '':
-            self.__temp_number_plate = current_value
+        if license_plate.strip() == '' and not ignore_empty_value:
+            return self.error('License plate')
+        elif license_plate.strip() == '':
+            self.__temp_license_plate = current_value
             return None
 
-        if len(number_plate) < 5 or len(number_plate) > 6:
+        if len(license_plate) < 5 or len(license_plate) > 6:
             return self.error('Number plate')
         
-        for letter in number_plate:
+        for letter in license_plate:
             if letter in (string.punctuation):
                 return self.error('Number plate')
-        self.__temp_number_plate = number_plate
+        self.__temp_license_plate = license_plate
 
     def check_insurance(self, insurance, ignore_empty_value=False, current_value=''):
         if insurance.strip() == '' and not ignore_empty_value:
