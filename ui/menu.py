@@ -85,7 +85,8 @@ class Menu:
         order_list = self.nocco_list.choose_one("Choose an action",
                                                 [
                                                     "Register order",
-                                                    "Find order", 
+                                                    "Find order",
+                                                    "Show pricing list", 
                                                     "Go back"
                                                 ],
                                                 "action")
@@ -98,6 +99,16 @@ class Menu:
         print()
         calculate_order_list = self.nocco_list.choose_one("Choose an action", ["Go back"], "action")
         self.handle_answer_from_menu(calculate_order_list['action'], 'calculate_order')
+
+    def show_pricing_list(self):
+        self.frame.delete_last_lines(2)
+        # print(self.order_manager.calculate_order())
+        print()
+        with open("./data/prices_list.txt","r") as f:
+            for i in f:
+                print(i)
+        self.nocco_list.single_list("go back")
+        self.frame.delete_last_lines(7)
 
     def find_order_by_id(self):
         ID = input("Enter ID: ")
@@ -447,7 +458,7 @@ class Menu:
 
         self.nocco_list.single_list('Go back')
 
-    def show_that_must_be_checked(self):
+    def show_cars_that_must_be_checked(self):
         test_data = [['Toyota', 'Huyndai', 'Ford', 'Reynir', 'Sixarinn'],
                      ['Renault', 'Viddi', 'Peugot', 'Guðrún', 'Ermir'], ['Nike', 'Subaru', 'Volvo', 'Bíll', 'Hilux']]
 
@@ -612,6 +623,10 @@ class Menu:
                 print()
                 self.frame.delete_last_lines(6)
                 self.find_order()
+            elif prompt.lower() == 'show pricing list':
+                print()
+                self.frame.delete_last_lines(6)
+                self.show_pricing_list()
         ######################################################    
         #                      FIND ORDER                    #
         ######################################################
@@ -821,6 +836,14 @@ class Menu:
             elif prompt.lower() == 'go back':
                 self.frame.delete_last_lines(9)
                 self.init_menu()
+        ########################################################
+        #                SHOW PRICING LIST                     #
+        ########################################################
+        elif menu_type == 'show pricing list':
+            if prompt.lower() == 'go back':
+                self.frame.delete_last_lines(9)
+                self.order()
+
 
         ########################################################
         #                REGISTER NEW ORDER                    #
