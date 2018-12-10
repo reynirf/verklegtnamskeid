@@ -19,7 +19,7 @@ class Vehicle:
         self.set_price()
 
     def set_price(self):
-        if self.__type_of_vehicle == "small car":
+        if self.__type_of_vehicle == "smallcar":
             self.__price_per_day = 9000
         elif self.__type_of_vehicle == "sedan":
             self.__price_per_day = 10000
