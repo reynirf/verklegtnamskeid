@@ -35,11 +35,13 @@ class OrderManager:
 
     def save_new_order(self):
         # uses the temp values to save the new customer
+        start_day = str(self.__temp_start_date.day) + '.' + str(self.__temp_start_date.month) + '.' + str(self.__temp_start_date.year)
+        end_day = str(self.__temp_end_date.day) + '.' + str(self.__temp_end_date.month) + '.' + str(self.__temp_end_date.year)
         self.__order_repo.save_new_order(
             self.__temp_ID,
             self.__temp_ssn,
-            self.__temp_start_date,
-            self.__temp_end_date,
+            start_day,
+            end_day,
             self.__temp_pick_up_time,
             self.__temp_returning_time,
             self.__temp_pick_up_location,

@@ -240,8 +240,22 @@ class VehicleManager:
         vehicle_dates = vehicle.get_rented_dates()
 
         vehicle_dates.extend(dates)
+        new_dates = self.dates_to_string(vehicle_dates)
+        
+        self.__vehicle_repo.save_new_car(a, b, c, d, e, f, g, h, i, dates_rented=new_dates)
+
+    def delete_order_dates(self, dates, vehicle_number):
+        vehicle = self.find_car_by_number_plate(vehicle_number)
+        a, b, c, d, e, f, g, h, i = vehicle.get_attributes()
+        vehicle_dates = vehicle.get_rented_dates()
+        self.__vehicle_repo.delete_vehicle(vehicle)
+        new_dates = [day for day in vehicle_dates not in dates]
+        new_vehicle_dates = self.dates_to_string(new_dates)
+        self.__vehicle_repo.save_new_car(a, b, c, d, e, f, g, h, i, dates_rented=new_vehicle_dates)
+
+    def dates_to_string(self, dates):
         new_dates = ''
-        for v_day in vehicle_dates:
+        for v_day in dates:
             new_dates += str(v_day.year)
             if v_day.month <10:
                 new_dates += '0' + str(v_day.month) 
@@ -251,17 +265,7 @@ class VehicleManager:
                 new_dates += '0' + str(v_day.day) + ','
             else:
                 new_dates += str(v_day.day) + ','
-        
-        self.__vehicle_repo.save_new_car(a, b, c, d, e, f, g, h, i, dates_rented=new_dates)
-
-    def delete_order_dates(self, dates, vehicle_number):
-        vehicle = self.find_car_by_number_plate(vehicle_number)
-        a, b, c, d, e, f, g, h, i = vehicle.get_attributes()
-        vehicle_dates = vehicle.get_rented_dates()
-        iso_dates = [date.isoformat() for date in dates]
-        self.__vehicle_repo.delete_vehicle(vehicle)
-        new_vehicle_dates = [date for date in vehicle_dates not in iso_dates]
-        self.__vehicle_repo.save_new_car(a, b, c, d, e, f, g, h, i, dates_rented=new_vehicle_dates)
+        return new_dates
 
     def delete_vehicle(self, car):
         self.__vehicle_repo.delete_vehicle(car)
