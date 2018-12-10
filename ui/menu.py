@@ -160,7 +160,6 @@ class Menu:
 
 				found_multiple_orders = self.nocco_list.choose_one('Choose an order',
 						printable_orders, 'order', True)
-				self.frame.delete_last_lines(len(orders) + 1)
 				self.handle_answer_from_menu((found_multiple_orders, orders), 
 						'found multiple orders')
 
@@ -746,7 +745,7 @@ class Menu:
 		######################################################
 		if menu_type == 'found multiple orders':
 			chosen, orders = prompt
-			self.frame.delete_last_lines(2 + len(orders))
+			self.frame.delete_last_lines(5 + len(orders))
 			if chosen['order'].lower() != 'go back':
 				self.__current_order = orders[chosen['index']]
 				print('Order: ' + self.__current_order.__str__())
