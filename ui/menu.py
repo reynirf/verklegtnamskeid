@@ -489,9 +489,6 @@ class Menu:
 		print('-'*70)
 		for car in car_list:
 			print(car.availability_string())
-		#col_width = max(len(word) for row in test_data for word in row) + 2
-		#for row in test_data:
-		#    print("".join(word.ljust(col_width) for word in row))
 
 		self.nocco_list.single_list('Go back')
 		self.frame.delete_last_lines(len(car_list) + 1)
@@ -613,7 +610,7 @@ class Menu:
 	def register_car(self):
 		self.frame.delete_last_lines(8)
 
-		self.check_if_valid('Car type', self.vehicle_manager.check_type)
+		self.check_if_valid('Car type (smallcar, sedan, offroad or bus)', self.vehicle_manager.check_type)
 
 		self.check_if_valid('Make', self.vehicle_manager.check_make)
 
@@ -625,9 +622,9 @@ class Menu:
 
 		self.check_if_valid('Number plate', self.vehicle_manager.check_number_plate)
 
-		self.check_if_valid('Fuel', self.vehicle_manager.check_fuel)
+		self.check_if_valid('Fuel (bensin, diesel, electric or hybrid)', self.vehicle_manager.check_fuel)
 
-		self.check_if_valid('Driving transmission', self.vehicle_manager.check_driving_transmission)
+		self.check_if_valid('Driving transmission (manual or automatic)', self.vehicle_manager.check_driving_transmission)
 		print()
 		register_car = self.nocco_list.choose_one('Choose an action',
 												  ['Save', 'Cancel'],

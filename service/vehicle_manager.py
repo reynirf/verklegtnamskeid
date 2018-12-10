@@ -41,8 +41,8 @@ class VehicleManager:
         if car_type.strip() == '':
             return self.error("Car type")
         
-        car_type.replace(' ', '')
-        if car_type.strip().lower() in car_types:
+        car_type = car_type.lower().replace(' ', '')
+        if car_type.strip() in car_types:
             self.__temp_car_type = car_type
         else:
             return self.error("Car type")
@@ -70,14 +70,14 @@ class VehicleManager:
 
     def check_year(self, year, ignore_empty_value=False, current_value=''):
         """Check if year is valid. Returns an error message if not"""
-        OLDEST_CAR = 1940
-        present_year = datetime.datetime.today().year
+        OLDEST_CAR = int(1940)
+        present_year = int(datetime.datetime.today().year)
         
         if year.strip() == '':
             return self.error("Year")
         
         try:
-            int(year.strip())
+            year = int(year.strip())
             if year > present_year or year < OLDEST_CAR:
                 raise ValueError
         except ValueError:
@@ -92,7 +92,7 @@ class VehicleManager:
             return self.error("Number of seats")
 
         try:
-            int(number_of_seats.strip())
+            number_of_seats = int(number_of_seats.strip())
             if number_of_seats < 2 or number_of_seats > 14:
                 raise ValueError
         except ValueError:
