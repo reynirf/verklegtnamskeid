@@ -428,10 +428,26 @@ class Menu:
 
 	def found_customer(self):
 		found_customer = self.nocco_list.choose_one('Choose an action',
-													['Print customer details', 'Edit customer', 'Unsubscribe customer',
+													['Print customer details', 'Print order history', 'Edit customer', 'Unsubscribe customer',
 													 'Go back'], 'action')
 		self.frame.delete_last_lines(2)
 		self.handle_answer_from_menu(found_customer['action'], 'found customer')
+
+	def customer_history(self):
+		ssn = self.__current_customer.get_ssn()
+		orders = self.order_manager.find_order_by_ssn(ssn)
+		if orders == []:
+			print()
+			print('{}'.format(self.color.return_colored("No orders registered to this customer", 'red')))
+			self.nocco_list.single_list('Go back')
+			self.frame.delete_last_lines(3)	
+		else:
+			print('{:<10}{:<10}{:<20}'.format('ID', 'Vehicle', 'Dates'))
+			print('-'*43)
+			for order in orders:
+				print('{:<10}{:<10}{:>20}'.format(order.get_id(), order.get_license_plate(), order.get_date_str()))
+			self.nocco_list.single_list('Go back')
+			self.frame.delete_last_lines(len(orders) + 4)
 
 	def find_customer_by_name(self):
 		name = input("Enter name: ")
@@ -524,8 +540,24 @@ class Menu:
 
 	def found_car(self):
 		found_car_list = self.nocco_list.choose_one('Choose an action',
-						['Edit car', 'Print car', 'Delete car', 'Go back'], 'action')
+						['Edit car', 'Print car', 'Print car history', 'Delete car', 'Go back'], 'action')
 		self.handle_answer_from_menu(found_car_list['action'], 'found car')
+
+	def vehicle_history(self):
+		license_plate = self.__current_vehicle.get_license()
+		order_list = self.order_manager.find_orders_by_vehicle(license_plate)
+		if order_list == []:
+			print()
+			print('{}'.format(self.color.return_colored("No orders registered to this car", 'red')))
+			self.nocco_list.single_list('Go back')
+			self.frame.delete_last_lines(3)
+		else:
+			print('{:<10}{:<15}{:<20}'.format('ID', 'Customer SSN', 'Dates'))
+			print('-'*48)
+			for order in order_list:
+				print('{:<10}{:<15}{:>20}'.format(order.get_id(), order.get_ssn(), order.get_date_str()))
+			self.nocco_list.single_list('Go back')
+			self.frame.delete_last_lines(len(order_list) + 4)
 
 	def edit_car(self):
 		car = self.__current_vehicle.return_details()
@@ -586,6 +618,7 @@ class Menu:
 														[
 															"Edit car", 
 															"Print car",
+															"Print car history",
 															"Remove car", 
 															"Go back"
 														], 
@@ -940,6 +973,11 @@ class Menu:
 				print('Customer: ' + self.__current_customer.__str__() + '\n')
 				self.found_customer()
 
+			elif prompt == 'Print order history':
+				self.frame.delete_last_lines(5)
+				self.customer_history()
+				self.found_customer()
+
 			elif prompt.lower() == 'edit customer':
 				self.frame.delete_last_lines(6)
 				self.edit_customer()
@@ -1060,6 +1098,11 @@ class Menu:
 				self.nocco_list.single_list('Go back')
 				self.frame.delete_last_lines(10)
 				print('Car: ' + self.__current_vehicle.__str__() + '\n')
+				self.found_car()
+			
+			elif prompt == 'Print car history':
+				self.frame.delete_last_lines(7)
+				self.vehicle_history()
 				self.found_car()
 
 			elif prompt.lower() == 'go back':

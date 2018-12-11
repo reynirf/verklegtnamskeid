@@ -5,6 +5,8 @@ class Order:
             pick_up_time, return_time, pick_up_location, return_location, license_plate, insurance, vehicle_type):
         self.__order_id = order_id
         self.__ssn = ssn
+        self.__start_date_str = start_date[6:] + '.' + start_date[4:6] + '.' + start_date[:4]
+        self.__end_date_str = end_date[6:] + '.' + end_date[4:6] + '.' + end_date[:4]
         self.__start_date = date(int(start_date[:4]), int(start_date[4:6]), int(start_date[6:]))
         self.__end_date = date(int(end_date[:4]), int(end_date[4:6]), int(end_date[6:]))
         self.__pick_up_time = pick_up_time
@@ -27,18 +29,19 @@ class Order:
     def get_dates(self):
         return self.__start_date, self.__end_date
     
+    def get_date_str(self):
+        return self.__start_date_str + ' - ' + self.__end_date_str
+    
     def get_license_plate(self):
         return self.__license_plate
     
     def return_details(self):
         """Returns the details needed for editing the order"""
-        start_day = str(self.__start_date.day) + '.' + str(self.__start_date.month) + '.' + str(self.__start_date.year)
-        end_day = str(self.__end_date.day) + '.' + str(self.__end_date.month) + '.' + str(self.__end_date.year)
         return {
             "ID": self.__order_id,
             "SSN": self.__ssn,
-            "Start date": start_day,
-            "End date": end_day,
+            "Start date": self.__start_date_str,
+            "End date": self.__end_date_str,
             "Pick up time": self.__pick_up_time,
             "Return time": self.__return_time,
             "Pick up location": self.__pick_up_location,
