@@ -306,7 +306,7 @@ class OrderManager:
             self.__temp_insurance = current_value
             return None
         insurance = insurance.strip()
-        if insurance.lower() == "yes" or insurance.lower() == "no":
+        if insurance.lower() == "yes" or insurance.lower() == "no" or insurance.lower() == 'n' or insurance.lower() == 'y':
             self.__temp_insurance = insurance
         else:
             return self.error('Insurance')
