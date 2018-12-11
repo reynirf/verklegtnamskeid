@@ -60,7 +60,7 @@ class Frame:
         self.boot_loop(0, boot_length, 'Starting system:','Complete', 50)
         for number in self.list_of_boot_length:
 
-            #delay for 0,1 seconds
+            #delay for 0,05 seconds
             time.sleep(0.05) 
 
             #Uppfæra progress

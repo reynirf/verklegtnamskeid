@@ -341,8 +341,6 @@ class Menu:
 
 		self.check_if_valid('SSN', self.customer_manager.check_ssn)
 
-		self.check_if_valid('Birthday', self.customer_manager.check_birthday)
-
 		self.check_if_valid('Phone number', self.customer_manager.check_phone_number)
 
 		self.check_if_valid('Driver license category', self.customer_manager.check_license)
@@ -366,8 +364,6 @@ class Menu:
 		self.check_if_valid('Name', self.customer_manager.check_name, True, customer['Name'])
 
 		self.check_if_valid('SSN', self.customer_manager.check_ssn, True, customer['SSN'])
-
-		self.check_if_valid('Birthday', self.customer_manager.check_birthday, True, customer['Birthday'])
 
 		self.check_if_valid('Phone number', self.customer_manager.check_phone_number, True, customer['Phone number'])
 
