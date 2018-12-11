@@ -24,7 +24,7 @@ class OrderManager:
         self.__temp_licese_plate = ""
         self.__temp_insurance = ""
         self.__temp_type_of_vehicle = ""
-        self.__locations = ["reykjavik", "akureyri", "ak", "rvk"]
+        self.__locations = ["reykjavik", "akureyri"]
     
     def get_order_list(self):
         return self.__order_repo.get_order_list()
@@ -228,13 +228,13 @@ class OrderManager:
     def check_pick_up_time(self, pick_up_time, ignore_empty_value=False, current_value=''):
         """Check if pick up time is valid. Returns an error message if pick up time
         has letters in it"""
-        slice_list=list(pick_up_time)
+        slice_list = list(pick_up_time)
         if pick_up_time.strip() == '' and not ignore_empty_value:
             return self.error('Pick up time')
-        if len(pick_up_time) != 5:
-            return self.error('Return time')
+        if len(slice_list) != 5:
+            return self.error('Pick up time')
         if slice_list[2] != ":":
-            return self.error('Return time')
+            return self.error('Pick up time')
         elif pick_up_time.strip() == '':
             self.__temp_pick_up_time = current_value
             return None
@@ -248,14 +248,17 @@ class OrderManager:
     def check_returning_time(self, returning_time, ignore_empty_value=False, current_value=''):
         """Check if returning time is valid. Returns an error message if returning time
         has letters in it"""
+        slice_list = list(returning_time)
         if returning_time.strip() == '' and not ignore_empty_value:
             return self.error('Return time')
-        if len(returning_time) != 5:
-            return self.error('Return time') 
+        if len(slice_list) != 5:
+            return self.error('Return time')
+        if slice_list[2] != ":":
+            return self.error('Return time')
         elif returning_time.strip() == '':
             self.__temp_returning_time = current_value
             return None
-
+        
         for letter in returning_time.strip():
             if letter in (string.ascii_letters):
                 return self.error('Return time')
@@ -331,7 +334,7 @@ class OrderManager:
     def find_order_by_id(self, ID):
         order_list = self.__order_repo.get_order_list()
         for order in order_list:
-            if order.get_id().lower() == ID.lower():
+            if order.get_id() == ID:
                 return order
 
     def find_orders_by_vehicle(self, license_plate):

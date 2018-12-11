@@ -265,7 +265,7 @@ class Menu:
 
 		self.check_if_valid('start date', self.order_manager.check_start_date, True, order['Start date'])
 
-		self.check_if_valid('start date', self.order_manager.check_ending_date, True, order['End date'])
+		self.check_if_valid('end date', self.order_manager.check_ending_date, True, order['End date'])
 
 		self.check_if_valid('pick up time', self.order_manager.check_pick_up_time, True, order['Pick up time'])
 
@@ -830,7 +830,7 @@ class Menu:
 					temp_order = self.order_manager.find_order_by_id(self.__current_order.get_id())
 					if not temp_order:
 						raise ValueError
-					self.__current_order = self.order_manager.find_order_by_ssn(self.__current_order.get_ssn())
+					self.__current_order = temp_order
 				except ValueError:
 					temp_order = self.order_manager.find_order_by_ssn(self.__current_order.get_ssn())
 					if not temp_order:
