@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 id,ssn,starting date,ending date,pick up time,returning time,pick up location,return location,number plate,insurance,type of vehicle
 1,1107983699,20181211,20181213,12:00,12:00,ak,ak,SVT71,yes,smallcar
 24242,2345673456,20191123,20191223,13:00,18:00,akureyri,akureyri,MMM12,yes,smallcar
@@ -12,3 +13,23 @@ id,ssn,starting date,ending date,pick up time,returning time,pick up location,re
 0022,01201568,20190202,20190203,08:00,20:00,akureyri,akureyri,OFF66,yes,offroad
 013,101101545,20190202,20190203,03:00,21:00,ak,ak,WOW13,no,offroad
 432,49320904239,20191010,20191020,"time.struct_time(tm_year=1900, tm_mon=1, tm_mday=1, tm_hour=20, tm_min=20, tm_sec=0, tm_wday=0, tm_yday=1, tm_isdst=-1)",20:20,ak,ak,gbs00,yes,sedan
+=======
+id,ssn,starting date,ending date,pick up time,returning time,pick up location,return location,number plate,insurance,type of vehicle
+1,1107983699,20181211,20181213,12:00,12:00,ak,ak,SVT71,yes,smallcar
+24242,2345673456,20191123,20191223,13:00,18:00,akureyri,akureyri,MMM12,yes,smallcar
+2,2408983579,20181211,20181213,12:00,12:00,akureyri,akureyri,MMM12,yes,smallcar
+3,2408981111,20181211,20181213,12:00,13:00,akureyri,akureyri,NET13,no,sedan
+4,0608003699,20181224,20181231,08:00,08:00,reykjavik,reykjavik,WOW13,yes,offroad
+5,0101906767,20181211,20190111,09:00,09:00,akureyri,akureyri,BIG14,yes,bus
+6,1302991717,20181214,20181216,12:00,12:00,akureyri,akureyri,GBS00,yes,sedan
+7,1803870000,20181211,20181218,12:00,12:00,akureyri,akureyri,XXS01,yes,smallcar
+8,1309717777,20181211,20181212,09:00,09:00,akureyri,akureyri,KN896,yes,sedan
+9,1234567890,20181211,20181213,09:00,09:00,akureyri,akureyri,RYZ78,no,smallcar
+0022,01201568,20190202,20190203,08:00,20:00,akureyri,akureyri,OFF66,yes,offroad
+013,101101545,20190202,20190203,03:00,21:00,ak,ak,WOW13,no,offroad
+32,2311992929,20191010,20191030,20:20,20:20,ak,ak,gbs00,yes,sedan
+32,2311992929,20191010,20191020,20:20,20:20,ak,ak,gbs00,yes,sedan
+3232,2311992929,20191010,20191020,20:20,2:20,ak,ak,ooo00,yes,sedan
+43290,4932094032,20191010,20191020,10:10,10:10,ak,ak,RYZ78,yes,smallcar
+43290423,39402932,20191010,20191020,30:20,20:20,ak,ak,ryz78,yes,smallcar
+>>>>>>> 4e0f8f8e9fe48fbd740ceed50975da692b900f85
