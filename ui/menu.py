@@ -622,9 +622,13 @@ class Menu:
 			self.find_cars()
 		else:
 			for i, car in enumerate(cars):
-				print(car.get_license())
-				print("Car " + str(i + 1) + ": " + car.get_license())
-				time.sleep(3)
+				print('{:<20} {:<20} {:<20} {:<20}'.format("License", "Make", "Model", "Seats"))
+				print('-'*70)
+				print('{:<20} {:<20} {:<20} {:<20}'.format(car.get_license(), car.get_make(), car.get_model(), car.get_seats()))
+				
+
+			self.nocco_list.single_list("Go back")
+			self.frame.delete_last_lines()	
 			print()
 
 	def find_cars_by_type(self):
