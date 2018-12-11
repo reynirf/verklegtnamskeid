@@ -25,7 +25,7 @@ class OrderManager:
         self.__temp_licese_plate = ""
         self.__temp_insurance = ""
         self.__temp_type_of_vehicle = ""
-        self.__locations = ["reykjavik", "akureyri"]
+        self.__locations = ["reykjavik", "akureyri", 'ak', 'rvk']
     
     def get_order_list(self):
         return self.__order_repo.get_order_list()
@@ -139,6 +139,8 @@ class OrderManager:
             self.__temp_ID = current_value
             return None
 
+        if len(ID) > 8:
+            return self.error('ID')
         for letter in ID:
             if letter in (string.ascii_letters + string.punctuation):
                 return self.error('ID')
@@ -246,32 +248,31 @@ class OrderManager:
         """Check if pick up time is valid. Returns an error message if pick up time
         has letters in it"""
         #slice_list=list(pick_up_time)
-        try:
-            check_time=time.strptime(pick_up_time,"%H:%M")
-        except:
-            return self.error('Pick up time')
-
-        if pick_up_time.strip() == '':
+        if pick_up_time.strip() == '' and not ignore_empty_value:
+            try:
+                check_time = time.strptime(pick_up_time,"%H:%M")
+            except ValueError:
+                return self.error('Pick up time')
+        elif pick_up_time.strip() == '':
             self.__temp_pick_up_time = current_value
             return None
-        
         else:
             self.__temp_pick_up_time = pick_up_time
 
     def check_returning_time(self, returning_time, ignore_empty_value=False, current_value=''):
         """Check if returning time is valid. Returns an error message if returning time
         has letters in it"""
-        try:
-            check_time=time.strptime(returning_time,"%H:%M")
-        except:
-            return self.error('Return time')
-        
-        if returning_time.strip() == '':
+        if returning_time.strip() == '' and not ignore_empty_value:
+            try:
+                check_time = time.strptime(returning_time,"%H:%M")
+            except ValueError:
+                return self.error('Return time')
+        elif returning_time.strip() == '':
             self.__temp_returning_time = current_value
             return None
-
         else:
             self.__temp_returning_time = returning_time
+
 
     def check_pick_up_location(self, pick_up_location, ignore_empty_value=False, current_value=''):
         """Check if location matches our list of locations"""
@@ -306,15 +307,15 @@ class OrderManager:
         elif license_plate.strip() == '' and current_value:
             self.__temp_license_plate = current_value
             return None
-
-        if len(license_plate) < 5 or len(license_plate) > 6:
+        # TODO this should accept also entering the license number in lowercase.
+        if len(license_plate) != 5:
             return self.error('License plate')
         
         for letter in license_plate:
             if letter in (string.punctuation):
                 return self.error('License plate')
         if license_plate not in ignore_empty_value:
-            return 'License plate does not exist. Find a plate in the list above and try again'
+            return 'License plate does not exist. Find a plate in the list above and try again.'
         self.__temp_license_plate = license_plate
 
     def check_insurance(self, insurance, ignore_empty_value=False, current_value=''):

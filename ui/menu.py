@@ -67,7 +67,7 @@ class Menu:
 
 	def report_error(self):
 		self.frame.delete_last_lines(7)
-		print('Contact your manager to report an error')
+		print('Contact your manager to report an error.')
 		self.nocco_list.single_list('Go back')
 		self.frame.delete_last_lines(3)
 
@@ -93,7 +93,6 @@ class Menu:
 		self.handle_answer_from_menu(order_list['action'], 'order')
 
 	def calculate_order(self):
-		self.frame.delete_last_lines()
 		print()
 		print('{:<20}{:>10}{:>12}'.format('Description', 'Per day', 'Amount'))
 		print('-'*42)
@@ -139,7 +138,7 @@ class Menu:
 		print()
 		orders = self.order_manager.find_order_by_ssn(ssn)
 		if orders == []:
-			print('{}'.format(self.color.return_colored("Order not found", 'red')))
+			print('{}'.format(self.color.return_colored("Order not found!", 'red')))
 			time.sleep(1.5)
 			self.frame.delete_last_lines(3)
 			self.find_order()
@@ -187,14 +186,14 @@ class Menu:
 		self.vehicle_manager.delete_order_dates(dates, car)
 		self.order_manager.delete_order(self.__current_order)
 		self.frame.delete_last_lines(2)
-		print('{}'.format(self.color.return_colored("Order removed", 'red')))
+		print('{}'.format(self.color.return_colored("Order removed!", 'red')))
 		time.sleep(1.5)
 		self.frame.delete_last_lines(1)
 		self.order()
 
 	def save_new_order(self):
 		self.order_manager.save_new_order()
-		print("{}".format(self.color.return_colored("New order registered", 'green')))
+		print("{}".format(self.color.return_colored("New order registered!", 'green')))
 		time.sleep(2)
 		dates = self.order_manager.get_order_dates()
 		vehicle = self.order_manager.get_license_plate()
@@ -230,7 +229,7 @@ class Menu:
 		if not filtered_list:
 			self.frame.delete_last_lines(1)
 			print()
-			print("No vehicle of type {} available on these dates".format(self.color.return_colored(car_type, 'red')))
+			print("No vehicle of type {} available on these dates.".format(self.color.return_colored(car_type, 'red')))
 			time.sleep(2)
 			self.frame.delete_last_lines(11)
 			self.order()
@@ -257,7 +256,7 @@ class Menu:
 	
 	def edit_order(self):
 		order = self.__current_order.return_details()
-		print('{}\n'.format(self.color.return_colored('Leave input empty to keep the value the same', 'green')))
+		print('{}\n'.format(self.color.return_colored('Leave input empty to keep the value the same.', 'green')))
 
 		self.check_if_valid('ID', self.order_manager.check_ID, True, order['ID'])
 
@@ -313,7 +312,7 @@ class Menu:
 	def save_edited_order(self):
 		self.order_manager.delete_order(self.__current_order)
 		self.order_manager.save_new_order()
-		print("{}".format(self.color.return_colored("Order updated", 'green')))
+		print("{}".format(self.color.return_colored("Order updated!", 'green')))
 		time.sleep(1.5)
 
 	def check_if_valid(self, to_enter, to_check, editing=False, current_value=''):
@@ -376,7 +375,7 @@ class Menu:
 
 	def edit_customer(self):
 		customer = self.__current_customer.return_details()
-		print('{}\n'.format(self.color.return_colored('Leave input empty to keep the value the same', 'green')))
+		print('{}\n'.format(self.color.return_colored('Leave input empty to keep the value the same.', 'green')))
 
 		self.check_if_valid('Name', self.customer_manager.check_name, True, customer['Name'])
 
@@ -408,7 +407,7 @@ class Menu:
 
 	def save_new_customer(self):
 		self.customer_manager.save_new_customer()
-		print("{}".format(self.color.return_colored("New customer registered", 'green')))
+		print("{}".format(self.color.return_colored("New customer registered!", 'green')))
 		time.sleep(1.5)
 		self.frame.delete_last_lines(1)
 
@@ -416,7 +415,7 @@ class Menu:
 		self.customer_manager.delete_customer(self.__current_customer)
 		self.customer_manager.save_new_customer()
 		
-		print("{}".format(self.color.return_colored("Customer updated", 'green')))
+		print("{}".format(self.color.return_colored("Customer updated!", 'green')))
 		time.sleep(1.5)
 		self.frame.delete_last_lines(1)
 
@@ -428,9 +427,12 @@ class Menu:
 
 	def found_customer(self):
 		found_customer = self.nocco_list.choose_one('Choose an action',
-													['Print customer details', 'Print order history', 'Edit customer', 'Unsubscribe customer',
+													['Print customer details', 
+													'Print order history', 
+													'Edit customer', 
+													'Unsubscribe customer',
 													 'Go back'], 'action')
-		self.frame.delete_last_lines(2)
+		self.frame.delete_last_lines(3)
 		self.handle_answer_from_menu(found_customer['action'], 'found customer')
 
 	def customer_history(self):
@@ -485,7 +487,7 @@ class Menu:
 		print()
 		customer = self.customer_manager.find_customer_by_ssn(ssn)
 		if customer == None:
-			print('{}'.format(self.color.return_colored("Customer not found", 'red')))
+			print('{}'.format(self.color.return_colored("Customer not found!", 'red')))
 			time.sleep(1.5)
 			self.frame.delete_last_lines(4)
 			print()
@@ -500,7 +502,7 @@ class Menu:
 	def delete_customer(self):
 		self.customer_manager.delete_customer(self.__current_customer)
 		self.frame.delete_last_lines()
-		print('{}'.format(self.color.return_colored("Customer removed", 'red')))
+		print('{}'.format(self.color.return_colored("Customer removed!", 'red')))
 		time.sleep(1.5)
 		self.frame.delete_last_lines()
 		self.customer()
@@ -535,7 +537,7 @@ class Menu:
 	def save_edited_car(self):
 		self.vehicle_manager.delete_vehicle(self.__current_vehicle)
 		self.vehicle_manager.save_new_car()
-		print("{}".format(self.color.return_colored("Car updated", 'green')))
+		print("{}".format(self.color.return_colored("Car updated!", 'green')))
 		time.sleep(1.5)
 
 	def found_car(self):
@@ -692,7 +694,7 @@ class Menu:
 	def delete_vehicle(self):
 		self.vehicle_manager.delete_vehicle(self.__current_vehicle)
 		self.frame.delete_last_lines(1)
-		print('{}'.format(self.color.return_colored("Car removed", 'red')))
+		print('{}'.format(self.color.return_colored("Car removed!", 'red')))
 		time.sleep(1.5)
 		self.frame.delete_last_lines(2)
 		print('\n' * 7)
@@ -969,12 +971,12 @@ class Menu:
 						continue
 					print("{}: {}".format(detail, value))
 				self.nocco_list.single_list('Go back')
-				self.frame.delete_last_lines(10)
+				self.frame.delete_last_lines(11)
 				print('Customer: ' + self.__current_customer.__str__() + '\n')
 				self.found_customer()
 
 			elif prompt == 'Print order history':
-				self.frame.delete_last_lines(5)
+				self.frame.delete_last_lines(4)
 				self.customer_history()
 				self.found_customer()
 
@@ -1092,7 +1094,6 @@ class Menu:
 
 				car_details = self.__current_vehicle.return_details()
 				self.frame.delete_last_lines(9)
-				print()
 				for detail, value in car_details.items():
 					print("{}: {}".format(detail, value))
 				self.nocco_list.single_list('Go back')
@@ -1106,7 +1107,7 @@ class Menu:
 				self.found_car()
 
 			elif prompt.lower() == 'go back':
-				self.frame.delete_last_lines(8)
+				self.frame.delete_last_lines(9)
 				self.find_cars()
 
 		######################################################    
