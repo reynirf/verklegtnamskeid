@@ -138,6 +138,8 @@ class OrderManager:
             self.__temp_ID = current_value
             return None
 
+        if len(ID) > 8:
+            return self.error('ID')
         for letter in ID:
             if letter in (string.ascii_letters + string.punctuation):
                 return self.error('ID')
@@ -326,6 +328,15 @@ class OrderManager:
         for order in order_list:
             if order.__str__().lower() == ID.lower():
                 return order
+    
+    def find_orders_by_vehicle(self, license_plate):
+        order_list = self.__order_repo.get_order_list()
+        orders = []
+        for order in order_list:
+            vehicle = order.get_license_plate()
+            if vehicle.lower() == license_plate.lower():
+                orders.append(order)
+        return orders
 
     def delete_order(self, order):
         self.__order_repo.delete_order(order)
