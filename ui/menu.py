@@ -414,6 +414,7 @@ class Menu:
 	def save_edited_customer(self):
 		self.customer_manager.delete_customer(self.__current_customer)
 		self.customer_manager.save_new_customer()
+		
 		print("{}".format(self.color.return_colored("Customer updated", 'green')))
 		time.sleep(1.5)
 		self.frame.delete_last_lines(1)
@@ -813,7 +814,10 @@ class Menu:
 			if prompt.lower() == 'save':
 				self.frame.delete_last_lines(13)
 				self.save_new_customer()
-				self.customer()
+				customers = self.customer_manager.get_customer_list()
+				self.__current_customer = customers[-1]
+				print('Customer: {}\n'.format(self.__current_customer.__str__()))
+				self.found_customer()
 
 			elif prompt.lower() == 'cancel':
 				self.frame.delete_last_lines(15)
@@ -826,6 +830,7 @@ class Menu:
 			if prompt.lower() == 'save':
 				self.frame.delete_last_lines(15)
 				self.save_edited_customer()
+				self.__current_customer = self.customer_manager.find_customer_by_ssn(self.__current_customer.get_ssn())
 				print('Customer: {}\n'.format(self.__current_customer.__str__()))
 				self.found_customer()
 
