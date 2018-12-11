@@ -209,7 +209,7 @@ class OrderManager:
         can not be converted to a datetime object"""
         present_datetime = datetime.datetime.now()
         try:
-            inputted_start_date = datetime.datetime.strptime(start_date, "%d:%m:%Y")
+            inputted_start_date = datetime.datetime.strptime(start_date, "%d.%m.%Y")
             if present_datetime > inputted_start_date:
                 return self.error("Start date")
         except:
@@ -230,7 +230,7 @@ class OrderManager:
 
         present_datetime = datetime.datetime.now()
         try:
-            inputted_end_date = datetime.datetime.strptime(end_date, "%d:%m:%Y")
+            inputted_end_date = datetime.datetime.strptime(end_date, "%d.%m.%Y")
             if present_datetime > inputted_end_date:
                 return self.error("End date")
         except:
@@ -312,7 +312,7 @@ class OrderManager:
         for letter in license_plate:
             if letter in (string.punctuation):
                 return self.error('License plate')
-        if license_plate not in ignore_empty_value:
+        if license_plate.lower() not in ignore_empty_value:
             return 'License plate does not exist. Find a plate in the list above and try again.'
         self.__temp_license_plate = license_plate
 
