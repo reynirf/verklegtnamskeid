@@ -41,7 +41,7 @@ class Order:
             "Pick up location": self.__pick_up_location,
             "Return location": self.__return_location,
             "Type": self.__vehicle_type,
-            "Number plate": self.__license_plate,
+            "License plate": self.__license_plate,
             "Insurance": self.__insurance
         }
 

@@ -106,23 +106,16 @@ class Menu:
 		print('{:<20}{:>22}'.format('TOTAL ISK:', total))
 
 		self.nocco_list.single_list("Go back")
-		self.frame.delete_last_lines(7)
 
 	def show_pricing_list(self):
 		self.frame.delete_last_lines(2)
 		print()
 		with open("./data/prices_list.txt","r") as f:
 			for i in f:
-<<<<<<< HEAD
 				print("\t",i)
-		self.nocco_list.single_list("Go back")
-		self.frame.delete_last_lines(7)
-=======
-				print(i)
 		self.nocco_list.single_list("Go back")
 		self.frame.delete_last_lines(10)
 		self.order()
->>>>>>> d17b8fd7571b2c4366e51ee49fe0397f8bf8b3d8
 
 	def find_order_by_id(self):
 		ID = input("Enter ID: ")
@@ -132,7 +125,7 @@ class Menu:
 		if order == None:
 			print('{}'.format(self.color.return_colored("Order not found!", 'red')))
 			time.sleep(1.5)
-			self.frame.delete_last_lines(2)
+			self.frame.delete_last_lines()
 			self.find_order()
 		else:
 			self.__current_order = order
@@ -176,12 +169,13 @@ class Menu:
 
 	def found_order(self):
 		found_order_list = self.nocco_list.choose_one('Choose an action',
-						['Edit order', 'Delete order', 'Go back'], 'action')
+						['Edit order', 'Print order', 'Delete order', 'Go back'], 'action')
 		self.frame.delete_last_lines(2)
 		self.handle_answer_from_menu(found_order_list['action'], 'found order')
 
 	def get_inputted_order(self):
-		self.order_manager.get_inputted_order()
+		cars = self.order_manager.get_inputted_order()
+		self.frame.delete_last_lines(len(cars) - 1)
 		register_order_list = self.nocco_list.choose_one("Choose an action",["Save", "Calculate order" , "Cancel"], "action")
 		self.handle_answer_from_menu(register_order_list['action'], 'register_order')
 
@@ -242,13 +236,13 @@ class Menu:
 		else:
 			print('Available cars:')
 			print()
-			print('{:<20} {:<20} {:<20} {:<20}'.format('Licence', 'Make', 'Model', 'Seats'))
+			print('{:<20} {:<20} {:<20} {:<20}'.format('License', 'Make', 'Model', 'Seats'))
 			print('-'*70)
 			for car in filtered_list:
 				print(car.availability_string())
 			print()
 
-			self.check_if_valid('licence plate', self.order_manager.check_license_plate)
+			self.check_if_valid('license plate', self.order_manager.check_license_plate)
 
 			self.check_if_valid('insurance (yes or no)', self.order_manager.check_insurance)
 
@@ -282,26 +276,27 @@ class Menu:
 		
 		self.check_if_valid('type', self.order_manager.check_type_of_vehicle, True, order['Type'])
 
-		start_date, end_date = self.order_manager.get_dates()
-		car_list = self.vehicle_manager.show_car_availability(start_date, end_date, 'available')
-		car_type = self.order_manager.get_type()
-		filtered_list = self.vehicle_manager.find_car_by_type(car_type, car_list)
-		print()
-		if not filtered_list:
-			self.frame.delete_last_lines(1)
-			print()
-			print("No vehicle of type {} available on these dates".format(self.color.return_colored(car_type, 'red')))
-			time.sleep(2)
-			self.frame.delete_last_lines(11)
-			self.order()
-		else:
-			print('Available cars:')
-			print()
-			print('{:<20} {:<20} {:<20} {:<20}'.format('Licence', 'Make', 'Model', 'Seats'))
-			print('-'*70)
-			for car in filtered_list:
-				print(car.availability_string())
-			print()
+		# start_date, end_date = self.order_manager.get_dates()
+		# car_list = self.vehicle_manager.show_car_availability(start_date, end_date, 'available')
+		# car_type = self.order_manager.get_type()
+		# filtered_list = self.vehicle_manager.find_car_by_type(car_type, car_list)
+		# print()
+		# if not filtered_list:
+		# 	self.frame.delete_last_lines(1)
+		# 	print()
+		# 	print("No vehicle of type {} available on these dates".format(self.color.return_colored(car_type, 'red')))
+		# 	time.sleep(2)
+		# 	self.frame.delete_last_lines(13)
+		# 	self.order()
+		# else:
+		# 	print('Available cars:')
+		# 	print()
+		# 	print('{:<20} {:<20} {:<20} {:<20}'.format('Licence', 'Make', 'Model', 'Seats'))
+		# 	print('-'*70)
+		# 	for car in filtered_list:
+		# 		print(car.availability_string())
+		# 	print()
+
 		self.check_if_valid('license plate', self.order_manager.check_license_plate, True, order['License plate'])
 
 		self.check_if_valid('insurance', self.order_manager.check_insurance, True, order['Insurance'])
@@ -313,12 +308,10 @@ class Menu:
 		self.handle_answer_from_menu(save_edited_order['action'], 'save edited order')
 	
 	def save_edited_order(self):
-		self.order_manager.delete_order(self.__current_customer)
+		self.order_manager.delete_order(self.__current_order)
 		self.order_manager.save_new_order()
 		print("{}".format(self.color.return_colored("Order updated", 'green')))
 		time.sleep(1.5)
-		self.frame.delete_last_lines(1)
-		###Villa hér, kemur str obj has no attribute day??
 
 	def check_if_valid(self, to_enter, to_check, editing=False, current_value=''):
 		mistake = 0
@@ -504,7 +497,7 @@ class Menu:
 		start_date, end_date = self.order_manager.get_dates()
 		car_list = self.vehicle_manager.show_car_availability(start_date, end_date, prompt)
 		print() 
-		print('{:<20} {:<20} {:<20} {:<20}'.format('Licence', 'Make', 'Model', 'Seats'))
+		print('{:<20} {:<20} {:<20} {:<20}'.format('License', 'Make', 'Model', 'Seats'))
 		print('-'*70)
 		for car in car_list:
 			print(car.availability_string())
@@ -555,7 +548,7 @@ class Menu:
 			time.sleep(1.5)
 			self.find_cars()
 		else:
-			print("Car: " + car.get_licence())
+			print("Car: " + car.get_license())
 			print()
 			self.__current_vehicle = car
 			found_cars_list = self.nocco_list.choose_one(
@@ -596,7 +589,7 @@ class Menu:
 			self.find_cars()
 		else:
 			for i, car in enumerate(cars):
-				print("Car " + str(i + 1) + ": " + car.get_licence())
+				print("Car " + str(i + 1) + ": " + car.get_license())
 				# time.sleep(1.5)
 			print()
 			if len(cars) == 1:
@@ -633,7 +626,7 @@ class Menu:
 
 		self.check_if_valid('Number of seats', self.vehicle_manager.check_number_of_seats)
 
-		self.check_if_valid('Licence plate', self.vehicle_manager.check_number_plate)
+		self.check_if_valid('License plate', self.vehicle_manager.check_license_plate)
 
 		self.check_if_valid('Fuel (bensin, diesel, electric or hybrid)', self.vehicle_manager.check_fuel)
 
@@ -720,13 +713,22 @@ class Menu:
 		######################################################
 		elif menu_type == 'found order':
 			if prompt.lower() == 'edit order':
-				self.frame.delete_last_lines(5)
+				self.frame.delete_last_lines(6)
 				self.edit_order()
+			elif prompt.lower() == 'print order':
+				order_details = self.__current_order.return_details()
+				self.frame.delete_last_lines(6)
+				for detail, value in order_details.items():
+					print("{}: {}".format(detail, value))
+				self.nocco_list.single_list('Go back')
+				self.frame.delete_last_lines(13)
+				print('Order: ' + self.__current_order.__str__() + '\n')
+				self.found_order()
 			elif prompt.lower() == 'delete order':
-				self.frame.delete_last_lines(3)
+				self.frame.delete_last_lines(4)
 				self.delete_order()
 			elif prompt.lower() == 'go back':
-				self.frame.delete_last_lines(5)
+				self.frame.delete_last_lines(6)
 				self.find_order()
 		
 		######################################################    
@@ -734,13 +736,15 @@ class Menu:
 		######################################################
 		elif menu_type == 'save edited order':
 			if prompt.lower() == 'save':
-				self.frame.delete_last_lines(15)
+				self.frame.delete_last_lines(18)
 				self.save_edited_order()
+				self.frame.delete_last_lines()
 				print('Order: {}\n'.format(self.__current_order.__str__()))
-				self.edit_order()
+				self.found_order()
 			if prompt.lower() == 'cancel':
-				self.frame.delete_last_lines(15)
-				self.find_order()
+				self.frame.delete_last_lines(18)
+				print('Order: {}\n'.format(self.__current_order.__str__()))
+				self.found_order()
 
 		######################################################    
 		#                 FOUND MULTIPLE ORDERS              #                    
@@ -893,23 +897,6 @@ class Menu:
 				print()
 				self.cars()
 
-<<<<<<< HEAD
-			elif prompt.lower() == 'show cars that require maintenance':
-				self.frame.delete_last_lines(9)
-				self.show_cars_that_require_maintenance()
-				print()
-				print()
-				self.cars()
-
-			elif prompt.lower() == 'show cars that must be checked':
-				self.frame.delete_last_lines(9)
-				self.show_cars_that_must_be_checked()
-				print()
-				print()
-				self.cars()
-
-=======
->>>>>>> d17b8fd7571b2c4366e51ee49fe0397f8bf8b3d8
 			elif prompt.lower() == 'go back':
 				self.frame.delete_last_lines(7)
 				self.init_menu()
@@ -938,7 +925,7 @@ class Menu:
 			elif prompt.lower() == 'calculate order':
 				self.frame.delete_last_lines(19)
 				self.calculate_order()
-				self.frame.delete_last_lines(3)
+				self.frame.delete_last_lines(10)
 				self.get_inputted_order()
 	
 		######################################################    

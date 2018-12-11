@@ -104,16 +104,16 @@ class VehicleManager:
         """Check if number plate is valid. Returns an error message if number plate
         has punctuation in it"""
 
-        if number_plate.strip() == '':
-            return self.error("Licence plate")
+        if license_plate.strip() == '':
+            return self.error("License plate")
 
-        if len(number_plate) < 5 or len(number_plate) > 6:
-            return self.error('Licence plate')
+        if len(license_plate) < 5 or len(license_plate) > 6:
+            return self.error('License plate')
         
         for letter in license_plate:
             if letter in (string.punctuation):
-                return self.error('Licence plate')
-        self.__temp_number_plate = number_plate
+                return self.error('License plate')
+        self.__temp_license_plate = license_plate
 
     def check_fuel(self, fuel, ignore_empty_value=False, current_value=''):
         """Checks that input fuel is valid. Returns an error if it is not
@@ -146,7 +146,7 @@ class VehicleManager:
     def find_car_by_license_plate(self, license_plate):
         cars_list = self.__vehicle_repo.get_vehicle_list()
         for vehicle in cars_list:
-            car_licence = vehicle.get_licence().lower()
+            car_licence = vehicle.get_license().lower()
             if car_licence == license_plate.lower():
                 return vehicle
 

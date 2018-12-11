@@ -2,8 +2,8 @@ from datetime import date
 
 
 class Vehicle:
-    def __init__(self, licence, make, model, year, type_of_vehicle, seats, fuel, transmission, maintainance=0, dates=[]):
-        self.__licence = licence
+    def __init__(self, license, make, model, year, type_of_vehicle, seats, fuel, transmission, maintainance=0, dates=[]):
+        self.__license = license
         self.__make = make
         self.__model = model
         self.__year = year
@@ -50,13 +50,13 @@ class Vehicle:
         return self.__rented_dates
 
     def __str__(self):
-        return "{} {}".format(self.__licence, self.__make)
+        return "{} {}".format(self.__license, self.__make)
 
     def availability_string(self):
-        return '{:<20} {:<20} {:<20} {:<20}'.format(self.__licence, self.__make, self.__model, self.__seats)
+        return '{:<20} {:<20} {:<20} {:<20}'.format(self.__license, self.__make, self.__model, self.__seats)
 
-    def get_licence(self):
-        return self.__licence
+    def get_license(self):
+        return self.__license
 
     def get_make(self):
         return self.__make
@@ -71,4 +71,4 @@ class Vehicle:
         return self.__insurance_per_day
 
     def get_attributes(self):
-        return self.__licence, self.__make, self.__model, self.__year, self.__type_of_vehicle, self.__seats, self.__fuel, self.__transmission, self.__maintainance
+        return self.__license, self.__make, self.__model, self.__year, self.__type_of_vehicle, self.__seats, self.__fuel, self.__transmission, self.__maintainance
