@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 id,ssn,starting date,ending date,pick up time,returning time,pick up location,return location,number plate,insurance,type of vehicle
 1,1107983699,20181211,20181213,12:00,12:00,ak,ak,SVT71,yes,smallcar
 2,2408983579,20181211,20181213,12:00,12:00,akureyri,akureyri,MMM12,yes,smallcar
@@ -8,4 +9,3 @@ id,ssn,starting date,ending date,pick up time,returning time,pick up location,re
 7,1803870000,20181211,20181218,12:00,12:00,akureyri,akureyri,XXS01,yes,smallcar
 8,1309717777,20181211,20181212,09:00,09:00,akureyri,akureyri,KN896,yes,sedan
 9,1234567890,20181211,20181213,09:00,09:00,akureyri,akureyri,RYZ78,no,smallcar
-

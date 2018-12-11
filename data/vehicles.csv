@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 licence;make;model;year;type;seats;fuel;transmission;dates rented
 OFF66;toyota;landcruiser;2010;offroad;5;gasoline;manual;[]
 BUS12;mercedez benz;schneider;2012;bus;9;gasoline;manual;[]
@@ -12,3 +13,26 @@ XXS01;nissan;leaf;2017;smallcar;2;electric;manual;20181211,20181212,20181213,201
 KN896;nissan;rhyno;2018;sedan;7;gasoline;manual;20181211,20181212,
 RYZ78;toyota;yaris;2003;smallcar;5;gasoline;manual;20181211,20181212,20181213,
 
+=======
+<<<<<<< HEAD
+licence;make;model;year;type;seats;fuel;transmission;maintainance;dates rented
+OSV09;Skoda;Octavia;2011;sedan;5;bensin;automatic;;20190606,
+JO695;Renault;Trafic;2010;bus;9;diesel;manual;;20190101,20190102,
+TU564;Yaris;;2010;smallcar;4;bensin;automatic;0;[]
+AS654;Kia;Niro;2018;sedan;5;diesel;automatic;;20180131,20190101,
+=======
+licence;make;model;year;type;seats;fuel;transmission;dates rented
+RYZ78;toyota;yaris;2003;smallcar;5;gasoline;manual;[]
+GBS00;skoda;octavia;2009;sedan;5;diesel;automatic;[]
+OFF66;toyota;landcruiser;2010;offroad;5;gasoline;manual;[]
+BUS12;mercedez benz;schneider;2012;bus;9;gasoline;manual;[]
+OOO00;volvo;xc60;2018;sedan;5;hybrid;automatic;[]
+WOW13;range rover;discovery;2018;offroad;5;hybrid;manual;[]
+BIG14;pugeot;xxl;2017;bus;14;diesel;manual;[]
+YZ777;toyota;auris;2018;sedan;5;electric;manual;[]
+XXS01;nissan;leaf;2017;smallcar;2;electric;manual;[]
+NET13;toyota;RAV;2018;sedan;5;hybrid;manual;[]
+MMM12;toyota;yaris;2018;smallcar;5;diesel;automatic;[]
+KN896;nissan;rhyno;2018;sedan;7;gasoline;manual;[]
+>>>>>>> 057581f05e37274a00c4db494817caeab2950204
+>>>>>>> 5dde6336cdd74da4c45c21acef3d9c764280c62f
