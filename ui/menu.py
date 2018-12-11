@@ -93,6 +93,7 @@ class Menu:
 		self.handle_answer_from_menu(order_list['action'], 'order')
 
 	def calculate_order(self):
+		self.frame.delete_last_lines()
 		print()
 		print('{:<20}{:>10}{:>12}'.format('Description', 'Per day', 'Amount'))
 		print('-'*42)
@@ -802,6 +803,17 @@ class Menu:
 				self.frame.delete_last_lines(18)
 				self.save_edited_order()
 				self.frame.delete_last_lines()
+				try:
+					temp_order = self.order_manager.find_order_by_id(self.__current_order.get_id())
+					if not temp_order:
+						raise ValueError
+					self.__current_order = self.order_manager.find_order_by_ssn(self.__current_order.get_ssn())
+				except ValueError:
+					temp_order = self.order_manager.find_order_by_ssn(self.__current_order.get_ssn())
+					if not temp_order:
+						pass
+					else:
+						self.__current_order = temp_order[-1]
 				print('Order: {}\n'.format(self.__current_order.__str__()))
 				self.found_order()
 			if prompt.lower() == 'cancel':
@@ -972,24 +984,26 @@ class Menu:
 		#                REGISTER NEW ORDER                    #
 		########################################################
 		elif menu_type == 'register_order':
-
 			start_date, end_date = self.order_manager.get_dates()
 			car_list = self.vehicle_manager.show_car_availability(start_date, end_date, 'available')
 			car_type = self.order_manager.get_type()
 			filtered_list = self.vehicle_manager.find_car_by_type(car_type, car_list)
 			if filtered_list:
-				self.frame.delete_last_lines(len(filtered_list) + 5)
+				self.frame.delete_last_lines(len(filtered_list) + 4)
 			else:
-				self.frame.delete_last_lines(5)
+				self.frame.delete_last_lines(4)
 			if prompt.lower() == 'cancel':
-				self.frame.delete_last_lines(18)
+				self.frame.delete_last_lines(19)
 				self.order()
 
 			elif prompt.lower() == 'save':
-				self.frame.delete_last_lines(18)
+				self.frame.delete_last_lines(19)
 				self.save_new_order()
 				self.frame.delete_last_lines()
-				self.order()
+				orders = self.order_manager.get_order_list()
+				self.__current_order = orders[-1]
+				print('Order: {}\n'.format(self.__current_order.__str__()))
+				self.found_order()
 
 			elif prompt.lower() == 'calculate order':
 				self.frame.delete_last_lines(19)
@@ -1053,8 +1067,11 @@ class Menu:
 			if prompt.lower() == 'save':
 				self.frame.delete_last_lines(13)
 				self.save_new_car()
-				print("\n" * 7)
-				self.cars()
+				vehicles = self.vehicle_manager.get_vehicle_list()
+				self.__current_vehicle = vehicles[-1]
+				print()
+				print('Car: {}\n'.format(self.__current_vehicle.__str__()))
+				self.found_car()
 
 			if prompt.lower() == 'cancel':
 				self.frame.delete_last_lines(6)
@@ -1067,6 +1084,7 @@ class Menu:
 				self.frame.delete_last_lines(15)
 				self.save_edited_car()
 				self.frame.delete_last_lines()
+				self.__current_vehicle = self.vehicle_manager.find_car_by_license_plate(self.__current_vehicle.get_license())
 				print('Car: {}\n'.format(self.__current_vehicle.__str__()))
 				self.found_car()
 				self.frame.delete_last_lines(2)

@@ -16,10 +16,13 @@ class Order:
         self.__vehicle_type = vehicle_type
     
     def __str__(self):
-        return self.__order_id
+        return '{} | {}'.format(self.__order_id, self.__ssn)
     
     def get_ssn(self):
         return self.__ssn
+
+    def get_id(self):
+        return self.__order_id
     
     def get_dates(self):
         return self.__start_date, self.__end_date

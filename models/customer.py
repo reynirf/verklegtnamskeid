@@ -12,7 +12,7 @@ class Customer:
         self.__orders = []
 
     def __str__(self):
-        return self.__name
+        return '{} | {}'.format(self.__name, self.__ssn)
 
     def get_ssn(self):
         return self.__ssn

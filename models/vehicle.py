@@ -50,7 +50,7 @@ class Vehicle:
         return self.__rented_dates
 
     def __str__(self):
-        return "{} {}".format(self.__license, self.__make)
+        return "{} | {}".format(self.__license, self.__make)
 
     def availability_string(self):
         return '{:<20} {:<20} {:<20} {:<20}'.format(self.__license, self.__make, self.__model, self.__seats)
