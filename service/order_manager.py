@@ -228,7 +228,6 @@ class OrderManager:
     def check_pick_up_time(self, pick_up_time, ignore_empty_value=False, current_value=''):
         """Check if pick up time is valid. Returns an error message if pick up time
         has letters in it"""
-<<<<<<< HEAD
         #slice_list=list(pick_up_time)
         try:
             check_time=time.strptime(pick_up_time,"%H:%M")
@@ -236,16 +235,6 @@ class OrderManager:
             return self.error('Pick up time')
 
         if pick_up_time.strip() == '':
-=======
-        slice_list = list(pick_up_time)
-        if pick_up_time.strip() == '' and not ignore_empty_value:
-            return self.error('Pick up time')
-        if len(slice_list) != 5:
-            return self.error('Pick up time')
-        if slice_list[2] != ":":
-            return self.error('Pick up time')
-        elif pick_up_time.strip() == '':
->>>>>>> a6f792380acb56cd6eb00351672593d6145da6bd
             self.__temp_pick_up_time = current_value
             return None
         
@@ -255,7 +244,6 @@ class OrderManager:
     def check_returning_time(self, returning_time, ignore_empty_value=False, current_value=''):
         """Check if returning time is valid. Returns an error message if returning time
         has letters in it"""
-<<<<<<< HEAD
         try:
             check_time=time.strptime(returning_time,"%H:%M")
         except:
@@ -267,24 +255,6 @@ class OrderManager:
 
         else:
             self.__temp_returning_time = returning_time
-=======
-        slice_list = list(returning_time)
-        if returning_time.strip() == '' and not ignore_empty_value:
-            return self.error('Return time')
-        if len(slice_list) != 5:
-            return self.error('Return time')
-        if slice_list[2] != ":":
-            return self.error('Return time')
-        elif returning_time.strip() == '':
-            self.__temp_returning_time = current_value
-            return None
-        
-        for letter in returning_time.strip():
-            if letter in (string.ascii_letters):
-                return self.error('Return time')
-            else:
-                self.__temp_returning_time = returning_time
->>>>>>> a6f792380acb56cd6eb00351672593d6145da6bd
 
     def check_pick_up_location(self, pick_up_location, ignore_empty_value=False, current_value=''):
         """Check if location matches our list of locations"""
