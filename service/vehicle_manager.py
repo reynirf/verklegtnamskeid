@@ -239,22 +239,22 @@ class VehicleManager:
     def save_order_dates(self, dates, license_plate):
         vehicle = self.find_car_by_license_plate(license_plate)
         self.__vehicle_repo.delete_vehicle(vehicle)
-        a, b, c, d, e, f, g, h, i = vehicle.get_attributes()
+        a, b, c, d, e, f, g, h = vehicle.get_attributes()
         vehicle_dates = vehicle.get_rented_dates()
 
         vehicle_dates.extend(dates)
         new_dates = self.dates_to_string(vehicle_dates)
         
-        self.__vehicle_repo.save_new_car(a, b, c, d, e, f, g, h, i, dates_rented=new_dates)
+        self.__vehicle_repo.save_new_car(a, b, c, d, e, f, g, h, dates_rented=new_dates)
 
     def delete_order_dates(self, dates, license_plate):
         vehicle = self.find_car_by_license_plate(license_plate)
-        a, b, c, d, e, f, g, h, i = vehicle.get_attributes()
+        a, b, c, d, e, f, g, h = vehicle.get_attributes()
         vehicle_dates = set(vehicle.get_rented_dates())
         self.__vehicle_repo.delete_vehicle(vehicle)
         new_dates = vehicle_dates - set(dates)
         new_vehicle_dates = self.dates_to_string(new_dates)
-        self.__vehicle_repo.save_new_car(a, b, c, d, e, f, g, h, i, dates_rented=new_vehicle_dates)
+        self.__vehicle_repo.save_new_car(a, b, c, d, e, f, g, h, dates_rented=new_vehicle_dates)
 
     def dates_to_string(self, dates):
         new_dates = ''
