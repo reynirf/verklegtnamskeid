@@ -2,11 +2,5 @@ licence;make;model;year;type;seats;fuel;transmission;dates rented
 <<<<<<< HEAD
 RYZ78;toyota;yaris;2003;smallcar;5;gasoline;manual;[]
 BUS12;mercedez benz;schneider;2012;bus;9;gasoline;manual;[]
-OOO00;volvo;xc60;2018;sedan;5;hybrid;automatic;[]
-GBS00;skoda;octavia;2009;sedan;5;diesel;automatic;20191010,20191011,20191012,20191013,20191014,20191015,20191016,20191017,20191018,20191019,20191020,
-=======
-BUS12;mercedez benz;schneider;2012;bus;9;gasoline;manual;[]
-OOO00;volvo;xc60;2018;sedan;5;hybrid;automatic;[]
-GBS00;skoda;octavia;2009;sedan;5;diesel;automatic;
-RYZ78;toyota;yaris;2003;smallcar;5;gasoline;manual;20191010,20191011,20191012,20191013,20191014,20191015,20191016,20191017,20191018,20191019,20191020,20191010,20191011,20191012,20191013,20191014,20191015,20191016,20191017,20191018,20191019,20191020,
->>>>>>> 4e0f8f8e9fe48fbd740ceed50975da692b900f85
+GBS00;skoda;octavia;2009;sedan;5;diesel;automatic;20190201,
+OOO00;volvo;xc60;2018;sedan;5;hybrid;automatic;20190201,20190202,20190203,
