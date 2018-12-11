@@ -19,8 +19,7 @@ class NoccoKey:
                 tty.setraw(fd)
                 char = sys.stdin.read(1)
             finally:
-                termios.tcsetattr(fd, termios.TCSADRAIN,
-                                  old_settings)
+                termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
                 return char
         except ModuleNotFoundError: # for Windows
             import msvcrt

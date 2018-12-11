@@ -284,26 +284,6 @@ class Menu:
 		
 		self.check_if_valid('type', self.order_manager.check_type_of_vehicle, True, order['Type'])
 
-		# start_date, end_date = self.order_manager.get_dates()
-		# car_list = self.vehicle_manager.show_car_availability(start_date, end_date, 'available')
-		# car_type = self.order_manager.get_type()
-		# filtered_list = self.vehicle_manager.find_car_by_type(car_type, car_list)
-		# print()
-		# if not filtered_list:
-		# 	self.frame.delete_last_lines(1)
-		# 	print()
-		# 	print("No vehicle of type {} available on these dates".format(self.color.return_colored(car_type, 'red')))
-		# 	time.sleep(2)
-		# 	self.frame.delete_last_lines(13)
-		# 	self.order()
-		# else:
-		# 	print('Available cars:')
-		# 	print()
-		# 	print('{:<20} {:<20} {:<20} {:<20}'.format('Licence', 'Make', 'Model', 'Seats'))
-		# 	print('-'*70)
-		# 	for car in filtered_list:
-		# 		print(car.availability_string())
-		# 	print()
 
 		self.check_if_valid('license plate', self.order_manager.check_license_plate, True, order['License plate'])
 
