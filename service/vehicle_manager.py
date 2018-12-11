@@ -236,8 +236,8 @@ class VehicleManager:
         else:
             return rented_cars
 
-    def save_order_dates(self, dates, vehicle_number):
-        vehicle = self.find_car_by_license_plate(vehicle_number)
+    def save_order_dates(self, dates, license_plate):
+        vehicle = self.find_car_by_license_plate(license_plate)
         self.__vehicle_repo.delete_vehicle(vehicle)
         a, b, c, d, e, f, g, h, i = vehicle.get_attributes()
         vehicle_dates = vehicle.get_rented_dates()
@@ -247,8 +247,8 @@ class VehicleManager:
         
         self.__vehicle_repo.save_new_car(a, b, c, d, e, f, g, h, i, dates_rented=new_dates)
 
-    def delete_order_dates(self, dates, vehicle_number):
-        vehicle = self.find_car_by_license_plate(vehicle_number)
+    def delete_order_dates(self, dates, license_plate):
+        vehicle = self.find_car_by_license_plate(license_plate)
         a, b, c, d, e, f, g, h, i = vehicle.get_attributes()
         vehicle_dates = set(vehicle.get_rented_dates())
         self.__vehicle_repo.delete_vehicle(vehicle)
