@@ -138,6 +138,8 @@ class OrderManager:
             self.__temp_ID = current_value
             return None
 
+        if len(ID) > 8:
+            return self.error('ID')
         for letter in ID:
             if letter in (string.ascii_letters + string.punctuation):
                 return self.error('ID')
@@ -288,15 +290,15 @@ class OrderManager:
         elif license_plate.strip() == '' and current_value:
             self.__temp_license_plate = current_value
             return None
-
-        if len(license_plate) < 5 or len(license_plate) > 6:
+        # TODO this should accept also entering the license number in lowercase.
+        if len(license_plate) != 5:
             return self.error('License plate')
         
         for letter in license_plate:
             if letter in (string.punctuation):
                 return self.error('License plate')
         if license_plate not in ignore_empty_value:
-            return 'License plate does not exist. Find a plate in the list above and try again'
+            return 'License plate does not exist. Find a plate in the list above and try again.'
         self.__temp_license_plate = license_plate
 
     def check_insurance(self, insurance, ignore_empty_value=False, current_value=''):
@@ -326,6 +328,15 @@ class OrderManager:
         for order in order_list:
             if order.get_id() == ID:
                 return order
+    
+    def find_orders_by_vehicle(self, license_plate):
+        order_list = self.__order_repo.get_order_list()
+        orders = []
+        for order in order_list:
+            vehicle = order.get_license_plate()
+            if vehicle.lower() == license_plate.lower():
+                orders.append(order)
+        return orders
 
     def find_orders_by_vehicle(self, license_plate):
         order_list = self.__order_repo.get_order_list()
