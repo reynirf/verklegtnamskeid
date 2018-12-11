@@ -209,10 +209,10 @@ class OrderManager:
         can not be converted to a datetime object"""
         present_datetime = datetime.datetime.now()
         try:
-            inputted_start_date = datetime.datetime.strptime(start_date, "%d:%m:%Y")
+            inputted_start_date = datetime.datetime.strptime(start_date, "%d.%m.%Y")
             if present_datetime > inputted_start_date:
                 return self.error("Start date")
-        except:
+        except ValueError:
             return self.error('Start date')
         
         #if start_date.strip() == '' and not ignore_empty_value:
@@ -230,10 +230,10 @@ class OrderManager:
 
         present_datetime = datetime.datetime.now()
         try:
-            inputted_end_date = datetime.datetime.strptime(end_date, "%d:%m:%Y")
+            inputted_end_date = datetime.datetime.strptime(end_date, "%d.%m.%Y")
             if present_datetime > inputted_end_date:
                 return self.error("End date")
-        except:
+        except ValueError:
             return self.error('End date')
         #if end_date.strip() == '' and not ignore_empty_value:
         #    return self.error('End date')
@@ -254,10 +254,13 @@ class OrderManager:
             except ValueError:
                 return self.error('Pick up time')
         elif pick_up_time.strip() == '':
-            self.__temp_pick_up_time = current_value
+            self.__temp_pick_up_time = time.strptime(current_value,"%H:%M")
             return None
         else:
-            self.__temp_pick_up_time = pick_up_time
+            try:
+                self.__temp_pick_up_time = time.strptime(pick_up_time,"%H:%M")
+            except ValueError:
+                return self.error('Pick up time')
 
     def check_returning_time(self, returning_time, ignore_empty_value=False, current_value=''):
         """Check if returning time is valid. Returns an error message if returning time
@@ -307,14 +310,12 @@ class OrderManager:
         elif license_plate.strip() == '' and current_value:
             self.__temp_license_plate = current_value
             return None
-        # TODO this should accept also entering the license number in lowercase.
-        if len(license_plate) != 5:
+        if 2 > len(license_plate) > 6:
             return self.error('License plate')
-        
         for letter in license_plate:
             if letter in (string.punctuation):
                 return self.error('License plate')
-        if license_plate not in ignore_empty_value:
+        if license_plate.lower() not in ignore_empty_value:
             return 'License plate does not exist. Find a plate in the list above and try again.'
         self.__temp_license_plate = license_plate
 

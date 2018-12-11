@@ -207,13 +207,13 @@ class Menu:
 
 		self.check_if_valid('customer SSN', self.order_manager.check_ssn)
 
-		self.check_if_valid('start date (DD MM YYYY)', self.order_manager.check_start_date)
+		self.check_if_valid('start date (DD.MM.YYYY)', self.order_manager.check_start_date)
 
-		self.check_if_valid('ending date (DD MM YYYY)', self.order_manager.check_ending_date)
+		self.check_if_valid('ending date (DD.MM.YYYY)', self.order_manager.check_ending_date)
 
-		self.check_if_valid('pick up time(HRS:MIN)', self.order_manager.check_pick_up_time)
+		self.check_if_valid('pick up time (HRS:MIN)', self.order_manager.check_pick_up_time)
 
-		self.check_if_valid('returning time(HRS:MIN)', self.order_manager.check_returning_time)
+		self.check_if_valid('returning time (HRS:MIN)', self.order_manager.check_returning_time)
 
 		self.check_if_valid('pick up location (Reykjavik or Akureyri)', self.order_manager.check_pick_up_location)
 
@@ -241,7 +241,7 @@ class Menu:
 			print('-'*70)
 			for car in filtered_list:
 				print(car.availability_string())
-				plates.append(car.get_license())
+				plates.append(car.get_license().lower())
 			print()
 
 			self.check_if_valid('license plate', self.order_manager.check_license_plate, plates)
@@ -1045,9 +1045,10 @@ class Menu:
 			elif prompt == 'Save':
 				self.frame.delete_last_lines(19)
 				self.save_new_order()
-				self.frame.delete_last_lines()
+				self.frame.delete_last_lines(2)
 				orders = self.order_manager.get_order_list()
 				self.__current_order = orders[-1]
+				print()
 				print('Order: {}\n'.format(self.__current_order.__str__()))
 				self.found_order()
 
