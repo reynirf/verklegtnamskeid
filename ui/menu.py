@@ -525,7 +525,7 @@ class Menu:
 			print(car.availability_string())
 
 		self.nocco_list.single_list('Go back')
-		self.frame.delete_last_lines(len(car_list) + 1)
+		self.frame.delete_last_lines(len(car_list) + 2)
 
 	def cars(self):
 		self.frame.delete_last_lines(7)
@@ -1009,7 +1009,7 @@ class Menu:
 			elif prompt.lower() == 'show all available cars':
 				self.frame.delete_last_lines(7)
 				self.show_car_availability('available')
-				self.frame.delete_last_lines(1)
+				#self.frame.delete_last_lines(1)
 				print()
 				print()
 				self.cars()
@@ -1052,7 +1052,7 @@ class Menu:
 				self.found_order()
 
 			elif prompt.lower() == 'calculate order':
-				self.frame.delete_last_lines(19)
+				self.frame.delete_last_lines(20)
 				self.calculate_order()
 				self.frame.delete_last_lines(10)
 				print()

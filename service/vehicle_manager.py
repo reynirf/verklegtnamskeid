@@ -137,7 +137,7 @@ class VehicleManager:
         if license_plate.strip() == '' and not ignore_empty_value:
             return self.error("License plate")
 
-        if len(license_plate) < 5 or len(license_plate) > 6:
+        if len(license_plate) != 5:
             return self.error('License plate')
         
         for letter in license_plate:
