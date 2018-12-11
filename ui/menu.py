@@ -94,7 +94,6 @@ class Menu:
 
 	def calculate_order(self):
 		print()
-		print()
 		print('{:<20}{:>10}{:>12}'.format('Description', 'Per day', 'Amount'))
 		print('-'*42)
 		base_price, insurance, extra_ins, days = self.order_manager.calculate_order()
@@ -176,6 +175,7 @@ class Menu:
 	def get_inputted_order(self):
 		cars = self.order_manager.get_inputted_order()
 		self.frame.delete_last_lines(len(cars) - 1)
+		print()
 		register_order_list = self.nocco_list.choose_one("Choose an action",["Save", "Calculate order" , "Cancel"], "action")
 		self.handle_answer_from_menu(register_order_list['action'], 'register_order')
 
@@ -250,7 +250,7 @@ class Menu:
 
 			print()
 			register_order_list = self.nocco_list.choose_one("Choose an action", ["Save", "Calculate order", "Cancel"], "action")
-			self.frame.delete_last_lines(len(filtered_list) + 5)
+			# self.frame.delete_last_lines(len(filtered_list) + 5)
 			
 			self.handle_answer_from_menu(register_order_list['action'], 'register_order')
 	
@@ -414,6 +414,7 @@ class Menu:
 	def save_edited_customer(self):
 		self.customer_manager.delete_customer(self.__current_customer)
 		self.customer_manager.save_new_customer()
+		
 		print("{}".format(self.color.return_colored("Customer updated", 'green')))
 		time.sleep(1.5)
 		self.frame.delete_last_lines(1)
@@ -783,7 +784,7 @@ class Menu:
 				self.frame.delete_last_lines(4)
 				self.delete_order()
 			elif prompt.lower() == 'go back':
-				self.frame.delete_last_lines(5)
+				self.frame.delete_last_lines(6)
 				self.find_order()
 		
 		######################################################    
@@ -839,7 +840,10 @@ class Menu:
 			if prompt.lower() == 'save':
 				self.frame.delete_last_lines(13)
 				self.save_new_customer()
-				self.customer()
+				customers = self.customer_manager.get_customer_list()
+				self.__current_customer = customers[-1]
+				print('Customer: {}\n'.format(self.__current_customer.__str__()))
+				self.found_customer()
 
 			elif prompt.lower() == 'cancel':
 				self.frame.delete_last_lines(15)
@@ -852,6 +856,7 @@ class Menu:
 			if prompt.lower() == 'save':
 				self.frame.delete_last_lines(15)
 				self.save_edited_customer()
+				self.__current_customer = self.customer_manager.find_customer_by_ssn(self.__current_customer.get_ssn())
 				print('Customer: {}\n'.format(self.__current_customer.__str__()))
 				self.found_customer()
 
@@ -960,6 +965,15 @@ class Menu:
 		#                REGISTER NEW ORDER                    #
 		########################################################
 		elif menu_type == 'register_order':
+
+			start_date, end_date = self.order_manager.get_dates()
+			car_list = self.vehicle_manager.show_car_availability(start_date, end_date, 'available')
+			car_type = self.order_manager.get_type()
+			filtered_list = self.vehicle_manager.find_car_by_type(car_type, car_list)
+			if filtered_list:
+				self.frame.delete_last_lines(len(filtered_list) + 5)
+			else:
+				self.frame.delete_last_lines(5)
 			if prompt.lower() == 'cancel':
 				self.frame.delete_last_lines(18)
 				self.order()
@@ -974,6 +988,7 @@ class Menu:
 				self.frame.delete_last_lines(19)
 				self.calculate_order()
 				self.frame.delete_last_lines(10)
+				print()
 				self.get_inputted_order()
 	
 		######################################################    
