@@ -93,7 +93,6 @@ class Menu:
 		self.handle_answer_from_menu(order_list['action'], 'order')
 
 	def calculate_order(self):
-		self.frame.delete_last_lines()
 		print()
 		print('{:<20}{:>10}{:>12}'.format('Description', 'Per day', 'Amount'))
 		print('-'*42)
@@ -1092,7 +1091,6 @@ class Menu:
 
 				car_details = self.__current_vehicle.return_details()
 				self.frame.delete_last_lines(9)
-				print()
 				for detail, value in car_details.items():
 					print("{}: {}".format(detail, value))
 				self.nocco_list.single_list('Go back')
@@ -1106,7 +1104,7 @@ class Menu:
 				self.found_car()
 
 			elif prompt.lower() == 'go back':
-				self.frame.delete_last_lines(8)
+				self.frame.delete_last_lines(9)
 				self.find_cars()
 
 		######################################################    
