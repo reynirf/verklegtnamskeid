@@ -546,7 +546,7 @@ class Menu:
 
 		self.check_if_valid('Number of seats', self.vehicle_manager.check_number_of_seats, True, car['Number of seats'])
 
-		self.check_if_valid('License plate', self.vehicle_manager.check_license_plate, True, car['License plate'])
+		self.check_if_valid('License plate', self.vehicle_manager.check_license_plate, True, car['License'])
 
 		self.check_if_valid('Fuel', self.vehicle_manager.check_fuel, True,
 							car['Fuel'])
