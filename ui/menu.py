@@ -427,14 +427,10 @@ class Menu:
 
 	def found_customer(self):
 		found_customer = self.nocco_list.choose_one('Choose an action',
-<<<<<<< HEAD
 													['Print customer details', 
 													'Print order history', 
 													'Edit customer', 
 													'Unsubscribe customer',
-=======
-													['Print customer details', 'Print order history', 'Edit customer', 'Unsubscribe customer',
->>>>>>> 057581f05e37274a00c4db494817caeab2950204
 													 'Go back'], 'action')
 		self.frame.delete_last_lines(3)
 		self.handle_answer_from_menu(found_customer['action'], 'found customer')
@@ -996,11 +992,7 @@ class Menu:
 				self.found_customer()
 
 			elif prompt == 'Print order history':
-<<<<<<< HEAD
 				self.frame.delete_last_lines(4)
-=======
-				self.frame.delete_last_lines(5)
->>>>>>> 057581f05e37274a00c4db494817caeab2950204
 				self.customer_history()
 				self.found_customer()
 
@@ -1181,8 +1173,4 @@ class Menu:
 
 			if prompt.lower() == 'cancel':
 				self.frame.delete_last_lines(10)
-<<<<<<< HEAD
 				self.cars()
-=======
-				self.cars()
->>>>>>> 057581f05e37274a00c4db494817caeab2950204
