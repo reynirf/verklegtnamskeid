@@ -4,13 +4,9 @@ from lib.nocco_key import NoccoKey
 import os
 import time
 import datetime
-
+import string
 
 class NoccoList:
-    ALPHABET = ['A', 'a', 'B', 'b', 'C', 'c', 'D', 'd', 'E', 'e', 'F', 'f', 'G', \
-                'g', 'H', 'h', 'I', 'i', 'J', 'j', 'K', 'k', 'L', 'l', 'M', 'm', 'N', 'n', 'O', 'o' \
-        , 'P', 'p', 'Q', 'q', 'R', 'r', 'S', 's', 'T', 't', 'U', 'u', 'V', 'v', 'W', 'w', 'X', \
-                'x', 'Y', 'y', 'Z', 'z']
 
     def __init__(self):
         self.nocco_key = NoccoKey()
@@ -60,7 +56,7 @@ class NoccoList:
             else:
                 if os.name == 'nt': # for Windows
                     key = key.decode('utf-8')
-                if key not in self.ALPHABET: # for UNIX
+                if key not in string.digits and key not in string.ascii_letters and key not in string.punctuation: 
                     if get_chosen_index:
                         return {answer_key: alternatives[alternative_index], 'index': alternative_index}
                     else:
@@ -77,7 +73,7 @@ class NoccoList:
         print(' {}'.format(self.color.return_colored('> ' + alternative, 'red')))
         while 1:
             key = self.nocco_key.get()
-            if key not in self.ALPHABET and key != 'down' and key != 'up':
+            if key not in string.digits and key not in string.ascii_letters and key not in string.punctuation and key != 'down' and key != 'up':
                 return alternative
             self.frame.delete_last_lines(1)
             print(' {}'.format(self.color.return_colored('> ' + alternative, 'red')))
