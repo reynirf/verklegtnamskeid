@@ -1,16 +1,18 @@
 from repos.order_repo import OrderRepo
 from models.order import Order
-import string
 from models.vehicle import Vehicle
 from datetime import timedelta
 from datetime import date
+from service.vehicle_manager import VehicleManager
 import time
+import string
 
 
 class OrderManager:
     
     def __init__(self):
         self.__order_repo = OrderRepo()
+        self.__vehicle_manager = VehicleManager()
         self.__temp_id = ""
         self.__temp_customer = ""
         self.__temp_start_date = ""
@@ -72,9 +74,22 @@ class OrderManager:
         print("Enter pick up location: {}".format(self.__temp_pick_up_location))
         print("Enter return location: {}".format(self.__temp_return_location))
         print("Enter type of vehicle: {}".format(self.__temp_type_of_vehicle))
+        start_date, end_date = self.get_dates()
+        car_list = self.__vehicle_manager.show_car_availability(start_date, end_date, 'available')
+        car_type = self.get_type()
+        filtered_list = self.__vehicle_manager.find_car_by_type(car_type, car_list)
+        print()
+        print('Available cars:')
+        print()
+        print('{:<20} {:<20} {:<20} {:<20}'.format('License', 'Make', 'Model', 'Seats'))
+        print('-'*70)
+        for car in filtered_list:
+            print(car.availability_string())
+        print()
         print("Enter license plate: {}".format(self.__temp_license_plate))
         print("Enter Insurance: {}".format(self.__temp_insurance))
         print()
+        return filtered_list
         
 
     def get_order_dates(self, start='', end=''):
@@ -161,26 +176,40 @@ class OrderManager:
         else:
             return self.error("Car type")
 
+    def create_start_date_object(self, date_str):
+        present_day = date.today()
+        try:
+            year = date_str[6:]
+            month = date_str[3:5]
+            day = date_str[:2]
+            date_object = date(int(year), int(month), int(day))
+            if date_object < present_day:
+                raise ValueError
+            return date_object
+        except ValueError:
+            return self.error('Start date')
+
+    def create_end_date_object(self, date_str):
+        try:
+            year = date_str[6:]
+            month = date_str[3:5]
+            day = date_str[:2]
+            date_object = date(int(year), int(month), int(day))
+            if date_object < self.__temp_start_date:
+                raise ValueError
+            return date_object
+        except ValueError:
+            return self.error('End date')
+
     def check_start_date(self, start_date, ignore_empty_value=False, current_value=''):
         """Check if start date is valid. Returns an error message if start date
         can not be converted to a datetime object"""
         if start_date.strip() == '' and not ignore_empty_value:
             return self.error('Start date')
         elif start_date.strip() == '':
-            self.__temp_start_date = current_value
+            self.__temp_start_date = self.create_start_date_object(current_value)
             return None
-        
-        present_day = date.today()
-        try:
-            year = start_date[6:]
-            month = start_date[3:5]
-            day = start_date[:2]
-            date_object = date(int(year), int(month), int(day))
-            if date_object < present_day:
-                raise ValueError
-            self.__temp_start_date = date_object
-        except ValueError:
-            return self.error('Start date')
+        self.__temp_start_date = self.create_start_date_object(start_date)
 
     def check_ending_date(self, end_date, ignore_empty_value=False, current_value=''):
         """Check if end date is valid. Returns an error message if end date
@@ -188,18 +217,9 @@ class OrderManager:
         if end_date.strip() == '' and not ignore_empty_value:
             return self.error('End date')
         elif end_date.strip() == '':
-            self.__temp_end_date = current_value
+            self.__temp_end_date = self.create_end_date_object(current_value)
             return None
-        try:
-            year = end_date[6:]
-            month = end_date[3:5]
-            day = end_date[:2]
-            date_object = date(int(year), int(month), int(day))
-            if date_object < self.__temp_start_date:
-                raise ValueError
-            self.__temp_end_date = date_object
-        except ValueError:
-            return self.error('End date')
+        self.__temp_end_date = self.create_end_date_object(end_date)
 
     def check_pick_up_time(self, pick_up_time, ignore_empty_value=False, current_value=''):
         """Check if pick up time is valid. Returns an error message if pick up time

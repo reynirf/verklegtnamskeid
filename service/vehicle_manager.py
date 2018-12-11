@@ -186,8 +186,8 @@ class VehicleManager:
     def find_car_by_license_plate(self, license_plate):
         cars_list = self.__vehicle_repo.get_vehicle_list()
         for vehicle in cars_list:
-            car_license = vehicle.get_license().lower()
-            if car_license == license_plate.lower():
+            car_licence = vehicle.get_license().lower()
+            if car_licence == license_plate.lower():
                 return vehicle
 
     def find_car_by_make(self, make):
