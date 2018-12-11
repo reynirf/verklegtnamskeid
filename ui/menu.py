@@ -1017,7 +1017,6 @@ class Menu:
 			elif prompt == 'Show cars in service':
 				self.frame.delete_last_lines(7)
 				self.show_car_availability('rented')
-				self.frame.delete_last_lines(1)
 				print()
 				print()
 				self.cars()
