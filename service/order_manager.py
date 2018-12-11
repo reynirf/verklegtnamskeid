@@ -228,8 +228,13 @@ class OrderManager:
     def check_pick_up_time(self, pick_up_time, ignore_empty_value=False, current_value=''):
         """Check if pick up time is valid. Returns an error message if pick up time
         has letters in it"""
+        slice_list=list(pick_up_time)
         if pick_up_time.strip() == '' and not ignore_empty_value:
             return self.error('Pick up time')
+        if len(pick_up_time) != 5:
+            return self.error('Return time')
+        if slice_list[2] != ":":
+            return self.error('Return time')
         elif pick_up_time.strip() == '':
             self.__temp_pick_up_time = current_value
             return None
@@ -245,6 +250,8 @@ class OrderManager:
         has letters in it"""
         if returning_time.strip() == '' and not ignore_empty_value:
             return self.error('Return time')
+        if len(returning_time) != 5:
+            return self.error('Return time') 
         elif returning_time.strip() == '':
             self.__temp_returning_time = current_value
             return None
@@ -326,6 +333,15 @@ class OrderManager:
         for order in order_list:
             if order.get_id().lower() == ID.lower():
                 return order
+
+    def find_orders_by_vehicle(self, license_plate):
+        order_list = self.__order_repo.get_order_list()
+        orders = []
+        for order in order_list:
+            vehicle = order.get_license_plate()
+            if vehicle.lower() == license_plate.lower():
+                orders.append(order)
+        return orders
 
     def delete_order(self, order):
         self.__order_repo.delete_order(order)

@@ -2,7 +2,7 @@ from datetime import date
 
 
 class Vehicle:
-    def __init__(self, license, make, model, year, type_of_vehicle, seats, fuel, transmission, maintainance=0, dates=[]):
+    def __init__(self, license, make, model, year, type_of_vehicle, seats, fuel, transmission, dates=[]):
         self.__license = license
         self.__make = make
         self.__model = model
@@ -11,7 +11,6 @@ class Vehicle:
         self.__seats = seats
         self.__fuel = fuel
         self.__transmission = transmission
-        self.__maintainance = maintainance
         self.__rent_dates = dates
         self.__rented_dates = []
         self.set_rented_dates()
@@ -78,7 +77,7 @@ class Vehicle:
 
     def get_attributes(self):
         return (self.__license, self.__make, self.__model, self.__year, self.__type_of_vehicle, 
-        self.__seats, self.__fuel, self.__transmission, self.__maintainance)
+        self.__seats, self.__fuel, self.__transmission)
     
     def return_details(self):
         """Returns the details needed for editing the car"""
