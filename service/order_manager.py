@@ -212,7 +212,7 @@ class OrderManager:
             inputted_start_date = datetime.datetime.strptime(start_date, "%d:%m:%Y")
             if present_datetime > inputted_start_date:
                 return self.error("Start date")
-        except:
+        except ValueError:
             return self.error('Start date')
         
         #if start_date.strip() == '' and not ignore_empty_value:
@@ -233,7 +233,7 @@ class OrderManager:
             inputted_end_date = datetime.datetime.strptime(end_date, "%d:%m:%Y")
             if present_datetime > inputted_end_date:
                 return self.error("End date")
-        except:
+        except ValueError:
             return self.error('End date')
         #if end_date.strip() == '' and not ignore_empty_value:
         #    return self.error('End date')
@@ -254,10 +254,13 @@ class OrderManager:
             except ValueError:
                 return self.error('Pick up time')
         elif pick_up_time.strip() == '':
-            self.__temp_pick_up_time = current_value
+            self.__temp_pick_up_time = time.strptime(current_value,"%H:%M")
             return None
         else:
-            self.__temp_pick_up_time = pick_up_time
+            try:
+                self.__temp_pick_up_time = time.strptime(pick_up_time,"%H:%M")
+            except ValueError:
+                return self.error('Pick up time')
 
     def check_returning_time(self, returning_time, ignore_empty_value=False, current_value=''):
         """Check if returning time is valid. Returns an error message if returning time

@@ -11,3 +11,4 @@ id,ssn,starting date,ending date,pick up time,returning time,pick up location,re
 9,1234567890,20181211,20181213,09:00,09:00,akureyri,akureyri,RYZ78,no,smallcar
 0022,01201568,20190202,20190203,08:00,20:00,akureyri,akureyri,OFF66,yes,offroad
 013,101101545,20190202,20190203,03:00,21:00,ak,ak,WOW13,no,offroad
+432,49320904239,20191010,20191020,"time.struct_time(tm_year=1900, tm_mon=1, tm_mday=1, tm_hour=20, tm_min=20, tm_sec=0, tm_wday=0, tm_yday=1, tm_isdst=-1)",20:20,ak,ak,gbs00,yes,sedan
