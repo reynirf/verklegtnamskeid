@@ -71,4 +71,21 @@ class Vehicle:
         return self.__insurance_per_day
 
     def get_attributes(self):
-        return self.__license, self.__make, self.__model, self.__year, self.__type_of_vehicle, self.__seats, self.__fuel, self.__transmission, self.__maintainance
+        return self.__license, self.__make, self.__model, self.__year, self.__type_of_vehicle,
+        self.__seats, self.__fuel, self.__transmission, self.__maintainance
+    
+    def return_details(self):
+        """Returns the details needed for editing the car"""
+        return {
+            "Car type": self.__type_of_vehicle,
+            "Make": self.__make,
+            "Model": self.__model,
+            "Year": self.__year,
+            "Number of seats": self.__seats,
+            "License": self.__license,
+            "Fuel": self.__fuel,
+            "Driving transmission": self.__transmission,
+        }
+    
+
+

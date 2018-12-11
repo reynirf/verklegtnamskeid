@@ -25,7 +25,7 @@ class OrderRepo:
                         line['returning time'],
                         line['pick up location'],
                         line['return location'],
-                        line['number plate'],
+                        line['license plate'],
                         line['insurance'],
                         line['type of vehicle'])
                     self.__order_list.append(order)
