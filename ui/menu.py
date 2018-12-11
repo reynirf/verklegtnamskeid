@@ -241,7 +241,7 @@ class Menu:
 			print('-'*70)
 			for car in filtered_list:
 				print(car.availability_string())
-				plates.append(car.get_license())
+				plates.append(car.get_license().lower())
 			print()
 
 			self.check_if_valid('license plate', self.order_manager.check_license_plate, plates)

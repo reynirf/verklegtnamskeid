@@ -307,10 +307,8 @@ class OrderManager:
         elif license_plate.strip() == '' and current_value:
             self.__temp_license_plate = current_value
             return None
-        # TODO this should accept also entering the license number in lowercase.
-        if len(license_plate) != 5:
+        if 2 > len(license_plate) > 6:
             return self.error('License plate')
-        
         for letter in license_plate:
             if letter in (string.punctuation):
                 return self.error('License plate')
