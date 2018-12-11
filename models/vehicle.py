@@ -1,9 +1,10 @@
 from datetime import date
-
+from models.price import Price
 
 class Vehicle:
-    def __init__(self, license, make, model, year, type_of_vehicle, seats, fuel, transmission, dates=[]):
-        self.__license = license
+    def __init__(self, license_plate, make, model, year, type_of_vehicle, seats, fuel, transmission, dates=[]):
+        self.__price_list = Price()
+        self.__license = license_plate
         self.__make = make
         self.__model = model
         self.__year = year
@@ -13,29 +14,9 @@ class Vehicle:
         self.__transmission = transmission
         self.__rent_dates = dates
         self.__rented_dates = []
+        self.__price_per_day = self.__price_list.get_price(type_of_vehicle)
+        self.__insurance_per_day = self.__price_list.get_insurance(type_of_vehicle)
         self.set_rented_dates()
-        self.set_price()
-        self.set_insurance()
-
-    def set_price(self):
-        if self.__type_of_vehicle == "smallcar":
-            self.__price_per_day = 9000
-        elif self.__type_of_vehicle == "sedan":
-            self.__price_per_day = 10000
-        elif self.__type_of_vehicle == "offroad":
-            self.__price_per_day = 12000
-        elif self.__type_of_vehicle == "bus":
-            self.__price_per_day = 13000
-
-    def set_insurance(self):
-        if self.__type_of_vehicle == "smallcar":
-            self.__insurance_per_day = 1050
-        elif self.__type_of_vehicle == "sedan":
-            self.__insurance_per_day = 1150
-        elif self.__type_of_vehicle == "offroad":
-            self.__insurance_per_day = 1350
-        elif self.__type_of_vehicle == "bus":
-            self.__insurance_per_day = 1500
 
     def set_rented_dates(self):
         try:
