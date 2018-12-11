@@ -61,8 +61,7 @@ class Menu:
 		self.frame.delete_last_lines(9)
 		employee = self.employee_manager.get_current_employee()
 		print('{} has been logged out'.format(
-			self.color.return_colored(employee.get_name(), 'red'
-									  )))
+			self.color.return_colored(employee.get_name(), 'red')))
 		time.sleep(1.5)
 		self.frame.delete_last_lines(3)
 		self.authenticate_v2()
@@ -74,13 +73,15 @@ class Menu:
 		self.frame.delete_last_lines(3)
 
 	def customer(self):
-		customer = self.nocco_list.choose_one('Choose an action',
-											  [
-												'Register customer', 
-												'Find customer', 
-												'Go back'
-											  ],
-											  'action')
+		customer = self.nocco_list.choose_one(
+												'Choose an action',
+											    [
+											    	'Register customer', 
+													'Find customer', 
+													'Go back'
+											    ],
+											    'action'
+											  )
 		self.handle_answer_from_menu(customer['action'], 'customer')
 
 	def order(self):
@@ -164,8 +165,7 @@ class Menu:
 
 				found_multiple_orders = self.nocco_list.choose_one('Choose an order',
 						printable_orders, 'order', True)
-				self.handle_answer_from_menu((found_multiple_orders, orders), 
-						'found multiple orders')
+				self.handle_answer_from_menu((found_multiple_orders, orders), 'found multiple orders')
 
 	def find_order(self):
 		find_order_list = self.nocco_list.choose_one('Choose an action',
@@ -181,7 +181,8 @@ class Menu:
 	def get_inputted_order(self):
 		cars = self.order_manager.get_inputted_order()
 		self.frame.delete_last_lines(len(cars) - 1)
-		register_order_list = self.nocco_list.choose_one("Choose an action",["Save", "Calculate order" , "Cancel"], "action")
+		register_order_list = self.nocco_list.choose_one("Choose an action",
+							["Save", "Calculate order" , "Cancel"], "action")
 		self.handle_answer_from_menu(register_order_list['action'], 'register_order')
 
 	def delete_order(self):
@@ -199,7 +200,7 @@ class Menu:
 	def save_new_order(self):
 		self.order_manager.save_new_order()
 		print("{}".format(self.color.return_colored("New order registered!", 'green')))
-		time.sleep(2)
+		time.sleep(1.5)
 		dates = self.order_manager.get_order_dates()
 		vehicle = self.order_manager.get_license_plate()
 		self.vehicle_manager.save_order_dates(dates, vehicle)
@@ -235,7 +236,7 @@ class Menu:
 			self.frame.delete_last_lines(1)
 			print()
 			print("No vehicle of type {} available on these dates.".format(self.color.return_colored(car_type, 'red')))
-			time.sleep(2)
+			time.sleep(1.5)
 			self.frame.delete_last_lines(11)
 			self.order()
 		else:
@@ -254,7 +255,8 @@ class Menu:
 			self.check_if_valid('insurance (yes or no)', self.order_manager.check_insurance)
 
 			print()
-			register_order_list = self.nocco_list.choose_one("Choose an action", ["Save", "Calculate order", "Cancel"], "action")
+			register_order_list = self.nocco_list.choose_one("Choose an action", 
+															["Save", "Calculate order", "Cancel"], "action")
 			
 			self.handle_answer_from_menu(register_order_list['action'], 'register_order')
 	
