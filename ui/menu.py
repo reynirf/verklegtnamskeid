@@ -153,8 +153,8 @@ class Menu:
 			else:
 				print("{}".format(self.color.return_colored("There are multiple orders with that SSN!", 'red')))
 				print()
-				printable_orders = ['ID: {} | SSN: {} | {} - {}'.format(
-					order.__str__(),order.get_ssn(), order.get_dates()[0], order.get_dates()[1]) for order in orders]
+				printable_orders = ['ID: {} | {} - {}'.format(
+					order.__str__(), order.get_dates()[0], order.get_dates()[1]) for order in orders]
 				printable_orders.append('Go back')
 
 				found_multiple_orders = self.nocco_list.choose_one('Choose an order',
