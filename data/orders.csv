@@ -10,3 +10,4 @@ id,ssn,starting date,ending date,pick up time,returning time,pick up location,re
 4,2311992929,20191010,20191030,13,13,ak,ak,FG978,yes,offroad
 009,2311992929,20190808,20190810,12,12,AK,AK,TU564,yes,smallcar
 0022,012015654,20190113,20190113,08:00,23:00,ak,ak,OSV09,no,sedan
+351,01501564,20190202,20190202,08:00,21:00,akureyri,akureyri,OSV09,no,sedan
