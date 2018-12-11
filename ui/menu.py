@@ -94,7 +94,6 @@ class Menu:
 
 	def calculate_order(self):
 		print()
-		print()
 		print('{:<20}{:>10}{:>12}'.format('Description', 'Per day', 'Amount'))
 		print('-'*42)
 		base_price, insurance, extra_ins, days = self.order_manager.calculate_order()
@@ -176,6 +175,7 @@ class Menu:
 	def get_inputted_order(self):
 		cars = self.order_manager.get_inputted_order()
 		self.frame.delete_last_lines(len(cars) - 1)
+		print()
 		register_order_list = self.nocco_list.choose_one("Choose an action",["Save", "Calculate order" , "Cancel"], "action")
 		self.handle_answer_from_menu(register_order_list['action'], 'register_order')
 
@@ -250,7 +250,7 @@ class Menu:
 
 			print()
 			register_order_list = self.nocco_list.choose_one("Choose an action", ["Save", "Calculate order", "Cancel"], "action")
-			self.frame.delete_last_lines(len(filtered_list) + 5)
+			# self.frame.delete_last_lines(len(filtered_list) + 5)
 			
 			self.handle_answer_from_menu(register_order_list['action'], 'register_order')
 	
@@ -780,7 +780,7 @@ class Menu:
 				self.frame.delete_last_lines(4)
 				self.delete_order()
 			elif prompt.lower() == 'go back':
-				self.frame.delete_last_lines(5)
+				self.frame.delete_last_lines(6)
 				self.find_order()
 		
 		######################################################    
@@ -961,6 +961,15 @@ class Menu:
 		#                REGISTER NEW ORDER                    #
 		########################################################
 		elif menu_type == 'register_order':
+
+			start_date, end_date = self.order_manager.get_dates()
+			car_list = self.vehicle_manager.show_car_availability(start_date, end_date, 'available')
+			car_type = self.order_manager.get_type()
+			filtered_list = self.vehicle_manager.find_car_by_type(car_type, car_list)
+			if filtered_list:
+				self.frame.delete_last_lines(len(filtered_list) + 5)
+			else:
+				self.frame.delete_last_lines(5)
 			if prompt.lower() == 'cancel':
 				self.frame.delete_last_lines(18)
 				self.order()
@@ -975,6 +984,7 @@ class Menu:
 				self.frame.delete_last_lines(19)
 				self.calculate_order()
 				self.frame.delete_last_lines(10)
+				print()
 				self.get_inputted_order()
 	
 		######################################################    
