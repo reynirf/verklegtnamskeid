@@ -665,7 +665,7 @@ class Menu:
 				print("{}".format(self.color.return_colored("There are multiple cars with that make!", 'red')))
 				print()
 				printable_cars = [
-					'{} | {}'.format(car.__str__(), car.get_make()) for car
+					'{}'.format(car.__str__()) for car
 					in cars]
 
 				printable_cars.append('Go back')
@@ -712,6 +712,7 @@ class Menu:
 		self.frame.delete_last_lines(1)
 		print('{}'.format(self.color.return_colored("Car removed", 'red')))
 		time.sleep(1.5)
+		self.frame.delete_last_lines(2)
 		print('\n' * 7)
 		self.cars()
 
@@ -959,13 +960,15 @@ class Menu:
 		######################################################
 		if menu_type == 'found multiple cars':
 			chosen, cars = prompt
-			self.frame.delete_last_lines(len(cars) + 5)
 			if chosen['car'].lower() != 'go back':
+				self.frame.delete_last_lines(len(cars) + 5)
 				self.__current_vehicle = cars[chosen['index']]
 				print('Car: ' + self.__current_vehicle.__str__())
 				print()
 				self.found_car()
 			else:
+				self.frame.delete_last_lines(len(cars) + 4)
+				print('\n' * 5)
 				self.cars()
 
 		######################################################    
