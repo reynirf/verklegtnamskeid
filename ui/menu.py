@@ -532,6 +532,18 @@ class Menu:
 															  'Go back'], 'action')
 		self.handle_answer_from_menu(car['action'], 'cars')
 	
+	def save_edited_car(self):
+		self.vehicle_manager.delete_vehicle(self.__current_vehicle)
+		self.vehicle_manager.save_new_car()
+		print("{}".format(self.color.return_colored("Car updated", 'green')))
+		time.sleep(1.5)
+
+	def found_car(self):
+		found_car_list = self.nocco_list.choose_one('Choose an action',
+						['Edit car', 'Print car', 'Delete car', 'Go back'], 'action')
+		self.frame.delete_last_lines(2)
+		self.handle_answer_from_menu(found_car_list['action'], 'found car')
+
 	def edit_car(self):
 		car = self.__current_vehicle.return_details()
 		print('{}\n'.format(self.color.return_colored('Leave input empty to keep the value the same', 'green')))
@@ -553,11 +565,20 @@ class Menu:
 
 		self.check_if_valid('Driving transmission', self.vehicle_manager.check_driving_transmission, True, 
 							car['Driving transmission'])
+		print()
+
+		save_edited_car = self.nocco_list.choose_one('Choose an action',
+														  ['Save', 'Cancel'],
+														  'action')
+		self.handle_answer_from_menu(save_edited_car['action'], 'save edited car')
+		self.frame.delete_last_lines(8)
+		print("{}".format(self.color.return_colored("Car Saved", 'green')))
+		time.sleep(4)
 		
 
 
 	def find_cars(self):
-		find_cars = self.nocco_list.choose_one('Choose an action', ['Find car by number plate', 'Find car by make',
+		find_cars = self.nocco_list.choose_one('Choose an action', ['Find car by license plate', 'Find car by make',
 																	'Find car by type', 'Go back'], 'action')
 		print()
 		self.handle_answer_from_menu(find_cars['action'], 'find car')
@@ -572,6 +593,7 @@ class Menu:
 			time.sleep(1.5)
 			self.find_cars()
 		else:
+			self.frame.delete_last_lines(2)
 			print("Car: " + car.get_license())
 			print()
 			self.__current_vehicle = car
@@ -755,7 +777,7 @@ class Menu:
 				self.frame.delete_last_lines(4)
 				self.delete_order()
 			elif prompt.lower() == 'go back':
-				self.frame.delete_last_lines(6)
+				self.frame.delete_last_lines(5)
 				self.find_order()
 		
 		######################################################    
@@ -952,7 +974,7 @@ class Menu:
 		#                    FIND CAR                        #                    
 		######################################################
 		elif menu_type == 'find car':
-			if prompt.lower() == 'find car by number plate':
+			if prompt.lower() == 'find car by license plate':
 				self.frame.delete_last_lines(7)
 				self.find_cars_by_license_plate()
 
@@ -981,7 +1003,7 @@ class Menu:
 				self.delete_vehicle()
 
 			elif prompt.lower() == 'go back':
-				self.frame.delete_last_lines(5)
+				self.frame.delete_last_lines(6)
 				self.find_cars()
 
 		######################################################    
@@ -997,6 +1019,20 @@ class Menu:
 			if prompt.lower() == 'cancel':
 				self.frame.delete_last_lines(6)
 				self.cars()
+		######################################################    
+		#                    SAVE EDITED CAR                 #                    
+		######################################################
+		elif menu_type == 'save edited car':
+			if prompt.lower() == 'save':
+				self.frame.delete_last_lines(15)
+				self.save_edited_car()
+				self.frame.delete_last_lines()
+				print('Car: {}\n'.format(self.__current_vehicle.__str__()))
+				self.found_car()
+			if prompt.lower() == 'cancel':
+				self.frame.delete_last_lines(18)
+				print('Car: {}\n'.format(self.__current_vehicle.__str__()))
+				self.found_car()
 
 		######################################################    
 		#               SHOW CARS IN SERVICE                 #                    
