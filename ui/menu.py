@@ -499,22 +499,6 @@ class Menu:
 			print()
 			self.found_customer()
 
-	def customer_history(self):
-		ssn = self.__current_customer.get_ssn()
-		orders = self.order_manager.find_order_by_ssn(ssn)
-		if orders == []:
-			print()
-			print('{}'.format(self.color.return_colored("No orders registered to this customer", 'red')))
-			self.nocco_list.single_list('Go back')
-			self.frame.delete_last_lines(3)	
-		else:
-			print('{:<10}{:<10}{:<20}'.format('ID', 'Vehicle', 'Dates'))
-			print('-'*43)
-			for order in orders:
-				print('{:<10}{:<10}{:>20}'.format(order.get_id(), order.get_license_plate(), order.get_date_str()))
-			self.nocco_list.single_list('Go back')
-			self.frame.delete_last_lines(len(orders) + 4)
-
 	def delete_customer(self):
 		self.customer_manager.delete_customer(self.__current_customer)
 		self.frame.delete_last_lines()
