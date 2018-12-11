@@ -93,7 +93,6 @@ class Menu:
 		self.handle_answer_from_menu(order_list['action'], 'order')
 
 	def calculate_order(self):
-		self.frame.delete_last_lines()
 		print()
 		print('{:<20}{:>10}{:>12}'.format('Description', 'Per day', 'Amount'))
 		print('-'*42)
@@ -153,8 +152,8 @@ class Menu:
 			else:
 				print("{}".format(self.color.return_colored("There are multiple orders with that SSN!", 'red')))
 				print()
-				printable_orders = ['ID: {} | SSN: {} | {} - {}'.format(
-					order.__str__(),order.get_ssn(), order.get_dates()[0], order.get_dates()[1]) for order in orders]
+				printable_orders = ['ID: {} | {} - {}'.format(
+					order.__str__(), order.get_dates()[0], order.get_dates()[1]) for order in orders]
 				printable_orders.append('Go back')
 
 				found_multiple_orders = self.nocco_list.choose_one('Choose an order',
@@ -212,9 +211,9 @@ class Menu:
 
 		self.check_if_valid('ending date (DD MM YYYY)', self.order_manager.check_ending_date)
 
-		self.check_if_valid('pick up time', self.order_manager.check_pick_up_time)
+		self.check_if_valid('pick up time(HRS:MIN)', self.order_manager.check_pick_up_time)
 
-		self.check_if_valid('returning time', self.order_manager.check_returning_time)
+		self.check_if_valid('returning time(HRS:MIN)', self.order_manager.check_returning_time)
 
 		self.check_if_valid('pick up location (Reykjavik or Akureyri)', self.order_manager.check_pick_up_location)
 
@@ -265,7 +264,7 @@ class Menu:
 
 		self.check_if_valid('start date', self.order_manager.check_start_date, True, order['Start date'])
 
-		self.check_if_valid('start date', self.order_manager.check_ending_date, True, order['End date'])
+		self.check_if_valid('end date', self.order_manager.check_ending_date, True, order['End date'])
 
 		self.check_if_valid('pick up time', self.order_manager.check_pick_up_time, True, order['Pick up time'])
 
@@ -428,13 +427,33 @@ class Menu:
 
 	def found_customer(self):
 		found_customer = self.nocco_list.choose_one('Choose an action',
+<<<<<<< HEAD
 													['Print customer details', 
 													'Print order history', 
 													'Edit customer', 
 													'Unsubscribe customer',
+=======
+													['Print customer details', 'Print order history', 'Edit customer', 'Unsubscribe customer',
+>>>>>>> 057581f05e37274a00c4db494817caeab2950204
 													 'Go back'], 'action')
 		self.frame.delete_last_lines(3)
 		self.handle_answer_from_menu(found_customer['action'], 'found customer')
+
+	def customer_history(self):
+		ssn = self.__current_customer.get_ssn()
+		orders = self.order_manager.find_order_by_ssn(ssn)
+		if orders == []:
+			print()
+			print('{}'.format(self.color.return_colored("No orders registered to this customer", 'red')))
+			self.nocco_list.single_list('Go back')
+			self.frame.delete_last_lines(3)	
+		else:
+			print('{:<10}{:<10}{:<20}'.format('ID', 'Vehicle', 'Dates'))
+			print('-'*43)
+			for order in orders:
+				print('{:<10}{:<10}{:>20}'.format(order.get_id(), order.get_license_plate(), order.get_date_str()))
+			self.nocco_list.single_list('Go back')
+			self.frame.delete_last_lines(len(orders) + 4)
 
 	def find_customer_by_name(self):
 		name = input("Enter name: ")
@@ -833,7 +852,7 @@ class Menu:
 					temp_order = self.order_manager.find_order_by_id(self.__current_order.get_id())
 					if not temp_order:
 						raise ValueError
-					self.__current_order = self.order_manager.find_order_by_ssn(self.__current_order.get_ssn())
+					self.__current_order = temp_order
 				except ValueError:
 					temp_order = self.order_manager.find_order_by_ssn(self.__current_order.get_ssn())
 					if not temp_order:
@@ -977,7 +996,11 @@ class Menu:
 				self.found_customer()
 
 			elif prompt == 'Print order history':
+<<<<<<< HEAD
 				self.frame.delete_last_lines(4)
+=======
+				self.frame.delete_last_lines(5)
+>>>>>>> 057581f05e37274a00c4db494817caeab2950204
 				self.customer_history()
 				self.found_customer()
 
@@ -1095,7 +1118,6 @@ class Menu:
 
 				car_details = self.__current_vehicle.return_details()
 				self.frame.delete_last_lines(9)
-				print()
 				for detail, value in car_details.items():
 					print("{}: {}".format(detail, value))
 				self.nocco_list.single_list('Go back')
@@ -1109,7 +1131,7 @@ class Menu:
 				self.found_car()
 
 			elif prompt.lower() == 'go back':
-				self.frame.delete_last_lines(8)
+				self.frame.delete_last_lines(9)
 				self.find_cars()
 
 		######################################################    
@@ -1159,4 +1181,8 @@ class Menu:
 
 			if prompt.lower() == 'cancel':
 				self.frame.delete_last_lines(10)
+<<<<<<< HEAD
 				self.cars()
+=======
+				self.cars()
+>>>>>>> 057581f05e37274a00c4db494817caeab2950204
