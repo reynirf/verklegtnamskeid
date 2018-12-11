@@ -593,37 +593,6 @@ class Menu:
 														)
 			self.handle_answer_from_menu(found_cars_list['action'], 'found car')
 
-	def find_customer_by_name(self):
-		name = input("Enter name: ")
-		print()
-		customers = self.customer_manager.find_customer_by_name(name)
-		if customers == None:
-			print('{}'.format(self.color.return_colored("Customer not found!", 'red')))
-			time.sleep(1.5)
-			self.frame.delete_last_lines(4)
-			print()
-			self.find_customer()
-		else:
-			self.frame.delete_last_lines(2)
-			if len(customers) == 1:
-				self.__current_customer = customers[0]
-				print("Customer: " + self.__current_customer.__str__())
-				print()
-				self.found_customer()
-			else:
-				print("{}".format(self.color.return_colored("There are multiple customers with that name!", 'red')))
-				print()
-				printable_customers = [
-					'{} | {}-{}'.format(customer.__str__(), customer.get_ssn()[:6], customer.get_ssn()[6:]) for customer
-					in customers]
-
-				printable_customers.append('Go back')
-				found_multiple_customers = self.nocco_list.choose_one('Choose customer',
-																	  printable_customers, 'customer', True)
-
-				self.handle_answer_from_menu((found_multiple_customers, customers),
-											 'found multiple customers')
-
 	def find_cars_by_make(self):
 		make = input("Enter make: ")
 		print()
