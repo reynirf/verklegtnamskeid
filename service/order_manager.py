@@ -6,6 +6,7 @@ from datetime import date
 from service.vehicle_manager import VehicleManager
 import time
 import string
+import datetime
 
 
 class OrderManager:
@@ -204,26 +205,42 @@ class OrderManager:
     def check_start_date(self, start_date, ignore_empty_value=False, current_value=''):
         """Check if start date is valid. Returns an error message if start date
         can not be converted to a datetime object"""
-        if start_date.strip() == '' and not ignore_empty_value:
+        present_datetime = datetime.datetime.now()
+        try:
+            inputted_start_date = datetime.datetime.strptime(start_date, "%d:%m:%Y")
+            if present_datetime > inputted_start_date:
+                return self.error("Start date")
+        except:
             return self.error('Start date')
-        elif start_date.strip() == '':
+        
+        #if start_date.strip() == '' and not ignore_empty_value:
+        #    return self.error('Start date')
+        if start_date.strip() == '':
             self.__temp_start_date = self.create_start_date_object(current_value)
             return None
         self.__temp_start_date = self.create_start_date_object(start_date)
-        if not self.__temp_start_date:
-            return self.error('Start date')
+        #if not self.__temp_start_date:
+        #    return self.error('Start date')
 
     def check_ending_date(self, end_date, ignore_empty_value=False, current_value=''):
         """Check if end date is valid. Returns an error message if end date
         can not be converted to a datetime object"""
-        if end_date.strip() == '' and not ignore_empty_value:
+
+        present_datetime = datetime.datetime.now()
+        try:
+            inputted_end_date = datetime.datetime.strptime(end_date, "%d:%m:%Y")
+            if present_datetime > inputted_end_date:
+                return self.error("End date")
+        except:
             return self.error('End date')
-        elif end_date.strip() == '':
+        #if end_date.strip() == '' and not ignore_empty_value:
+        #    return self.error('End date')
+        if end_date.strip() == '':
             self.__temp_end_date = self.create_end_date_object(current_value)
             return None
         self.__temp_end_date = self.create_end_date_object(end_date)
-        if not self.__temp_end_date:
-            return self.error('End date')
+        #if not self.__temp_end_date:
+        #    return self.error('End date')
 
     def check_pick_up_time(self, pick_up_time, ignore_empty_value=False, current_value=''):
         """Check if pick up time is valid. Returns an error message if pick up time

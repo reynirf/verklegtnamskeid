@@ -1,2 +1,3 @@
 id,ssn,starting date,ending date,pick up time,returning time,pick up location,return location,number plate,insurance,type of vehicle
 1,1107983699,20181211,20181213,12:00,12:00,ak,ak,SVT71,yes,smallcar
+24242,2345673456,20191123,20191223,13:00,18:00,akureyri,akureyri,MMM12,yes,smallcar
