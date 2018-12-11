@@ -61,8 +61,14 @@ class Vehicle:
     def get_make(self):
         return self.__make
 
+    def get_model(self):
+        return self.__model
+
     def get_vehicle_type(self):
         return self.__type_of_vehicle
+
+    def get_seats(self):
+        return self.__seats
 
     def get_price_per_day(self):
         return self.__price_per_day
