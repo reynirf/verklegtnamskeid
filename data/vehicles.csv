@@ -1,13 +1,14 @@
 licence;make;model;year;type;seats;fuel;transmission;dates rented
-RYZ78;toyota;yaris;2003;smallcar;5;gasoline;manual;[]
-GBS00;skoda;octavia;2009;sedan;5;diesel;automatic;[]
 OFF66;toyota;landcruiser;2010;offroad;5;gasoline;manual;[]
 BUS12;mercedez benz;schneider;2012;bus;9;gasoline;manual;[]
 OOO00;volvo;xc60;2018;sedan;5;hybrid;automatic;[]
-WOW13;range rover;discovery;2018;offroad;5;hybrid;manual;[]
-BIG14;pugeot;xxl;2017;bus;14;diesel;manual;[]
 YZ777;toyota;auris;2018;sedan;5;electric;manual;[]
-XXS01;nissan;leaf;2017;smallcar;2;electric;manual;[]
-NET13;toyota;RAV;2018;sedan;5;hybrid;manual;[]
-MMM12;toyota;yaris;2018;smallcar;5;diesel;automatic;[]
-KN896;nissan;rhyno;2018;sedan;7;gasoline;manual;[]
+MMM12;toyota;yaris;2018;smallcar;5;diesel;automatic;20181211,20181212,20181213,
+NET13;toyota;RAV;2018;sedan;5;hybrid;manual;20181211,20181212,20181213,
+WOW13;range rover;discovery;2018;offroad;5;hybrid;manual;20181224,20181225,20181226,20181227,20181228,20181229,20181230,20181231,
+BIG14;pugeot;xxl;2017;bus;14;diesel;manual;20181211,20181212,20181213,20181214,20181215,20181216,20181217,20181218,20181219,20181220,20181221,20181222,20181223,20181224,20181225,20181226,20181227,20181228,20181229,20181230,20181231,20190101,20190102,20190103,20190104,20190105,20190106,20190107,20190108,20190109,20190110,20190111,
+GBS00;skoda;octavia;2009;sedan;5;diesel;automatic;20181214,20181215,20181216,
+XXS01;nissan;leaf;2017;smallcar;2;electric;manual;20181211,20181212,20181213,20181214,20181215,20181216,20181217,20181218,
+KN896;nissan;rhyno;2018;sedan;7;gasoline;manual;20181211,20181212,
+RYZ78;toyota;yaris;2003;smallcar;5;gasoline;manual;20181211,20181212,20181213,
+
