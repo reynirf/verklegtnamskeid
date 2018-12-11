@@ -181,7 +181,6 @@ class Menu:
 	def get_inputted_order(self):
 		cars = self.order_manager.get_inputted_order()
 		self.frame.delete_last_lines(len(cars) - 1)
-		print()
 		register_order_list = self.nocco_list.choose_one("Choose an action",["Save", "Calculate order" , "Cancel"], "action")
 		self.handle_answer_from_menu(register_order_list['action'], 'register_order')
 
@@ -256,7 +255,6 @@ class Menu:
 
 			print()
 			register_order_list = self.nocco_list.choose_one("Choose an action", ["Save", "Calculate order", "Cancel"], "action")
-			# self.frame.delete_last_lines(len(filtered_list) + 5)
 			
 			self.handle_answer_from_menu(register_order_list['action'], 'register_order')
 	
@@ -1017,8 +1015,9 @@ class Menu:
 				self.frame.delete_last_lines(len(filtered_list) + 4)
 			else:
 				self.frame.delete_last_lines(4)
+				
 			if prompt == 'Cancel':
-				self.frame.delete_last_lines(20)
+				self.frame.delete_last_lines(19)
 				self.order()
 
 			elif prompt == 'Save':
