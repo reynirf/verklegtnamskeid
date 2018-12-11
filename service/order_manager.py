@@ -324,7 +324,7 @@ class OrderManager:
     def find_order_by_id(self, ID):
         order_list = self.__order_repo.get_order_list()
         for order in order_list:
-            if order.__str__().lower() == ID.lower():
+            if order.get_id().lower() == ID.lower():
                 return order
 
     def find_orders_by_vehicle(self, license_plate):
