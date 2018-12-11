@@ -403,7 +403,7 @@ class Menu:
 
 	def find_customer(self):
 		find_customer = self.nocco_list.choose_one('Choose an action',
-												   ['Find customer by Name', 'Find customer by SSN', 'Go back'],
+												   ['Find customer by name', 'Find customer by SSN', 'Go back'],
 												   'action')
 		self.handle_answer_from_menu(find_customer['action'], 'find customer')
 
@@ -421,7 +421,6 @@ class Menu:
 		ssn = self.__current_customer.get_ssn()
 		orders = self.order_manager.find_order_by_ssn(ssn)
 		if orders == []:
-			print()
 			print('{}'.format(self.color.return_colored("No orders registered to this customer", 'red')))
 			self.nocco_list.single_list('Go back')
 			self.frame.delete_last_lines(3)	
@@ -865,7 +864,7 @@ class Menu:
 		######################################################
 		elif menu_type == 'register customer':
 			if prompt == 'Save':
-				self.frame.delete_last_lines(13)
+				self.frame.delete_last_lines(12)
 				self.save_new_customer()
 				customers = self.customer_manager.get_customer_list()
 				self.__current_customer = customers[-1]
@@ -881,14 +880,14 @@ class Menu:
 		######################################################
 		elif menu_type == 'save edited customer':
 			if prompt == 'Save':
-				self.frame.delete_last_lines(15)
+				self.frame.delete_last_lines(14)
 				self.save_edited_customer()
 				self.__current_customer = self.customer_manager.find_customer_by_ssn(self.__current_customer.get_ssn())
 				print('Customer: {}\n'.format(self.__current_customer.__str__()))
 				self.found_customer()
 
 			elif prompt == 'Cancel':
-				self.frame.delete_last_lines(15)
+				self.frame.delete_last_lines(14)
 				print('Customer: {}\n'.format(self.__current_customer.__str__()))
 				self.found_customer()
 
@@ -896,7 +895,7 @@ class Menu:
 		#                    FIND CUSTOMER                   #                    
 		######################################################
 		elif menu_type == 'find customer':
-			if prompt == 'Find customer by Name':
+			if prompt == 'Find customer by name':
 				self.frame.delete_last_lines(5)
 				self.find_customer_by_name()
 
@@ -954,7 +953,7 @@ class Menu:
 						continue
 					print("{}: {}".format(detail, value))
 				self.nocco_list.single_list('Go back')
-				self.frame.delete_last_lines(11)
+				self.frame.delete_last_lines(9)
 				print('Customer: ' + self.__current_customer.__str__() + '\n')
 				self.found_customer()
 
