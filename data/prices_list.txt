@@ -1,4 +1,0 @@
-Small car: 1 day with basic insurance cost 9 000 ISK
-Sedan: 1 day with basic insurance cost 10 000 ISK
-Off Road: 1 day with basic insurance cost 12 000 ISK
-Bus: 1 day with basic insurance cost 13 000 ISK
