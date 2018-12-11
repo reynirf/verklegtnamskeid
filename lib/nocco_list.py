@@ -57,7 +57,7 @@ class NoccoList:
                     return {answer_key: alternatives[alternative_index]}
             elif key == 'left':
                 pass
-            elif key not in self.ALPHABET:
+            elif key.decode('utf-8') not in self.ALPHABET:
                 if get_chosen_index:
                     return {answer_key: alternatives[alternative_index], 'index': alternative_index}
                 else:
