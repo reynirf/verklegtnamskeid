@@ -21,7 +21,7 @@ class OrderManager:
         self.__temp_returning_time = ""
         self.__temp_pick_up_location = ""
         self.__temp_return_location = ""
-        self.__temp_car_number = ""
+        self.__temp_licese_plate = ""
         self.__temp_insurance = ""
         self.__temp_type_of_vehicle = ""
         self.__locations = ["reykjavik", "akureyri", "ak", "rvk"]
