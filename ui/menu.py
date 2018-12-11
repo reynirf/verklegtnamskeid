@@ -428,9 +428,12 @@ class Menu:
 
 	def found_customer(self):
 		found_customer = self.nocco_list.choose_one('Choose an action',
-													['Print customer details', 'Edit customer', 'Unsubscribe customer',
+													['Print customer details', 
+													'Print order history', 
+													'Edit customer', 
+													'Unsubscribe customer',
 													 'Go back'], 'action')
-		self.frame.delete_last_lines(2)
+		self.frame.delete_last_lines(3)
 		self.handle_answer_from_menu(found_customer['action'], 'found customer')
 
 	def find_customer_by_name(self):
@@ -480,6 +483,22 @@ class Menu:
 			print("Customer: " + customer.__str__())
 			print()
 			self.found_customer()
+
+	def customer_history(self):
+		ssn = self.__current_customer.get_ssn()
+		orders = self.order_manager.find_order_by_ssn(ssn)
+		if orders == []:
+			print()
+			print('{}'.format(self.color.return_colored("No orders registered to this customer", 'red')))
+			self.nocco_list.single_list('Go back')
+			self.frame.delete_last_lines(3)	
+		else:
+			print('{:<10}{:<10}{:<20}'.format('ID', 'Vehicle', 'Dates'))
+			print('-'*43)
+			for order in orders:
+				print('{:<10}{:<10}{:>20}'.format(order.get_id(), order.get_license_plate(), order.get_date_str()))
+			self.nocco_list.single_list('Go back')
+			self.frame.delete_last_lines(len(orders) + 4)
 
 	def delete_customer(self):
 		self.customer_manager.delete_customer(self.__current_customer)
@@ -987,8 +1006,13 @@ class Menu:
 						continue
 					print("{}: {}".format(detail, value))
 				self.nocco_list.single_list('Go back')
-				self.frame.delete_last_lines(10)
+				self.frame.delete_last_lines(11)
 				print('Customer: ' + self.__current_customer.__str__() + '\n')
+				self.found_customer()
+
+			elif prompt == 'Print order history':
+				self.frame.delete_last_lines(4)
+				self.customer_history()
 				self.found_customer()
 
 			elif prompt.lower() == 'edit customer':
