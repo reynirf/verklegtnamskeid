@@ -249,15 +249,20 @@ class OrderManager:
         has letters in it"""
         if pick_up_time.strip() == '' and not ignore_empty_value:
             try:
-                check_time = time.strptime(pick_up_time,"%H:%M")
+                time.strptime(pick_up_time,"%H:%M")
             except ValueError:
                 return self.error('Pick up time')
         elif pick_up_time.strip() == '':
-            self.__temp_pick_up_time = time.strptime(current_value,"%H:%M")
+            self.__temp_pick_up_time = current_value
             return None
         else:
             try:
-                self.__temp_pick_up_time = time.strptime(pick_up_time,"%H:%M")
+                time_tuple = time.strptime(pick_up_time,"%H:%M")
+                hours = time_tuple[3]
+                minutes = time_tuple[4]
+                if minutes < 10:
+                    minutes = '0' + str(minutes)
+                self.__temp_pick_up_time = '{}:{}'.format(hours, minutes)
             except ValueError:
                 return self.error('Pick up time')
 
@@ -266,7 +271,7 @@ class OrderManager:
         has letters in it"""
         if returning_time.strip() == '' and not ignore_empty_value:
             try:
-                check_time = time.strptime(returning_time,"%H:%M")
+                time.strptime(returning_time,"%H:%M")
             except ValueError:
                 return self.error('Return time')
         elif returning_time.strip() == '':
@@ -274,9 +279,14 @@ class OrderManager:
             return None
         else:
             try:
-                self.__temp_returning_time = time.strptime(returning_time,"%H:%M")
+                time_tuple = time.strptime(returning_time,"%H:%M")
+                hours = time_tuple[3]
+                minutes = time_tuple[4]
+                if minutes < 10:
+                    minutes = '0' + str(minutes)
+                self.__temp_returning_time = '{}:{}'.format(hours, minutes)
             except ValueError:
-                return self.error('Pick up time')
+                return self.error('Return time')
 
 
     def check_pick_up_location(self, pick_up_location, ignore_empty_value=False, current_value=''):

@@ -74,7 +74,7 @@ class VehicleManager:
         if model.strip() == '' and not ignore_empty_value:
             return self.error('Model')
         elif model.strip() == '':
-            self.__temp_make = current_value
+            self.__temp_model = current_value
             return None
 
         if model.strip() == '':

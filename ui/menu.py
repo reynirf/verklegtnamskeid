@@ -495,8 +495,8 @@ class Menu:
 		self.frame.delete_last_lines(2)
 
 	def show_car_availability(self, prompt):
-		self.check_if_valid('a start date [DD/MM/YYYY]', self.order_manager.check_start_date)
-		self.check_if_valid('an end date [DD/MM/YYYY]', self.order_manager.check_ending_date)
+		self.check_if_valid('a start date (DD.MM.YYYY)', self.order_manager.check_start_date)
+		self.check_if_valid('an end date (DD.MM.YYYY)', self.order_manager.check_ending_date)
 		start_date, end_date = self.order_manager.get_dates()
 		car_list = self.vehicle_manager.show_car_availability(start_date, end_date, prompt)
 		print() 
@@ -523,14 +523,13 @@ class Menu:
 
 	def found_car(self):
 		found_car_list = self.nocco_list.choose_one('Choose an action',
-						['Edit car', 'Print car', 'Print car history', 'Delete car', 'Go back'], 'action')
+						['Edit car', 'Print car', 'Print car history', 'Remove car', 'Go back'], 'action')
 		self.handle_answer_from_menu(found_car_list['action'], 'found car')
 
 	def vehicle_history(self):
 		license_plate = self.__current_vehicle.get_license()
 		order_list = self.order_manager.find_orders_by_vehicle(license_plate)
 		if order_list == []:
-			print()
 			print('{}'.format(self.color.return_colored("No orders registered to this car", 'red')))
 			self.nocco_list.single_list('Go back')
 			self.frame.delete_last_lines(3)
@@ -1019,7 +1018,7 @@ class Menu:
 			else:
 				self.frame.delete_last_lines(4)
 			if prompt == 'Cancel':
-				self.frame.delete_last_lines(19)
+				self.frame.delete_last_lines(20)
 				self.order()
 
 			elif prompt == 'Save':
@@ -1064,11 +1063,11 @@ class Menu:
 		######################################################
 		elif menu_type == 'found car':
 			if prompt == 'Edit car':
-				self.frame.delete_last_lines(7)
+				self.frame.delete_last_lines(8)
 				self.edit_car()
 
-			elif prompt == 'Delete car':
-				self.frame.delete_last_lines(7)
+			elif prompt == 'Remove car':
+				self.frame.delete_last_lines(8)
 				self.delete_vehicle()
 
 			elif prompt == 'Print car':
