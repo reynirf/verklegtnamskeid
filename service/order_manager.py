@@ -24,7 +24,7 @@ class OrderManager:
         self.__temp_licese_plate = ""
         self.__temp_insurance = ""
         self.__temp_type_of_vehicle = ""
-        self.__locations = ["reykjavik", "akureyri"]
+        self.__locations = ["reykjavik", "akureyri", 'ak', 'rvk']
     
     def get_order_list(self):
         return self.__order_repo.get_order_list()
