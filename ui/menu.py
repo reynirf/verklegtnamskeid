@@ -622,14 +622,17 @@ class Menu:
 			self.frame.delete_last_lines(3)
 			self.find_cars()
 		else:
-			for i, car in enumerate(cars):
-				print('{:<20} {:<20} {:<20} {:<20}'.format("License", "Make", "Model", "Seats"))
-				print('-'*70)
+			self.frame.delete_last_lines(2)
+			print('{:<20} {:<20} {:<20} {:<20}'.format("License", "Make", "Model", "Seats"))
+			print('-'*70)
+			for car in cars:
+				
 				print('{:<20} {:<20} {:<20} {:<20}'.format(car.get_license(), car.get_make(), car.get_model(), car.get_seats()))
 				
 
 			self.nocco_list.single_list("Go back")
-			self.frame.delete_last_lines()	
+			#self.frame.delete_last_lines()	
+			print()
 			print()
 
 	def find_cars_by_type(self):
@@ -642,9 +645,14 @@ class Menu:
 			self.frame.delete_last_lines(3)
 			self.find_cars()
 		else:
-			for i, car in enumerate(cars):
-				print("Car " + str(i + 1) + ": " + car.get_vehicle_type())
-				time.sleep(1.5)
+			self.frame.delete_last_lines(2)
+			print('{:<20} {:<20} {:<20} {:<20}'.format("License", "Make", "Model", "Seats"))
+			print('-'*70)
+			for car in cars:
+				print('{:<20} {:<20} {:<20} {:<20}'.format(car.get_license(), car.get_make(), car.get_model(), car.get_seats()))
+
+			self.nocco_list.single_list("Go back")
+			self.frame.delete_last_lines(2)
 			print()
 			if len(cars) == 1:
 				self.__current_vehicle = cars

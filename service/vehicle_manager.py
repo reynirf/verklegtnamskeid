@@ -201,8 +201,8 @@ class VehicleManager:
             return cars
 
     def find_car_by_type(self, type_of_car, cars_list=''):
-        if cars_list == '':
-            cars_list = self.__vehicle_repo.get_vehicle_list()
+        #if cars_list == '':
+        cars_list = self.__vehicle_repo.get_vehicle_list()
         cars = []
         for vehicle in cars_list:
             car_type = vehicle.get_vehicle_type().lower()
