@@ -207,9 +207,9 @@ class Menu:
 
 		self.check_if_valid('customer SSN', self.order_manager.check_ssn)
 
-		self.check_if_valid('start date (DD MM YYYY)', self.order_manager.check_start_date)
+		self.check_if_valid('start date (DD:MM:YYYY)', self.order_manager.check_start_date)
 
-		self.check_if_valid('ending date (DD MM YYYY)', self.order_manager.check_ending_date)
+		self.check_if_valid('ending date (DD:MM:YYYY)', self.order_manager.check_ending_date)
 
 		self.check_if_valid('pick up time(HRS:MIN)', self.order_manager.check_pick_up_time)
 
