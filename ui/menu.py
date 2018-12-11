@@ -234,15 +234,17 @@ class Menu:
 			self.frame.delete_last_lines(11)
 			self.order()
 		else:
+			plates = []
 			print('Available cars:')
 			print()
 			print('{:<20} {:<20} {:<20} {:<20}'.format('License', 'Make', 'Model', 'Seats'))
 			print('-'*70)
 			for car in filtered_list:
 				print(car.availability_string())
+				plates.append(car.get_license())
 			print()
 
-			self.check_if_valid('license plate', self.order_manager.check_license_plate)
+			self.check_if_valid('license plate', self.order_manager.check_license_plate, plates)
 
 			self.check_if_valid('insurance (yes or no)', self.order_manager.check_insurance)
 
@@ -317,7 +319,7 @@ class Menu:
 		mistake = 0
 		error = "check if valid"
 		while error:
-			if not editing and not current_value:
+			if (not editing and not current_value) or (not current_value and type(editing) == list):
 				user_input = input("Enter " + to_enter + ": ")
 			else:
 				if to_enter == 'Credit card number':

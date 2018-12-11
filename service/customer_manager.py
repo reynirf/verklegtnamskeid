@@ -50,7 +50,7 @@ class CustomerManager:
         """Check if ssn is valid. Returns an error message if ssn
         has letters or punctuation in it"""
         ssn = ssn.replace("-", "").replace(" ", "")
-        if self.find_customer_by_ssn(ssn):
+        if self.find_customer_by_ssn(ssn) and not current_value:
             return 'Customer with this SSN has already been registered'
         if ssn.strip() == '' and not ignore_empty_value:
             return self.error('SSN')
@@ -64,15 +64,8 @@ class CustomerManager:
                 return self.error('SSN')
         self.__temp_ssn = ssn
 
-    def check_birthday(self, birthday, ignore_empty_value=False, current_value=''):
-        """Check if birthday can be converted to a date object and wether that date
-        was more than 18 years ago"""
-        if birthday.strip() == '' and not ignore_empty_value:
-            return self.error('Birthday')
-        elif birthday.strip() == '':
-            self.__temp_birthday = current_value
-            return None
-        
+
+    def birthday_object(self, birthday):
         present_day = date.today()
         legal_age = present_day.year - 18
         legal_date = present_day.replace(year=legal_age)
@@ -83,9 +76,23 @@ class CustomerManager:
             date_object = date(int(year), int(month), int(day))
             if date_object > legal_date:
                 raise ValueError
-            self.__temp_start_date = date_object
+            return date_object
         except ValueError:
+            return None
+
+    def check_birthday(self, birthday, ignore_empty_value=False, current_value=''):
+        """Check if birthday can be converted to a date object and wether that date
+        was more than 18 years ago"""
+        if birthday.strip() == '' and not ignore_empty_value:
             return self.error('Birthday')
+        elif birthday.strip() == '':
+            self.__temp_birthday = self.birthday_object(current_value)
+            return None
+
+        self.__temp_birthday = self.birthday_object(birthday)
+        if not self.__temp_birthday:
+            return self.error('Birthday')
+        
 
     def check_phone_number(self, phone, ignore_empty_value=False, current_value=''):
         """Check if phone number is valid. Returns an error message if phone
@@ -163,7 +170,7 @@ class CustomerManager:
         customer_list = self.__customer_repo.get_customer_list()
         customers = []
         for customer in customer_list:
-            if customer.__str__().lower() == name.lower():
+            if name.lower() in customer.__str__().lower():
                 customers.append(customer)
         if customers != []:
             return customers

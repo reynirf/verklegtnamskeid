@@ -21,7 +21,7 @@ class OrderManager:
         self.__temp_returning_time = ""
         self.__temp_pick_up_location = ""
         self.__temp_return_location = ""
-        self.__temp_car_number = ""
+        self.__temp_licese_plate = ""
         self.__temp_insurance = ""
         self.__temp_type_of_vehicle = ""
         self.__locations = ["reykjavik", "akureyri", "ak", "rvk"]
@@ -132,7 +132,7 @@ class OrderManager:
         has letters or punctuation in it"""
         if self.find_order_by_id(ID):
             return 'An order with that ID already exists. Choose another ID'
-        if ID.strip() == '': #and not ignore_empty_value:
+        if ID.strip() == '' and not ignore_empty_value: #and not ignore_empty_value:
             return self.error('ID')
         elif ID.strip() == '':
             self.__temp_ID = current_value
@@ -199,7 +199,7 @@ class OrderManager:
                 raise ValueError
             return date_object
         except ValueError:
-            return self.error('End date')
+            return None
 
     def check_start_date(self, start_date, ignore_empty_value=False, current_value=''):
         """Check if start date is valid. Returns an error message if start date
@@ -210,6 +210,8 @@ class OrderManager:
             self.__temp_start_date = self.create_start_date_object(current_value)
             return None
         self.__temp_start_date = self.create_start_date_object(start_date)
+        if not self.__temp_start_date:
+            return self.error('Start date')
 
     def check_ending_date(self, end_date, ignore_empty_value=False, current_value=''):
         """Check if end date is valid. Returns an error message if end date
@@ -220,6 +222,8 @@ class OrderManager:
             self.__temp_end_date = self.create_end_date_object(current_value)
             return None
         self.__temp_end_date = self.create_end_date_object(end_date)
+        if not self.__temp_end_date:
+            return self.error('End date')
 
     def check_pick_up_time(self, pick_up_time, ignore_empty_value=False, current_value=''):
         """Check if pick up time is valid. Returns an error message if pick up time
@@ -281,7 +285,7 @@ class OrderManager:
         has punctuation in it"""
         if license_plate.strip() == '' and not ignore_empty_value:
             return self.error('License plate')
-        elif license_plate.strip() == '':
+        elif license_plate.strip() == '' and current_value:
             self.__temp_license_plate = current_value
             return None
 
@@ -291,6 +295,8 @@ class OrderManager:
         for letter in license_plate:
             if letter in (string.punctuation):
                 return self.error('License plate')
+        if license_plate not in ignore_empty_value:
+            return 'License plate does not exist. Find a plate in the list above and try again'
         self.__temp_license_plate = license_plate
 
     def check_insurance(self, insurance, ignore_empty_value=False, current_value=''):
