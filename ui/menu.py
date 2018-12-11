@@ -3,6 +3,7 @@ from lib.color import Color
 from ui.frame import Frame
 from models.employee import Employee
 from models.customer import Customer
+from models.price import Price
 from service.employee_manager import EmployeeManager
 from service.customer_manager import CustomerManager
 from service.vehicle_manager import VehicleManager
@@ -22,6 +23,7 @@ class Menu:
 		self.customer_manager = CustomerManager()
 		self.vehicle_manager = VehicleManager()
 		self.order_manager = OrderManager()
+		self.price_list = Price()
 		self.__current_customer = ""
 		self.__current_vehicle = ""
 		self.__current_order = ""
@@ -107,11 +109,15 @@ class Menu:
 		self.nocco_list.single_list("Go back")
 
 	def show_pricing_list(self):
+		vehicle_types = ['smallcar', 'sedan', 'offroad', 'bus']
 		self.frame.delete_last_lines(2)
 		print()
-		with open("./data/prices_list.txt","r") as f:
-			for i in f:
-				print("\t",i)
+		print('{:<15}{:>12}{:>20}{:>20}'.format('Vehicle type', 'Base price', 'Basic insurance', 'Extra insurance'))
+		print('-'*67)
+		for vehicle in vehicle_types:
+			print(self.price_list.print_prices(vehicle))
+		print()
+		print('Prices are per day in ISK')
 		self.nocco_list.single_list("Go back")
 		self.frame.delete_last_lines(10)
 		self.order()
