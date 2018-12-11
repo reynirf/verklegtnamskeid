@@ -11,3 +11,5 @@ id,ssn,starting date,ending date,pick up time,returning time,pick up location,re
 9,1234567890,20181211,20181213,09:00,09:00,akureyri,akureyri,RYZ78,no,smallcar
 0022,01201568,20190202,20190203,08:00,20:00,akureyri,akureyri,OFF66,yes,offroad
 013,101101545,20190202,20190203,03:00,21:00,ak,ak,WOW13,no,offroad
+0233,020202555,20190201,20190201,08:00,15:00,ak,ak,GBS00,no,sedan
+555,201556215,20190201,20190203,09:00,21:30,ak,ak,OOO00,no,sedan
