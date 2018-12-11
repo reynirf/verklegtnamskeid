@@ -265,7 +265,7 @@ class Menu:
 
 		self.check_if_valid('start date', self.order_manager.check_start_date, True, order['Start date'])
 
-		self.check_if_valid('start date', self.order_manager.check_ending_date, True, order['End date'])
+		self.check_if_valid('end date', self.order_manager.check_ending_date, True, order['End date'])
 
 		self.check_if_valid('pick up time', self.order_manager.check_pick_up_time, True, order['Pick up time'])
 
