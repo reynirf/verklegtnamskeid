@@ -57,11 +57,14 @@ class NoccoList:
                     return {answer_key: alternatives[alternative_index]}
             elif key == 'left':
                 pass
-            elif key.decode('utf-8') not in self.ALPHABET:
-                if get_chosen_index:
-                    return {answer_key: alternatives[alternative_index], 'index': alternative_index}
-                else:
-                    return {answer_key: alternatives[alternative_index]}
+            else:
+                if os.name == 'nt': # for Windows
+                    key = key.decode('utf-8')
+                if key not in self.ALPHABET: # for UNIX
+                    if get_chosen_index:
+                        return {answer_key: alternatives[alternative_index], 'index': alternative_index}
+                    else:
+                        return {answer_key: alternatives[alternative_index]}
             self.frame.delete_last_lines(n=len(alternatives) + 2)
             self.print_alternatives(
                 question,
