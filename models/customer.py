@@ -1,9 +1,8 @@
 class Customer:
-    def __init__(self, name, ssn, birthday, phone, email, 
+    def __init__(self, name, ssn, phone, email, 
         address, driver_license, credit_card):
         self.__name = name
         self.__ssn = ssn
-        self.__birthday = birthday
         self.__phone = phone
         self.__email = email
         self.__address = address
@@ -21,7 +20,6 @@ class Customer:
         return {
             "Name": self.__name,
             "SSN": self.__ssn,
-            "Birthday": self.__birthday,
             "Phone number": self.__phone,
             "Email address": self.__email,
             "Home address": self.__address,

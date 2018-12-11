@@ -10,7 +10,6 @@ class CustomerManager:
         self.__customer_repo = CustomerRepo()
         self.__temp_name = ""
         self.__temp_ssn = ""
-        self.__temp_birthday = ""
         self.__temp_phone = ""
         self.__temp_driver_license = ""
         self.__temp_email = ""
@@ -25,7 +24,6 @@ class CustomerManager:
         self.__customer_repo.save_new_customer(
             self.__temp_name,
             self.__temp_ssn,
-            self.__temp_birthday,
             self.__temp_phone,
             self.__temp_email,
             self.__temp_address,
@@ -63,36 +61,6 @@ class CustomerManager:
             if letter in (string.ascii_letters + string.punctuation):
                 return self.error('SSN')
         self.__temp_ssn = ssn
-
-
-    def birthday_object(self, birthday):
-        present_day = date.today()
-        legal_age = present_day.year - 18
-        legal_date = present_day.replace(year=legal_age)
-        try:
-            year = birthday[6:]
-            month = birthday[3:5]
-            day = birthday[:2]
-            date_object = date(int(year), int(month), int(day))
-            if date_object > legal_date:
-                raise ValueError
-            return date_object
-        except ValueError:
-            return None
-
-    def check_birthday(self, birthday, ignore_empty_value=False, current_value=''):
-        """Check if birthday can be converted to a date object and wether that date
-        was more than 18 years ago"""
-        if birthday.strip() == '' and not ignore_empty_value:
-            return self.error('Birthday')
-        elif birthday.strip() == '':
-            self.__temp_birthday = self.birthday_object(current_value)
-            return None
-
-        self.__temp_birthday = self.birthday_object(birthday)
-        if not self.__temp_birthday:
-            return self.error('Birthday')
-        
 
     def check_phone_number(self, phone, ignore_empty_value=False, current_value=''):
         """Check if phone number is valid. Returns an error message if phone

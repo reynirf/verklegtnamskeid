@@ -17,7 +17,6 @@ class CustomerRepo:
                     customer = Customer(
                         line['name'],
                         line['ssn'],
-                        line['birthday'],
                         line['phone'],
                         line['email'],
                         line['address'],
@@ -26,11 +25,11 @@ class CustomerRepo:
                     self.__customer_list.append(customer)
         return self.__customer_list
 
-    def save_new_customer(self, name, ssn, birthday, phone,
+    def save_new_customer(self, name, ssn, phone,
                           email, address, driver_licence, credit_card):
         with open(self.CUSTOMER_FILE, 'a', newline='') as customer_file:
             csv_writer = csv.writer(customer_file)
-            csv_writer.writerow([name, ssn, birthday, phone, email, address,
+            csv_writer.writerow([name, ssn, phone, email, address,
                                  driver_licence, credit_card])
         self.__customer_list = []
 

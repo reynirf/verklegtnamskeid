@@ -1,11 +1,11 @@
-name,ssn,birthday,phone,email,address,driver license,credit card
-Sigurdur Mar,1107983699,1998-07-11,7825161,siggso@internet.is,somatun 31,A,1111111111111111
-Gudrun,0101906767,1990-01-01,6664545,gudrun@internet.is,glerartorg,B,0000000000000000
-Vidar Oli,2408981111,1998-08-24,5812345,vidara@ru.is,thorp,C,2222222222222222
-Reynir Freyr,1302991717,1999-02-13,4666666,hax@hotmail.com,macbook air 1,D,3333333333333333
-Anna Rakel,2408983579,1998-08-24,8486584,Anna@gmail.com,horpulundur 21,A,9999999999999999
-Anna Rakel Petursdottir,1706981234,1998-06-17,8486584,Rakel@hotmail.com,dvergalundur 13,B,0000000000005810
-Gusti,0608003699,2000-08-06,7835162,gustur@gmail.com,dvergagil 1,B,0000111122223333
-Hannes,1803870000,0087-03-18,4660000,GoatOfProgramming@internet.is,Hotstreet 13,A,0000000000000000
-Kristin Sigurdardottir,1309719999,1971-09-13,8681107,kristin@ma.is,trollaborgir 12,C,1234123412341234
-kristin,1234567890,1945-03-12,1234567,kristin1234@gmail.com,lol 12,A,1111222233334444
+name,ssn,phone,email,address,driver license,credit card
+Sigurdur Mar,1107983699,7825161,siggso@internet.is,somatun 31,A,1111111111111111
+Gudrun,0101906767,6664545,gudrun@internet.is,glerartorg,B,0000000000000000
+Vidar Oli,2408981111,5812345,vidara@ru.is,thorp,C,2222222222222222
+Reynir Freyr,1302991717,4666666,hax@hotmail.com,macbook air 1,D,3333333333333333
+Anna Rakel,2408983579,8486584,Anna@gmail.com,horpulundur 21,A,9999999999999999
+Anna Rakel Petursdottir,1706981234,8486584,Rakel@hotmail.com,dvergalundur 13,B,0000000000005810
+Gusti,0608003699,7835162,gustur@gmail.com,dvergagil 1,B,0000111122223333
+Hannes,1803870000,4660000,GoatOfProgramming@internet.is,Hotstreet 13,A,0000000000000000
+Kristin Sigurdardottir,1309719999,8681107,kristin@ma.is,trollaborgir 12,C,1234123412341234
+kristin,1234567890,1234567,kristin1234@gmail.com,lol 12,A,1111222233334444
