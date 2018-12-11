@@ -328,15 +328,6 @@ class OrderManager:
         for order in order_list:
             if order.get_id() == ID:
                 return order
-    
-    def find_orders_by_vehicle(self, license_plate):
-        order_list = self.__order_repo.get_order_list()
-        orders = []
-        for order in order_list:
-            vehicle = order.get_license_plate()
-            if vehicle.lower() == license_plate.lower():
-                orders.append(order)
-        return orders
 
     def find_orders_by_vehicle(self, license_plate):
         order_list = self.__order_repo.get_order_list()
