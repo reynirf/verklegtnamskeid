@@ -11,7 +11,8 @@ class OrderRepo:
         self.__current_order = ""
 
     def get_order_list(self):
-        """Returns a list of all orders on file"""
+        """Reads each order from the file and returns a list of 
+        Order instances"""
         if self.__order_list == []:
             with open(self.ORDER_FILE, 'r') as order_file:
                 csv_reader = csv.DictReader(order_file)
@@ -38,17 +39,19 @@ class OrderRepo:
         return self.__current_order
 
     def save_new_order(self, ID, ssn, starting_date, ending_date, pick_up_time,
-                       returning_time, pick_up_location, return_location, car_number, insurance,
-                       type_of_vehicle):
+                       returning_time, pick_up_location, return_location, car_number,
+                        insurance, type_of_vehicle):
+        """Writes a new order to file"""
         with open(self.ORDER_FILE, 'a', newline='') as order_file:
             csv_writer = csv.writer(order_file)
             csv_writer.writerow([ID, ssn, starting_date, ending_date, pick_up_time,
-                                 returning_time, pick_up_location, return_location, car_number,
-                                 insurance, type_of_vehicle])
+                                 returning_time, pick_up_location, return_location, 
+                                 car_number, insurance, type_of_vehicle])
         self.__order_list = []
 
     def delete_order(self, order):
-        """Deletes order from file"""
+        """Reads orders from file and compares with order. Writes the
+        file again without the line that matches the ID"""
         file_content = []
         with open(self.ORDER_FILE, 'r') as order_file:
             csv_reader = csv.reader(order_file)

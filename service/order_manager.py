@@ -207,40 +207,38 @@ class OrderManager:
     def check_start_date(self, start_date, ignore_empty_value=False, current_value=''):
         """Check if start date is valid. Returns an error message if start date
         can not be converted to a datetime object"""
-        present_datetime = datetime.datetime.now()
-        try:
-            inputted_start_date = datetime.datetime.strptime(start_date, "%d.%m.%Y")
-            if present_datetime > inputted_start_date:
-                return self.error("Start date")
-        except ValueError:
-            return self.error('Start date')
-        
-        #if start_date.strip() == '' and not ignore_empty_value:
-        #    return self.error('Start date')
-        if start_date.strip() == '':
+        if start_date.strip() == '' and not ignore_empty_value:
+            return self.error('Start date')         
+        elif start_date.strip() == '':
             self.__temp_start_date = self.create_start_date_object(current_value)
             return None
-        self.__temp_start_date = self.create_start_date_object(start_date)
+       
+        start_date_object = self.create_start_date_object(start_date)
+        if type(start_date_object) == date:
+            self.__temp_start_date = start_date_object
+        else:
+            return self.error("Start date")
+        
+        #self.__temp_start_date = self.create_start_date_object(start_date)
         #if not self.__temp_start_date:
         #    return self.error('Start date')
 
     def check_ending_date(self, end_date, ignore_empty_value=False, current_value=''):
         """Check if end date is valid. Returns an error message if end date
         can not be converted to a datetime object"""
-
-        present_datetime = datetime.datetime.now()
-        try:
-            inputted_end_date = datetime.datetime.strptime(end_date, "%d.%m.%Y")
-            if present_datetime > inputted_end_date:
-                return self.error("End date")
-        except ValueError:
+        if end_date.strip() == '' and not ignore_empty_value:
             return self.error('End date')
-        #if end_date.strip() == '' and not ignore_empty_value:
-        #    return self.error('End date')
-        if end_date.strip() == '':
+        elif end_date.strip() == '':
             self.__temp_end_date = self.create_end_date_object(current_value)
             return None
-        self.__temp_end_date = self.create_end_date_object(end_date)
+
+        end_date_object = self.create_end_date_object(end_date)
+        if type(end_date_object) == date:
+            self.__temp_end_date = end_date_object
+        else:
+            return self.error("End date")
+
+        #self.__temp_end_date = self.create_end_date_object(end_date)
         #if not self.__temp_end_date:
         #    return self.error('End date')
 
@@ -307,12 +305,13 @@ class OrderManager:
     def check_license_plate(self, license_plate, ignore_empty_value=False, current_value=''):
         """Check if license plate is valid. Returns an error message if license plate
         has punctuation in it"""
+        license_plate = license_plate.replace(' ', '')
         if license_plate.strip() == '' and not ignore_empty_value:
             return self.error('License plate')
         elif license_plate.strip() == '' and current_value:
             self.__temp_license_plate = current_value
             return None
-        if 2 > len(license_plate) > 6:
+        if 3 > len(license_plate) or len(license_plate) > 6:
             return self.error('License plate')
         for letter in license_plate:
             if letter in (string.punctuation):

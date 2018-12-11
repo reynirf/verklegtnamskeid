@@ -128,6 +128,8 @@ class VehicleManager:
     def check_license_plate(self, license_plate, ignore_empty_value=False, current_value=''):
         """Check if license plate is valid. Returns an error message if number plate
         has punctuation in it"""
+        license_plate = license_plate.replace(' ', '')
+        
         if license_plate.strip() == '' and not ignore_empty_value:
             return self.error('License plate')
         elif license_plate.strip() == '':
@@ -137,7 +139,7 @@ class VehicleManager:
         if license_plate.strip() == '' and not ignore_empty_value:
             return self.error("License plate")
 
-        if len(license_plate) != 5:
+        if len(license_plate) < 3 or len(license_plate) > 6:
             return self.error('License plate')
         
         for letter in license_plate:
@@ -184,6 +186,7 @@ class VehicleManager:
                 return self.error("Driving transmission")
 
     def find_car_by_license_plate(self, license_plate):
+        license_plate = license_plate.replace(' ', '')
         cars_list = self.__vehicle_repo.get_vehicle_list()
         for vehicle in cars_list:
             car_licence = vehicle.get_license().lower()
