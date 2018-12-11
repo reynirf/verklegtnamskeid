@@ -509,26 +509,6 @@ class Menu:
 		self.nocco_list.single_list('Go back')
 		self.frame.delete_last_lines(len(car_list) + 1)
 
-	def show_cars_that_require_maintenance(self):
-		test_data = [['Toyota', 'Huyndai', 'Ford', 'Reynir', 'Sixarinn'],
-					 ['Renault', 'Viddi', 'Peugot', 'Guðrún', 'Ermir'], ['Nike', 'Subaru', 'Volvo', 'Bíll', 'Hilux']]
-
-		col_width = max(len(word) for row in test_data for word in row) + 2
-		for row in test_data:
-			print("".join(word.ljust(col_width) for word in row))
-
-		self.nocco_list.single_list('Go back')
-
-	def show_cars_that_must_be_checked(self):
-		test_data = [['Toyota', 'Huyndai', 'Ford', 'Reynir', 'Sixarinn'],
-					 ['Renault', 'Viddi', 'Peugot', 'Guðrún', 'Ermir'], ['Nike', 'Subaru', 'Volvo', 'Bíll', 'Hilux']]
-
-		col_width = max(len(word) for row in test_data for word in row) + 2
-		for row in test_data:
-			print("".join(word.ljust(col_width) for word in row))
-
-		self.nocco_list.single_list('Go back')
-
 	def cars(self):
 		self.frame.delete_last_lines(7)
 		car = self.nocco_list.choose_one('Choose an action', ['Register car', 'Find car', 'Show all available cars',
@@ -612,37 +592,6 @@ class Menu:
 														"action"
 														)
 			self.handle_answer_from_menu(found_cars_list['action'], 'found car')
-
-	def find_customer_by_name(self):
-		name = input("Enter name: ")
-		print()
-		customers = self.customer_manager.find_customer_by_name(name)
-		if customers == None:
-			print('{}'.format(self.color.return_colored("Customer not found!", 'red')))
-			time.sleep(1.5)
-			self.frame.delete_last_lines(4)
-			print()
-			self.find_customer()
-		else:
-			self.frame.delete_last_lines(2)
-			if len(customers) == 1:
-				self.__current_customer = customers[0]
-				print("Customer: " + self.__current_customer.__str__())
-				print()
-				self.found_customer()
-			else:
-				print("{}".format(self.color.return_colored("There are multiple customers with that name!", 'red')))
-				print()
-				printable_customers = [
-					'{} | {}-{}'.format(customer.__str__(), customer.get_ssn()[:6], customer.get_ssn()[6:]) for customer
-					in customers]
-
-				printable_customers.append('Go back')
-				found_multiple_customers = self.nocco_list.choose_one('Choose customer',
-																	  printable_customers, 'customer', True)
-
-				self.handle_answer_from_menu((found_multiple_customers, customers),
-											 'found multiple customers')
 
 	def find_cars_by_make(self):
 		make = input("Enter make: ")
@@ -1156,34 +1105,6 @@ class Menu:
 		#               SHOW CARS IN SERVICE                 #                    
 		######################################################
 		elif menu_type == 'show cars in service':
-			if prompt.lower() == 'save':
-				self.frame.delete_last_lines(16)
-				self.save_new_car()
-				print("\n" * 7)
-				self.cars()
-
-			if prompt.lower() == 'cancel':
-				self.frame.delete_last_lines(10)
-				self.cars()
-
-		######################################################    
-		#       CARS THAT REQUIRE MAINTENANCE                #                    
-		######################################################
-		elif menu_type == 'show cars that require maintenance':
-			if prompt.lower() == 'save':
-				self.frame.delete_last_lines(16)
-				self.save_new_car()
-				print("\n" * 7)
-				self.cars()
-
-			if prompt.lower() == 'cancel':
-				self.frame.delete_last_lines(10)
-				self.cars()
-
-		######################################################    
-		#            CARS THAT MUST BE CHECKED               #                    
-		######################################################
-		elif menu_type == 'show cars that must be checked':
 			if prompt.lower() == 'save':
 				self.frame.delete_last_lines(16)
 				self.save_new_car()
