@@ -786,11 +786,11 @@ class Menu:
 		#                      FIND ORDER                    #
 		######################################################
 		elif menu_type == 'find order':
-			if prompt == 'Find order by id':
+			if prompt == 'Find order by ID':
 				self.frame.delete_last_lines(5)
 				self.find_order_by_id()
 
-			elif prompt == 'Find order by ssn':
+			elif prompt == 'Find order by SSN':
 				self.frame.delete_last_lines(5)
 				self.find_order_by_ssn()
 
@@ -914,11 +914,11 @@ class Menu:
 		#                    FIND CUSTOMER                   #                    
 		######################################################
 		elif menu_type == 'find customer':
-			if prompt == 'Find customer by name':
+			if prompt == 'Find customer by Name':
 				self.frame.delete_last_lines(5)
 				self.find_customer_by_name()
 
-			elif prompt == 'Find customer by ssn':
+			elif prompt == 'Find customer by SSN':
 				self.frame.delete_last_lines(5)
 				self.find_customer_by_ssn()
 
@@ -1115,7 +1115,7 @@ class Menu:
 		#                    REGISTER CAR                    #                    
 		######################################################
 		elif menu_type == 'register car':
-			if prompt.lower() == 'save':
+			if prompt == 'Save':
 				self.frame.delete_last_lines(13)
 				self.save_new_car()
 				vehicles = self.vehicle_manager.get_vehicle_list()
