@@ -509,26 +509,6 @@ class Menu:
 		self.nocco_list.single_list('Go back')
 		self.frame.delete_last_lines(len(car_list) + 1)
 
-	def show_cars_that_require_maintenance(self):
-		test_data = [['Toyota', 'Huyndai', 'Ford', 'Reynir', 'Sixarinn'],
-					 ['Renault', 'Viddi', 'Peugot', 'Guðrún', 'Ermir'], ['Nike', 'Subaru', 'Volvo', 'Bíll', 'Hilux']]
-
-		col_width = max(len(word) for row in test_data for word in row) + 2
-		for row in test_data:
-			print("".join(word.ljust(col_width) for word in row))
-
-		self.nocco_list.single_list('Go back')
-
-	def show_cars_that_must_be_checked(self):
-		test_data = [['Toyota', 'Huyndai', 'Ford', 'Reynir', 'Sixarinn'],
-					 ['Renault', 'Viddi', 'Peugot', 'Guðrún', 'Ermir'], ['Nike', 'Subaru', 'Volvo', 'Bíll', 'Hilux']]
-
-		col_width = max(len(word) for row in test_data for word in row) + 2
-		for row in test_data:
-			print("".join(word.ljust(col_width) for word in row))
-
-		self.nocco_list.single_list('Go back')
-
 	def cars(self):
 		self.frame.delete_last_lines(7)
 		car = self.nocco_list.choose_one('Choose an action', ['Register car', 'Find car', 'Show all available cars',
@@ -1156,34 +1136,6 @@ class Menu:
 		#               SHOW CARS IN SERVICE                 #                    
 		######################################################
 		elif menu_type == 'show cars in service':
-			if prompt.lower() == 'save':
-				self.frame.delete_last_lines(16)
-				self.save_new_car()
-				print("\n" * 7)
-				self.cars()
-
-			if prompt.lower() == 'cancel':
-				self.frame.delete_last_lines(10)
-				self.cars()
-
-		######################################################    
-		#       CARS THAT REQUIRE MAINTENANCE                #                    
-		######################################################
-		elif menu_type == 'show cars that require maintenance':
-			if prompt.lower() == 'save':
-				self.frame.delete_last_lines(16)
-				self.save_new_car()
-				print("\n" * 7)
-				self.cars()
-
-			if prompt.lower() == 'cancel':
-				self.frame.delete_last_lines(10)
-				self.cars()
-
-		######################################################    
-		#            CARS THAT MUST BE CHECKED               #                    
-		######################################################
-		elif menu_type == 'show cars that must be checked':
 			if prompt.lower() == 'save':
 				self.frame.delete_last_lines(16)
 				self.save_new_car()
