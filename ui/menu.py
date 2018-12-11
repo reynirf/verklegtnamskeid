@@ -212,9 +212,9 @@ class Menu:
 
 		self.check_if_valid('ending date (DD MM YYYY)', self.order_manager.check_ending_date)
 
-		self.check_if_valid('pick up time', self.order_manager.check_pick_up_time)
+		self.check_if_valid('pick up time(HRS:MIN)', self.order_manager.check_pick_up_time)
 
-		self.check_if_valid('returning time', self.order_manager.check_returning_time)
+		self.check_if_valid('returning time(HRS:MIN)', self.order_manager.check_returning_time)
 
 		self.check_if_valid('pick up location (Reykjavik or Akureyri)', self.order_manager.check_pick_up_location)
 
