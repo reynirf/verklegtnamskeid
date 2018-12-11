@@ -291,14 +291,14 @@ class OrderManager:
             self.__temp_license_plate = current_value
             return None
 
-        if len(license_plate) < 5 or len(license_plate) > 6:
+        if len(license_plate) != 5:
             return self.error('License plate')
         
         for letter in license_plate:
             if letter in (string.punctuation):
                 return self.error('License plate')
         if license_plate not in ignore_empty_value:
-            return 'License plate does not exist. Find a plate in the list above and try again'
+            return 'License plate does not exist. Find a plate in the list above and try again.'
         self.__temp_license_plate = license_plate
 
     def check_insurance(self, insurance, ignore_empty_value=False, current_value=''):
