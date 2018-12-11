@@ -18,3 +18,13 @@ id,ssn,starting date,ending date,pick up time,returning time,pick up location,re
 556,201556215,20190201,20190203,09:00,21:30,ak,ak,OOO00,no,sedan
 559,201556215,20190201,20190203,09:00,21:30,ak,ak,OOO00,no,sedan
 551,201556215,20190201,20190203,09:00,21:30,ak,ak,OOO00,no,sedan
+0,1107983699,20181220,20181225,"time.struct_time(tm_year=1900, tm_mon=1, tm_mday=1, tm_hour=13, tm_min=0, tm_sec=0, tm_wday=0, tm_yday=1, tm_isdst=-1)","time.struct_time(tm_year=1900, tm_mon=1, tm_mday=1, tm_hour=15, tm_min=0, tm_sec=0, tm_wday=0, tm_yday=1, tm_isdst=-1)",ak,ak,SVT71,yes,smallcar
+2,2408983579,20181220,20181225,"time.struct_time(tm_year=1900, tm_mon=1, tm_mday=1, tm_hour=12, tm_min=0, tm_sec=0, tm_wday=0, tm_yday=1, tm_isdst=-1)",12:00,akureyri,akureyri,MMM12,yes,smallcar
+2,2408983579,20181220,20181225,"time.struct_time(tm_year=1900, tm_mon=1, tm_mday=1, tm_hour=13, tm_min=0, tm_sec=0, tm_wday=0, tm_yday=1, tm_isdst=-1)","time.struct_time(tm_year=1900, tm_mon=1, tm_mday=1, tm_hour=15, tm_min=0, tm_sec=0, tm_wday=0, tm_yday=1, tm_isdst=-1)",akureyri,akureyri,MMM12,yes,smallcar
+43293,439243290,20191010,20191020,"time.struct_time(tm_year=1900, tm_mon=1, tm_mday=1, tm_hour=12, tm_min=0, tm_sec=0, tm_wday=0, tm_yday=1, tm_isdst=-1)","time.struct_time(tm_year=1900, tm_mon=1, tm_mday=1, tm_hour=12, tm_min=0, tm_sec=0, tm_wday=0, tm_yday=1, tm_isdst=-1)",ak,ak,RYZ78,yes,smallcar
+100,2311992929,20301010,20301020,12:0,"time.struct_time(tm_year=1900, tm_mon=1, tm_mday=1, tm_hour=20, tm_min=20, tm_sec=0, tm_wday=0, tm_yday=1, tm_isdst=-1)",ak,ak,RYZ78,yes,smallcar
+34920,43294320,20341020,20361010,12:0,14:02,ak,ak,RYZ78,yes,smallcar
+4329,432894329,20401020,20401030,10:10,20:20,ak,ak,RYZ78,yes,smallcar
+121,2311992929,20901020,20901022,12:00,12:00,ak,ak,RYZ78,yes,smallcar
+120,2311992929,21001020,21001022,12:00,12:00,ak,ak,RYZ78,yes,smallcar
+1303,2311992929,20501020,20501022,12:00,13:00,ak,ak,RYZ78,yes,smallcar
