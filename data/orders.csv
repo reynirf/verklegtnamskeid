@@ -28,3 +28,5 @@ id,ssn,starting date,ending date,pick up time,returning time,pick up location,re
 121,2311992929,20901020,20901022,12:00,12:00,ak,ak,RYZ78,yes,smallcar
 120,2311992929,21001020,21001022,12:00,12:00,ak,ak,RYZ78,yes,smallcar
 1303,2311992929,20501020,20501022,12:00,13:00,ak,ak,RYZ78,yes,smallcar
+1000,2311992929,20191030,20191030,12:00,13:00,ak,ak,RYZ78,yes,smallcar
+1000,2311992929,20191030,20191130,12:00,13:00,ak,ak,RYZ78,yes,smallcar
