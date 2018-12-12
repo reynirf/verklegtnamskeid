@@ -22,7 +22,7 @@ class VehicleManager:
         return self.__vehicle_repo.get_vehicle_list()
 
     def save_new_car(self):
-        # uses the temp values to save the new car 
+        """uses the temp values to save the new car""" 
         self.__vehicle_repo.save_new_car(
             self.__temp_license_plate,
             self.__temp_make,
@@ -35,18 +35,19 @@ class VehicleManager:
 
     def check_type(self, car_type, ignore_empty_value=False, current_value=''):
         """Check if type is valid. Returns an error message if type
-        has numbers or punctuation in it"""
+        does not match our list of types. When editing a previous value 
+        is used if nothing is entered"""
+        car_types = ["sedan", "offroad", "smallcar", "bus"]
+        car_type = car_type.lower().replace(' ', '')
+        
         if car_type.strip() == '' and not ignore_empty_value:
             return self.error('Car type')
         elif car_type.strip() == '':
             self.__temp_car_type = current_value
             return None
-        car_types = ["sedan", "offroad", "smallcar", "bus"]
 
         if car_type.strip() == '':
             return self.error("Car type")
-        
-        car_type = car_type.lower().replace(' ', '')
         if car_type.strip() in car_types:
             self.__temp_car_type = car_type
         else:
@@ -54,7 +55,8 @@ class VehicleManager:
 
     def check_make(self, make, ignore_empty_value=False, current_value=''):
         """Check if make is valid. Returns an error message if make
-        has numbers or punctuation in it"""
+        has numbers or punctuation in it. When editing a previous
+        value is used if nothing is entered"""
         if make.strip() == '' and not ignore_empty_value:
             return self.error('Make')
         elif make.strip() == '':
@@ -63,14 +65,15 @@ class VehicleManager:
 
         if make.strip() == '':
             return self.error("Make")
-
         for letter in make.strip():
             if letter in (string.digits + string.punctuation):
                 return self.error('Make')
         self.__temp_make = make
 
     def check_model(self, model, ignore_empty_value=False, current_value=''):
-        """Checks if model is valid. Returns an error if it has punctuation in it"""
+        """Checks if model is valid. Returns an error if it has 
+        punctuation in it. When editing a previous value is used
+        if nothing is entered"""
         if model.strip() == '' and not ignore_empty_value:
             return self.error('Model')
         elif model.strip() == '':
@@ -85,15 +88,18 @@ class VehicleManager:
         self.__temp_model = model
 
     def check_year(self, year, ignore_empty_value=False, current_value=''):
-        """Check if year is valid. Returns an error message if not"""
+        """Check if year is valid. Returns an error message if it is not
+        between 1940 and the current year. When editing a previous 
+        value is used if nothing is entered"""
+        OLDEST_CAR = int(1940)
+        present_year = int(datetime.datetime.today().year)        
+        
         if year.strip() == '' and not ignore_empty_value:
             return self.error('Year')
         elif year.strip() == '':
             self.__temp_year = current_value
             return None
-        OLDEST_CAR = int(1940)
-        present_year = int(datetime.datetime.today().year)
-        
+
         if year.strip() == '':
             return self.error("Year")
         
@@ -103,31 +109,33 @@ class VehicleManager:
                 raise ValueError
         except ValueError:
             return self.error("Year")
-
         self.__temp_year = year
 
-    def check_number_of_seats(self, number_of_seats, ignore_empty_value=False, current_value=''):
-        """Check if number of seats is between 2 and 14. Returns an error message if not"""
-        if number_of_seats.strip() == '' and not ignore_empty_value:
+    def check_number_of_seats(self, seats, ignore_empty_value=False, current_value=''):
+        """Check if number of seats is between 2 and 14. Returns an error 
+        message if not. When editing a previous value is used if 
+        nothing is entered"""
+        if seats.strip() == '' and not ignore_empty_value:
             return self.error('Number of seats')
-        elif number_of_seats.strip() == '':
+        elif seats.strip() == '':
             self.__temp_number_of_seats = current_value
             return None
-        if number_of_seats.strip() == '':
+        
+        if seats.strip() == '':
             return self.error("Number of seats")
 
         try:
-            number_of_seats = int(number_of_seats.strip())
-            if number_of_seats < 2 or number_of_seats > 14:
+            seats = int(seats.strip())
+            if seats < 2 or seats > 14:
                 raise ValueError
         except ValueError:
             return self.error("Number of seats")
-
-        self.__temp_number_of_seats = number_of_seats
+        self.__temp_number_of_seats = seats
 
     def check_license_plate(self, license_plate, ignore_empty_value=False, current_value=''):
-        """Check if license plate is valid. Returns an error message if number plate
-        has punctuation in it"""
+        """Check if license plate is valid. Returns an error message if number 
+        plate has punctuation in it. When editing a previous value is 
+        used if nothing is entered"""
         license_plate = license_plate.replace(' ', '')
         
         if license_plate.strip() == '' and not ignore_empty_value:
@@ -135,9 +143,6 @@ class VehicleManager:
         elif license_plate.strip() == '':
             self.__temp_license_plate = current_value
             return None
-
-        if license_plate.strip() == '' and not ignore_empty_value:
-            return self.error("License plate")
 
         if len(license_plate) < 3 or len(license_plate) > 6:
             return self.error('License plate')
@@ -149,13 +154,15 @@ class VehicleManager:
 
     def check_fuel(self, fuel, ignore_empty_value=False, current_value=''):
         """Checks that input fuel is valid. Returns an error if it is not
-        in our list of fuels"""
+        in our list of fuels. When editing a previous value is used 
+        if nothing is entered"""
+        fuels = ["gasoline", "diesel", "electric", "hybrid"]
+        
         if fuel.strip() == '' and not ignore_empty_value:
             return self.error('Fuel')
         elif fuel.strip() == '':
             self.__temp_fuel = current_value
             return None
-        fuels = ["gasoline", "diesel", "electric", "hybrid"]
 
         if fuel.strip() == '':
             return self.error("Fuel")
@@ -165,17 +172,18 @@ class VehicleManager:
             else:
                 return self.error("Fuel")
 
-    def check_driving_transmission(self, driving_transmission, ignore_empty_value=False, current_value=''):
-        """
-        Driving transmission allowed: Automatic, Manual, 
-        we don't have any other high tech crappy something.
-        """
+    def check_driving_transmission(
+            self, driving_transmission, ignore_empty_value=False, current_value=''):
+        """Checks that input driving transmission is valid. Returns an 
+        error if it is not in our list of fuels. When editing a 
+        previous value is used if nothing is entered"""
+        transmissions = ["automatic", "manual"]        
+        
         if driving_transmission.strip() == '' and not ignore_empty_value:
             return self.error('Driving transmission')
         elif driving_transmission.strip() == '':
             self.__temp_driving_transmission = current_value
             return None
-        transmissions = ["automatic", "manual"]
 
         if driving_transmission.strip() == '':
             return self.error("Driving transmission")
@@ -186,7 +194,11 @@ class VehicleManager:
                 return self.error("Driving transmission")
 
     def find_car_by_license_plate(self, license_plate):
+        """Searches through a list of vehicles to find one whose license 
+        plate matches the given license. Returns a matched vehicle 
+        instance or None if no vehicle is found."""
         license_plate = license_plate.replace(' ', '')
+        
         cars_list = self.__vehicle_repo.get_vehicle_list()
         for vehicle in cars_list:
             car_licence = vehicle.get_license().lower()
@@ -194,6 +206,9 @@ class VehicleManager:
                 return vehicle
 
     def find_car_by_make(self, make):
+        """Searches through a list of vehicles to find those whose make 
+        matches the given make. Returns a list of matched vehicles 
+        or None if no vehicles are found."""
         cars_list = self.__vehicle_repo.get_vehicle_list()
         cars = []
         for vehicle in cars_list:
@@ -204,6 +219,10 @@ class VehicleManager:
             return cars
 
     def find_car_by_type(self, type_of_car, cars_list=''):
+        """Searches through a list of vehicles to find those whose type 
+        matches the given type. Returns a list of matched vehicles 
+        or None if no vehicles are found."""
+        #if no car list is given go to vehicle_repo to get one
         if cars_list == '':
             cars_list = self.__vehicle_repo.get_vehicle_list()
         cars = []
@@ -215,11 +234,15 @@ class VehicleManager:
             return cars
 
     def show_car_availability(self, start_date, end_date, prompt):
+        """Goes through a list of vehicles and splits them into two 
+        lists based on wether they are available or rented on the 
+        given dates. Returns a list based on the prompt given"""
         vehicles = self.get_vehicle_list()
         available_cars = []
         rented_cars = []
 
         dates = set()
+        #adds start and end dates and every day between them to a set of dates
         working_date = start_date
         one_day = datetime.timedelta(days=1)
         while working_date <= end_date:
@@ -227,6 +250,7 @@ class VehicleManager:
             working_date += one_day
         
         for car in vehicles:
+            #get dates from each car and creates a set to compare with the entered dates
             car_dates = set(car.get_rented_dates())
             check = car_dates & dates
             if len(check) == 0:
@@ -240,26 +264,39 @@ class VehicleManager:
             return rented_cars
 
     def save_order_dates(self, dates, license_plate):
+        """Finds a vehicle based on license plate, deletes it from file, 
+        adds dates to its dates_rented attribute and saves it again"""
         vehicle = self.find_car_by_license_plate(license_plate)
-        self.__vehicle_repo.delete_vehicle(vehicle)
+        #Getting everything needed to recreate the Vehicle instance
         a, b, c, d, e, f, g, h = vehicle.get_attributes()
         vehicle_dates = vehicle.get_rented_dates()
+        self.__vehicle_repo.delete_vehicle(vehicle)
 
+        #Adding the new dates and saving them as strings
         vehicle_dates.extend(dates)
         new_dates = self.dates_to_string(vehicle_dates)
         
         self.__vehicle_repo.save_new_car(a, b, c, d, e, f, g, h, dates_rented=new_dates)
 
     def delete_order_dates(self, dates, license_plate):
+        """Finds a vehicle based on license plate, deletes it from file, 
+        removes dates to its dates_rented attribute and saves it again"""
         vehicle = self.find_car_by_license_plate(license_plate)
+
+        #Getting everything needed to recreate the Vehicle instance        
         a, b, c, d, e, f, g, h = vehicle.get_attributes()
         vehicle_dates = set(vehicle.get_rented_dates())
         self.__vehicle_repo.delete_vehicle(vehicle)
+        
+        #Removing dates and converting what's left to strings
         new_dates = vehicle_dates - set(dates)
         new_vehicle_dates = self.dates_to_string(new_dates)
+
         self.__vehicle_repo.save_new_car(a, b, c, d, e, f, g, h, dates_rented=new_vehicle_dates)
 
     def dates_to_string(self, dates):
+        """Recieves a list of dates and converts them into a single string
+        of information, where every date has 8 numbers in it"""
         new_dates = ''
         for v_day in dates:
             new_dates += str(v_day.year)
@@ -277,4 +314,5 @@ class VehicleManager:
         self.__vehicle_repo.delete_vehicle(car)
 
     def error(self, input_type):
+        """An error message used by all check methods"""
         return '{} not valid. Please try again.'.format(input_type)

@@ -1,5 +1,6 @@
 from lib.color import Color
 
+
 class Employee:
     def __init__(self, title='', name='', user_id='', password=''):
         self.__title = title
@@ -23,9 +24,3 @@ class Employee:
             self.color.return_colored(self.__title, 'bold'), 
             self.color.return_colored(self.__name,'bold')
         )
-    
-    def delete_employee(self, employee):
-        pass
-        """
-        Maybe should focus in finishing the important one first.
-        """
