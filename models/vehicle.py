@@ -67,9 +67,9 @@ class Vehicle:
         self.__type_of_vehicle, self.__seats, self.__fuel, self.__transmission)
     
     def return_details(self):
-        """Returns the details needed for editing the car"""
+        """Returns vehicle details in a dictionary"""
         return {
-            "Car type": self.__type_of_vehicle,
+            "Vehicle type": self.__type_of_vehicle,
             "Make": self.__make,
             "Model": self.__model,
             "Year": self.__year,

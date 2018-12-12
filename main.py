@@ -2,7 +2,7 @@ from ui.frame import Frame
 from ui.menu import Menu
 
 
-#STARTING FUNCTIONALITY
+# STARTING FUNCTIONALITY
 
 frame = Frame()
 frame.clear()

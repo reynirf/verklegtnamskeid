@@ -13,7 +13,6 @@ import time
 import getpass
 import os.path
 
-
 class Menu:
 	def __init__(self):
 		self.nocco_list = NoccoList()
@@ -178,8 +177,8 @@ class Menu:
 		self.handle_answer_from_menu(found_order_list['action'], 'found order')
 
 	def get_inputted_order(self):
-		cars = self.order_manager.get_inputted_order()
-		self.frame.delete_last_lines(len(cars) - 1)
+		vehicles = self.order_manager.get_inputted_order()
+		self.frame.delete_last_lines(len(vehicles) - 1)
 		register_order_list = self.nocco_list.choose_one("Choose an action",
 							["Save", "Calculate order" , "Cancel"], "action")
 		self.handle_answer_from_menu(register_order_list['action'], 'register_order')
@@ -187,8 +186,8 @@ class Menu:
 	def delete_order(self):
 		start_day, end_day = self.__current_order.get_dates()
 		dates = self.order_manager.get_order_dates(start_day, end_day)
-		car = self.__current_order.get_license_plate()
-		self.vehicle_manager.delete_order_dates(dates, car)
+		vehicle = self.__current_order.get_license_plate()
+		self.vehicle_manager.delete_order_dates(dates, vehicle)
 		self.order_manager.delete_order(self.__current_order)
 		self.frame.delete_last_lines(2)
 		print('{}'.format(self.color.return_colored("Order removed!", 'red')))
@@ -224,29 +223,29 @@ class Menu:
 
 		self.check_if_valid('return location (Reykjavik or Akureyri)', self.order_manager.check_return_location)
 		
-		self.check_if_valid('type of vehicle (Small car, sedan, offroad or bus)', self.order_manager.check_type_of_vehicle)
+		self.check_if_valid('type of vehicle (Small vehicle, sedan, offroad or bus)', self.order_manager.check_type_of_vehicle)
 		
 		start_date, end_date = self.order_manager.get_dates()
-		car_list = self.vehicle_manager.show_car_availability(start_date, end_date, 'available')
-		car_type = self.order_manager.get_type()
-		filtered_list = self.vehicle_manager.find_car_by_type(car_type, car_list)
+		vehicle_list = self.vehicle_manager.show_vehicle_availability(start_date, end_date, 'available')
+		vehicle_type = self.order_manager.get_type()
+		filtered_list = self.vehicle_manager.find_vehicle_by_type(vehicle_type, vehicle_list)
 		print()
 		if not filtered_list:
 			self.frame.delete_last_lines(1)
 			print()
-			print("No vehicle of type {} available on these dates.".format(self.color.return_colored(car_type, 'red')))
+			print("No vehicle of type {} available on these dates.".format(self.color.return_colored(vehicle_type, 'red')))
 			time.sleep(1.5)
 			self.frame.delete_last_lines(11)
 			self.order()
 		else:
 			plates = []
-			print('Available cars:')
+			print('Available vehicles:')
 			print()
 			print('{:<20} {:<20} {:<20} {:<20}'.format('License', 'Make', 'Model', 'Seats'))
 			print('-'*70)
-			for car in filtered_list:
-				print(car.availability_string())
-				plates.append(car.get_license().lower())
+			for vehicle in filtered_list:
+				print(vehicle.availability_string())
+				plates.append(vehicle.get_license().lower())
 			print()
 
 			self.check_if_valid('license plate', self.order_manager.check_license_plate, plates)
@@ -487,49 +486,49 @@ class Menu:
 		self.frame.delete_last_lines()
 		self.customer()
 
-	def save_new_car(self):
-		self.vehicle_manager.save_new_car()
-		print("{}".format(self.color.return_colored("New car registered!", 'green')))
+	def save_new_vehicle(self):
+		self.vehicle_manager.save_new_vehicle()
+		print("{}".format(self.color.return_colored("New vehicle registered!", 'green')))
 		time.sleep(1.5)
 		self.frame.delete_last_lines(2)
 
-	def show_car_availability(self, prompt):
+	def show_vehicle_availability(self, prompt):
 		self.check_if_valid('a start date (DD.MM.YYYY)', self.order_manager.check_start_date)
 		self.check_if_valid('an end date (DD.MM.YYYY)', self.order_manager.check_ending_date)
 		start_date, end_date = self.order_manager.get_dates()
-		car_list = self.vehicle_manager.show_car_availability(start_date, end_date, prompt)
+		vehicle_list = self.vehicle_manager.show_vehicle_availability(start_date, end_date, prompt)
 		print() 
 		print('{:<20} {:<20} {:<20} {:<20}'.format('License', 'Make', 'Model', 'Seats'))
 		print('-'*70)
-		for car in car_list:
-			print(car.availability_string())
+		for vehicle in vehicle_list:
+			print(vehicle.availability_string())
 
 		self.nocco_list.single_list('Go back')
-		self.frame.delete_last_lines(len(car_list) + 2)
+		self.frame.delete_last_lines(len(vehicle_list) + 2)
 
-	def cars(self):
+	def vehicles(self):
 		self.frame.delete_last_lines(7)
-		car = self.nocco_list.choose_one('Choose an action', ['Register car', 'Find car', 'Show all available cars',
-															  'Show cars in service',
+		vehicle = self.nocco_list.choose_one('Choose an action', ['Register vehicle', 'Find vehicle', 'Show all available vehicles',
+															  'Show vehicles in service',
 															  'Go back'], 'action')
-		self.handle_answer_from_menu(car['action'], 'cars')
+		self.handle_answer_from_menu(vehicle['action'], 'vehicles')
 	
-	def save_edited_car(self):
+	def save_edited_vehicle(self):
 		self.vehicle_manager.delete_vehicle(self.__current_vehicle)
-		self.vehicle_manager.save_new_car()
-		print("{}".format(self.color.return_colored("Car updated!", 'green')))
+		self.vehicle_manager.save_new_vehicle()
+		print("{}".format(self.color.return_colored("Vehicle updated!", 'green')))
 		time.sleep(1.5)
 
-	def found_car(self):
-		found_car_list = self.nocco_list.choose_one('Choose an action',
-						['Edit car', 'Print car', 'Print car history', 'Remove car', 'Go back'], 'action')
-		self.handle_answer_from_menu(found_car_list['action'], 'found car')
+	def found_vehicle(self):
+		found_vehicle_list = self.nocco_list.choose_one('Choose an action',
+						['Edit vehicle', 'Print vehicle', 'Print vehicle history', 'Remove vehicle', 'Go back'], 'action')
+		self.handle_answer_from_menu(found_vehicle_list['action'], 'found vehicle')
 
 	def vehicle_history(self):
 		license_plate = self.__current_vehicle.get_license()
 		order_list = self.order_manager.find_orders_by_vehicle(license_plate)
 		if order_list == []:
-			print('{}'.format(self.color.return_colored("No orders registered to this car", 'red')))
+			print('{}'.format(self.color.return_colored("No orders registered to this vehicle", 'red')))
 			self.nocco_list.single_list('Go back')
 			self.frame.delete_last_lines(3)
 		else:
@@ -540,149 +539,149 @@ class Menu:
 			self.nocco_list.single_list('Go back')
 			self.frame.delete_last_lines(len(order_list) + 4)
 
-	def edit_car(self):
-		car = self.__current_vehicle.return_details()
+	def edit_vehicle(self):
+		vehicle = self.__current_vehicle.return_details()
 		self.frame.delete_last_lines()
 		print('{}\n'.format(self.color.return_colored('Leave input empty to keep the value the same', 'green')))
 
-		self.check_if_valid('Car type', self.vehicle_manager.check_type, True, car['Car type'])
+		self.check_if_valid('Vehicle type', self.vehicle_manager.check_type, True, vehicle['Vehicle type'])
 
-		self.check_if_valid('Make', self.vehicle_manager.check_make, True, car['Make'])
+		self.check_if_valid('Make', self.vehicle_manager.check_make, True, vehicle['Make'])
 
-		self.check_if_valid('Model', self.vehicle_manager.check_model, True, car['Model'])
+		self.check_if_valid('Model', self.vehicle_manager.check_model, True, vehicle['Model'])
 
-		self.check_if_valid('Year', self.vehicle_manager.check_year, True, car['Year'])
+		self.check_if_valid('Year', self.vehicle_manager.check_year, True, vehicle['Year'])
 
-		self.check_if_valid('Number of seats', self.vehicle_manager.check_number_of_seats, True, car['Number of seats'])
+		self.check_if_valid('Number of seats', self.vehicle_manager.check_number_of_seats, True, vehicle['Number of seats'])
 
-		self.check_if_valid('License plate', self.vehicle_manager.check_license_plate, True, car['License'])
+		self.check_if_valid('License plate', self.vehicle_manager.check_license_plate, True, vehicle['License'])
 
 		self.check_if_valid('Fuel', self.vehicle_manager.check_fuel, True,
-							car['Fuel'])
+							vehicle['Fuel'])
 
 		self.check_if_valid('Driving transmission', self.vehicle_manager.check_driving_transmission, True, 
-							car['Driving transmission'])
+							vehicle['Driving transmission'])
 		print()
 
-		save_edited_car = self.nocco_list.choose_one('Choose an action',
+		save_edited_vehicle = self.nocco_list.choose_one('Choose an action',
 														  ['Save', 'Cancel'],
 														  'action')
-		self.handle_answer_from_menu(save_edited_car['action'], 'save edited car')
+		self.handle_answer_from_menu(save_edited_vehicle['action'], 'save edited vehicle')
 		self.frame.delete_last_lines(8)
-		print("{}".format(self.color.return_colored("Car Saved", 'green')))
+		print("{}".format(self.color.return_colored("Vehicle Saved", 'green')))
 		time.sleep(4)
 		
 
 
-	def find_cars(self):
-		find_cars = self.nocco_list.choose_one('Choose an action', ['Find car by license plate', 'Find car by make',
-																	'Find car by type', 'Go back'], 'action')
+	def find_vehicles(self):
+		find_vehicles = self.nocco_list.choose_one('Choose an action', ['Find vehicle by license plate', 'Find vehicle by make',
+																	'Find vehicle by type', 'Go back'], 'action')
 		print()
-		self.handle_answer_from_menu(find_cars['action'], 'find car')
+		self.handle_answer_from_menu(find_vehicles['action'], 'find vehicle')
 
-	def find_cars_by_license_plate(self):
+	def find_vehicles_by_license_plate(self):
 		license_plate = input("Enter license plate: ")
 		print()
-		car = self.vehicle_manager.find_car_by_license_plate(license_plate)
-		if car == None:
-			print('{}'.format(self.color.return_colored("Car not found!", 'red')))
+		vehicle = self.vehicle_manager.find_vehicle_by_license_plate(license_plate)
+		if vehicle == None:
+			print('{}'.format(self.color.return_colored("Vehicle not found!", 'red')))
 			self.frame.delete_last_lines(3)
 			time.sleep(1.5)
-			self.find_cars()
+			self.find_vehicles()
 		else:
 			self.frame.delete_last_lines(2)
-			print("Car: " + car.get_license())
+			print("Vehicle: " + vehicle.get_license())
 			print()
-			self.__current_vehicle = car
-			found_cars_list = self.nocco_list.choose_one(
+			self.__current_vehicle = vehicle
+			found_vehicles_list = self.nocco_list.choose_one(
 														"Choose an action", 
 														[
-															"Edit car", 
-															"Print car",
-															"Print car history",
-															"Remove car", 
+															"Edit vehicle", 
+															"Print vehicle",
+															"Print vehicle history",
+															"Remove vehicle", 
 															"Go back"
 														], 
 														"action"
 														)
-			self.handle_answer_from_menu(found_cars_list['action'], 'found car')
+			self.handle_answer_from_menu(found_vehicles_list['action'], 'found vehicle')
 
-	def find_cars_by_make(self):
+	def find_vehicles_by_make(self):
 		make = input("Enter make: ")
 		print()
-		cars = self.vehicle_manager.find_car_by_make(make)
-		if cars == None:
-			print('{}'.format(self.color.return_colored("No car found!", 'red')))
+		vehicles = self.vehicle_manager.find_vehicle_by_make(make)
+		if vehicles == None:
+			print('{}'.format(self.color.return_colored("No vehicle found!", 'red')))
 			time.sleep(1.5)
 			self.frame.delete_last_lines(4)
 			print()
-			self.find_cars()
+			self.find_vehicles()
 		else:
 			self.frame.delete_last_lines(2)
-			if len(cars) == 1:
-				self.__current_vehicle = cars[0]
-				print("Car: " + self.__current_vehicle.__str__())
+			if len(vehicles) == 1:
+				self.__current_vehicle = vehicles[0]
+				print("Vehicle: " + self.__current_vehicle.__str__())
 				print()
-				self.found_car()
+				self.found_vehicle()
 			else:
-				print("{}".format(self.color.return_colored("There are multiple cars with that make!", 'red')))
+				print("{}".format(self.color.return_colored("There are multiple vehicles with that make!", 'red')))
 				print()
-				printable_cars = [
-					'{}'.format(car.__str__()) for car
-					in cars]
+				printable_vehicles = [
+					'{}'.format(vehicle.__str__()) for vehicle
+					in vehicles]
 
-				printable_cars.append('Go back')
-				found_multiple_cars = self.nocco_list.choose_one('Choose car',
-																	  printable_cars, 'car', True)
+				printable_vehicles.append('Go back')
+				found_multiple_vehicles = self.nocco_list.choose_one('Choose vehicle',
+																	  printable_vehicles, 'vehicle', True)
 
-				self.handle_answer_from_menu((found_multiple_cars, cars),
-											 'found multiple cars')
+				self.handle_answer_from_menu((found_multiple_vehicles, vehicles),
+											 'found multiple vehicles')
 
 
-	def find_cars_by_type(self):
-		type_of_car = input("Enter type: ")
+	def find_vehicles_by_type(self):
+		type_of_vehicle = input("Enter type: ")
 		print()
-		cars = self.vehicle_manager.find_car_by_type(type_of_car)
-		if cars == None:
-			print('{}'.format(self.color.return_colored("No car found!", 'red')))
+		vehicles = self.vehicle_manager.find_vehicle_by_type(type_of_vehicle)
+		if vehicles == None:
+			print('{}'.format(self.color.return_colored("No vehicle found!", 'red')))
 			time.sleep(1.5)
 			self.frame.delete_last_lines(4)
 			print()
-			self.find_cars()
+			self.find_vehicles()
 		else:
 			self.frame.delete_last_lines(2)
-			if len(cars) == 1:
-				self.__current_vehicle = cars[0]
-				print("Car: " + self.__current_vehicle.__str__())
+			if len(vehicles) == 1:
+				self.__current_vehicle = vehicles[0]
+				print("Vehicle: " + self.__current_vehicle.__str__())
 				print()
-				self.found_car()
+				self.found_vehicle()
 			else:
-				print("{}".format(self.color.return_colored("There are multiple cars with that type!", 'red')))
+				print("{}".format(self.color.return_colored("There are multiple vehicles with that type!", 'red')))
 				print()
-				printable_cars = [
-					'{} | {}'.format(car.__str__(), car.get_vehicle_type()) for car
-					in cars]
+				printable_vehicles = [
+					'{} | {}'.format(vehicle.__str__(), vehicle.get_vehicle_type()) for vehicle
+					in vehicles]
 
-				printable_cars.append('Go back')
-				found_multiple_cars = self.nocco_list.choose_one('Choose car',
-																	  printable_cars, 'car', True)
+				printable_vehicles.append('Go back')
+				found_multiple_vehicles = self.nocco_list.choose_one('Choose vehicle',
+																	  printable_vehicles, 'vehicle', True)
 
-				self.handle_answer_from_menu((found_multiple_cars, cars),
-											 'found multiple cars')
+				self.handle_answer_from_menu((found_multiple_vehicles, vehicles),
+											 'found multiple vehicles')
 
 	def delete_vehicle(self):
 		self.vehicle_manager.delete_vehicle(self.__current_vehicle)
 		self.frame.delete_last_lines(1)
-		print('{}'.format(self.color.return_colored("Car removed!", 'red')))
+		print('{}'.format(self.color.return_colored("Vehicle removed!", 'red')))
 		time.sleep(1.5)
 		self.frame.delete_last_lines(2)
 		print('\n' * 7)
-		self.cars()
+		self.vehicles()
 
-	def register_car(self):
+	def register_vehicle(self):
 		self.frame.delete_last_lines(7)
 
-		self.check_if_valid('Car type (smallcar, sedan, offroad or bus)', self.vehicle_manager.check_type)
+		self.check_if_valid('Vehicle type (smallcar, sedan, offroad or bus)', self.vehicle_manager.check_type)
 
 		self.check_if_valid('Make', self.vehicle_manager.check_make)
 
@@ -698,15 +697,15 @@ class Menu:
 
 		self.check_if_valid('Driving transmission (manual or automatic)', self.vehicle_manager.check_driving_transmission)
 		print()
-		register_car = self.nocco_list.choose_one('Choose an action',
+		register_vehicle = self.nocco_list.choose_one('Choose an action',
 												  ['Save', 'Cancel'],
 												  'action')
-		self.handle_answer_from_menu(register_car['action'], 'register car')
+		self.handle_answer_from_menu(register_vehicle['action'], 'register vehicle')
 
 	def init_menu(self):
 		prompt = self.nocco_list.choose_one(
 			'Choose an action',
-			['Order', 'Customer', 'Cars', 'Report an error', 'Sign out'],
+			['Order', 'Customer', 'Vehicles', 'Report an error', 'Sign out'],
 			'action'
 		)
 		self.handle_answer_from_menu(prompt['action'], 'main_menu')
@@ -729,8 +728,8 @@ class Menu:
 				self.frame.delete_last_lines(7)
 				self.customer()
 
-			elif prompt == 'Cars':
-				self.cars()
+			elif prompt == 'Vehicles':
+				self.vehicles()
 
 			elif prompt == 'Order':
 				self.frame.delete_last_lines(7)
@@ -920,20 +919,20 @@ class Menu:
 				self.customer()
 
 		######################################################    
-		#               FOUND MULTIPLE CARS             	 #                    
+		#               FOUND MULTIPLE VEHICLES              #                    
 		######################################################
-		if menu_type == 'found multiple cars':
-			chosen, cars = prompt
-			if chosen['car'] != 'Go back':
-				self.frame.delete_last_lines(len(cars) + 5)
-				self.__current_vehicle = cars[chosen['index']]
-				print('Car: ' + self.__current_vehicle.__str__())
+		if menu_type == 'found multiple vehicles':
+			chosen, vehicles = prompt
+			if chosen['vehicle'] != 'Go back':
+				self.frame.delete_last_lines(len(vehicles) + 5)
+				self.__current_vehicle = vehicles[chosen['index']]
+				print('Vehicle: ' + self.__current_vehicle.__str__())
 				print()
-				self.found_car()
+				self.found_vehicle()
 			else:
-				self.frame.delete_last_lines(len(cars) + 4)
+				self.frame.delete_last_lines(len(vehicles) + 4)
 				print('\n' * 5)
-				self.cars()
+				self.vehicles()
 
 		######################################################    
 		#                    FOUND CUSTOMER                  #                    
@@ -974,31 +973,31 @@ class Menu:
 				self.find_customer()
 
 		######################################################    
-		#                       CARS                         #                    
+		#                       VEHICLES                     #                    
 		######################################################
-		elif menu_type == 'cars':
-			if prompt == 'Register car':
-				self.register_car()
-				self.cars()
+		elif menu_type == 'vehicles':
+			if prompt == 'Register vehicle':
+				self.register_vehicle()
+				self.vehicles()
 
-			if prompt == 'Find car':
+			if prompt == 'Find vehicle':
 				self.frame.delete_last_lines(7)
-				self.find_cars()
-				self.cars()
+				self.find_vehicles()
+				self.vehicles()
 
-			elif prompt == 'Show all available cars':
+			elif prompt == 'Show all available vehicles':
 				self.frame.delete_last_lines(7)
-				self.show_car_availability('available')
+				self.show_vehicle_availability('available')
 				print()
 				print()
-				self.cars()
+				self.vehicles()
 
-			elif prompt == 'Show cars in service':
+			elif prompt == 'Show vehicles in service':
 				self.frame.delete_last_lines(7)
-				self.show_car_availability('rented')
+				self.show_vehicle_availability('rented')
 				print()
 				print()
-				self.cars()
+				self.vehicles()
 
 			elif prompt == 'Go back':
 				self.frame.delete_last_lines(7)
@@ -1009,9 +1008,9 @@ class Menu:
 		########################################################
 		elif menu_type == 'register_order':
 			start_date, end_date = self.order_manager.get_dates()
-			car_list = self.vehicle_manager.show_car_availability(start_date, end_date, 'available')
-			car_type = self.order_manager.get_type()
-			filtered_list = self.vehicle_manager.find_car_by_type(car_type, car_list)
+			vehicle_list = self.vehicle_manager.show_vehicle_availability(start_date, end_date, 'available')
+			vehicle_type = self.order_manager.get_type()
+			filtered_list = self.vehicle_manager.find_vehicle_by_type(vehicle_type, vehicle_list)
 			if filtered_list:
 				self.frame.delete_last_lines(len(filtered_list) + 4)
 			else:
@@ -1039,102 +1038,102 @@ class Menu:
 				self.get_inputted_order()
 	
 		######################################################    
-		#                    FIND CAR                        #                    
+		#                    FIND VEHICLE                    #                    
 		######################################################
-		elif menu_type == 'find car':
-			if prompt == 'Find car by license plate':
+		elif menu_type == 'find vehicle':
+			if prompt == 'Find vehicle by license plate':
 				self.frame.delete_last_lines(7)
-				self.find_cars_by_license_plate()
+				self.find_vehicles_by_license_plate()
 
-			elif prompt == 'Find car by make':
+			elif prompt == 'Find vehicle by make':
 				self.frame.delete_last_lines(7)
-				self.find_cars_by_make()
+				self.find_vehicles_by_make()
 
-			elif prompt == 'Find car by type':
+			elif prompt == 'Find vehicle by type':
 				self.frame.delete_last_lines(7)
-				self.find_cars_by_type()
+				self.find_vehicles_by_type()
 
 			elif prompt == 'Go back':
-				# It goes in cars menu if go back is chosen!
-				self.cars()
+				# It goes in vehicles menu if go back is chosen!
+				self.vehicles()
 
 		######################################################    
-		#                    FOUND CAR                       #                    
+		#                    FOUND VEHICLE                   #                    
 		######################################################
-		elif menu_type == 'found car':
-			if prompt == 'Edit car':
+		elif menu_type == 'found vehicle':
+			if prompt == 'Edit vehicle':
 				self.frame.delete_last_lines(8)
-				self.edit_car()
+				self.edit_vehicle()
 
-			elif prompt == 'Remove car':
+			elif prompt == 'Remove vehicle':
 				self.frame.delete_last_lines(8)
 				self.delete_vehicle()
 
-			elif prompt == 'Print car':
+			elif prompt == 'Print vehicle':
 
-				car_details = self.__current_vehicle.return_details()
+				vehicle_details = self.__current_vehicle.return_details()
 				self.frame.delete_last_lines(9)
-				for detail, value in car_details.items():
+				for detail, value in vehicle_details.items():
 					print("{}: {}".format(detail, value))
 				self.nocco_list.single_list('Go back')
 				self.frame.delete_last_lines(10)
-				print('Car: ' + self.__current_vehicle.__str__() + '\n')
-				self.found_car()
+				print('Vehicle: ' + self.__current_vehicle.__str__() + '\n')
+				self.found_vehicle()
 			
-			elif prompt == 'Print car history':
+			elif prompt == 'Print vehicle history':
 				self.frame.delete_last_lines(7)
 				self.vehicle_history()
-				self.found_car()
+				self.found_vehicle()
 
 			elif prompt == 'Go back':
 				self.frame.delete_last_lines(9)
-				self.find_cars()
+				self.find_vehicles()
 
 		######################################################    
-		#                    REGISTER CAR                    #                    
+		#                    REGISTER VEHICLE                #                    
 		######################################################
-		elif menu_type == 'register car':
+		elif menu_type == 'register vehicle':
 			if prompt == 'Save':
 				self.frame.delete_last_lines(13)
-				self.save_new_car()
+				self.save_new_vehicle()
 				vehicles = self.vehicle_manager.get_vehicle_list()
 				self.__current_vehicle = vehicles[-1]
 				print()
-				print('Car: {}\n'.format(self.__current_vehicle.__str__()))
-				self.found_car()
+				print('Vehicle: {}\n'.format(self.__current_vehicle.__str__()))
+				self.found_vehicle()
 
 			if prompt == 'Cancel':
 				self.frame.delete_last_lines(6)
-				self.cars()
+				self.vehicles()
 		######################################################    
-		#                    SAVE EDITED CAR                 #                    
+		#                    SAVE EDITED VEHICLE             #                    
 		######################################################
-		elif menu_type == 'save edited car':
+		elif menu_type == 'save edited vehicle':
 			if prompt == 'Save':
 				self.frame.delete_last_lines(15)
-				self.save_edited_car()
+				self.save_edited_vehicle()
 				self.frame.delete_last_lines()
-				self.__current_vehicle = self.vehicle_manager.find_car_by_license_plate(self.__current_vehicle.get_license())
-				print('Car: {}\n'.format(self.__current_vehicle.__str__()))
-				self.found_car()
+				self.__current_vehicle = self.vehicle_manager.find_vehicle_by_license_plate(self.__current_vehicle.get_license())
+				print('Vehicle: {}\n'.format(self.__current_vehicle.__str__()))
+				self.found_vehicle()
 				self.frame.delete_last_lines(2)
 
 			if prompt == 'Cancel':
 				self.frame.delete_last_lines(15)
-				print('Car: {}\n'.format(self.__current_vehicle.__str__()))
-				self.found_car()
+				print('Vehicle: {}\n'.format(self.__current_vehicle.__str__()))
+				self.found_vehicle()
 				self.frame.delete_last_lines(2)
 
 		######################################################    
-		#               SHOW CARS IN SERVICE                 #                    
+		#               SHOW VEHICLES IN SERVICE             #                    
 		######################################################
-		elif menu_type == 'show cars in service':
+		elif menu_type == 'show vehicles in service':
 			if prompt == 'Save':
 				self.frame.delete_last_lines(16)
-				self.save_new_car()
+				self.save_new_vehicle()
 				print("\n" * 7)
-				self.cars()
+				self.vehicles()
 
 			if prompt == 'Cancel':
 				self.frame.delete_last_lines(10)
-				self.cars()
+				self.vehicles()

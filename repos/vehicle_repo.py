@@ -35,12 +35,12 @@ class VehicleRepo:
                         self.__vehicle_list.append(vehicle)
         return self.__vehicle_list
 
-    def save_new_car(self, license_plate, make, model, year, car_type, number_of_seats,
+    def save_new_vehicle(self, license_plate, make, model, year, vehicle_type, number_of_seats,
              fuel, driving_transmission, dates_rented=[]):
-        """Saves a new car to file"""
+        """Saves a new vehicle to file"""
         with open(self.VEHICLE_FILE, 'a') as vehicle_file:
             csv_writer = csv.writer(vehicle_file, delimiter=';')
-            csv_writer.writerow([license_plate,make,model,year,car_type,number_of_seats,
+            csv_writer.writerow([license_plate,make,model,year,vehicle_type,number_of_seats,
             fuel,driving_transmission, dates_rented])
         self.__vehicle_list = []
     

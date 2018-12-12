@@ -76,16 +76,16 @@ class OrderManager:
         print("Enter return location: {}".format(self.__temp_return_location))
         print("Enter type of vehicle: {}".format(self.__temp_type_of_vehicle))
         start_date, end_date = self.get_dates()
-        car_list = self.__vehicle_manager.show_car_availability(start_date, end_date, 'available')
-        car_type = self.get_type()
-        filtered_list = self.__vehicle_manager.find_car_by_type(car_type, car_list)
+        vehicle_list = self.__vehicle_manager.show_vehicle_availability(start_date, end_date, 'available')
+        vehicle_type = self.get_type()
+        filtered_list = self.__vehicle_manager.find_vehicle_by_type(vehicle_type, vehicle_list)
         print()
-        print('Available cars:')
+        print('Available vehicles:')
         print()
         print('{:<20} {:<20} {:<20} {:<20}'.format('License', 'Make', 'Model', 'Seats'))
         print('-'*70)
-        for car in filtered_list:
-            print(car.availability_string())
+        for vehicle in filtered_list:
+            print(vehicle.availability_string())
         print()
         print("Enter license plate: {}".format(self.__temp_license_plate))
         print("Enter Insurance: {}".format(self.__temp_insurance))
@@ -164,20 +164,20 @@ class OrderManager:
         self.__temp_ssn = ssn
 
     def check_type_of_vehicle(self, type_of_vehicle, ignore_empty_value=False, current_value=''):
-        """check if type of car is valid."""
+        """check if type of vehicle is valid."""
         if type_of_vehicle.strip() == '' and not ignore_empty_value:
             return self.error( 'Type' )
         elif type_of_vehicle.strip() == '':
             self.__temp_type_of_vehicle = current_value
             return None
         
-        car_types = ["sedan", "offroad", "smallcar", "bus"]
+        vehicle_types = ["sedan", "offroad", "smallcar", "bus"]
         
         type_of_vehicle = type_of_vehicle.replace(' ', '')
-        if type_of_vehicle.lower() in car_types:
+        if type_of_vehicle.lower() in vehicle_types:
             self.__temp_type_of_vehicle = type_of_vehicle
         else:
-            return self.error("Car type")
+            return self.error("Vehicle type")
 
     def create_start_date_object(self, date_str):
         present_day = date.today()
