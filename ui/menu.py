@@ -28,9 +28,9 @@ class Menu:
 		self.__current_order = ""
 
 	def get_employees(self):
-		employee_list = self.employee_manager.get_employee_list()
-		for employee in employee_list:
-			print(employee)
+		employee_list = self.employee_manager.get_employee_list() #Fetch employees in a list from employee_manager.
+		for employee in employee_list: #Loop through the list to get a employee
+			print(employee) 
 
 	def authenticate_v2(self):
 		print()
@@ -40,17 +40,17 @@ class Menu:
 			employee_id = input('Enter your ID: ')
 			employee_password = getpass.getpass('Enter password: ')
 			response = self.employee_manager.authenticate(employee_id, employee_password)
-			if type(response) == Employee:
-				print()
+			if type(response) == Employee: #The function authenticate checks the id and password.
+				print() #Styling...
 				if self.employee_manager.has_failed():
 					self.frame.delete_last_lines(4)
 					print('\n' * 3)
-				self.introduce_employee(response)
+				self.introduce_employee(response) #The function introduce_employee prints the customer
 				print()
-				logged_in = True
+				logged_in = True #To end the while loop
 			else:
 				self.frame.delete_last_lines(3)
-				self.color.print_colored(response, 'red')
+				self.color.print_colored(response, 'red') #The loggin has failed.
 
 	def introduce_employee(self, employee):
 		self.frame.delete_last_lines(3)
@@ -58,10 +58,10 @@ class Menu:
 
 	def signout(self):
 		self.frame.delete_last_lines(9)
-		employee = self.employee_manager.get_current_employee()
-		print('{} has been logged out'.format(
+		employee = self.employee_manager.get_current_employee() 
+		print('{} has been logged out'.format(  				#Prints that the user has been logged out
 			self.color.return_colored(employee.get_name(), 'red')))
-		time.sleep(1.5)
+		time.sleep(1.5) #Lets the program sleep for 1.5 seconds before continuing for a regular flow.
 		self.frame.delete_last_lines(3)
 		self.authenticate_v2()
 
@@ -105,61 +105,62 @@ class Menu:
 		print('-'*42)
 		total = (base_price + insurance + extra_ins) * days
 		print('{:<20}{:>22}'.format('TOTAL ISK:', total))
-
+		#A lot of formatting was needed to print the calculated order fancy and readable.
 		self.nocco_list.single_list("Go back")
 
 	def show_pricing_list(self):
-		vehicle_types = ['smallcar', 'sedan', 'offroad', 'bus']
+		vehicle_types = ['smallcar', 'sedan', 'offroad', 'bus'] #All available types we offer.
 		self.frame.delete_last_lines(2)
 		print()
 		print('{:<15}{:>12}{:>20}{:>20}'.format('Vehicle type', 'Base price', 'Basic insurance', 'Extra insurance'))
 		print('-'*67)
-		for vehicle in vehicle_types:
+		for vehicle in vehicle_types: #Loops the vehicle list and prints the price for each vehicle.
 			print(self.price_list.print_prices(vehicle))
 		print()
 		print('Prices are per day in ISK')
 		self.nocco_list.single_list("Go back")
 		self.frame.delete_last_lines(10)
-		self.order()
+		self.order() #Runs order again after you go back.
 
 	def find_order_by_id(self):
 		ID = input("Enter ID: ")
 		self.frame.delete_last_lines(2)
 		print()
-		order = self.order_manager.find_order_by_id(ID)
-		if order == None:
+		order = self.order_manager.find_order_by_id(ID) #Runs find_order_by_id in order manager
+		if order == None: #Then there is no order with that particular ID
 			print('{}'.format(self.color.return_colored("Order not found!", 'red')))
 			time.sleep(1.5)
 			self.frame.delete_last_lines()
 			self.find_order()
-		else:
+		else: #The order has been found
 			self.__current_order = order
 			print("Order: " + order.__str__())
 			print()
-			self.found_order()
+			self.found_order() 
 
 	def find_order_by_ssn(self):
 		ssn = input("Enter SSN: ")
 		print()
-		orders = self.order_manager.find_order_by_ssn(ssn)
-		if orders == []:
+		orders = self.order_manager.find_order_by_ssn(ssn) #Runs find_order_by_ssn in order_manager
+		if orders == []: #Than the order has not been found because there is no order linked to that ssn
 			print('{}'.format(self.color.return_colored("Order not found!", 'red')))
 			time.sleep(1.5)
 			self.frame.delete_last_lines(3)
 			self.find_order()
-		else:
+		else: #A order has been found with that particular ssn linked to it.
 			self.frame.delete_last_lines(2)
-			if len(orders) == 1:
+			if len(orders) == 1: #There is only one order linked to that particular ssn
 				print("Order : " + orders[0].__str__())
 				print()
 				self.__current_order = orders[0]
 				self.found_order()
-			else:
+			else: # Multiple orders are linked with a paticullar ssn
 				print("{}".format(self.color.return_colored("There are multiple orders with that SSN!", 'red')))
 				print()
 				printable_orders = ['ID: {} | {} - {}'.format(
 					order.__str__(), order.get_dates()[0], order.get_dates()[1]) for order in orders]
 				printable_orders.append('Go back')
+				#Reynir...
 
 				found_multiple_orders = self.nocco_list.choose_one('Choose an order',
 						printable_orders, 'order', True)
@@ -178,17 +179,17 @@ class Menu:
 
 	def get_inputted_order(self):
 		vehicles = self.order_manager.get_inputted_order()
-		self.frame.delete_last_lines(len(vehicles) - 1)
+		self.frame.delete_last_lines(len(vehicles) - 1) #Deletes last lines equal to len(cars) -1...styling
 		register_order_list = self.nocco_list.choose_one("Choose an action",
 							["Save", "Calculate order" , "Cancel"], "action")
 		self.handle_answer_from_menu(register_order_list['action'], 'register_order')
 
 	def delete_order(self):
-		start_day, end_day = self.__current_order.get_dates()
-		dates = self.order_manager.get_order_dates(start_day, end_day)
-		vehicle = self.__current_order.get_license_plate()
-		self.vehicle_manager.delete_order_dates(dates, vehicle)
-		self.order_manager.delete_order(self.__current_order)
+		start_day, end_day = self.__current_order.get_dates() # gets start day an end day from get_dates.
+		dates = self.order_manager.get_order_dates(start_day, end_day) #puts the values in get_order_dates
+		vehicle = self.__current_order.get_license_plate() #Gets a license plate for current order.
+		self.vehicle_manager.delete_order_dates(dates, vehicle) #A function that deletes the dates a vehicle is rented.
+		self.order_manager.delete_order(self.__current_order) #A function that deletes the particullar order
 		self.frame.delete_last_lines(2)
 		print('{}'.format(self.color.return_colored("Order removed!", 'red')))
 		time.sleep(1.5)
@@ -196,17 +197,19 @@ class Menu:
 		self.order()
 
 	def save_new_order(self):
-		self.order_manager.save_new_order()
+		self.order_manager.save_new_order() #A function that saves the order in the csv file.
 		print("{}".format(self.color.return_colored("New order registered!", 'green')))
 		time.sleep(1.5)
 		dates = self.order_manager.get_order_dates()
 		vehicle = self.order_manager.get_license_plate()
-		self.vehicle_manager.save_order_dates(dates, vehicle)
+		self.vehicle_manager.save_order_dates(dates, vehicle) #saves the dates for a praticullar rented car.
 
 	def register_order(self):
 		self.frame.delete_last_lines(6)
 		print()
-
+		# Here are all checks to check if a input is valid, it is sent to the check_if_valid function
+		# and order_manager checks.
+		 
 		self.check_if_valid('order ID', self.order_manager.check_ID)
 
 		self.check_if_valid('customer SSN', self.order_manager.check_ssn)
@@ -261,7 +264,8 @@ class Menu:
 	def edit_order(self):
 		order = self.__current_order.return_details()
 		print('{}\n'.format(self.color.return_colored('Leave input empty to keep the value the same.', 'green')))
-
+		# Checks if inputs are valid, goes thorugh check_if_valid fundtion and checks in order_manager.
+		
 		self.check_if_valid('ID', self.order_manager.check_ID, True, order['ID'])
 
 		self.check_if_valid('SSN', self.order_manager.check_ssn, True, order['SSN'])
