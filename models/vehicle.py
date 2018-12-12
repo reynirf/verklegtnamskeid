@@ -1,8 +1,12 @@
 from datetime import date
 from models.price import Price
 
+
 class Vehicle:
-    def __init__(self, license_plate, make, model, year, type_of_vehicle, seats, fuel, transmission, dates=[]):
+    def __init__(
+            self, license_plate, make, model, year, type_of_vehicle, 
+            seats, fuel, transmission, dates=[]
+    ):
         self.__price_list = Price()
         self.__license = license_plate
         self.__make = make
@@ -19,6 +23,8 @@ class Vehicle:
         self.set_rented_dates()
 
     def set_rented_dates(self):
+        """converts all dates in rent_dates to date instances and saves
+        them to rented_dates"""
         try:
             for d in self.__rent_dates:
                 rent_day = date(int(d[:4]), int(d[4:6]), int(d[6:]))
@@ -33,7 +39,8 @@ class Vehicle:
         return "{} | {}".format(self.__license, self.__make)
 
     def availability_string(self):
-        return '{:<20} {:<20} {:<20} {:<20}'.format(self.__license, self.__make, self.__model, self.__seats)
+        return '{:<20} {:<20} {:<20} {:<20}'.format(
+            self.__license, self.__make, self.__model, self.__seats)
 
     def get_license(self):
         return self.__license

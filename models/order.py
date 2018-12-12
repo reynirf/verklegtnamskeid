@@ -1,5 +1,6 @@
 from datetime import date
 
+
 class Order:
     def __init__(
         self, order_id, ssn, start_date, end_date, pick_up_time, return_time, 
@@ -9,8 +10,10 @@ class Order:
         self.__ssn = ssn
         self.__start_date_str = start_date[6:] + '.' + start_date[4:6] + '.' + start_date[:4]
         self.__end_date_str = end_date[6:] + '.' + end_date[4:6] + '.' + end_date[:4]
-        self.__start_date = date(int(start_date[:4]), int(start_date[4:6]), int(start_date[6:]))
-        self.__end_date = date(int(end_date[:4]), int(end_date[4:6]), int(end_date[6:]))
+        self.__start_date = date(
+            int(start_date[:4]), int(start_date[4:6]), int(start_date[6:]))
+        self.__end_date = date(
+            int(end_date[:4]), int(end_date[4:6]), int(end_date[6:]))
         self.__pick_up_time = pick_up_time
         self.__return_time = return_time
         self.__pick_up_location = pick_up_location
