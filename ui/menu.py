@@ -13,7 +13,6 @@ import time
 import getpass
 import os.path
 
-
 class Menu:
 	def __init__(self):
 		self.nocco_list = NoccoList()
