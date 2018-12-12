@@ -91,7 +91,7 @@ class VehicleManager:
         """Check if year is valid. Returns an error message if it is not
         between 1940 and the current year. When editing a previous 
         value is used if nothing is entered"""
-        OLDEST_CAR = int(1940)
+        OLDEST_VEHICLE = int(1940)
         present_year = int(datetime.datetime.today().year)        
         
         if year.strip() == '' and not ignore_empty_value:
@@ -291,7 +291,8 @@ class VehicleManager:
         #Removing dates and converting what's left to strings
         new_dates = vehicle_dates - set(dates)
         new_vehicle_dates = self.dates_to_string(new_dates)
-        self.__vehicle_repo.save_new_vehicle(a, b, c, d, e, f, g, h, dates_rented=new_vehicle_dates)
+        self.__vehicle_repo.save_new_vehicle(
+            a, b, c, d, e, f, g, h, dates_rented=new_vehicle_dates)
 
     def dates_to_string(self, dates):
         """Recieves a list of dates and converts them into a single string
