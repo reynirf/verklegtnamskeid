@@ -32,7 +32,7 @@ class Menu:
 		for employee in employee_list: #Loop through the list to get a employee
 			print(employee) 
 
-	def authenticate_v2(self):
+	def authenticate(self):
 		print()
 		print()
 		logged_in = False
@@ -63,7 +63,7 @@ class Menu:
 			self.color.return_colored(employee.get_name(), 'red')))
 		time.sleep(1.5) #Lets the program sleep for 1.5 seconds before continuing for a regular flow.
 		self.frame.delete_last_lines(3)
-		self.authenticate_v2()
+		self.authenticate()
 
 	def report_error(self):
 		self.frame.delete_last_lines(7)

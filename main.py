@@ -1,20 +1,18 @@
 from ui.frame import Frame
 from ui.menu import Menu
 
-
-# STARTING FUNCTIONALITY
-
 frame = Frame()
-frame.clear()
-print(frame)
+frame.clear_window()
+print(frame) # prints frame (logo and horizontal line)
+
 print() # empty line before system boot
 
-frame.boot_system()
+frame.boot_system() # boot system. Progress bar from 0-100%
 
-frame.delete_last_lines(3)
+frame.delete_last_lines(3) # delete 3 lines to remove the progress bar after it's finished
 
-menu = Menu()
+menu = Menu() # init menu
 
-menu.authenticate_v2()
+menu.authenticate() # authenticate  
 
-menu.init_menu()
+menu.init_menu() # after authentication, show main menu
