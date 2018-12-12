@@ -178,13 +178,8 @@ class Menu:
 		self.handle_answer_from_menu(found_order_list['action'], 'found order')
 
 	def get_inputted_order(self):
-<<<<<<< HEAD
-		cars = self.order_manager.get_inputted_order()
-		self.frame.delete_last_lines(len(cars) - 1) #Deletes last lines equal to len(cars) -1...styling
-=======
 		vehicles = self.order_manager.get_inputted_order()
-		self.frame.delete_last_lines(len(vehicles) - 1)
->>>>>>> d72017bcaf0a40db3dc0eb213689e3b2acc2f2e5
+		self.frame.delete_last_lines(len(vehicles) - 1) #Deletes last lines equal to len(cars) -1...styling
 		register_order_list = self.nocco_list.choose_one("Choose an action",
 							["Save", "Calculate order" , "Cancel"], "action")
 		self.handle_answer_from_menu(register_order_list['action'], 'register_order')
