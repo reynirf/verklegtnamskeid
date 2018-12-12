@@ -1,14 +1,9 @@
 licence;make;model;year;type;seats;fuel;transmission;dates rented
-<<<<<<< HEAD
-ABDE;lel;lel;2000;offroad;4;diesel;manual;[]
-test;tes;test;2000;bus;4;electric;automatic;[]
-=======
 AAA00;toyota;auris;2017;smallcar;5;hybrid;manual;[]
 LOL00;toyota;auris;2017;smallcar;5;diesel;automatic;[]
 FOK23;toyota;yaris;2017;smallcar;5;diesel;manual;[]
 ABC;toyota;auris;2017;smallcar;5;hybrid;automatic;[]
 DNO45;skoda;octavia;2018;sedan;5;diesel;automatic;[]
-BBB33;skoda;octavia;2018;sedan;5;hybrid;manual;[]
 TTT11;volvo;clx;2018;sedan;5;hybrid;manual;[]
 lollol;volvo;x3;2018;sedan;5;diesel;automatic;[]
 VIP01;range rover;descovery;2018;offroad;5;diesel;manual;[]
@@ -17,5 +12,5 @@ BIG99;pugeot;xxl;2017;bus;13;diesel;automatic;[]
 VIP00;tesla;premium;2018;sedan;2;hybrid;manual;20181212,20181213,20181214,
 WOW00;toyota;rav;2018;offroad;6;hybrid;manual;[]
 RYZ71;toyota;yaris;2017;smallcar;5;gasoline;automatic;20181212,20181213,20181214,
-XXL13;RAM;XL;2018;bus;8;gasoline;automatic;20181224,20181225,20181226,
->>>>>>> c80cb20acee818a885d0733d2f19dd3af22f9f27
+XXL13;RAM;XL;2018;bus;8;gasoline;automatic;20181224,20181225,20181226,
+BBB33;skoda;octavia;2018;sedan;5;hybrid;manual;

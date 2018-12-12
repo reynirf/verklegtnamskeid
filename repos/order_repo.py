@@ -57,7 +57,7 @@ class OrderRepo:
             csv_reader = csv.reader(order_file)
             for line in csv_reader:
                 if line != []:
-                    if line[0] != order.__str__():
+                    if line[0] != order.get_id():
                         file_content.append(line)
         with open(self.ORDER_FILE, 'w', newline='') as updated_file:
             csv_writer = csv.writer(updated_file)

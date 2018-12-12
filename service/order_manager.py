@@ -218,10 +218,6 @@ class OrderManager:
             self.__temp_start_date = start_date_object
         else:
             return self.error("Start date")
-        
-        #self.__temp_start_date = self.create_start_date_object(start_date)
-        #if not self.__temp_start_date:
-        #    return self.error('Start date')
 
     def check_ending_date(self, end_date, ignore_empty_value=False, current_value=''):
         """Check if end date is valid. Returns an error message if end date
@@ -237,10 +233,6 @@ class OrderManager:
             self.__temp_end_date = end_date_object
         else:
             return self.error("End date")
-
-        #self.__temp_end_date = self.create_end_date_object(end_date)
-        #if not self.__temp_end_date:
-        #    return self.error('End date')
 
     def check_pick_up_time(self, pick_up_time, ignore_empty_value=False, current_value=''):
         """Check if pick up time is valid. Returns an error message if pick up time
