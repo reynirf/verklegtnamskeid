@@ -31,14 +31,14 @@ class OrderRepo:
         return self.__order_list
 
     def save_new_order(self, ID, ssn, starting_date, ending_date, pick_up_time,
-                       returning_time, pick_up_location, return_location, car_number,
+                       returning_time, pick_up_location, return_location, license_plate,
                         insurance, type_of_vehicle):
         """Writes a new order to file"""
         with open(self.ORDER_FILE, 'a', newline='') as order_file:
             csv_writer = csv.writer(order_file)
             csv_writer.writerow([ID, ssn, starting_date, ending_date, pick_up_time,
                                  returning_time, pick_up_location, return_location, 
-                                 car_number, insurance, type_of_vehicle])
+                                 license_plate, insurance, type_of_vehicle])
         self.__order_list = []
 
     def delete_order(self, order):
