@@ -137,7 +137,6 @@ class Menu:
 			self.__current_order = order
 			print("Order: " + order.__str__())
 			print()
-			self.__current_order = order
 			self.found_order()
 
 	def find_order_by_ssn(self):
