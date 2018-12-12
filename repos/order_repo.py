@@ -1,4 +1,3 @@
-from models.employee import Employee
 from models.order import Order
 import csv
 
@@ -8,7 +7,6 @@ class OrderRepo:
 
     def __init__(self):
         self.__order_list = []
-        self.__current_order = ""
 
     def get_order_list(self):
         """Reads each order from the file and returns a list of 
@@ -32,12 +30,6 @@ class OrderRepo:
                     self.__order_list.append(order)
         return self.__order_list
 
-    def set_current_order(self, order):
-        self.__current_order = order
-
-    def get_current_order(self):
-        return self.__current_order
-
     def save_new_order(self, ID, ssn, starting_date, ending_date, pick_up_time,
                        returning_time, pick_up_location, return_location, car_number,
                         insurance, type_of_vehicle):
@@ -56,6 +48,7 @@ class OrderRepo:
         with open(self.ORDER_FILE, 'r') as order_file:
             csv_reader = csv.reader(order_file)
             for line in csv_reader:
+                #compares first column of non empty lines to order ID
                 if line != []:
                     if line[0] != order.get_id():
                         file_content.append(line)

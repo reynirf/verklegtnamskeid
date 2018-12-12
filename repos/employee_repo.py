@@ -10,7 +10,8 @@ class EmployeeRepo:
         self.__current_employee = ""
 
     def get_employee_list(self):
-        """Returns a list of all employees on file"""
+        """Reads in all employees on file and returns a list of 
+        Employee instances"""
         if self.__employee_list == []:
             with open(self.EMPLOYEE_FILE, 'r') as employee_file:
                 csv_reader = csv.DictReader(employee_file)
