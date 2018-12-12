@@ -453,7 +453,7 @@ class Menu:
 				print("{}".format(self.color.return_colored("There are multiple customers with that name!", 'red')))
 				print()
 				printable_customers = [
-					'{} | {}-{}'.format(customer.__str__(), customer.get_ssn()[:6], customer.get_ssn()[6:]) for customer
+					'{}'.format(customer.__str__()) for customer
 					in customers]
 
 				printable_customers.append('Go back')
@@ -871,7 +871,7 @@ class Menu:
 				self.found_customer()
 
 			elif prompt == 'Cancel':
-				self.frame.delete_last_lines(15)
+				self.frame.delete_last_lines(12)
 				self.customer()
 
 		######################################################    
