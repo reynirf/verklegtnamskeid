@@ -31,7 +31,8 @@ class VehicleManager:
             self.__temp_vehicle_type,
             self.__temp_number_of_seats,
             self.__temp_fuel,
-            self.__temp_driving_transmission)
+            self.__temp_driving_transmission
+        )
 
     def check_type(self, vehicle_type, ignore_empty_value=False, current_value=''):
         """Check if type is valid. Returns an error message if type

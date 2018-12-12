@@ -52,9 +52,12 @@ class NoccoList:
                     alternative_index += 1
             elif key == 'right':
                 if get_chosen_index:
-                    answer_from_user = {answer_key: alternatives[alternative_index], 'index': alternative_index}
+                    answer_from_user = {
+                        answer_key: alternatives[alternative_index], 
+                        'index': alternative_index
+                    }
                 else:
-                    answer_from_user = {answer_key: alternatives[alternative_index]}
+                    answer_from_user = { answer_key: alternatives[alternative_index] }
             elif key == 'left':
                 pass
             else:
@@ -62,10 +65,13 @@ class NoccoList:
                     key = key.decode('utf-8')
                 if key not in string.digits and key not in string.ascii_letters and key not in string.punctuation: 
                     if get_chosen_index:
-                        answer_from_user = {answer_key: alternatives[alternative_index], 'index': alternative_index}
+                        answer_from_user = {
+                            answer_key: alternatives[alternative_index], 
+                            'index': alternative_index
+                        }
                     else:
-                        answer_from_user = {answer_key: alternatives[alternative_index]}
-            self.frame.delete_last_lines(n=len(alternatives) + 2)
+                        answer_from_user = { answer_key: alternatives[alternative_index] }
+            self.frame.delete_last_lines(len(alternatives) + 2)
             self.print_alternatives(
                 question,
                 alternatives,
@@ -87,7 +93,8 @@ class NoccoList:
 
         while not pressed:
             key = self.nocco_key.getKey() # get key_press from user
-            if key not in string.digits and key not in string.ascii_letters and key not in string.punctuation and key != 'down' and key != 'up':
+            enter_key = string.digits + string.ascii_letters + string.punctuation
+            if key not in enter_key and key != 'down' and key != 'up':
                 pressed = True
             self.frame.delete_last_lines(1)
             print(' {}'.format(self.color.return_colored('> ' + alternative, 'red')))

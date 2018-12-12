@@ -44,6 +44,11 @@ class NoccoKey:
         # elif for Windows
         elif firstChar == b'\xe0': # if special key is pressed, for instance arrow keys
             # return "up" if Windows version of arrow key "up" is b'\xe0H etc...
-            return {b'H': 'up', b'P': 'down', b'M': 'right', b'K': 'left'}[self.msvcrt.getch()]
+            return {
+                b'H': 'up', 
+                b'P': 'down', 
+                b'M': 'right', 
+                b'K': 'left'
+            }[self.msvcrt.getch()]
         # else
         return firstChar

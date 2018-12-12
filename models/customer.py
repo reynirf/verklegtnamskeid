@@ -1,6 +1,5 @@
 class Customer:
-    def __init__(self, name, ssn, phone, email, 
-        address, driver_license, credit_card):
+    def __init__(self, name, ssn, phone, email, address, driver_license, credit_card):
         self.__name = name
         self.__ssn = ssn
         self.__phone = phone
@@ -18,6 +17,7 @@ class Customer:
         return self.__ssn
 
     def return_details(self):
+        """ Returns customer details in a dictionary """
         return {
             "Name": self.__name,
             "SSN": self.__ssn,

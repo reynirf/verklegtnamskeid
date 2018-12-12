@@ -35,18 +35,29 @@ class VehicleRepo:
                         self.__vehicle_list.append(vehicle)
         return self.__vehicle_list
 
-    def save_new_vehicle(self, license_plate, make, model, year, vehicle_type, number_of_seats,
-             fuel, driving_transmission, dates_rented=[]):
+    def save_new_vehicle(
+        self, license_plate, make, model, year, vehicle_type, 
+        number_of_seats, fuel, driving_transmission, dates_rented=[]
+    ):
         """Saves a new vehicle to file"""
         with open(self.VEHICLE_FILE, 'a') as vehicle_file:
             csv_writer = csv.writer(vehicle_file, delimiter=';')
-            csv_writer.writerow([license_plate,make,model,year,vehicle_type,number_of_seats,
-            fuel,driving_transmission, dates_rented])
+            csv_writer.writerow([
+                license_plate,
+                make,
+                model,
+                year,
+                vehicle_type,
+                number_of_seats,
+                fuel,
+                driving_transmission, 
+                dates_rented
+            ])
         self.__vehicle_list = []
     
     def delete_vehicle(self, vehicle):
-        """Reads vehicles from file and compares them to the given vehicle. 
-        Writes the file again without the line that matches the license plate"""
+        """ Reads vehicles from file and compares them to the given vehicle. 
+        Writes the file again without the line that matches the license plate """
         file_content = []
         with open(self.VEHICLE_FILE, 'r') as vehicle_file:
             csv_reader = csv.reader(vehicle_file, delimiter=';')

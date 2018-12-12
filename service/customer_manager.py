@@ -28,7 +28,8 @@ class CustomerManager:
             self.__temp_email,
             self.__temp_address,
             self.__temp_driver_license,
-            self.__temp_credit_card)
+            self.__temp_credit_card
+        )
 
     def check_name(self, name, ignore_empty_value=False, current_value=''):
         """check if name is valid. Returns an error message if name
