@@ -28,4 +28,6 @@ class Price:
         price = self.get_price(vehicle_type)
         basic_ins = int(price * 0.35)
         extra_ins = self.get_insurance(vehicle_type)
-        return '{:<15}{:>12}{:>20}{:>20}'.format(vehicle_type, price, basic_ins, extra_ins)
+        if vehicle_type == 'smallcar':
+            vehicle_type = 'small car'
+        return '{:<15}{:>12}{:>20}{:>20}'.format(vehicle_type.capitalize(), price, basic_ins, extra_ins)
