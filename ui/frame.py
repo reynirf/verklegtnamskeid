@@ -56,10 +56,13 @@ class Frame:
 
             # Update progress bar
             self.boot_loop(number + 1, boot_length, 'Starting system:', 'Complete', 50)
+            
+        self.delete_last_lines(3) # delete 3 lines to remove the progress bar after it's finished
+
 
     def __str__(self):
         """ Print header of application """
-        return '{}{}\n'.format(
+        return '{}{}\n\n'.format(
             self.color.return_colored(self.logo,'bold'),
             self.color.return_colored('-'*int(self.columns), 'bold')
         )
