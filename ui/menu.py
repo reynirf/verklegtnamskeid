@@ -127,6 +127,7 @@ class Menu:
 		#                    MAIN MENU                     #                                                                                
 		####################################################
 		if menu_type == 'main_menu':
+
 			if prompt == 'Sign out':
 				self.signout()
 				self.init_menu()
@@ -151,6 +152,7 @@ class Menu:
 		####################################################
 
 		elif menu_type == 'order':
+
 			if prompt == 'Go back':
 				self.frame.delete_last_lines(6)
 				self.init_menu()
@@ -164,6 +166,7 @@ class Menu:
 				print()
 				self.frame.delete_last_lines(7)
 				self.find_order()
+
 			elif prompt == 'Show pricing list':
 				print()
 				self.frame.delete_last_lines(6)
@@ -176,6 +179,7 @@ class Menu:
 		####################################################
 
 		elif menu_type == 'customer':
+
 			if prompt == 'Go back':
 				self.frame.delete_last_lines(5)
 				self.init_menu()
@@ -192,6 +196,7 @@ class Menu:
 		#                     VEHICLES                     #                    
 		####################################################
 		elif menu_type == 'vehicles':
+			
 			if prompt == 'Register vehicle':
 				self.register_vehicle()
 				self.vehicles()
@@ -225,7 +230,13 @@ class Menu:
 		and from there the it will be called the authenticate() method which prompts to get an user id and password."""
 		prompt = self.nocco_list.choose_one(
 			'Choose an action',
-			['Order', 'Customer', 'Vehicles', 'Report an error', 'Sign out'],
+			[
+				'Order', 
+				'Customer', 
+				'Vehicles', 
+				'Report an error', 
+				'Sign out'
+			],
 			'action'
 		)
 		self.handle_answer_from_main_menus(prompt['action'], 'main_menu')
@@ -246,37 +257,47 @@ class Menu:
 		the menu, either can go back at main menu.
 		"""
 		customer = self.nocco_list.choose_one(
-												'Choose an action',
-											    [
-											    	'Register customer', 
-													'Find customer', 
-													'Go back'
-											    ],
-											    'action'
-											  )
+			'Choose an action',
+			[
+				'Register customer', 
+				'Find customer', 
+				'Go back'
+			],
+			'action'
+		)
 		self.handle_answer_from_main_menus(customer['action'], 'customer')
 
 	def order(self):
 		"""Prints functionalities of the order menu, and the user can either choose any option from
 		the menu, either can go back at main menu.
 		"""
-		order_list = self.nocco_list.choose_one("Choose an action",
-												[
-													"Register order",
-													"Find order",
-													"Show pricing list", 
-													"Go back"
-												],
-												"action")
+		order_list = self.nocco_list.choose_one(
+			"Choose an action",
+			[
+				"Register order",
+				"Find order",
+				"Show pricing list", 
+				"Go back"
+			],
+			"action"
+		)
 		self.handle_answer_from_main_menus(order_list['action'], 'order')
 
 	def vehicles(self):
 		"""This function allows the user to choose what action he wants after going to the section "cars"
 		using nocco list"""
 		self.frame.delete_last_lines(7)
-		vehicle = self.nocco_list.choose_one('Choose an action', ['Register vehicle', 'Find vehicle', 'Show all available vehicles',
-															  'Show vehicles in service',
-															  'Go back'], 'action')
+		vehicle = self.nocco_list.choose_one(
+			'Choose an action', 
+			[
+				'Register vehicle', 
+				'Find vehicle', 
+				'Show all available vehicles',
+				'Show vehicles in service',
+				'Go back'
+			], 
+			'action'
+		)
 		self.handle_answer_from_main_menus(vehicle['action'], 'vehicles')
 	
 	############################################################################
@@ -315,10 +336,9 @@ class Menu:
 				self.found_order()
 
 			elif prompt == 'Calculate order':
-				vehicles = self.order_manager.get_inputted_order()
-				self.frame.delete_last_lines(len(vehicles) * 2 + 36)				
+				self.frame.delete_last_lines(20)
 				self.calculate_order()
-				self.frame.delete_last_lines(len(vehicles) * 2 + 6)				
+				self.frame.delete_last_lines(10)
 				print()
 				self.get_inputted_order()
 	
@@ -326,6 +346,7 @@ class Menu:
 		#                    FIND ORDER                    #
 		####################################################
 		elif menu_type == 'find order':
+
 			if prompt == 'Find order by ID':
 				self.frame.delete_last_lines(5)
 				self.find_order_by_id()
@@ -342,9 +363,11 @@ class Menu:
 		#                   FOUND ORDER                    #
 		####################################################
 		elif menu_type == 'found order':
+
 			if prompt == 'Edit order':
 				self.frame.delete_last_lines(6)
 				self.edit_order()
+
 			elif prompt == 'Print order':
 				order_details = self.__current_order.return_details()
 				self.frame.delete_last_lines(6)
@@ -354,9 +377,11 @@ class Menu:
 				self.frame.delete_last_lines(13)
 				print('Order: ' + self.__current_order.__str__() + '\n')
 				self.found_order()
+
 			elif prompt == 'Delete order':
 				self.frame.delete_last_lines(4)
 				self.delete_order()
+
 			elif prompt == 'Go back':
 				self.frame.delete_last_lines(6)
 				self.find_order()
@@ -365,6 +390,7 @@ class Menu:
 		#                 SAVE EDITED ORDER                #
 		####################################################
 		elif menu_type == 'save edited order':
+
 			if prompt == 'Save':
 				self.frame.delete_last_lines(18)
 				self.save_edited_order()
@@ -376,12 +402,11 @@ class Menu:
 					self.__current_order = temp_order
 				except ValueError:
 					temp_order = self.order_manager.find_order_by_ssn(self.__current_order.get_ssn())
-					if not temp_order:
-						pass
-					else:
+					if temp_order:
 						self.__current_order = temp_order[-1]
 				print('Order: {}\n'.format(self.__current_order.__str__()))
 				self.found_order()
+
 			if prompt == 'Cancel':
 				self.frame.delete_last_lines(18)
 				print('Order: {}\n'.format(self.__current_order.__str__()))
@@ -418,7 +443,6 @@ class Menu:
 		# A lot of formatting was needed to print the calculated order fancy and readable.
 		self.nocco_list.single_list("Go back")
 
-
 	def show_pricing_list(self):
 		"""This simple method prints the pricing list, in case that the customer wants to know whaat kind of car 
 		can afford, and what the price ranges is.
@@ -440,8 +464,15 @@ class Menu:
 		"""This method provides the functionalities of the Find order in Order menu. 
 		The employee can either user enter either right arrow to continue in any desired option. 
 		"""
-		find_order_list = self.nocco_list.choose_one('Choose an action',
-						['Find order by ID', 'Find order by SSN', 'Go back'], 'action')
+		find_order_list = self.nocco_list.choose_one(
+			'Choose an action',
+			[
+				'Find order by ID',
+				'Find order by SSN', 
+				'Go back'
+			], 
+			'action'
+		)
 		self.handle_answer_from_order_menus(find_order_list['action'], 'find order')
 
 	def find_order_by_id(self):
@@ -490,16 +521,28 @@ class Menu:
 				printable_orders.append('Go back')
 				# Reynir...
 
-				found_multiple_orders = self.nocco_list.choose_one('Choose an order',
-						printable_orders, 'order', True)
+				found_multiple_orders = self.nocco_list.choose_one(
+					'Choose an order',
+					printable_orders, 
+					'order', 
+					True
+				)
 				self.handle_answer_from_order_menus((found_multiple_orders, orders), 'found multiple orders')
 
 	def found_order(self):
 		"""After the employee has found the order that was looking for, this method provides the functionalities
 		of what the employee can do with that particular order.
 		"""
-		found_order_list = self.nocco_list.choose_one('Choose an action',
-						['Edit order', 'Print order', 'Delete order', 'Go back'], 'action')
+		found_order_list = self.nocco_list.choose_one(
+			'Choose an action',
+			[
+				'Edit order', 
+				'Print order', 
+				'Delete order', 
+				'Go back'
+			], 
+			'action'
+		)
 		self.frame.delete_last_lines(2)
 		self.handle_answer_from_order_menus(found_order_list['action'], 'found order')
 
@@ -509,13 +552,19 @@ class Menu:
 		"""
 		vehicles = self.order_manager.get_inputted_order()
 		self.frame.delete_last_lines(len(vehicles) - 1)  # Deletes last lines equal to len(cars) -1...styling
-		print()
-		register_order_list = self.nocco_list.choose_one("Choose an action",
-							["Save", "Calculate order" , "Cancel"], "action")
+		register_order_list = self.nocco_list.choose_one(
+			"Choose an action",
+			[
+				"Save", 
+				"Calculate order",
+				"Cancel"
+			], 
+			"action"
+		)
 		self.handle_answer_from_order_menus(register_order_list['action'], 'register_order')
 
 	def delete_order(self):
-		"""This method enables the employee to delete/cancel any order. """
+		""" This method enables the employee to delete/cancel any order. """
 		start_day, end_day = self.__current_order.get_dates()  # gets start day an end day from get_dates.
 		dates = self.order_manager.get_order_dates(start_day, end_day)  # puts the values in get_order_dates
 		vehicle = self.__current_order.get_license_plate()  # Gets a license plate for current order.
@@ -548,7 +597,7 @@ class Menu:
 		print()
 		# Here are all checks to check if a input is valid, it is sent to the check_if_valid function
 		# and order_manager checks.
-		 
+
 		self.check_if_valid('order ID', self.order_manager.check_ID)
 
 		self.check_if_valid('customer SSN', self.order_manager.check_ssn)
@@ -597,8 +646,15 @@ class Menu:
 			# Let the customer choose if he/she wants any insurance other than basic.
 
 			print()
-			register_order_list = self.nocco_list.choose_one("Choose an action", 
-															["Save", "Calculate order", "Cancel"], "action")
+			register_order_list = self.nocco_list.choose_one(
+				"Choose an action", 
+				[
+					"Save", 
+					"Calculate order", 
+					"Cancel"
+				], 
+				"action"
+			)
 			
 			self.handle_answer_from_order_menus(register_order_list['action'], 'register_order')
 	
@@ -625,23 +681,18 @@ class Menu:
 
 		self.check_if_valid('return time', self.order_manager.check_returning_time, True, order['Return time'])
 
-		self.check_if_valid('pick up location', self.order_manager.check_pick_up_location, True,
-							order['Pick up location'])
+		self.check_if_valid('pick up location', self.order_manager.check_pick_up_location, True, order['Pick up location'])
 
-		self.check_if_valid('Return location', self.order_manager.check_return_location, True, 
-							order['Return location'])
+		self.check_if_valid('Return location', self.order_manager.check_return_location, True, order['Return location'])
 		
 		self.check_if_valid('type', self.order_manager.check_type_of_vehicle, True, order['Type'])
-
 
 		self.check_if_valid('license plate', self.order_manager.check_license_plate, True, order['License plate'])
 
 		self.check_if_valid('insurance', self.order_manager.check_insurance, True, order['Insurance'])
 
 		print()
-		save_edited_order = self.nocco_list.choose_one('Choose an action',
-														  ['Save', 'Cancel'],
-														  'action')
+		save_edited_order = self.nocco_list.choose_one('Choose an action', ['Save', 'Cancel'], 'action')
 		self.handle_answer_from_order_menus(save_edited_order['action'], 'save edited order')
 	
 	def save_edited_order(self):
@@ -665,6 +716,7 @@ class Menu:
 		#                  REGISTER CUSTOMER               #                    
 		####################################################
 		if menu_type == 'register customer':
+
 			if prompt == 'Save':
 				self.frame.delete_last_lines(12)
 				self.save_new_customer()
@@ -681,6 +733,7 @@ class Menu:
 		#                SAVE EDITED CUSTOMER              #                    
 		####################################################
 		elif menu_type == 'save edited customer':
+
 			if prompt == 'Save':
 				self.frame.delete_last_lines(14)
 				self.save_edited_customer()
@@ -697,6 +750,7 @@ class Menu:
 		#                  FIND CUSTOMER                   #                    
 		####################################################
 		elif menu_type == 'find customer':
+
 			if prompt == 'Find customer by name':
 				self.frame.delete_last_lines(5)
 				self.find_customer_by_name()
@@ -713,6 +767,7 @@ class Menu:
 		#                  FOUND CUSTOMER                  #                    
 		####################################################
 		if menu_type == 'found customer':
+
 			if prompt == 'Print customer details':
 				customer_details = self.__current_customer.return_details()
 				self.frame.delete_last_lines(6)
@@ -784,9 +839,7 @@ class Menu:
 		self.check_if_valid('Home address', self.customer_manager.check_address)
 
 		print()
-		register_customer = self.nocco_list.choose_one('Choose an action',
-													   ['Save', 'Cancel'],
-													   'action')
+		register_customer = self.nocco_list.choose_one('Choose an action', ['Save', 'Cancel'], 'action')
 		self.handle_answer_from_customer_menus(register_customer['action'], 'register customer')
 
 	def edit_customer(self):
@@ -815,9 +868,7 @@ class Menu:
 		self.check_if_valid('Home address', self.customer_manager.check_address, True, customer['Home address'])
 
 		print()
-		save_edited_customer = self.nocco_list.choose_one('Choose an action',
-														  ['Save', 'Cancel'],
-														  'action')
+		save_edited_customer = self.nocco_list.choose_one('Choose an action', ['Save', 'Cancel'], 'action')
 		self.handle_answer_from_customer_menus(save_edited_customer['action'], 'save edited customer')
 
 	def save_new_customer(self):
@@ -845,21 +896,32 @@ class Menu:
 		"""When find customer option is clicked, the employee will choose to find a customer either by name, either by SSN.
 		Find customer by SSN in our opinion is more efficient because of the nature of the SSN that is unique for each customer.
 		"""
-		find_customer = self.nocco_list.choose_one('Choose an action',
-												   ['Find customer by name', 'Find customer by SSN', 'Go back'],
-												   'action')
+		find_customer = self.nocco_list.choose_one(
+			'Choose an action',
+			[
+				'Find customer by name', 
+				'Find customer by SSN', 
+				'Go back'
+			],
+			'action'
+		)
 		self.handle_answer_from_customer_menus(find_customer['action'], 'find customer')
 
 	def found_customer(self):
 		"""After the unique customer is found, then the employee can decide what to do with that particular customer,
 		by clicking in any of the available options.
 		"""
-		found_customer = self.nocco_list.choose_one('Choose an action',
-													['Print customer details', 
-													'Print order history', 
-													'Edit customer', 
-													'Unsubscribe customer',
-													 'Go back'], 'action')
+		found_customer = self.nocco_list.choose_one(
+			'Choose an action',
+			[
+				'Print customer details', 
+				'Print order history', 
+				'Edit customer', 
+				'Unsubscribe customer',
+				'Go back'
+			], 
+			'action'
+		)
 		self.frame.delete_last_lines(3)
 		self.handle_answer_from_customer_menus(found_customer['action'], 'found customer')
 
@@ -914,11 +976,9 @@ class Menu:
 					in customers]
 
 				printable_customers.append('Go back')
-				found_multiple_customers = self.nocco_list.choose_one('Choose customer',
-																	  printable_customers, 'customer', True)
+				found_multiple_customers = self.nocco_list.choose_one('Choose customer', printable_customers, 'customer', True)
 
-				self.handle_answer_from_customer_menus((found_multiple_customers, customers),
-											 'found multiple customers')
+				self.handle_answer_from_customer_menus((found_multiple_customers, customers), 'found multiple customers')
 
 	def find_customer_by_ssn(self):
 		"""This method is called when the employee wants to find a customer, because it uses SSN as criteria for search
@@ -968,6 +1028,7 @@ class Menu:
 		#                  REGISTER VEHICLE                #                    
 		####################################################
 		if menu_type == 'register vehicle':
+
 			if prompt == 'Save':
 				self.frame.delete_last_lines(13)
 				self.save_new_vehicle()
@@ -985,6 +1046,7 @@ class Menu:
 		#                   FIND VEHICLE                   #                    
 		####################################################
 		elif menu_type == 'find vehicle':
+
 			if prompt == 'Find vehicle by license plate':
 				self.frame.delete_last_lines(7)
 				self.find_vehicles_by_license_plate()
@@ -1005,6 +1067,7 @@ class Menu:
 		#                   FOUND VEHICLE                  #                    
 		####################################################
 		elif menu_type == 'found vehicle':
+
 			if prompt == 'Edit vehicle':
 				self.frame.delete_last_lines(8)
 				self.edit_vehicle()
@@ -1053,6 +1116,7 @@ class Menu:
 		#                SAVE EDITED VEHICLE               #                    
 		####################################################
 		elif menu_type == 'save edited vehicle':
+
 			if prompt == 'Save':
 				self.frame.delete_last_lines(15)
 				self.save_edited_vehicle()
@@ -1072,6 +1136,7 @@ class Menu:
 		#             SHOW VEHICLES IN SERVICE             #                    
 		####################################################
 		elif menu_type == 'show vehicles in service':
+
 			if prompt == 'Save':
 				self.frame.delete_last_lines(16)
 				self.save_new_vehicle()
@@ -1114,9 +1179,7 @@ class Menu:
 
 		self.check_if_valid('Driving transmission (manual or automatic)', self.vehicle_manager.check_driving_transmission)
 		print()
-		register_vehicle = self.nocco_list.choose_one('Choose an action',
-												  ['Save', 'Cancel'],
-												  'action')
+		register_vehicle = self.nocco_list.choose_one('Choose an action', ['Save', 'Cancel'], 'action')
 		self.handle_answer_from_vehicle_menus(register_vehicle['action'], 'register vehicle')
 
 	def find_vehicles(self):
@@ -1141,22 +1204,22 @@ class Menu:
 			time.sleep(1.5)
 			self.find_vehicles()
 		else: # No need to check if there are many licence plates because there is only one licence plate
-			  # linked to a particullar car.
+			# linked to a particullar car.
 			self.frame.delete_last_lines(2)
 			print("Vehicle: " + vehicle.get_license())
 			print()
 			self.__current_vehicle = vehicle
 			found_vehicles_list = self.nocco_list.choose_one(
-														"Choose an action", 
-														[
-															"Edit vehicle", 
-															"Print vehicle",
-															"Print vehicle history",
-															"Remove vehicle", 
-															"Go back"
-														], 
-														"action"
-														)
+				"Choose an action", 
+				[
+					"Edit vehicle", 
+					"Print vehicle",
+					"Print vehicle history",
+					"Remove vehicle", 
+					"Go back"
+				], 
+				"action"
+			)
 			self.handle_answer_from_vehicle_menus(found_vehicles_list['action'], 'found vehicle')
 
 	def find_vehicles_by_make(self):
@@ -1186,11 +1249,9 @@ class Menu:
 					
 
 				printable_vehicles.append('Go back')
-				found_multiple_vehicles = self.nocco_list.choose_one('Choose vehicle',
-																	  printable_vehicles, 'vehicle', True)
+				found_multiple_vehicles = self.nocco_list.choose_one('Choose vehicle', printable_vehicles, 'vehicle', True)
 
-				self.handle_answer_from_vehicle_menus((found_multiple_vehicles, vehicles),
-											 'found multiple vehicles')
+				self.handle_answer_from_vehicle_menus((found_multiple_vehicles, vehicles), 'found multiple vehicles')
 
 	def find_vehicles_by_type(self):
 		"""This function finds vehicles by type.
@@ -1219,18 +1280,25 @@ class Menu:
 					in vehicles]
 
 				printable_vehicles.append('Go back')
-				found_multiple_vehicles = self.nocco_list.choose_one('Choose vehicle',
-																	  printable_vehicles, 'vehicle', True)
+				found_multiple_vehicles = self.nocco_list.choose_one('Choose vehicle', printable_vehicles, 'vehicle', True)
 
-				self.handle_answer_from_vehicle_menus((found_multiple_vehicles, vehicles),
-											 'found multiple vehicles')
+				self.handle_answer_from_vehicle_menus((found_multiple_vehicles, vehicles), 'found multiple vehicles')
 
 	def found_vehicle(self):
 		"""If the program has found a vehicle this function will take care of it, using nocco list the employee
 		has options shown here down below.
 		"""
-		found_vehicle_list = self.nocco_list.choose_one('Choose an action',
-						['Edit vehicle', 'Print vehicle', 'Print vehicle history', 'Remove vehicle', 'Go back'], 'action')
+		found_vehicle_list = self.nocco_list.choose_one(
+			'Choose an action',
+			[
+				'Edit vehicle', 
+				'Print vehicle', 
+				'Print vehicle history', 
+				'Remove vehicle', 
+				'Go back'
+			], 
+			'action'
+		)
 		self.handle_answer_from_vehicle_menus(found_vehicle_list['action'], 'found vehicle')											 
 
 	def vehicle_history(self):
@@ -1271,16 +1339,12 @@ class Menu:
 
 		self.check_if_valid('License plate', self.vehicle_manager.check_license_plate, True, vehicle['License'])
 
-		self.check_if_valid('Fuel', self.vehicle_manager.check_fuel, True,
-							vehicle['Fuel'])
+		self.check_if_valid('Fuel', self.vehicle_manager.check_fuel, True, vehicle['Fuel'])
 
-		self.check_if_valid('Driving transmission', self.vehicle_manager.check_driving_transmission, True, 
-							vehicle['Driving transmission'])
+		self.check_if_valid('Driving transmission', self.vehicle_manager.check_driving_transmission, True, vehicle['Driving transmission'])
 		print()
 
-		save_edited_vehicle = self.nocco_list.choose_one('Choose an action',
-														  ['Save', 'Cancel'],
-														  'action')
+		save_edited_vehicle = self.nocco_list.choose_one('Choose an action', ['Save', 'Cancel'], 'action')
 		self.handle_answer_from_vehicle_menus(save_edited_vehicle['action'], 'save edited vehicle')
 		self.frame.delete_last_lines(8)
 		print("{}".format(self.color.return_colored("Vehicle Saved", 'green')))
