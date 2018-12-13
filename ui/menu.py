@@ -493,12 +493,18 @@ class Menu:
 		self.frame.delete_last_lines(1)
 
 	def find_customer(self):
+		"""When find customer option is clicked, the employee will choose to find a customer either by name, either by SSN.
+		Find customer by SSN in our opinion is more efficient because of the nature of the SSN that is unique for each customer.
+		"""
 		find_customer = self.nocco_list.choose_one('Choose an action',
 												   ['Find customer by name', 'Find customer by SSN', 'Go back'],
 												   'action')
 		self.handle_answer_from_menu(find_customer['action'], 'find customer')
 
 	def found_customer(self):
+		"""After the unique customer is found, then the employee can decide what to do with that particular customer,
+		by clicking in any of the available options.
+		"""
 		found_customer = self.nocco_list.choose_one('Choose an action',
 													['Print customer details', 
 													'Print order history', 
@@ -528,6 +534,15 @@ class Menu:
 			self.frame.delete_last_lines(len(orders) + 4)
 
 	def find_customer_by_name(self):
+		"""If the employee is looking for a customer by the name of that customer, this method is called
+		The employee enters the customer´s name, and in case that it does not exist any customer with that particuar name,
+		a short message will be printed to indiciate that. 
+		In case that there are more than one customer with a particular name then a message will be printed to indicate that, 
+		and the list of the cusomers will be printed in the screen.
+		In case that there is only one customer with that name, then the employee will be able to edit, or remove that customer.
+		Otherwise the employee must use another way to find the a particular customer by using a method that uses a unique
+		identification parameter, such as SSN.
+		"""
 		name = input("Enter name: ")
 		print()
 		customers = self.customer_manager.find_customer_by_name(name)
@@ -559,6 +574,11 @@ class Menu:
 											 'found multiple customers')
 
 	def find_customer_by_ssn(self):
+		"""This method is called when the employee wants to find a customer, because it uses SSN as criteria for search
+		and because SSN is unique for each customer, this method of finding customers is much more efficient than finding customers by name,
+		because many customers can have the same name, but only one customer can have one SSN, so this method enables the employee to have more power
+		and being more effiecient in search, and editing or removing/unsubscring the customer afterwards.
+		"""
 		ssn = input("Enter SSN: ")
 		print()
 		customer = self.customer_manager.find_customer_by_ssn(ssn)
@@ -812,7 +832,10 @@ class Menu:
 		self.handle_answer_from_menu(prompt['action'], 'main_menu')
 
 	def handle_answer_from_menu(self, prompt, menu_type):
-
+		"""This method handles all the choices that are made when choosing from he menus in every layer of the application.
+		**Note that are only menus that have a list of operations not a single operation, single operations, such as <Report an error>
+		which only prints a message and the has a single operation available to go back, uses a special method, in nocco_list that handles that case.
+		"""
 		######################################################
 		#                      MAIN MENU                     #                                                                                
 		######################################################
