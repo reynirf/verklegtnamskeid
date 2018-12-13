@@ -8,8 +8,8 @@ class Order:
     ):
         self.__order_id = order_id
         self.__ssn = ssn
-        self.__start_date_str = start_date[6:] + '.' + start_date[4:6] + '.' + start_date[:4]
-        self.__end_date_str = end_date[6:] + '.' + end_date[4:6] + '.' + end_date[:4]
+        self.__start_date_str = start_date[6:] + "." + start_date[4:6] + "." + start_date[:4]
+        self.__end_date_str = end_date[6:] + "." + end_date[4:6] + "." + end_date[:4]
         self.__start_date = date(
             int(start_date[:4]), int(start_date[4:6]), int(start_date[6:]))
         self.__end_date = date(
@@ -23,7 +23,7 @@ class Order:
         self.__vehicle_type = vehicle_type
     
     def __str__(self):
-        return '{} | {}'.format(self.__order_id, self.__ssn)
+        return "{} | {}".format(self.__order_id, self.__ssn)
     
     def get_ssn(self):
         return self.__ssn
@@ -35,7 +35,7 @@ class Order:
         return self.__start_date, self.__end_date
     
     def get_date_str(self):
-        return self.__start_date_str + ' - ' + self.__end_date_str
+        return self.__start_date_str + " - " + self.__end_date_str
     
     def get_license_plate(self):
         return self.__license_plate

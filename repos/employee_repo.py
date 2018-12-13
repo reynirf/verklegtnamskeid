@@ -14,14 +14,14 @@ class EmployeeRepo:
         Employee instances.
         """
         if self.__employee_list == []:
-            with open(self.EMPLOYEE_FILE, 'r') as employee_file:
+            with open(self.EMPLOYEE_FILE, "r") as employee_file:
                 csv_reader = csv.DictReader(employee_file)
                 for line in csv_reader:
                     employee = Employee(
-                        line['title'],
-                        line['name'],
-                        line['id'],
-                        line['password'])
+                        line["title"],
+                        line["name"],
+                        line["id"],
+                        line["password"])
                     self.__employee_list.append(employee)
         return self.__employee_list
 
