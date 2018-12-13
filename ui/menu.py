@@ -650,40 +650,6 @@ class Menu:
 		print("{}".format(self.color.return_colored("Order updated!", 'green')))
 		time.sleep(1.5)
 
-	def check_if_valid(self, to_enter, to_check, editing=False, current_value=''):
-		"""Calls all the check methods."""
-		mistake = 0
-		error = "check if valid"
-		while error:
-			if (not editing and not current_value) or (not current_value and type(editing) == list):
-				user_input = input("Enter " + to_enter + ": ")
-			else:
-				if to_enter == 'Credit card number':
-					user_input = input("Enter " + to_enter + " [**** **** **** " + current_value[12:] + "]: ")
-				else:
-					user_input = input("Enter " + to_enter + " [" + current_value + "]: ")
-			error = to_check(user_input, editing, current_value)
-			if editing and current_value and not error:
-				if mistake:
-					self.frame.delete_last_lines(2)
-				else:
-					self.frame.delete_last_lines()
-				if user_input != '':
-					print("Enter " + to_enter + " [" + current_value + "]: " + user_input)
-				else:
-					if to_enter == 'Credit card number':  # Hides first 12 numbers and prints only last 4 numbers.
-						print("Enter " + to_enter + " [**** **** **** " + current_value[12:] + "]: " + "**** **** **** " + current_value[12:])
-					else:
-						print("Enter " + to_enter + " [" + current_value + "]: " + current_value)
-			elif error and not mistake:
-				self.invalid_input(error)
-				mistake = 1
-			elif error:
-				self.frame.delete_last_lines()
-			elif mistake and not error:
-				self.frame.delete_last_lines(2)
-				print("Enter " + to_enter + ": " + user_input)
-
 	############################################################################
 	#    Here starts the customer menu and all the methods that go with it     #
 	############################################################################
@@ -850,14 +816,6 @@ class Menu:
 														  ['Save', 'Cancel'],
 														  'action')
 		self.handle_answer_from_customer_menus(save_edited_customer['action'], 'save edited customer')
-
-	def invalid_input(self, message):
-		"""If an invalid input is entered then this method is called and,
-		provides the correct error message to suggest why it the inputed data is wrong and how it 
-		can be fixed.
-		"""
-		self.frame.delete_last_lines(1)
-		print('{}'.format(self.color.return_colored(message, 'red')))
 
 	def save_new_customer(self):
 		"""When a new customer is saved a short message to let the employee 
