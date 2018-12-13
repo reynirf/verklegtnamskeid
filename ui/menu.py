@@ -82,6 +82,17 @@ class Menu:
 	############################################################################
 	# Here starts the Homepage menu functionalities							   #
 	############################################################################
+	def init_menu(self):
+		"""Initial menu/Homepage,
+		The employee can choose any of the operations and continue with the functionalities of the page, or he/she can sign out,
+		and from there the it will be called the authenticate() method which prompts to get an user id and password."""
+		prompt = self.nocco_list.choose_one(
+			'Choose an action',
+			['Order', 'Customer', 'Vehicles', 'Report an error', 'Sign out'],
+			'action'
+		)
+		self.handle_answer_from_menu(prompt['action'], 'main_menu')
+
 	def report_error(self):
 		"""Since we do not have any database for holding email and password online as a form to prove the employee
 		identity, or troubleshooting, we simply implemented a simple method for any problems encountered while
@@ -607,32 +618,18 @@ class Menu:
 		self.frame.delete_last_lines()
 		self.customer()
 
-	def save_new_vehicle(self):
-		self.vehicle_manager.save_new_vehicle()
-		print("{}".format(self.color.return_colored("New vehicle registered!", 'green')))
-		time.sleep(1.5)
-		self.frame.delete_last_lines(2)
-
-	def show_vehicle_availability(self, prompt):
-		self.check_if_valid('a start date (DD.MM.YYYY)', self.order_manager.check_start_date)
-		self.check_if_valid('an end date (DD.MM.YYYY)', self.order_manager.check_ending_date)
-		start_date, end_date = self.order_manager.get_dates()
-		vehicle_list = self.vehicle_manager.show_vehicle_availability(start_date, end_date, prompt)
-		print() 
-		print('{:<20} {:<20} {:<20} {:<20}'.format('License', 'Make', 'Model', 'Seats'))
-		print('-'*70)
-		for vehicle in vehicle_list:
-			print(vehicle.availability_string())
-
-		self.nocco_list.single_list('Go back')
-		self.frame.delete_last_lines(len(vehicle_list) + 2)
-
 	def vehicles(self):
 		self.frame.delete_last_lines(7)
 		vehicle = self.nocco_list.choose_one('Choose an action', ['Register vehicle', 'Find vehicle', 'Show all available vehicles',
 															  'Show vehicles in service',
 															  'Go back'], 'action')
 		self.handle_answer_from_menu(vehicle['action'], 'vehicles')
+
+	def save_new_vehicle(self):
+		self.vehicle_manager.save_new_vehicle()
+		print("{}".format(self.color.return_colored("New vehicle registered!", 'green')))
+		time.sleep(1.5)
+		self.frame.delete_last_lines(2)
 
 	def register_vehicle(self):
 		self.frame.delete_last_lines(7)
@@ -812,6 +809,10 @@ class Menu:
 		time.sleep(1.5)
 
 	def delete_vehicle(self):
+		"""If the employee wants to remove/delete a vehicle then after he/she has found the vehicle,
+		then clicks in remove vehicle, and then this method is called.
+		A short message to indicate that the operation was done successfully will be printed.
+		"""
 		self.vehicle_manager.delete_vehicle(self.__current_vehicle)
 		self.frame.delete_last_lines(1)
 		print('{}'.format(self.color.return_colored("Vehicle removed!", 'red')))
@@ -819,20 +820,30 @@ class Menu:
 		self.frame.delete_last_lines(2)
 		print('\n' * 7)
 		self.vehicles()
+	
+	def show_vehicle_availability(self, prompt):
+		"""This method show all the vehicles that are available in a particular time, it will get only the vehicles that
+		are not in renting and not ordered to be rent. Thats why the employee has to enter a start date and an
+		end date to get the correct result.
+		"""
+		self.check_if_valid('a start date (DD.MM.YYYY)', self.order_manager.check_start_date)
+		self.check_if_valid('an end date (DD.MM.YYYY)', self.order_manager.check_ending_date)
+		start_date, end_date = self.order_manager.get_dates()
+		vehicle_list = self.vehicle_manager.show_vehicle_availability(start_date, end_date, prompt)
+		print() 
+		print('{:<20} {:<20} {:<20} {:<20}'.format('License', 'Make', 'Model', 'Seats'))
+		print('-'*70)
+		for vehicle in vehicle_list:
+			print(vehicle.availability_string())
 
+		self.nocco_list.single_list('Go back')
+		self.frame.delete_last_lines(len(vehicle_list) + 2)
 
-	def init_menu(self):
-		prompt = self.nocco_list.choose_one(
-			'Choose an action',
-			['Order', 'Customer', 'Vehicles', 'Report an error', 'Sign out'],
-			'action'
-		)
-		self.handle_answer_from_menu(prompt['action'], 'main_menu')
 
 	def handle_answer_from_menu(self, prompt, menu_type):
 		"""This method handles all the choices that are made when choosing from he menus in every layer of the application.
 		**Note that are only menus that have a list of operations not a single operation, single operations, such as <Report an error>
-		which only prints a message and the has a single operation available to go back, uses a special method, in nocco_list that handles that case.
+		which only prints a message and it has a single operation available to go back, uses a special method, in nocco_list that handles that case.
 		"""
 		######################################################
 		#                      MAIN MENU                     #                                                                                
