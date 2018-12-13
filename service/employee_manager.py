@@ -25,9 +25,6 @@ class EmployeeManager:
         self.__has_failed_auth = True
         return "Invalid ID: " + employee_id
 
-    def get_employee_list(self):
-        return self.__employee_repo.get_employee_list()
-
     def has_failed(self):
         return self.__has_failed_auth
 

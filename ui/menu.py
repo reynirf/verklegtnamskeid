@@ -31,14 +31,6 @@ class Menu:
 		self.__current_vehicle = ""
 		self.__current_order = ""
 
-	def get_employees(self):
-		"""Fetch employees in a list from employee_manager.
-		Loop through the list to get a employee
-		"""
-		employee_list = self.employee_manager.get_employee_list()
-		for employee in employee_list:
-			print(employee) 
-
 	def authenticate(self):
 		"""This method check the authentication of the employee, by entering the username and password,
 		and it will loop until it has the correct username and password.
@@ -79,9 +71,11 @@ class Menu:
 		time.sleep(1.5)  # Lets the program sleep for 1.5 seconds before continuing for a regular flow.
 		self.frame.delete_last_lines(3)
 		self.authenticate()
+
 	############################################################################
 	# Here starts the Homepage menu functionalities							   #
 	############################################################################
+	
 	def init_menu(self):
 		"""Initial menu/Homepage,
 		The employee can choose any of the operations and continue with the functionalities of the page, or he/she can sign out,
@@ -549,10 +543,8 @@ class Menu:
 		The employee enters the customer´s name, and in case that it does not exist any customer with that particuar name,
 		a short message will be printed to indiciate that. 
 		In case that there are more than one customer with a particular name then a message will be printed to indicate that, 
-		and the list of the cusomers will be printed in the screen.
+		and the list of the cusomers will be printed in the screen for the employee to choose from.
 		In case that there is only one customer with that name, then the employee will be able to edit, or remove that customer.
-		Otherwise the employee must use another way to find the a particular customer by using a method that uses a unique
-		identification parameter, such as SSN.
 		"""
 		name = input("Enter name: ")
 		print()
