@@ -14,8 +14,7 @@ import getpass
 import os.path
 
 class Menu:
-	"""
-	Handle all the menu functionalities.
+	"""Handle all the menu functionalities.
 	self.frame.delete_last_lines(xx) will be found in many places of our code, 
 	because it deletes the previous lines for better look, as we decided in the design pattern.
 	"""
@@ -33,8 +32,7 @@ class Menu:
 		self.__current_order = ""
 
 	def get_employees(self):
-		"""
-		Fetch employees in a list from employee_manager.
+		"""Fetch employees in a list from employee_manager.
 		Loop through the list to get a employee
 		"""
 		employee_list = self.employee_manager.get_employee_list()
@@ -42,8 +40,7 @@ class Menu:
 			print(employee) 
 
 	def authenticate(self):
-		"""
-		This method check the authentication of the employee, by entering the username and password,
+		"""This method check the authentication of the employee, by entering the username and password,
 		and it will loop until it has the correct username and password.
 		"""
 		print()
@@ -66,15 +63,13 @@ class Menu:
 				self.color.print_colored(response, 'red')  # The loggin has failed.
 
 	def introduce_employee(self, employee):
-		"""
-		Prints the name of the employee.
+		"""Prints the name of the employee.
 		"""
 		self.frame.delete_last_lines(3)
 		print(employee)
 
 	def signout(self):
-		"""
-		In case that the employee signs out, it prints sign out and calls the authenticate() method to wait
+		"""In case that the employee signs out, it prints sign out and calls the authenticate() method to wait
 		for the employee to sign in again.
 		"""
 		self.frame.delete_last_lines(9)
@@ -88,8 +83,7 @@ class Menu:
 	# Here starts the Homepage menu functionalities							   #
 	############################################################################
 	def report_error(self):
-		"""
-		Since we do not have any database for holding email and password online as a form to prove the employee
+		"""Since we do not have any database for holding email and password online as a form to prove the employee
 		identity, or troubleshooting, we simply implemented a simple method for any problems encountered while
 		using this service, the employee should contact the manager of this service for technical support.
 		This method prints how to reach help, and then go back at the main page.
@@ -100,8 +94,7 @@ class Menu:
 		self.frame.delete_last_lines(3)
 
 	def customer(self):
-		"""
-		Prints functionalities of the customer menu, and the user can either choose any option from
+		"""Prints functionalities of the customer menu, and the user can either choose any option from
 		the menu, either can go back at main menu.
 		"""
 		customer = self.nocco_list.choose_one(
@@ -116,8 +109,7 @@ class Menu:
 		self.handle_answer_from_menu(customer['action'], 'customer')
 
 	def order(self):
-		"""
-		Prints functionalities of the order menu, and the user can either choose any option from
+		"""Prints functionalities of the order menu, and the user can either choose any option from
 		the menu, either can go back at main menu.
 		"""
 		order_list = self.nocco_list.choose_one("Choose an action",
@@ -131,8 +123,7 @@ class Menu:
 		self.handle_answer_from_menu(order_list['action'], 'order')
 
 	def calculate_order(self):
-		"""
-		After the employee has inputed all the neccessary data, it calculates the order in a readable style,
+		"""After the employee has inputed all the neccessary data, it calculates the order in a readable style,
 		with correct formating.
 		"""
 		print()
@@ -149,8 +140,7 @@ class Menu:
 		self.nocco_list.single_list("Go back")
 
 	def show_pricing_list(self):
-		"""
-		This simple method prints the pricing list, in case that the customer wants to know whaat kind of car 
+		"""This simple method prints the pricing list, in case that the customer wants to know whaat kind of car 
 		can afford, and what the price ranges is.
 		"""
 		vehicle_types = ['smallcar', 'sedan', 'offroad', 'bus']  # All available types we offer.
@@ -167,8 +157,7 @@ class Menu:
 		self.order()  # Runs order again after you go back.
 	
 	def find_order(self):
-		"""
-		This method provides the functionalities of the Find order in Order menu. 
+		"""This method provides the functionalities of the Find order in Order menu. 
 		The employee can either user enter either right arrow to continue in any desired option. 
 		"""
 		find_order_list = self.nocco_list.choose_one('Choose an action',
@@ -176,8 +165,7 @@ class Menu:
 		self.handle_answer_from_menu(find_order_list['action'], 'find order')
 
 	def find_order_by_id(self):
-		"""
-		This method makes possible for the employee to find any order in the database (csv) with the id of the order.
+		"""This method makes possible for the employee to find any order in the database (csv) with the id of the order.
 		And after the order is found, it provides further options to continue.
 		"""
 		ID = input("Enter ID: ")
@@ -196,8 +184,7 @@ class Menu:
 			self.found_order() 
 
 	def find_order_by_ssn(self):
-		"""
-		This method makes possible for the employee to find any order in the database (csv) with the SSN of the customer.
+		"""This method makes possible for the employee to find any order in the database (csv) with the SSN of the customer.
 		And after the order is found, it provides further options to continue.
 		"""
 		ssn = input("Enter SSN: ")
@@ -228,8 +215,7 @@ class Menu:
 				self.handle_answer_from_menu((found_multiple_orders, orders), 'found multiple orders')
 
 	def found_order(self):
-		"""
-		After the employee has found the order that was looking for, this method provides the functionalities
+		"""After the employee has found the order that was looking for, this method provides the functionalities
 		of what the employee can do with that particular order.
 		"""
 		found_order_list = self.nocco_list.choose_one('Choose an action',
@@ -238,8 +224,7 @@ class Menu:
 		self.handle_answer_from_menu(found_order_list['action'], 'found order')
 
 	def get_inputted_order(self):
-		"""
-		After the employee has entered all the neccessary datas about the order, then another menu will
+		"""After the employee has entered all the neccessary datas about the order, then another menu will
 		appear with the functionalities to move on in further operations.
 		"""
 		vehicles = self.order_manager.get_inputted_order()
@@ -249,6 +234,7 @@ class Menu:
 		self.handle_answer_from_menu(register_order_list['action'], 'register_order')
 
 	def delete_order(self):
+		"""This method enables the employee to delete/cancel any order. """
 		start_day, end_day = self.__current_order.get_dates()  # gets start day an end day from get_dates.
 		dates = self.order_manager.get_order_dates(start_day, end_day)  # puts the values in get_order_dates
 		vehicle = self.__current_order.get_license_plate()  # Gets a license plate for current order.
@@ -261,14 +247,22 @@ class Menu:
 		self.order()
 
 	def save_new_order(self):
-		self.order_manager.save_new_order() #A function that saves the order in the csv file.
-		print("{}".format(self.color.return_colored("New order registered!", 'green')))
+		"""Saves a new order in our csv database if the correct information is entered."""
+		self.order_manager.save_new_order()  # A function that saves the order in the csv file.
+		print("{}".format(self.color.return_colored("New order registered!", 'green')))  # Prits this message in case that a new order is successfully registered
 		time.sleep(1.5)
-		dates = self.order_manager.get_order_dates()
+		dates = self.order_manager.get_order_dates()  # Allows to input only available date, and provides from inputing e.g past date
 		vehicle = self.order_manager.get_license_plate()
-		self.vehicle_manager.save_order_dates(dates, vehicle) #saves the dates for a praticullar rented car.
+		self.vehicle_manager.save_order_dates(dates, vehicle)  # saves the dates for a praticullar rented car.
 
 	def register_order(self):
+		"""When the employee wants to register a new order, this method is called and enables the employee to enter the correct information, 
+		by calling the correct checks for each data entered.
+		Some of the datas that are available, are just a choice for simplicity by the decision of the developers, like 
+		ability to choose only from two places, Reykjavik or Akureyri. 
+		After the employee has entered all the neccessary datas that are required, then another sub menu is provided to allow the customer to 
+		pick a car in a range of available cars. After the customer has choose the car, then the employee can proceed in further options.
+		"""
 		self.frame.delete_last_lines(6)
 		print()
 		# Here are all checks to check if a input is valid, it is sent to the check_if_valid function
@@ -293,18 +287,18 @@ class Menu:
 		self.check_if_valid('type of vehicle (Small vehicle, sedan, offroad or bus)', self.order_manager.check_type_of_vehicle)
 		
 		start_date, end_date = self.order_manager.get_dates()
-		vehicle_list = self.vehicle_manager.show_vehicle_availability(start_date, end_date, 'available')
+		vehicle_list = self.vehicle_manager.show_vehicle_availability(start_date, end_date, 'available')  # Shows only the cars that are available in that time
 		vehicle_type = self.order_manager.get_type()
 		filtered_list = self.vehicle_manager.find_vehicle_by_type(vehicle_type, vehicle_list)
 		print()
-		if not filtered_list:
+		if not filtered_list:  # In case that there are not any available car. 
 			self.frame.delete_last_lines(1)
 			print()
 			print("No vehicle of type {} available on these dates.".format(self.color.return_colored(vehicle_type, 'red')))
 			time.sleep(1.5)
 			self.frame.delete_last_lines(11)
 			self.order()
-		else:
+		else:  # Otherwise it will display all the cars available and the customer can pick any.
 			plates = []
 			print('Available vehicles:')
 			print()
@@ -317,7 +311,7 @@ class Menu:
 
 			self.check_if_valid('license plate', self.order_manager.check_license_plate, plates)
 
-			self.check_if_valid('insurance (yes or no)', self.order_manager.check_insurance)
+			self.check_if_valid('insurance (yes or no)', self.order_manager.check_insurance)  # Let the customer choose if he/she wants any insurance other than basic.
 
 			print()
 			register_order_list = self.nocco_list.choose_one("Choose an action", 
@@ -326,6 +320,12 @@ class Menu:
 			self.handle_answer_from_menu(register_order_list['action'], 'register_order')
 	
 	def edit_order(self):
+		"""This method is called when the customer or employee wants to edit any order.
+		The employee has the ability to change or leave as it is any data.
+		Any data that wants to be changed can be done by entering the new data and then hit enter, otherwise if the employee wants
+		to keep the previous data can skip editing by leaving the input field empty and hit enter.
+		For each data, it is called check method to check if the data entered is correct, or in correct format.
+		"""
 		order = self.__current_order.return_details()
 		print('{}\n'.format(self.color.return_colored('Leave input empty to keep the value the same.', 'green')))
 		# Checks if inputs are valid, goes thorugh check_if_valid fundtion and checks in order_manager.
@@ -362,12 +362,16 @@ class Menu:
 		self.handle_answer_from_menu(save_edited_order['action'], 'save edited order')
 	
 	def save_edited_order(self):
+		"""Updates the order after it is edited by the employee.
+		First deletes the previous order, and then saves the edited order as a new order.
+		"""
 		self.order_manager.delete_order(self.__current_order)
 		self.order_manager.save_new_order()
 		print("{}".format(self.color.return_colored("Order updated!", 'green')))
 		time.sleep(1.5)
 
 	def check_if_valid(self, to_enter, to_check, editing=False, current_value=''):
+		"""Calls all the check methods."""
 		mistake = 0
 		error = "check if valid"
 		while error:
@@ -387,7 +391,7 @@ class Menu:
 				if user_input != '':
 					print("Enter " + to_enter + " [" + current_value + "]: " + user_input)
 				else:
-					if to_enter == 'Credit card number':
+					if to_enter == 'Credit card number':  # Hides first 12 numbers and prints only last 4 numbers.
 						print("Enter " + to_enter + " [**** **** **** " + current_value[12:] + "]: " + "**** **** **** " + current_value[12:])
 					else:
 						print("Enter " + to_enter + " [" + current_value + "]: " + current_value)
@@ -401,6 +405,11 @@ class Menu:
 				print("Enter " + to_enter + ": " + user_input)
 
 	def register_customer(self):
+		"""Method for registering a new customer.
+		Provides all the required checks to prevent the employee entering wrong inputs.
+		After the employee has entered all required datas, then another sub menu will appear, to 
+		select an action for either save the customer or can cancel and go back.
+		"""
 		self.frame.delete_last_lines(6)
 
 		self.check_if_valid('Name', self.customer_manager.check_name)
@@ -424,6 +433,11 @@ class Menu:
 		self.handle_answer_from_menu(register_customer['action'], 'register customer')
 
 	def edit_customer(self):
+		"""In case that the employee wants to edit a customer´s data then first the employee must find that particular customer and then this method
+		is called, the logic behind is similar as in edit_order(),
+		The employee can either add new data, and it will override the previous date or can leave the input field
+		empty and hit enter, then the previous data will be kept unchanged.
+		"""
 		customer = self.__current_customer.return_details()
 		print('{}\n'.format(self.color.return_colored('Leave input empty to keep the value the same.', 'green')))
 
@@ -450,16 +464,27 @@ class Menu:
 		self.handle_answer_from_menu(save_edited_customer['action'], 'save edited customer')
 
 	def invalid_input(self, message):
+		"""If an invalid input is entered then this method is called and,
+		provides the correct error message to suggest why it the inputed data is wrong and how it 
+		can be fixed.
+		"""
 		self.frame.delete_last_lines(1)
 		print('{}'.format(self.color.return_colored(message, 'red')))
 
 	def save_new_customer(self):
+		"""When a new customer is saved a short message to let the employee 
+		that the operation was done successfully is printed in green
+		for a short period of time and the it disappears.
+		"""
 		self.customer_manager.save_new_customer()
 		print("{}".format(self.color.return_colored("New customer registered!", 'green')))
 		time.sleep(1.5)
 		self.frame.delete_last_lines(1)
 
 	def save_edited_customer(self):
+		"""When saving an edited customer, first it deletes the previous incorrect customer
+		and then saves the edited customer as new.
+		"""
 		self.customer_manager.delete_customer(self.__current_customer)
 		self.customer_manager.save_new_customer()
 		
@@ -484,6 +509,10 @@ class Menu:
 		self.handle_answer_from_menu(found_customer['action'], 'found customer')
 
 	def customer_history(self):
+		"""If the employee wants to see the history of any particular customer, after the employee has found the customer,
+		this method is called and it will print all the available orders made by that customer, or print a message
+		in case that the customer has never made any order.
+		"""
 		ssn = self.__current_customer.get_ssn()
 		orders = self.order_manager.find_order_by_ssn(ssn)
 		if orders == []:
@@ -547,6 +576,10 @@ class Menu:
 			self.found_customer()
 
 	def delete_customer(self):
+		"""When the employee wants to delete a customer, this method is called,
+		first the employee has to find the customer then can delete.
+		A short message will show to indicate that the customer is successfully removed.
+		"""
 		self.customer_manager.delete_customer(self.__current_customer)
 		self.frame.delete_last_lines()
 		print('{}'.format(self.color.return_colored("Customer removed!", 'red')))

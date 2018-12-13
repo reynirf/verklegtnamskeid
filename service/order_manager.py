@@ -131,7 +131,8 @@ class OrderManager:
 
     def check_ID(self, ID, ignore_empty_value=False, current_value=''):
         """Check if ssn is valid. Returns an error message if ssn
-        has letters or punctuation in it"""
+        has letters or punctuation in it.
+        """
         if self.find_order_by_id(ID):
             return 'An order with that ID already exists. Choose another ID'
         if ID.strip() == '' and not ignore_empty_value: #and not ignore_empty_value:
@@ -149,7 +150,8 @@ class OrderManager:
 
     def check_ssn(self, ssn, ignore_empty_value=False, current_value=''):
         """Check if ssn is valid. Returns an error message if ssn
-        has letters or punctuation in it"""
+        has letters or punctuation in it.
+        """
         if ssn.strip() == '' and not ignore_empty_value:
             return self.error('SSN')
         elif ssn.strip() == '':
@@ -207,7 +209,8 @@ class OrderManager:
 
     def check_start_date(self, start_date, ignore_empty_value=False, current_value=''):
         """Check if start date is valid. Returns an error message if start date
-        can not be converted to a datetime object"""
+        can not be converted to a datetime object.
+        """
         if start_date.strip() == '' and not ignore_empty_value:
             return self.error('Start date')         
         elif start_date.strip() == '':
@@ -221,7 +224,8 @@ class OrderManager:
 
     def check_ending_date(self, end_date, ignore_empty_value=False, current_value=''):
         """Check if end date is valid. Returns an error message if end date
-        can not be converted to a datetime object"""
+        can not be converted to a datetime object.
+        """
         if end_date.strip() == '' and not ignore_empty_value:
             return self.error('End date')
         elif end_date.strip() == '':
@@ -236,7 +240,8 @@ class OrderManager:
 
     def check_pick_up_time(self, pick_up_time, ignore_empty_value=False, current_value=''):
         """Check if pick up time is valid. Returns an error message if pick up time
-        has letters in it"""
+        has letters in it.
+        """
         if pick_up_time.strip() == '' and not ignore_empty_value:
             try:
                 time.strptime(pick_up_time,"%H:%M")
@@ -258,7 +263,8 @@ class OrderManager:
 
     def check_returning_time(self, returning_time, ignore_empty_value=False, current_value=''):
         """Check if returning time is valid. Returns an error message if returning time
-        has letters in it"""
+        has letters in it.
+        """
         if returning_time.strip() == '' and not ignore_empty_value:
             try:
                 time.strptime(returning_time,"%H:%M")
@@ -306,7 +312,8 @@ class OrderManager:
 
     def check_license_plate(self, license_plate, ignore_empty_value=False, current_value=''):
         """Check if license plate is valid. Returns an error message if license plate
-        has punctuation in it"""
+        has punctuation in it.
+        """
         license_plate = license_plate.replace(' ', '')
         if license_plate.strip() == '' and not ignore_empty_value:
             return self.error('License plate')

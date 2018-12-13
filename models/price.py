@@ -1,4 +1,10 @@
 class Price:
+    """This class holds all the information about the prices of the vehicles,
+    by separating vehicles in different categories and calculates the final price
+    after adding the insurance on top of the initial price.
+    All cars must be with basic insurance, and then it is up to the customer to choose
+    if he/she wants to add extra/kasko insurance or not.
+    """
     def __init__(self):
         self.__vehicle_types = ['Small car', 'Sedan', 'Offroad', 'Bus']
 
