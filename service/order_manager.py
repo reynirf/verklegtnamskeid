@@ -54,7 +54,8 @@ class OrderManager:
             self.__temp_return_location,
             self.__temp_license_plate,
             self.__temp_insurance,
-            self.__temp_type_of_vehicle)
+            self.__temp_type_of_vehicle
+        )
 
     def dates_to_string(self, dates):
         """Recieves a date and converts it into a single string
@@ -232,7 +233,6 @@ class OrderManager:
         elif start_date.strip() == '':
             self.__temp_start_date = self.create_start_date_object(current_value)
             return None
-       
         start_date_object = self.create_start_date_object(start_date)
         if type(start_date_object) == date:
             self.__temp_start_date = start_date_object

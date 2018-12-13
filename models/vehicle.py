@@ -5,7 +5,8 @@ from models.price import Price
 class Vehicle:
     def __init__(
             self, license_plate, make, model, year, type_of_vehicle, 
-            seats, fuel, transmission, dates=[]):
+            seats, fuel, transmission, dates=[]
+    ):
         self.__price_list = Price()
         self.__license = license_plate
         self.__make = make
@@ -23,7 +24,8 @@ class Vehicle:
 
     def set_rented_dates(self):
         """converts all dates in rent_dates to date instances and saves
-        them to rented_dates"""
+        them to rented_dates.
+        """
         try:
             for d in self.__rent_dates:
                 rent_day = date(int(d[:4]), int(d[4:6]), int(d[6:]))
@@ -63,8 +65,16 @@ class Vehicle:
         return self.__insurance_per_day
 
     def get_attributes(self):
-        return (self.__license, self.__make, self.__model, self.__year, 
-        self.__type_of_vehicle, self.__seats, self.__fuel, self.__transmission)
+        return (
+            self.__license, 
+            self.__make, 
+            self.__model, 
+            self.__year, 
+            self.__type_of_vehicle, 
+            self.__seats, 
+            self.__fuel, 
+            self.__transmission
+        )
     
     def return_details(self):
         """Returns vehicle details in a dictionary"""

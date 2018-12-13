@@ -10,7 +10,8 @@ class OrderRepo:
 
     def get_order_list(self):
         """Reads each order from the file and returns a list of 
-        Order instances"""
+        Order instances.
+        """
         if self.__order_list == []:
             with open(self.ORDER_FILE, 'r') as order_file:
                 csv_reader = csv.DictReader(order_file)
@@ -30,25 +31,38 @@ class OrderRepo:
                     self.__order_list.append(order)
         return self.__order_list
 
-    def save_new_order(self, ID, ssn, starting_date, ending_date, pick_up_time,
-                       returning_time, pick_up_location, return_location, license_plate,
-                        insurance, type_of_vehicle):
+    def save_new_order(
+        self, ID, ssn, starting_date, ending_date, pick_up_time,
+        returning_time, pick_up_location, return_location, license_plate,
+        insurance, type_of_vehicle
+    ):
         """Writes a new order to file"""
         with open(self.ORDER_FILE, 'a', newline='') as order_file:
             csv_writer = csv.writer(order_file)
-            csv_writer.writerow([ID, ssn, starting_date, ending_date, pick_up_time,
-                                 returning_time, pick_up_location, return_location, 
-                                 license_plate, insurance, type_of_vehicle])
+            csv_writer.writerow([
+                ID, 
+                ssn, 
+                starting_date, 
+                ending_date, 
+                pick_up_time,
+                returning_time, 
+                pick_up_location, 
+                return_location, 
+                license_plate, 
+                insurance, 
+                type_of_vehicle
+            ])
         self.__order_list = []
 
     def delete_order(self, order):
         """Reads orders from file and compares with order. Writes the
-        file again without the line that matches the ID"""
+        file again without the line that matches the ID.
+        """
         file_content = []
         with open(self.ORDER_FILE, 'r') as order_file:
             csv_reader = csv.reader(order_file)
             for line in csv_reader:
-                #compares first column of non empty lines to order ID
+                # compares first column of non empty lines to order ID
                 if line != []:
                     if line[0] != order.get_id():
                         file_content.append(line)

@@ -28,12 +28,14 @@ class CustomerManager:
             self.__temp_email,
             self.__temp_address,
             self.__temp_driver_license,
-            self.__temp_credit_card)
+            self.__temp_credit_card
+        )
 
     def check_name(self, name, ignore_empty_value=False, current_value=''):
         """check if name is valid. Returns an error message if name
         has numbers or punctuation in it. When editing a customer a 
-        previous value is used if nothing is entered"""
+        previous value is used if nothing is entered.
+        """
         if name.strip() == '' and not ignore_empty_value:
             return self.error('Name')
         elif name.strip() == '':
@@ -48,7 +50,8 @@ class CustomerManager:
     def check_ssn(self, ssn, ignore_empty_value=False, current_value=''):
         """Check if ssn is valid. Returns an error message if ssn
         has letters or punctuation in it. When editing a customer a 
-        previous value is used if nothing is entered"""
+        previous value is used if nothing is entered.
+        """
         ssn = ssn.replace("-", "").replace(" ", "")
         
         if self.find_customer_by_ssn(ssn) and not current_value:
@@ -69,7 +72,8 @@ class CustomerManager:
     def check_phone_number(self, phone, ignore_empty_value=False, current_value=''):
         """Check if phone number is valid. Returns an error message if phone
         number has letters or punctuation in it. When editing a customer a 
-        previous value is used if nothing is entered"""
+        previous value is used if nothing is entered.
+        """
         phone = phone.replace("-", "")
         
         if phone.strip() == '' and not ignore_empty_value:
@@ -86,7 +90,8 @@ class CustomerManager:
     def check_license(self, driver_license, ignore_empty_value=False, current_value=''):
         """Check if driver license categories given are valid. Returns an 
         error message if categories given are not valid. When editing a customer 
-        a previous value is used if nothing is entered"""
+        a previous value is used if nothing is entered.
+        """
         categories = ["a", "a1", "b", "be", "c1", "c1e", "c", "ce", "d1", "d1e", "d", "de"]
         driver_license = driver_license.split()
 
@@ -103,7 +108,8 @@ class CustomerManager:
     def check_email(self, email, ignore_empty_value=False, current_value=''):
         """Check if email address is valid. Returns an error message if email 
         does not have an @ and '.' in it or if it is too short. When editing 
-        a previous value is used if nothing is entered"""
+        a previous value is used if nothing is entered.
+        """
         condition = "@" not in email or len(email) < 6 or '.' not in email
         
         if condition and not ignore_empty_value:
@@ -118,7 +124,8 @@ class CustomerManager:
     def check_credit_card(self, credit_card, ignore_empty_value=False, current_value=''):
         """Check if credit card number is valid. Returns an error message if 
         credit card number has letters or punctuation in it or if it is too 
-        short. When editing a previous value is used if nothing is entered"""
+        short. When editing a previous value is used if nothing is entered.
+        """
         credit_card = credit_card.replace("-", "").replace(' ', '')
 
         if len(credit_card) != 16 and not ignore_empty_value:
@@ -136,7 +143,8 @@ class CustomerManager:
 
     def check_address(self, address, ignore_empty_value=False, current_value=''):
         """Checks that address is at least 5 letters long. When editing a
-        previous value is used if nothing is entered"""
+        previous value is used if nothing is entered.
+        """
         if address.strip() == '' and not ignore_empty_value:
             return self.error('Home address')
         elif address.strip() == '':
@@ -150,7 +158,8 @@ class CustomerManager:
     def find_customer_by_name(self, name):
         """Searches through a list of customers to find those whose name 
         matches the given name. Returns a list of matched customers or
-        None if no customers are found."""
+        None if no customers are found.
+        """
         customer_list = self.__customer_repo.get_customer_list()
         customers = []
         for customer in customer_list:
@@ -162,7 +171,8 @@ class CustomerManager:
     def find_customer_by_ssn(self, ssn):
         """Searches through a list of customers to find those whose SSN 
         matches the given SSN. Returns a list of matched customers or
-        None if no customers are found."""
+        None if no customers are found.
+        """
         customer_list = self.__customer_repo.get_customer_list()
         ssn = ssn.replace("-", "")
         for customer in customer_list:

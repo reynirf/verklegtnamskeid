@@ -14,6 +14,10 @@ import getpass
 import os.path
 
 class Menu:
+	"""Handle all the menu functionalities.
+	self.frame.delete_last_lines(xx) will be found in many places of our code, 
+	because it deletes the previous lines for better look, as we decided in the design pattern.
+	"""
 	def __init__(self):
 		self.nocco_list = NoccoList()
 		self.color = Color()
@@ -28,11 +32,17 @@ class Menu:
 		self.__current_order = ""
 
 	def get_employees(self):
-		employee_list = self.employee_manager.get_employee_list() #Fetch employees in a list from employee_manager.
-		for employee in employee_list: #Loop through the list to get a employee
+		"""Fetch employees in a list from employee_manager.
+		Loop through the list to get a employee
+		"""
+		employee_list = self.employee_manager.get_employee_list()
+		for employee in employee_list:
 			print(employee) 
 
-	def authenticate_v2(self):
+	def authenticate(self):
+		"""This method check the authentication of the employee, by entering the username and password,
+		and it will loop until it has the correct username and password.
+		"""
 		print()
 		print()
 		logged_in = False
@@ -40,38 +50,64 @@ class Menu:
 			employee_id = input('Enter your ID: ')
 			employee_password = getpass.getpass('Enter password: ')
 			response = self.employee_manager.authenticate(employee_id, employee_password)
-			if type(response) == Employee: #The function authenticate checks the id and password.
-				print() #Styling...
+			if type(response) == Employee:  # The function authenticate checks the id and password.
+				print()  # Styling...
 				if self.employee_manager.has_failed():
 					self.frame.delete_last_lines(4)
 					print('\n' * 3)
-				self.introduce_employee(response) #The function introduce_employee prints the customer
+				self.introduce_employee(response)  # The function introduce_employee prints the customer
 				print()
-				logged_in = True #To end the while loop
+				logged_in = True  # To end the while loop
 			else:
 				self.frame.delete_last_lines(3)
-				self.color.print_colored(response, 'red') #The loggin has failed.
+				self.color.print_colored(response, 'red')  # The loggin has failed.
 
 	def introduce_employee(self, employee):
+		"""Prints the name of the employee.
+		"""
 		self.frame.delete_last_lines(3)
 		print(employee)
 
 	def signout(self):
+		"""In case that the employee signs out, it prints sign out and calls the authenticate() method to wait
+		for the employee to sign in again.
+		"""
 		self.frame.delete_last_lines(9)
 		employee = self.employee_manager.get_current_employee() 
-		print('{} has been logged out'.format(  				#Prints that the user has been logged out
+		print('{} has been logged out'.format(  				# Prints that the user has been logged out
 			self.color.return_colored(employee.get_name(), 'red')))
-		time.sleep(1.5) #Lets the program sleep for 1.5 seconds before continuing for a regular flow.
+		time.sleep(1.5)  # Lets the program sleep for 1.5 seconds before continuing for a regular flow.
 		self.frame.delete_last_lines(3)
-		self.authenticate_v2()
+		self.authenticate()
+	############################################################################
+	# Here starts the Homepage menu functionalities							   #
+	############################################################################
+	def init_menu(self):
+		"""Initial menu/Homepage,
+		The employee can choose any of the operations and continue with the functionalities of the page, or he/she can sign out,
+		and from there the it will be called the authenticate() method which prompts to get an user id and password."""
+		prompt = self.nocco_list.choose_one(
+			'Choose an action',
+			['Order', 'Customer', 'Vehicles', 'Report an error', 'Sign out'],
+			'action'
+		)
+		self.handle_answer_from_menu(prompt['action'], 'main_menu')
 
 	def report_error(self):
+		"""Since we do not have any database for holding email and password online as a form to prove the employee
+		identity, or troubleshooting, we simply implemented a simple method for any problems encountered while
+		using this service, the employee should contact the manager of this service for technical support.
+		This method prints how to reach help, and then go back at the main page.
+		"""
 		self.frame.delete_last_lines(7)
 		print('Contact your manager to report an error.')
 		self.nocco_list.single_list('Go back')
 		self.frame.delete_last_lines(3)
 
 	def customer(self):
+		"""Prints functionalities of the customer menu, and the user can either choose any option from
+		the menu, either can go back at main menu.
+		"""
 		customer = self.nocco_list.choose_one(
 												'Choose an action',
 											    [
@@ -84,6 +120,9 @@ class Menu:
 		self.handle_answer_from_menu(customer['action'], 'customer')
 
 	def order(self):
+		"""Prints functionalities of the order menu, and the user can either choose any option from
+		the menu, either can go back at main menu.
+		"""
 		order_list = self.nocco_list.choose_one("Choose an action",
 												[
 													"Register order",
@@ -95,6 +134,9 @@ class Menu:
 		self.handle_answer_from_menu(order_list['action'], 'order')
 
 	def calculate_order(self):
+		"""After the employee has inputed all the neccessary data, it calculates the order in a readable style,
+		with correct formating.
+		"""
 		print()
 		print('{:<20}{:>10}{:>12}'.format('Description', 'Per day', 'Amount'))
 		print('-'*42)
@@ -105,91 +147,110 @@ class Menu:
 		print('-'*42)
 		total = (base_price + insurance + extra_ins) * days
 		print('{:<20}{:>22}'.format('TOTAL ISK:', total))
-		#A lot of formatting was needed to print the calculated order fancy and readable.
+		# A lot of formatting was needed to print the calculated order fancy and readable.
 		self.nocco_list.single_list("Go back")
 
 	def show_pricing_list(self):
-		vehicle_types = ['smallcar', 'sedan', 'offroad', 'bus'] #All available types we offer.
+		"""This simple method prints the pricing list, in case that the customer wants to know whaat kind of car 
+		can afford, and what the price ranges is.
+		"""
+		vehicle_types = ['smallcar', 'sedan', 'offroad', 'bus']  # All available types we offer.
 		self.frame.delete_last_lines(2)
 		print()
 		print('{:<15}{:>12}{:>20}{:>20}'.format('Vehicle type', 'Base price', 'Basic insurance', 'Extra insurance'))
 		print('-'*67)
-		for vehicle in vehicle_types: #Loops the vehicle list and prints the price for each vehicle.
+		for vehicle in vehicle_types:  # Loops the vehicle list and prints the price for each vehicle.
 			print(self.price_list.print_prices(vehicle))
 		print()
 		print('Prices are per day in ISK')
 		self.nocco_list.single_list("Go back")
 		self.frame.delete_last_lines(10)
-		self.order() #Runs order again after you go back.
+		self.order()  # Runs order again after you go back.
+	
+	def find_order(self):
+		"""This method provides the functionalities of the Find order in Order menu. 
+		The employee can either user enter either right arrow to continue in any desired option. 
+		"""
+		find_order_list = self.nocco_list.choose_one('Choose an action',
+						['Find order by ID', 'Find order by SSN', 'Go back'], 'action')
+		self.handle_answer_from_menu(find_order_list['action'], 'find order')
 
 	def find_order_by_id(self):
+		"""This method makes possible for the employee to find any order in the database (csv) with the id of the order.
+		And after the order is found, it provides further options to continue.
+		"""
 		ID = input("Enter ID: ")
 		self.frame.delete_last_lines(2)
 		print()
-		order = self.order_manager.find_order_by_id(ID) #Runs find_order_by_id in order manager
-		if order == None: #Then there is no order with that particular ID
+		order = self.order_manager.find_order_by_id(ID)  # Runs find_order_by_id in order manager
+		if order == None:  # Then there is no order with that particular ID
 			print('{}'.format(self.color.return_colored("Order not found!", 'red')))
 			time.sleep(1.5)
 			self.frame.delete_last_lines()
 			self.find_order()
-		else: #The order has been found
+		else:  # The order has been found
 			self.__current_order = order
 			print("Order: " + order.__str__())
 			print()
 			self.found_order() 
 
 	def find_order_by_ssn(self):
+		"""This method makes possible for the employee to find any order in the database (csv) with the SSN of the customer.
+		And after the order is found, it provides further options to continue.
+		"""
 		ssn = input("Enter SSN: ")
 		print()
-		orders = self.order_manager.find_order_by_ssn(ssn) #Runs find_order_by_ssn in order_manager
-		if orders == []: #Than the order has not been found because there is no order linked to that ssn
+		orders = self.order_manager.find_order_by_ssn(ssn)  # Runs find_order_by_ssn in order_manager
+		if orders == []:  # Than the order has not been found because there is no order linked to that ssn
 			print('{}'.format(self.color.return_colored("Order not found!", 'red')))
 			time.sleep(1.5)
 			self.frame.delete_last_lines(3)
 			self.find_order()
-		else: #A order has been found with that particular ssn linked to it.
+		else:  # A order has been found with that particular ssn linked to it.
 			self.frame.delete_last_lines(2)
-			if len(orders) == 1: #There is only one order linked to that particular ssn
+			if len(orders) == 1:  # There is only one order linked to that particular ssn
 				print("Order : " + orders[0].__str__())
 				print()
 				self.__current_order = orders[0]
 				self.found_order()
-			else: # Multiple orders are linked with a paticullar ssn
+			else:  # Multiple orders are linked with a paticullar ssn
 				print("{}".format(self.color.return_colored("There are multiple orders with that SSN!", 'red')))
 				print()
 				printable_orders = ['ID: {} | {} - {}'.format(
 					order.__str__(), order.get_dates()[0], order.get_dates()[1]) for order in orders]
 				printable_orders.append('Go back')
-				#Reynir...
+				# Reynir...
 
 				found_multiple_orders = self.nocco_list.choose_one('Choose an order',
 						printable_orders, 'order', True)
 				self.handle_answer_from_menu((found_multiple_orders, orders), 'found multiple orders')
 
-	def find_order(self):
-		find_order_list = self.nocco_list.choose_one('Choose an action',
-						['Find order by ID', 'Find order by SSN', 'Go back'], 'action')
-		self.handle_answer_from_menu(find_order_list['action'], 'find order')
-
 	def found_order(self):
+		"""After the employee has found the order that was looking for, this method provides the functionalities
+		of what the employee can do with that particular order.
+		"""
 		found_order_list = self.nocco_list.choose_one('Choose an action',
 						['Edit order', 'Print order', 'Delete order', 'Go back'], 'action')
 		self.frame.delete_last_lines(2)
 		self.handle_answer_from_menu(found_order_list['action'], 'found order')
 
 	def get_inputted_order(self):
+		"""After the employee has entered all the neccessary datas about the order, then another menu will
+		appear with the functionalities to move on in further operations.
+		"""
 		vehicles = self.order_manager.get_inputted_order()
-		self.frame.delete_last_lines(len(vehicles) - 1) #Deletes last lines equal to len(cars) -1...styling
+		self.frame.delete_last_lines(len(vehicles) - 1)  # Deletes last lines equal to len(cars) -1...styling
 		register_order_list = self.nocco_list.choose_one("Choose an action",
 							["Save", "Calculate order" , "Cancel"], "action")
 		self.handle_answer_from_menu(register_order_list['action'], 'register_order')
 
 	def delete_order(self):
-		start_day, end_day = self.__current_order.get_dates() # gets start day an end day from get_dates.
-		dates = self.order_manager.get_order_dates(start_day, end_day) #puts the values in get_order_dates
-		vehicle = self.__current_order.get_license_plate() #Gets a license plate for current order.
-		self.vehicle_manager.delete_order_dates(dates, vehicle) #A function that deletes the dates a vehicle is rented.
-		self.order_manager.delete_order(self.__current_order) #A function that deletes the particullar order
+		"""This method enables the employee to delete/cancel any order. """
+		start_day, end_day = self.__current_order.get_dates()  # gets start day an end day from get_dates.
+		dates = self.order_manager.get_order_dates(start_day, end_day)  # puts the values in get_order_dates
+		vehicle = self.__current_order.get_license_plate()  # Gets a license plate for current order.
+		self.vehicle_manager.delete_order_dates(dates, vehicle)  # A function that deletes the dates a vehicle is rented.
+		self.order_manager.delete_order(self.__current_order)  # A function that deletes the particullar order
 		self.frame.delete_last_lines(2)
 		print('{}'.format(self.color.return_colored("Order removed!", 'red')))
 		time.sleep(1.5)
@@ -197,14 +258,22 @@ class Menu:
 		self.order()
 
 	def save_new_order(self):
-		self.order_manager.save_new_order() #A function that saves the order in the csv file.
-		print("{}".format(self.color.return_colored("New order registered!", 'green')))
+		"""Saves a new order in our csv database if the correct information is entered."""
+		self.order_manager.save_new_order()  # A function that saves the order in the csv file.
+		print("{}".format(self.color.return_colored("New order registered!", 'green')))  # Prits this message in case that a new order is successfully registered
 		time.sleep(1.5)
-		dates = self.order_manager.get_order_dates()
+		dates = self.order_manager.get_order_dates()  # Allows to input only available date, and provides from inputing e.g past date
 		vehicle = self.order_manager.get_license_plate()
-		self.vehicle_manager.save_order_dates(dates, vehicle) #saves the dates for a praticullar rented car.
+		self.vehicle_manager.save_order_dates(dates, vehicle)  # saves the dates for a praticullar rented car.
 
 	def register_order(self):
+		"""When the employee wants to register a new order, this method is called and enables the employee to enter the correct information, 
+		by calling the correct checks for each data entered.
+		Some of the datas that are available, are just a choice for simplicity by the decision of the developers, like 
+		ability to choose only from two places, Reykjavik or Akureyri. 
+		After the employee has entered all the neccessary datas that are required, then another sub menu is provided to allow the customer to 
+		pick a car in a range of available cars. After the customer has choose the car, then the employee can proceed in further options.
+		"""
 		self.frame.delete_last_lines(6)
 		print()
 		# Here are all checks to check if a input is valid, it is sent to the check_if_valid function
@@ -229,18 +298,18 @@ class Menu:
 		self.check_if_valid('type of vehicle (Small vehicle, sedan, offroad or bus)', self.order_manager.check_type_of_vehicle)
 		
 		start_date, end_date = self.order_manager.get_dates()
-		vehicle_list = self.vehicle_manager.show_vehicle_availability(start_date, end_date, 'available')
+		vehicle_list = self.vehicle_manager.show_vehicle_availability(start_date, end_date, 'available')  # Shows only the cars that are available in that time
 		vehicle_type = self.order_manager.get_type()
 		filtered_list = self.vehicle_manager.find_vehicle_by_type(vehicle_type, vehicle_list)
 		print()
-		if not filtered_list:
+		if not filtered_list:  # In case that there are not any available car. 
 			self.frame.delete_last_lines(1)
 			print()
 			print("No vehicle of type {} available on these dates.".format(self.color.return_colored(vehicle_type, 'red')))
 			time.sleep(1.5)
 			self.frame.delete_last_lines(11)
 			self.order()
-		else:
+		else:  # Otherwise it will display all the cars available and the customer can pick any.
 			plates = []
 			print('Available vehicles:')
 			print()
@@ -253,7 +322,7 @@ class Menu:
 
 			self.check_if_valid('license plate', self.order_manager.check_license_plate, plates)
 
-			self.check_if_valid('insurance (yes or no)', self.order_manager.check_insurance)
+			self.check_if_valid('insurance (yes or no)', self.order_manager.check_insurance)  # Let the customer choose if he/she wants any insurance other than basic.
 
 			print()
 			register_order_list = self.nocco_list.choose_one("Choose an action", 
@@ -262,6 +331,12 @@ class Menu:
 			self.handle_answer_from_menu(register_order_list['action'], 'register_order')
 	
 	def edit_order(self):
+		"""This method is called when the customer or employee wants to edit any order.
+		The employee has the ability to change or leave as it is any data.
+		Any data that wants to be changed can be done by entering the new data and then hit enter, otherwise if the employee wants
+		to keep the previous data can skip editing by leaving the input field empty and hit enter.
+		For each data, it is called check method to check if the data entered is correct, or in correct format.
+		"""
 		order = self.__current_order.return_details()
 		print('{}\n'.format(self.color.return_colored('Leave input empty to keep the value the same.', 'green')))
 		# Checks if inputs are valid, goes thorugh check_if_valid fundtion and checks in order_manager.
@@ -298,12 +373,16 @@ class Menu:
 		self.handle_answer_from_menu(save_edited_order['action'], 'save edited order')
 	
 	def save_edited_order(self):
+		"""Updates the order after it is edited by the employee.
+		First deletes the previous order, and then saves the edited order as a new order.
+		"""
 		self.order_manager.delete_order(self.__current_order)
 		self.order_manager.save_new_order()
 		print("{}".format(self.color.return_colored("Order updated!", 'green')))
 		time.sleep(1.5)
 
 	def check_if_valid(self, to_enter, to_check, editing=False, current_value=''):
+		"""Calls all the check methods."""
 		mistake = 0
 		error = "check if valid"
 		while error:
@@ -323,7 +402,7 @@ class Menu:
 				if user_input != '':
 					print("Enter " + to_enter + " [" + current_value + "]: " + user_input)
 				else:
-					if to_enter == 'Credit card number':
+					if to_enter == 'Credit card number':  # Hides first 12 numbers and prints only last 4 numbers.
 						print("Enter " + to_enter + " [**** **** **** " + current_value[12:] + "]: " + "**** **** **** " + current_value[12:])
 					else:
 						print("Enter " + to_enter + " [" + current_value + "]: " + current_value)
@@ -337,6 +416,11 @@ class Menu:
 				print("Enter " + to_enter + ": " + user_input)
 
 	def register_customer(self):
+		"""Method for registering a new customer.
+		Provides all the required checks to prevent the employee entering wrong inputs.
+		After the employee has entered all required datas, then another sub menu will appear, to 
+		select an action for either save the customer or can cancel and go back.
+		"""
 		self.frame.delete_last_lines(6)
 
 		self.check_if_valid('Name', self.customer_manager.check_name)
@@ -360,6 +444,11 @@ class Menu:
 		self.handle_answer_from_menu(register_customer['action'], 'register customer')
 
 	def edit_customer(self):
+		"""In case that the employee wants to edit a customer´s data then first the employee must find that particular customer and then this method
+		is called, the logic behind is similar as in edit_order(),
+		The employee can either add new data, and it will override the previous date or can leave the input field
+		empty and hit enter, then the previous data will be kept unchanged.
+		"""
 		customer = self.__current_customer.return_details()
 		print('{}\n'.format(self.color.return_colored('Leave input empty to keep the value the same.', 'green')))
 
@@ -386,16 +475,27 @@ class Menu:
 		self.handle_answer_from_menu(save_edited_customer['action'], 'save edited customer')
 
 	def invalid_input(self, message):
+		"""If an invalid input is entered then this method is called and,
+		provides the correct error message to suggest why it the inputed data is wrong and how it 
+		can be fixed.
+		"""
 		self.frame.delete_last_lines(1)
 		print('{}'.format(self.color.return_colored(message, 'red')))
 
 	def save_new_customer(self):
+		"""When a new customer is saved a short message to let the employee 
+		that the operation was done successfully is printed in green
+		for a short period of time and the it disappears.
+		"""
 		self.customer_manager.save_new_customer()
 		print("{}".format(self.color.return_colored("New customer registered!", 'green')))
 		time.sleep(1.5)
 		self.frame.delete_last_lines(1)
 
 	def save_edited_customer(self):
+		"""When saving an edited customer, first it deletes the previous incorrect customer
+		and then saves the edited customer as new.
+		"""
 		self.customer_manager.delete_customer(self.__current_customer)
 		self.customer_manager.save_new_customer()
 		
@@ -404,12 +504,18 @@ class Menu:
 		self.frame.delete_last_lines(1)
 
 	def find_customer(self):
+		"""When find customer option is clicked, the employee will choose to find a customer either by name, either by SSN.
+		Find customer by SSN in our opinion is more efficient because of the nature of the SSN that is unique for each customer.
+		"""
 		find_customer = self.nocco_list.choose_one('Choose an action',
 												   ['Find customer by name', 'Find customer by SSN', 'Go back'],
 												   'action')
 		self.handle_answer_from_menu(find_customer['action'], 'find customer')
 
 	def found_customer(self):
+		"""After the unique customer is found, then the employee can decide what to do with that particular customer,
+		by clicking in any of the available options.
+		"""
 		found_customer = self.nocco_list.choose_one('Choose an action',
 													['Print customer details', 
 													'Print order history', 
@@ -420,6 +526,10 @@ class Menu:
 		self.handle_answer_from_menu(found_customer['action'], 'found customer')
 
 	def customer_history(self):
+		"""If the employee wants to see the history of any particular customer, after the employee has found the customer,
+		this method is called and it will print all the available orders made by that customer, or print a message
+		in case that the customer has never made any order.
+		"""
 		ssn = self.__current_customer.get_ssn()
 		orders = self.order_manager.find_order_by_ssn(ssn)
 		if orders == []:
@@ -435,6 +545,15 @@ class Menu:
 			self.frame.delete_last_lines(len(orders) + 4)
 
 	def find_customer_by_name(self):
+		"""If the employee is looking for a customer by the name of that customer, this method is called
+		The employee enters the customer´s name, and in case that it does not exist any customer with that particuar name,
+		a short message will be printed to indiciate that. 
+		In case that there are more than one customer with a particular name then a message will be printed to indicate that, 
+		and the list of the cusomers will be printed in the screen.
+		In case that there is only one customer with that name, then the employee will be able to edit, or remove that customer.
+		Otherwise the employee must use another way to find the a particular customer by using a method that uses a unique
+		identification parameter, such as SSN.
+		"""
 		name = input("Enter name: ")
 		print()
 		customers = self.customer_manager.find_customer_by_name(name)
@@ -466,6 +585,11 @@ class Menu:
 											 'found multiple customers')
 
 	def find_customer_by_ssn(self):
+		"""This method is called when the employee wants to find a customer, because it uses SSN as criteria for search
+		and because SSN is unique for each customer, this method of finding customers is much more efficient than finding customers by name,
+		because many customers can have the same name, but only one customer can have one SSN, so this method enables the employee to have more power
+		and being more effiecient in search, and editing or removing/unsubscring the customer afterwards.
+		"""
 		ssn = input("Enter SSN: ")
 		print()
 		customer = self.customer_manager.find_customer_by_ssn(ssn)
@@ -483,6 +607,10 @@ class Menu:
 			self.found_customer()
 
 	def delete_customer(self):
+		"""When the employee wants to delete a customer, this method is called,
+		first the employee has to find the customer then can delete.
+		A short message will show to indicate that the customer is successfully removed.
+		"""
 		self.customer_manager.delete_customer(self.__current_customer)
 		self.frame.delete_last_lines()
 		print('{}'.format(self.color.return_colored("Customer removed!", 'red')))
@@ -490,92 +618,42 @@ class Menu:
 		self.frame.delete_last_lines()
 		self.customer()
 
-	def save_new_vehicle(self):
-		self.vehicle_manager.save_new_vehicle()
-		print("{}".format(self.color.return_colored("New vehicle registered!", 'green')))
-		time.sleep(1.5)
-		self.frame.delete_last_lines(2)
-
-	def show_vehicle_availability(self, prompt):
-		self.check_if_valid('a start date (DD.MM.YYYY)', self.order_manager.check_start_date)
-		self.check_if_valid('an end date (DD.MM.YYYY)', self.order_manager.check_ending_date)
-		start_date, end_date = self.order_manager.get_dates()
-		vehicle_list = self.vehicle_manager.show_vehicle_availability(start_date, end_date, prompt)
-		print() 
-		print('{:<20} {:<20} {:<20} {:<20}'.format('License', 'Make', 'Model', 'Seats'))
-		print('-'*70)
-		for vehicle in vehicle_list:
-			print(vehicle.availability_string())
-
-		self.nocco_list.single_list('Go back')
-		self.frame.delete_last_lines(len(vehicle_list) + 2)
-
 	def vehicles(self):
 		self.frame.delete_last_lines(7)
 		vehicle = self.nocco_list.choose_one('Choose an action', ['Register vehicle', 'Find vehicle', 'Show all available vehicles',
 															  'Show vehicles in service',
 															  'Go back'], 'action')
 		self.handle_answer_from_menu(vehicle['action'], 'vehicles')
-	
-	def save_edited_vehicle(self):
-		self.vehicle_manager.delete_vehicle(self.__current_vehicle)
+
+	def save_new_vehicle(self):
 		self.vehicle_manager.save_new_vehicle()
-		print("{}".format(self.color.return_colored("Vehicle updated!", 'green')))
+		print("{}".format(self.color.return_colored("New vehicle registered!", 'green')))
 		time.sleep(1.5)
+		self.frame.delete_last_lines(2)
 
-	def found_vehicle(self):
-		found_vehicle_list = self.nocco_list.choose_one('Choose an action',
-						['Edit vehicle', 'Print vehicle', 'Print vehicle history', 'Remove vehicle', 'Go back'], 'action')
-		self.handle_answer_from_menu(found_vehicle_list['action'], 'found vehicle')
+	def register_vehicle(self):
+		self.frame.delete_last_lines(7)
 
-	def vehicle_history(self):
-		license_plate = self.__current_vehicle.get_license()
-		order_list = self.order_manager.find_orders_by_vehicle(license_plate)
-		if order_list == []:
-			print('{}'.format(self.color.return_colored("No orders registered to this vehicle", 'red')))
-			self.nocco_list.single_list('Go back')
-			self.frame.delete_last_lines(3)
-		else:
-			print('{:<10}{:<15}{:<20}'.format('ID', 'Customer SSN', 'Dates'))
-			print('-'*48)
-			for order in order_list:
-				print('{:<10}{:<15}{:>20}'.format(order.get_id(), order.get_ssn(), order.get_date_str()))
-			self.nocco_list.single_list('Go back')
-			self.frame.delete_last_lines(len(order_list) + 4)
+		self.check_if_valid('Vehicle type (smallcar, sedan, offroad or bus)', self.vehicle_manager.check_type)
 
-	def edit_vehicle(self):
-		vehicle = self.__current_vehicle.return_details()
-		self.frame.delete_last_lines()
-		print('{}\n'.format(self.color.return_colored('Leave input empty to keep the value the same', 'green')))
+		self.check_if_valid('Make', self.vehicle_manager.check_make)
 
-		self.check_if_valid('Vehicle type', self.vehicle_manager.check_type, True, vehicle['Vehicle type'])
+		self.check_if_valid('Model', self.vehicle_manager.check_model)
 
-		self.check_if_valid('Make', self.vehicle_manager.check_make, True, vehicle['Make'])
+		self.check_if_valid('Year', self.vehicle_manager.check_year)
 
-		self.check_if_valid('Model', self.vehicle_manager.check_model, True, vehicle['Model'])
+		self.check_if_valid('Number of seats', self.vehicle_manager.check_number_of_seats)
 
-		self.check_if_valid('Year', self.vehicle_manager.check_year, True, vehicle['Year'])
+		self.check_if_valid('License plate', self.vehicle_manager.check_license_plate)
 
-		self.check_if_valid('Number of seats', self.vehicle_manager.check_number_of_seats, True, vehicle['Number of seats'])
+		self.check_if_valid('Fuel (gasoline, diesel, electric or hybrid)', self.vehicle_manager.check_fuel)
 
-		self.check_if_valid('License plate', self.vehicle_manager.check_license_plate, True, vehicle['License'])
-
-		self.check_if_valid('Fuel', self.vehicle_manager.check_fuel, True,
-							vehicle['Fuel'])
-
-		self.check_if_valid('Driving transmission', self.vehicle_manager.check_driving_transmission, True, 
-							vehicle['Driving transmission'])
+		self.check_if_valid('Driving transmission (manual or automatic)', self.vehicle_manager.check_driving_transmission)
 		print()
-
-		save_edited_vehicle = self.nocco_list.choose_one('Choose an action',
-														  ['Save', 'Cancel'],
-														  'action')
-		self.handle_answer_from_menu(save_edited_vehicle['action'], 'save edited vehicle')
-		self.frame.delete_last_lines(8)
-		print("{}".format(self.color.return_colored("Vehicle Saved", 'green')))
-		time.sleep(4)
-		
-
+		register_vehicle = self.nocco_list.choose_one('Choose an action',
+												  ['Save', 'Cancel'],
+												  'action')
+		self.handle_answer_from_menu(register_vehicle['action'], 'register vehicle')
 
 	def find_vehicles(self):
 		find_vehicles = self.nocco_list.choose_one('Choose an action', ['Find vehicle by license plate', 'Find vehicle by make',
@@ -641,7 +719,6 @@ class Menu:
 				self.handle_answer_from_menu((found_multiple_vehicles, vehicles),
 											 'found multiple vehicles')
 
-
 	def find_vehicles_by_type(self):
 		type_of_vehicle = input("Enter type: ")
 		print()
@@ -673,7 +750,69 @@ class Menu:
 				self.handle_answer_from_menu((found_multiple_vehicles, vehicles),
 											 'found multiple vehicles')
 
+	def found_vehicle(self):
+		found_vehicle_list = self.nocco_list.choose_one('Choose an action',
+						['Edit vehicle', 'Print vehicle', 'Print vehicle history', 'Remove vehicle', 'Go back'], 'action')
+		self.handle_answer_from_menu(found_vehicle_list['action'], 'found vehicle')											 
+
+	def vehicle_history(self):
+		license_plate = self.__current_vehicle.get_license()
+		order_list = self.order_manager.find_orders_by_vehicle(license_plate)
+		if order_list == []:
+			print('{}'.format(self.color.return_colored("No orders registered to this vehicle", 'red')))
+			self.nocco_list.single_list('Go back')
+			self.frame.delete_last_lines(3)
+		else:
+			print('{:<10}{:<15}{:<20}'.format('ID', 'Customer SSN', 'Dates'))
+			print('-'*48)
+			for order in order_list:
+				print('{:<10}{:<15}{:>20}'.format(order.get_id(), order.get_ssn(), order.get_date_str()))
+			self.nocco_list.single_list('Go back')
+			self.frame.delete_last_lines(len(order_list) + 4)
+
+	def edit_vehicle(self):
+		vehicle = self.__current_vehicle.return_details()
+		self.frame.delete_last_lines()
+		print('{}\n'.format(self.color.return_colored('Leave input empty to keep the value the same', 'green')))
+
+		self.check_if_valid('Vehicle type', self.vehicle_manager.check_type, True, vehicle['Vehicle type'])
+
+		self.check_if_valid('Make', self.vehicle_manager.check_make, True, vehicle['Make'])
+
+		self.check_if_valid('Model', self.vehicle_manager.check_model, True, vehicle['Model'])
+
+		self.check_if_valid('Year', self.vehicle_manager.check_year, True, vehicle['Year'])
+
+		self.check_if_valid('Number of seats', self.vehicle_manager.check_number_of_seats, True, vehicle['Number of seats'])
+
+		self.check_if_valid('License plate', self.vehicle_manager.check_license_plate, True, vehicle['License'])
+
+		self.check_if_valid('Fuel', self.vehicle_manager.check_fuel, True,
+							vehicle['Fuel'])
+
+		self.check_if_valid('Driving transmission', self.vehicle_manager.check_driving_transmission, True, 
+							vehicle['Driving transmission'])
+		print()
+
+		save_edited_vehicle = self.nocco_list.choose_one('Choose an action',
+														  ['Save', 'Cancel'],
+														  'action')
+		self.handle_answer_from_menu(save_edited_vehicle['action'], 'save edited vehicle')
+		self.frame.delete_last_lines(8)
+		print("{}".format(self.color.return_colored("Vehicle Saved", 'green')))
+		time.sleep(4)
+		
+	def save_edited_vehicle(self):
+		self.vehicle_manager.delete_vehicle(self.__current_vehicle)
+		self.vehicle_manager.save_new_vehicle()
+		print("{}".format(self.color.return_colored("Vehicle updated!", 'green')))
+		time.sleep(1.5)
+
 	def delete_vehicle(self):
+		"""If the employee wants to remove/delete a vehicle then after he/she has found the vehicle,
+		then clicks in remove vehicle, and then this method is called.
+		A short message to indicate that the operation was done successfully will be printed.
+		"""
 		self.vehicle_manager.delete_vehicle(self.__current_vehicle)
 		self.frame.delete_last_lines(1)
 		print('{}'.format(self.color.return_colored("Vehicle removed!", 'red')))
@@ -681,41 +820,31 @@ class Menu:
 		self.frame.delete_last_lines(2)
 		print('\n' * 7)
 		self.vehicles()
+	
+	def show_vehicle_availability(self, prompt):
+		"""This method show all the vehicles that are available in a particular time, it will get only the vehicles that
+		are not in renting and not ordered to be rent. Thats why the employee has to enter a start date and an
+		end date to get the correct result.
+		"""
+		self.check_if_valid('a start date (DD.MM.YYYY)', self.order_manager.check_start_date)
+		self.check_if_valid('an end date (DD.MM.YYYY)', self.order_manager.check_ending_date)
+		start_date, end_date = self.order_manager.get_dates()
+		vehicle_list = self.vehicle_manager.show_vehicle_availability(start_date, end_date, prompt)
+		print() 
+		print('{:<20} {:<20} {:<20} {:<20}'.format('License', 'Make', 'Model', 'Seats'))
+		print('-'*70)
+		for vehicle in vehicle_list:
+			print(vehicle.availability_string())
 
-	def register_vehicle(self):
-		self.frame.delete_last_lines(7)
+		self.nocco_list.single_list('Go back')
+		self.frame.delete_last_lines(len(vehicle_list) + 2)
 
-		self.check_if_valid('Vehicle type (smallcar, sedan, offroad or bus)', self.vehicle_manager.check_type)
-
-		self.check_if_valid('Make', self.vehicle_manager.check_make)
-
-		self.check_if_valid('Model', self.vehicle_manager.check_model)
-
-		self.check_if_valid('Year', self.vehicle_manager.check_year)
-
-		self.check_if_valid('Number of seats', self.vehicle_manager.check_number_of_seats)
-
-		self.check_if_valid('License plate', self.vehicle_manager.check_license_plate)
-
-		self.check_if_valid('Fuel (gasoline, diesel, electric or hybrid)', self.vehicle_manager.check_fuel)
-
-		self.check_if_valid('Driving transmission (manual or automatic)', self.vehicle_manager.check_driving_transmission)
-		print()
-		register_vehicle = self.nocco_list.choose_one('Choose an action',
-												  ['Save', 'Cancel'],
-												  'action')
-		self.handle_answer_from_menu(register_vehicle['action'], 'register vehicle')
-
-	def init_menu(self):
-		prompt = self.nocco_list.choose_one(
-			'Choose an action',
-			['Order', 'Customer', 'Vehicles', 'Report an error', 'Sign out'],
-			'action'
-		)
-		self.handle_answer_from_menu(prompt['action'], 'main_menu')
 
 	def handle_answer_from_menu(self, prompt, menu_type):
-
+		"""This method handles all the choices that are made when choosing from he menus in every layer of the application.
+		**Note that are only menus that have a list of operations not a single operation, single operations, such as <Report an error>
+		which only prints a message and it has a single operation available to go back, uses a special method, in nocco_list that handles that case.
+		"""
 		######################################################
 		#                      MAIN MENU                     #                                                                                
 		######################################################

@@ -2,9 +2,10 @@ from datetime import date
 
 
 class Order:
-    def __init__(self, order_id, ssn, start_date, end_date, 
-            pick_up_time, return_time, pick_up_location, return_location, 
-            license_plate, insurance, vehicle_type):
+    def __init__(
+        self, order_id, ssn, start_date, end_date, pick_up_time, return_time, 
+        pick_up_location, return_location, license_plate, insurance, vehicle_type
+    ):
         self.__order_id = order_id
         self.__ssn = ssn
         self.__start_date_str = start_date[6:] + '.' + start_date[4:6] + '.' + start_date[:4]
@@ -40,7 +41,7 @@ class Order:
         return self.__license_plate
     
     def return_details(self):
-        """Returns the details needed for editing the order"""
+        """ Returns the order details in a dictionary """
         return {
             "ID": self.__order_id,
             "SSN": self.__ssn,
