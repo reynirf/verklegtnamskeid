@@ -315,9 +315,10 @@ class Menu:
 				self.found_order()
 
 			elif prompt == 'Calculate order':
-				self.frame.delete_last_lines(20)
+				vehicles = self.order_manager.get_inputted_order()
+				self.frame.delete_last_lines(len(vehicles) * 2 + 36)				
 				self.calculate_order()
-				self.frame.delete_last_lines(10)
+				self.frame.delete_last_lines(len(vehicles) * 2 + 6)				
 				print()
 				self.get_inputted_order()
 	
@@ -417,6 +418,7 @@ class Menu:
 		# A lot of formatting was needed to print the calculated order fancy and readable.
 		self.nocco_list.single_list("Go back")
 
+
 	def show_pricing_list(self):
 		"""This simple method prints the pricing list, in case that the customer wants to know whaat kind of car 
 		can afford, and what the price ranges is.
@@ -507,6 +509,7 @@ class Menu:
 		"""
 		vehicles = self.order_manager.get_inputted_order()
 		self.frame.delete_last_lines(len(vehicles) - 1)  # Deletes last lines equal to len(cars) -1...styling
+		print()
 		register_order_list = self.nocco_list.choose_one("Choose an action",
 							["Save", "Calculate order" , "Cancel"], "action")
 		self.handle_answer_from_order_menus(register_order_list['action'], 'register_order')

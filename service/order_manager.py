@@ -144,18 +144,18 @@ class OrderManager:
         or if it already exists. When editing a previous value is used 
         if nothing is entered"""
         if self.find_order_by_id(ID):
-            return 'An order with that ID already exists. Choose another ID'
+            return 'An order with that ID already exists or the ID is invalid. Choose another ID'
         if ID.strip() == '' and not ignore_empty_value: #and not ignore_empty_value:
-            return self.error('ID')
+            return 'An order with that ID already exists or the ID is invalid. Choose another ID'        
         elif ID.strip() == '':
             self.__temp_ID = current_value
             return None
 
         if len(ID) > 8:
-            return self.error('ID')
+            return 'An order with that ID already exists or the ID is invalid. Choose another ID'
         for letter in ID:
             if letter in (string.ascii_letters + string.punctuation):
-                return self.error('ID')
+                return 'An order with that ID already exists or the ID is invalid. Choose another ID'
         self.__temp_ID = ID
 
     def check_ssn(self, ssn, ignore_empty_value=False, current_value=''):
