@@ -35,7 +35,10 @@ class OrderManager:
 
     def get_type(self):
         return self.__temp_type_of_vehicle
-
+    
+    def get_license_plate(self):
+        return self.__temp_license_plate
+    
     def save_new_order(self):
         """uses the temp values to save the new customer"""
         start_day = self.dates_to_string(self.__temp_start_date)
@@ -54,6 +57,8 @@ class OrderManager:
             self.__temp_type_of_vehicle)
 
     def dates_to_string(self, dates):
+        """Recieves a date and converts it into a single string
+        with 8 numbers in it"""
         new_dates = str(dates.year)
         if dates.month <10:
             new_dates += '0' + str(dates.month) 
@@ -66,6 +71,8 @@ class OrderManager:
         return new_dates
 
     def get_inputted_order(self):
+        """Prints the prompts and temp values needed when editing an order. Searches
+        for available vehicles based on the input"""
         print("Enter ID: {}".format(self.__temp_ID))
         print("Enter SSN: {}".format(self.__temp_ssn))
         print("Enter start date: {}".format(self.__temp_start_date))
@@ -76,9 +83,11 @@ class OrderManager:
         print("Enter return location: {}".format(self.__temp_return_location))
         print("Enter type of vehicle: {}".format(self.__temp_type_of_vehicle))
         start_date, end_date = self.get_dates()
-        vehicle_list = self.__vehicle_manager.show_vehicle_availability(start_date, end_date, 'available')
+        vehicle_list = self.__vehicle_manager.show_vehicle_availability(
+            start_date, end_date, 'available')
         vehicle_type = self.get_type()
-        filtered_list = self.__vehicle_manager.find_vehicle_by_type(vehicle_type, vehicle_list)
+        filtered_list = self.__vehicle_manager.find_vehicle_by_type(
+            vehicle_type, vehicle_list)
         print()
         print('Available vehicles:')
         print()
@@ -92,8 +101,9 @@ class OrderManager:
         print()
         return filtered_list
         
-
     def get_order_dates(self, start='', end=''):
+        """Adds start and end dates and every day between them to a list of dates.
+        If start and end values are empty temp values are used"""
         if start == '':
             start = self.__temp_start_date
         if end == '':
@@ -107,30 +117,31 @@ class OrderManager:
             working_date += one_day
         return dates 
 
-    def get_license_plate(self):
-        return self.__temp_license_plate
-
     def calculate_order(self):
+        """Uses the temp values to find the values needed to calculate the
+        price of the order."""
         start_date_Input = self.__temp_start_date
         end_date_Input = self.__temp_end_date
         extra_insurance = self.__temp_insurance
 
+        # Creating a Vehicle instance to get the prices
         order_instance=Vehicle(0,0,0,0,self.__temp_type_of_vehicle,0,0,0)
         price_per_day = order_instance.get_price_per_day()
-
         if extra_insurance.lower() == 'yes':
             extra_insurance_per_day = order_instance.get_insurance_per_day()
         else:
             extra_insurance_per_day = 0
 
+        # Calculating the number of days and basic insurance price
         diffrence = end_date_Input - start_date_Input
         total_days = diffrence.days + 1
         basic_insurance_cost = int(price_per_day * 0.35)
         return price_per_day, basic_insurance_cost, extra_insurance_per_day, total_days
 
     def check_ID(self, ID, ignore_empty_value=False, current_value=''):
-        """Check if ssn is valid. Returns an error message if ssn
-        has letters or punctuation in it"""
+        """Check if ID is valid. Returns an error message if ID is invalid
+        or if it already exists. When editing a previous value is used 
+        if nothing is entered"""
         if self.find_order_by_id(ID):
             return 'An order with that ID already exists. Choose another ID'
         if ID.strip() == '' and not ignore_empty_value: #and not ignore_empty_value:
@@ -147,8 +158,8 @@ class OrderManager:
         self.__temp_ID = ID
 
     def check_ssn(self, ssn, ignore_empty_value=False, current_value=''):
-        """Check if ssn is valid. Returns an error message if ssn
-        has letters or punctuation in it"""
+        """Check if ssn is valid. Returns an error message if ssn is invalid. 
+        When editing a previous value is used if nothing is entered"""
         if ssn.strip() == '' and not ignore_empty_value:
             return self.error('SSN')
         elif ssn.strip() == '':
@@ -163,8 +174,11 @@ class OrderManager:
                 return self.error('SSN')
         self.__temp_ssn = ssn
 
-    def check_type_of_vehicle(self, type_of_vehicle, ignore_empty_value=False, current_value=''):
-        """check if type of vehicle is valid."""
+    def check_type_of_vehicle(
+            self, type_of_vehicle, ignore_empty_value=False, current_value=''):
+        """check if type of vehicle is valid. Returns an error message if type 
+        does not match our list of vehicles. When editing a previous value is 
+        used if nothing is entered"""
         if type_of_vehicle.strip() == '' and not ignore_empty_value:
             return self.error( 'Type' )
         elif type_of_vehicle.strip() == '':
@@ -180,6 +194,9 @@ class OrderManager:
             return self.error("Vehicle type")
 
     def create_start_date_object(self, date_str):
+        """Creates a date object from a string and compares it to the current date.
+        Returns an error if it is not possible to convert to a date or if it is
+        a date in the past"""
         present_day = date.today()
         try:
             year = date_str[6:]
@@ -193,6 +210,9 @@ class OrderManager:
             return self.error('Start date')
 
     def create_end_date_object(self, date_str):
+        """Creates a date object from a string and compares it to the temp start
+        date. Returns an error if it is not possible to convert to a date or if
+        it is a date that's older than the start date"""
         try:
             year = date_str[6:]
             month = date_str[3:5]
@@ -205,8 +225,8 @@ class OrderManager:
             return None
 
     def check_start_date(self, start_date, ignore_empty_value=False, current_value=''):
-        """Check if start date is valid. Returns an error message if start date
-        can not be converted to a datetime object"""
+        """Check if start date is valid. Returns an error message if not. When editing 
+        a previous value is used if nothing is entered"""
         if start_date.strip() == '' and not ignore_empty_value:
             return self.error('Start date')         
         elif start_date.strip() == '':
@@ -220,8 +240,8 @@ class OrderManager:
             return self.error("Start date")
 
     def check_ending_date(self, end_date, ignore_empty_value=False, current_value=''):
-        """Check if end date is valid. Returns an error message if end date
-        can not be converted to a datetime object"""
+        """Check if end date is valid. Returns an error message if not. When editing 
+        a previous value is used if nothing is entered"""
         if end_date.strip() == '' and not ignore_empty_value:
             return self.error('End date')
         elif end_date.strip() == '':
@@ -236,7 +256,8 @@ class OrderManager:
 
     def check_pick_up_time(self, pick_up_time, ignore_empty_value=False, current_value=''):
         """Check if pick up time is valid. Returns an error message if pick up time
-        has letters in it"""
+        can not be converted to a time object. When editing a previous value 
+        is used if nothing is entered"""
         if pick_up_time.strip() == '' and not ignore_empty_value:
             try:
                 time.strptime(pick_up_time,"%H:%M")
@@ -247,6 +268,7 @@ class OrderManager:
             return None
         else:
             try:
+                # Trying to convert to a time object and then saving as a string
                 time_tuple = time.strptime(pick_up_time,"%H:%M")
                 hours = time_tuple[3]
                 minutes = time_tuple[4]
@@ -257,8 +279,9 @@ class OrderManager:
                 return self.error('Pick up time')
 
     def check_returning_time(self, returning_time, ignore_empty_value=False, current_value=''):
-        """Check if returning time is valid. Returns an error message if returning time
-        has letters in it"""
+        """Check if returning time is valid. Returns an error message if returning 
+        time can not be converted to a time object. When editing a previous value 
+        is used if nothing is entered"""
         if returning_time.strip() == '' and not ignore_empty_value:
             try:
                 time.strptime(returning_time,"%H:%M")
@@ -269,6 +292,7 @@ class OrderManager:
             return None
         else:
             try:
+                # Trying to convert to a time object and then saving as a string
                 time_tuple = time.strptime(returning_time,"%H:%M")
                 hours = time_tuple[3]
                 minutes = time_tuple[4]
@@ -280,7 +304,8 @@ class OrderManager:
 
 
     def check_pick_up_location(self, pick_up_location, ignore_empty_value=False, current_value=''):
-        """Check if location matches our list of locations"""
+        """Check if location matches our list of locations. Returns an error if not.
+        When editing a previous value is used if nothing is entered"""
         if pick_up_location.strip() == '' and not ignore_empty_value:
             return self.error('Pick up location')
         elif pick_up_location.strip() == '':
@@ -293,26 +318,29 @@ class OrderManager:
             return self.error('Pick up location')
 
     def check_return_location(self, return_location, ignore_empty_value=False, current_value=''):
-        """Check if location matches our list of locations"""
+        """Check if location matches our list of locations. Returns an error if not.
+        When editing a previous value is used if nothing is entered"""
         if return_location.strip() == '' and not ignore_empty_value:
             return self.error('Return location')
         elif return_location.strip() == '':
             self.__temp_return_location = current_value
             return None
+        
         if return_location.lower().strip() in self.__locations:
             self.__temp_return_location = return_location
         else:
             return self.error('Pick up location')
 
     def check_license_plate(self, license_plate, ignore_empty_value=False, current_value=''):
-        """Check if license plate is valid. Returns an error message if license plate
-        has punctuation in it"""
+        """Check if license plate is valid. Returns an error message if not. 
+        When editing a previous value is used if nothing is entered"""
         license_plate = license_plate.replace(' ', '')
         if license_plate.strip() == '' and not ignore_empty_value:
             return self.error('License plate')
         elif license_plate.strip() == '' and current_value:
             self.__temp_license_plate = current_value
             return None
+        
         if 3 > len(license_plate) or len(license_plate) > 6:
             return self.error('License plate')
         for letter in license_plate:
@@ -323,18 +351,25 @@ class OrderManager:
         self.__temp_license_plate = license_plate
 
     def check_insurance(self, insurance, ignore_empty_value=False, current_value=''):
-        if insurance.strip() == '' and not ignore_empty_value:
+        """Check that a valid answer has been given for insurance. Returns an error
+        message if not. When editing a previous value is used if nothing is entered"""
+        valid_answers = ['yes', 'no', 'y', 'n']
+        insurance = insurance.strip()
+        
+        if insurance == '' and not ignore_empty_value:
             return self.error('Insurance')
-        elif insurance.strip() == '':
+        elif insurance == '':
             self.__temp_insurance = current_value
             return None
-        insurance = insurance.strip()
-        if insurance.lower() == "yes" or insurance.lower() == "no" or insurance.lower() == 'n' or insurance.lower() == 'y':
+        
+        if insurance.lower() in valid_answers:
             self.__temp_insurance = insurance
         else:
             return self.error('Insurance')
 
     def find_order_by_ssn(self, ssn):
+        """Searches through a list of orders to find those whose SSN matches the
+        SSN given. Returns a list of orders or None if no orders are found"""
         order_list = self.__order_repo.get_order_list()
         ssn = ssn.replace("-", "")
         orders = []
@@ -345,12 +380,16 @@ class OrderManager:
         return orders
 
     def find_order_by_id(self, ID):
+        """Searches through a list of orders to find one whose ID matches the 
+        one given. Returns an order or None if no order matches the ID"""
         order_list = self.__order_repo.get_order_list()
         for order in order_list:
             if order.get_id() == ID:
                 return order
 
     def find_orders_by_vehicle(self, license_plate):
+        """Searches through a list of orders to find those with the given vehicle
+        license plate. Returns a list of orders or None if no orders are found"""
         order_list = self.__order_repo.get_order_list()
         orders = []
         for order in order_list:
@@ -363,4 +402,5 @@ class OrderManager:
         self.__order_repo.delete_order(order)
     
     def error(self, input_type):
+        """An error message used by all check methods"""
         return '{} not valid. Please try again.'.format(input_type)
