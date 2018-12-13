@@ -20,6 +20,9 @@ class VehicleManager:
 
     def get_vehicle_list(self):
         return self.__vehicle_repo.get_vehicle_list()
+    
+    def get_license(self):
+        return self.__temp_license_plate
 
     def save_new_vehicle(self):
         """uses the temp values to save the new vehicle""" 
@@ -233,6 +236,7 @@ class VehicleManager:
         matches the given type. Returns a list of matched vehicles 
         or None if no vehicles are found.
         """
+        type_of_vehicle = type_of_vehicle.replace(' ', '')
         # if no car list is given go to vehicle_repo to get one
         if vehicle_list == '':
             vehicle_list = self.__vehicle_repo.get_vehicle_list()
@@ -246,7 +250,7 @@ class VehicleManager:
 
     def show_vehicle_availability(self, start_date, end_date, prompt):
         """Goes through a list of vehicles and splits them into two 
-        lists based on wether they are available or rented on the 
+        lists based on whether they are available or rented on the 
         given dates. Returns a list based on the prompt given.
         """
         vehicles = self.get_vehicle_list()

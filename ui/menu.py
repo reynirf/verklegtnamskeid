@@ -1121,7 +1121,7 @@ class Menu:
 				self.frame.delete_last_lines(15)
 				self.save_edited_vehicle()
 				self.frame.delete_last_lines()
-				self.__current_vehicle = self.vehicle_manager.find_vehicle_by_license_plate(self.__current_vehicle.get_license())
+				self.__current_vehicle = self.vehicle_manager.find_vehicle_by_license_plate(self.vehicle_manager.get_license())
 				print('Vehicle: {}\n'.format(self.__current_vehicle.__str__()))
 				self.found_vehicle()
 				self.frame.delete_last_lines(2)
