@@ -562,7 +562,7 @@ class Menu:
 
 		self.check_if_valid('return location (Reykjavik or Akureyri)', self.order_manager.check_return_location)
 		
-		self.check_if_valid('type of vehicle (Small vehicle, sedan, offroad or bus)', self.order_manager.check_type_of_vehicle)
+		self.check_if_valid('type of vehicle (Small car, sedan, offroad or bus)', self.order_manager.check_type_of_vehicle)
 		
 		start_date, end_date = self.order_manager.get_dates()
 		vehicle_list = self.vehicle_manager.show_vehicle_availability(start_date, end_date, 'available')
