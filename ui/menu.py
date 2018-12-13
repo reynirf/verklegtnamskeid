@@ -13,6 +13,7 @@ import time
 import getpass
 import os.path
 
+
 class Menu:
 	"""Handle all the menu functionalities.
 	self.frame.delete_last_lines(xx) will be found in many places of our code, 
@@ -72,9 +73,151 @@ class Menu:
 		self.frame.delete_last_lines(3)
 		self.authenticate()
 
+	def check_if_valid(self, to_enter, to_check, editing=False, current_value=''):
+		"""Controls the output for most of our error checks."""
+		mistake = 0
+		error = "check if valid"
+		while error:
+			if (not editing and not current_value) or (not current_value and type(editing) == list):
+				user_input = input("Enter " + to_enter + ": ")
+			else:
+				if to_enter == 'Credit card number':
+					user_input = input("Enter " + to_enter + " [**** **** **** " + current_value[12:] + "]: ")
+				else:
+					user_input = input("Enter " + to_enter + " [" + current_value + "]: ")
+			error = to_check(user_input, editing, current_value)
+			if editing and current_value and not error:
+				if mistake:
+					self.frame.delete_last_lines(2)
+				else:
+					self.frame.delete_last_lines()
+				if user_input != '':
+					print("Enter " + to_enter + " [" + current_value + "]: " + user_input)
+				else:
+					if to_enter == 'Credit card number':  # Hides first 12 numbers and prints only last 4 numbers.
+						print("Enter " + to_enter + " [**** **** **** " + current_value[12:] + "]: " + "**** **** **** " + current_value[12:])
+					else:
+						print("Enter " + to_enter + " [" + current_value + "]: " + current_value)
+			elif error and not mistake:
+				self.invalid_input(error)
+				mistake = 1
+			elif error:
+				self.frame.delete_last_lines()
+			elif mistake and not error:
+				self.frame.delete_last_lines(2)
+				print("Enter " + to_enter + ": " + user_input)
+
+	def invalid_input(self, message):
+		"""If an invalid input is entered then this method is called and,
+		provides the correct error message to suggest why it the inputed data is wrong and how it 
+		can be fixed.
+		"""
+		self.frame.delete_last_lines(1)
+		print('{}'.format(self.color.return_colored(message, 'red')))
+				
 	############################################################################
-	# Here starts the Homepage menu functionalities							   #
+	#       Here starts the main menu and all the methods that go with it      #
 	############################################################################
+	
+	def handle_answer_from_main_menus(self, prompt, menu_type):
+		"""This method handles all the choices that are made when choosing from the 
+		main menus of the application.
+		"""
+		####################################################
+		#                    MAIN MENU                     #                                                                                
+		####################################################
+		if menu_type == 'main_menu':
+			if prompt == 'Sign out':
+				self.signout()
+				self.init_menu()
+
+			elif prompt == 'Report an error':
+				self.report_error()
+				self.init_menu()
+
+			elif prompt == 'Customer':
+				self.frame.delete_last_lines(7)
+				self.customer()
+
+			elif prompt == 'Vehicles':
+				self.vehicles()
+
+			elif prompt == 'Order':
+				self.frame.delete_last_lines(7)
+				self.order()
+
+		####################################################    
+		#                    ORDER                         #
+		####################################################
+
+		elif menu_type == 'order':
+			if prompt == 'Go back':
+				self.frame.delete_last_lines(6)
+				self.init_menu()
+
+			elif prompt == 'Register order':
+				print()
+				self.frame.delete_last_lines(2)
+				self.register_order()
+
+			elif prompt == 'Find order':
+				print()
+				self.frame.delete_last_lines(7)
+				self.find_order()
+			elif prompt == 'Show pricing list':
+				print()
+				self.frame.delete_last_lines(6)
+				self.show_pricing_list()
+				self.frame.delete_last_lines(6)
+				self.order()
+
+		####################################################    
+		#                    CUSTOMER                      #
+		####################################################
+
+		elif menu_type == 'customer':
+			if prompt == 'Go back':
+				self.frame.delete_last_lines(5)
+				self.init_menu()
+
+			elif prompt == 'Register customer':
+				print()
+				self.register_customer()
+
+			elif prompt == 'Find customer':
+				self.frame.delete_last_lines(5)
+				self.find_customer()
+
+		####################################################    
+		#                     VEHICLES                     #                    
+		####################################################
+		elif menu_type == 'vehicles':
+			if prompt == 'Register vehicle':
+				self.register_vehicle()
+				self.vehicles()
+
+			if prompt == 'Find vehicle':
+				self.frame.delete_last_lines(7)
+				self.find_vehicles()
+				self.vehicles()
+
+			elif prompt == 'Show all available vehicles':
+				self.frame.delete_last_lines(7)
+				self.show_vehicle_availability('available')
+				print()
+				print()
+				self.vehicles()
+
+			elif prompt == 'Show vehicles in service':
+				self.frame.delete_last_lines(7)
+				self.show_vehicle_availability('rented')
+				print()
+				print()
+				self.vehicles()
+
+			elif prompt == 'Go back':
+				self.frame.delete_last_lines(7)
+				self.init_menu()
 	
 	def init_menu(self):
 		"""Initial menu/Homepage,
@@ -85,7 +228,7 @@ class Menu:
 			['Order', 'Customer', 'Vehicles', 'Report an error', 'Sign out'],
 			'action'
 		)
-		self.handle_answer_from_menu(prompt['action'], 'main_menu')
+		self.handle_answer_from_main_menus(prompt['action'], 'main_menu')
 
 	def report_error(self):
 		"""Since we do not have any database for holding email and password online as a form to prove the employee
@@ -111,7 +254,7 @@ class Menu:
 											    ],
 											    'action'
 											  )
-		self.handle_answer_from_menu(customer['action'], 'customer')
+		self.handle_answer_from_main_menus(customer['action'], 'customer')
 
 	def order(self):
 		"""Prints functionalities of the order menu, and the user can either choose any option from
@@ -125,7 +268,137 @@ class Menu:
 													"Go back"
 												],
 												"action")
-		self.handle_answer_from_menu(order_list['action'], 'order')
+		self.handle_answer_from_main_menus(order_list['action'], 'order')
+
+	def vehicles(self):
+		"""This function allows the user to choose what action he wants after going to the section "cars"
+		using nocco list"""
+		self.frame.delete_last_lines(7)
+		vehicle = self.nocco_list.choose_one('Choose an action', ['Register vehicle', 'Find vehicle', 'Show all available vehicles',
+															  'Show vehicles in service',
+															  'Go back'], 'action')
+		self.handle_answer_from_main_menus(vehicle['action'], 'vehicles')
+	
+	############################################################################
+	#      Here starts the order menu and all the methods that go with it      #
+	############################################################################
+
+	def handle_answer_from_order_menus(self, prompt, menu_type):
+		"""This method handles all the choices that are made when choosing from the 
+		order submenus of the application.
+		"""
+		######################################################
+		#                REGISTER NEW ORDER                  #
+		######################################################
+		if menu_type == 'register_order':
+			start_date, end_date = self.order_manager.get_dates()
+			vehicle_list = self.vehicle_manager.show_vehicle_availability(start_date, end_date, 'available')
+			vehicle_type = self.order_manager.get_type()
+			filtered_list = self.vehicle_manager.find_vehicle_by_type(vehicle_type, vehicle_list)
+			if filtered_list:
+				self.frame.delete_last_lines(len(filtered_list) + 4)
+			else:
+				self.frame.delete_last_lines(4)
+				
+			if prompt == 'Cancel':
+				self.frame.delete_last_lines(19)
+				self.order()
+
+			elif prompt == 'Save':
+				self.frame.delete_last_lines(19)
+				self.save_new_order()
+				self.frame.delete_last_lines(2)
+				orders = self.order_manager.get_order_list()
+				self.__current_order = orders[-1]
+				print()
+				print('Order: {}\n'.format(self.__current_order.__str__()))
+				self.found_order()
+
+			elif prompt == 'Calculate order':
+				self.frame.delete_last_lines(20)
+				self.calculate_order()
+				self.frame.delete_last_lines(10)
+				print()
+				self.get_inputted_order()
+	
+		####################################################    
+		#                    FIND ORDER                    #
+		####################################################
+		elif menu_type == 'find order':
+			if prompt == 'Find order by ID':
+				self.frame.delete_last_lines(5)
+				self.find_order_by_id()
+
+			elif prompt == 'Find order by SSN':
+				self.frame.delete_last_lines(5)
+				self.find_order_by_ssn()
+
+			elif prompt == 'Go back':
+				self.frame.delete_last_lines(5)
+				self.order()
+
+		####################################################    
+		#                   FOUND ORDER                    #
+		####################################################
+		elif menu_type == 'found order':
+			if prompt == 'Edit order':
+				self.frame.delete_last_lines(6)
+				self.edit_order()
+			elif prompt == 'Print order':
+				order_details = self.__current_order.return_details()
+				self.frame.delete_last_lines(6)
+				for detail, value in order_details.items():
+					print("{}: {}".format(detail, value))
+				self.nocco_list.single_list('Go back')
+				self.frame.delete_last_lines(13)
+				print('Order: ' + self.__current_order.__str__() + '\n')
+				self.found_order()
+			elif prompt == 'Delete order':
+				self.frame.delete_last_lines(4)
+				self.delete_order()
+			elif prompt == 'Go back':
+				self.frame.delete_last_lines(6)
+				self.find_order()
+		
+		####################################################    
+		#                 SAVE EDITED ORDER                #
+		####################################################
+		elif menu_type == 'save edited order':
+			if prompt == 'Save':
+				self.frame.delete_last_lines(18)
+				self.save_edited_order()
+				self.frame.delete_last_lines()
+				try:
+					temp_order = self.order_manager.find_order_by_id(self.__current_order.get_id())
+					if not temp_order:
+						raise ValueError
+					self.__current_order = temp_order
+				except ValueError:
+					temp_order = self.order_manager.find_order_by_ssn(self.__current_order.get_ssn())
+					if not temp_order:
+						pass
+					else:
+						self.__current_order = temp_order[-1]
+				print('Order: {}\n'.format(self.__current_order.__str__()))
+				self.found_order()
+			if prompt == 'Cancel':
+				self.frame.delete_last_lines(18)
+				print('Order: {}\n'.format(self.__current_order.__str__()))
+				self.found_order()
+
+		####################################################    
+		#               FOUND MULTIPLE ORDERS              #                    
+		####################################################
+		if menu_type == 'found multiple orders':
+			chosen, orders = prompt
+			self.frame.delete_last_lines(5 + len(orders))
+			if chosen['order'] != 'Go back':
+				self.__current_order = orders[chosen['index']]
+				print('Order: ' + self.__current_order.__str__())
+				print()
+				self.found_order()
+			else:
+				self.order()   
 
 	def calculate_order(self):
 		"""After the employee has inputed all the neccessary data, it calculates the order in a readable style,
@@ -167,7 +440,7 @@ class Menu:
 		"""
 		find_order_list = self.nocco_list.choose_one('Choose an action',
 						['Find order by ID', 'Find order by SSN', 'Go back'], 'action')
-		self.handle_answer_from_menu(find_order_list['action'], 'find order')
+		self.handle_answer_from_order_menus(find_order_list['action'], 'find order')
 
 	def find_order_by_id(self):
 		"""This method makes possible for the employee to find any order in the database (csv) with the id of the order.
@@ -217,7 +490,7 @@ class Menu:
 
 				found_multiple_orders = self.nocco_list.choose_one('Choose an order',
 						printable_orders, 'order', True)
-				self.handle_answer_from_menu((found_multiple_orders, orders), 'found multiple orders')
+				self.handle_answer_from_order_menus((found_multiple_orders, orders), 'found multiple orders')
 
 	def found_order(self):
 		"""After the employee has found the order that was looking for, this method provides the functionalities
@@ -226,7 +499,7 @@ class Menu:
 		found_order_list = self.nocco_list.choose_one('Choose an action',
 						['Edit order', 'Print order', 'Delete order', 'Go back'], 'action')
 		self.frame.delete_last_lines(2)
-		self.handle_answer_from_menu(found_order_list['action'], 'found order')
+		self.handle_answer_from_order_menus(found_order_list['action'], 'found order')
 
 	def get_inputted_order(self):
 		"""After the employee has entered all the neccessary datas about the order, then another menu will
@@ -236,7 +509,7 @@ class Menu:
 		self.frame.delete_last_lines(len(vehicles) - 1)  # Deletes last lines equal to len(cars) -1...styling
 		register_order_list = self.nocco_list.choose_one("Choose an action",
 							["Save", "Calculate order" , "Cancel"], "action")
-		self.handle_answer_from_menu(register_order_list['action'], 'register_order')
+		self.handle_answer_from_order_menus(register_order_list['action'], 'register_order')
 
 	def delete_order(self):
 		"""This method enables the employee to delete/cancel any order. """
@@ -324,7 +597,7 @@ class Menu:
 			register_order_list = self.nocco_list.choose_one("Choose an action", 
 															["Save", "Calculate order", "Cancel"], "action")
 			
-			self.handle_answer_from_menu(register_order_list['action'], 'register_order')
+			self.handle_answer_from_order_menus(register_order_list['action'], 'register_order')
 	
 	def edit_order(self):
 		"""This method is called when the customer or employee wants to edit any order.
@@ -366,7 +639,7 @@ class Menu:
 		save_edited_order = self.nocco_list.choose_one('Choose an action',
 														  ['Save', 'Cancel'],
 														  'action')
-		self.handle_answer_from_menu(save_edited_order['action'], 'save edited order')
+		self.handle_answer_from_order_menus(save_edited_order['action'], 'save edited order')
 	
 	def save_edited_order(self):
 		"""Updates the order after it is edited by the employee.
@@ -411,6 +684,114 @@ class Menu:
 				self.frame.delete_last_lines(2)
 				print("Enter " + to_enter + ": " + user_input)
 
+	############################################################################
+	#    Here starts the customer menu and all the methods that go with it     #
+	############################################################################
+
+	def handle_answer_from_customer_menus(self, prompt, menu_type):
+		"""This method handles all the choices that are made when choosing from the 
+		customer submenus of the application.
+		"""
+		####################################################    
+		#                  REGISTER CUSTOMER               #                    
+		####################################################
+		if menu_type == 'register customer':
+			if prompt == 'Save':
+				self.frame.delete_last_lines(12)
+				self.save_new_customer()
+				customers = self.customer_manager.get_customer_list()
+				self.__current_customer = customers[-1]
+				print('Customer: {}\n'.format(self.__current_customer.__str__()))
+				self.found_customer()
+
+			elif prompt == 'Cancel':
+				self.frame.delete_last_lines(12)
+				self.customer()
+
+		####################################################    
+		#                SAVE EDITED CUSTOMER              #                    
+		####################################################
+		elif menu_type == 'save edited customer':
+			if prompt == 'Save':
+				self.frame.delete_last_lines(14)
+				self.save_edited_customer()
+				self.__current_customer = self.customer_manager.find_customer_by_ssn(self.__current_customer.get_ssn())
+				print('Customer: {}\n'.format(self.__current_customer.__str__()))
+				self.found_customer()
+
+			elif prompt == 'Cancel':
+				self.frame.delete_last_lines(14)
+				print('Customer: {}\n'.format(self.__current_customer.__str__()))
+				self.found_customer()
+
+		####################################################    
+		#                  FIND CUSTOMER                   #                    
+		####################################################
+		elif menu_type == 'find customer':
+			if prompt == 'Find customer by name':
+				self.frame.delete_last_lines(5)
+				self.find_customer_by_name()
+
+			elif prompt == 'Find customer by SSN':
+				self.frame.delete_last_lines(5)
+				self.find_customer_by_ssn()
+
+			elif prompt == 'Go back':
+				self.frame.delete_last_lines(5)
+				self.customer()
+
+		####################################################    
+		#                  FOUND CUSTOMER                  #                    
+		####################################################
+		if menu_type == 'found customer':
+			if prompt == 'Print customer details':
+				customer_details = self.__current_customer.return_details()
+				self.frame.delete_last_lines(6)
+				for detail, value in customer_details.items():
+					if detail == 'Credit card number':
+						print("{}: **** **** **** {}".format(detail, value[12:]))
+						continue
+					if detail == 'SSN':
+						print('{}: {}-{}'.format(detail, value[:6], value[6:]))
+						continue
+					print("{}: {}".format(detail, value))
+				self.nocco_list.single_list('Go back')
+				self.frame.delete_last_lines(9)
+				print('Customer: ' + self.__current_customer.__str__() + '\n')
+				self.found_customer()
+
+			elif prompt == 'Print order history':
+				self.frame.delete_last_lines(4)
+				self.customer_history()
+				self.found_customer()
+
+			elif prompt == 'Edit customer':
+				self.frame.delete_last_lines(6)
+				self.edit_customer()
+
+			elif prompt == 'Unsubscribe customer':
+				self.frame.delete_last_lines(5)
+				self.delete_customer()
+				self.frame.delete_last_lines()
+
+			elif prompt == 'Go back':
+				self.frame.delete_last_lines(6)
+				self.find_customer()
+
+		####################################################    
+		#             FOUND MULTIPLE CUSTOMERS             #                    
+		####################################################
+		if menu_type == 'found multiple customers':
+			chosen, customers = prompt
+			self.frame.delete_last_lines(len(customers) + 5)
+			if chosen['customer'] != 'Go back':
+				self.__current_customer = customers[chosen['index']]
+				print('Customer: ' + self.__current_customer.__str__())
+				print()
+				self.found_customer()
+			else:
+				self.customer()
+
 	def register_customer(self):
 		"""Method for registering a new customer.
 		Provides all the required checks to prevent the employee entering wrong inputs.
@@ -437,7 +818,7 @@ class Menu:
 		register_customer = self.nocco_list.choose_one('Choose an action',
 													   ['Save', 'Cancel'],
 													   'action')
-		self.handle_answer_from_menu(register_customer['action'], 'register customer')
+		self.handle_answer_from_customer_menus(register_customer['action'], 'register customer')
 
 	def edit_customer(self):
 		"""In case that the employee wants to edit a customer´s data then first the employee must find that particular customer and then this method
@@ -468,7 +849,7 @@ class Menu:
 		save_edited_customer = self.nocco_list.choose_one('Choose an action',
 														  ['Save', 'Cancel'],
 														  'action')
-		self.handle_answer_from_menu(save_edited_customer['action'], 'save edited customer')
+		self.handle_answer_from_customer_menus(save_edited_customer['action'], 'save edited customer')
 
 	def invalid_input(self, message):
 		"""If an invalid input is entered then this method is called and,
@@ -506,7 +887,7 @@ class Menu:
 		find_customer = self.nocco_list.choose_one('Choose an action',
 												   ['Find customer by name', 'Find customer by SSN', 'Go back'],
 												   'action')
-		self.handle_answer_from_menu(find_customer['action'], 'find customer')
+		self.handle_answer_from_customer_menus(find_customer['action'], 'find customer')
 
 	def found_customer(self):
 		"""After the unique customer is found, then the employee can decide what to do with that particular customer,
@@ -519,7 +900,7 @@ class Menu:
 													'Unsubscribe customer',
 													 'Go back'], 'action')
 		self.frame.delete_last_lines(3)
-		self.handle_answer_from_menu(found_customer['action'], 'found customer')
+		self.handle_answer_from_customer_menus(found_customer['action'], 'found customer')
 
 	def customer_history(self):
 		"""If the employee wants to see the history of any particular customer, after the employee has found the customer,
@@ -575,7 +956,7 @@ class Menu:
 				found_multiple_customers = self.nocco_list.choose_one('Choose customer',
 																	  printable_customers, 'customer', True)
 
-				self.handle_answer_from_menu((found_multiple_customers, customers),
+				self.handle_answer_from_customer_menus((found_multiple_customers, customers),
 											 'found multiple customers')
 
 	def find_customer_by_ssn(self):
@@ -614,14 +995,131 @@ class Menu:
 		self.frame.delete_last_lines()
 		self.customer()
 
-	def vehicles(self):
-		"""This function allows the user to choose what action he wants after going to the section "cars"
-		using nocco list"""
-		self.frame.delete_last_lines(7)
-		vehicle = self.nocco_list.choose_one('Choose an action', ['Register vehicle', 'Find vehicle', 'Show all available vehicles',
-															  'Show vehicles in service',
-															  'Go back'], 'action')
-		self.handle_answer_from_menu(vehicle['action'], 'vehicles')
+	############################################################################
+	#    Here starts the vehicle menu and all the methods that go with it      #
+	############################################################################
+
+	def handle_answer_from_vehicle_menus(self, prompt, menu_type):
+		"""This method handles all the choices that are made when choosing from the 
+		vehicle submenus of the application.
+		"""
+		####################################################    
+		#                  REGISTER VEHICLE                #                    
+		####################################################
+		if menu_type == 'register vehicle':
+			if prompt == 'Save':
+				self.frame.delete_last_lines(13)
+				self.save_new_vehicle()
+				vehicles = self.vehicle_manager.get_vehicle_list()
+				self.__current_vehicle = vehicles[-1]
+				print()
+				print('Vehicle: {}\n'.format(self.__current_vehicle.__str__()))
+				self.found_vehicle()
+
+			if prompt == 'Cancel':
+				self.frame.delete_last_lines(6)
+				self.vehicles()		
+
+		####################################################    
+		#                   FIND VEHICLE                   #                    
+		####################################################
+		elif menu_type == 'find vehicle':
+			if prompt == 'Find vehicle by license plate':
+				self.frame.delete_last_lines(7)
+				self.find_vehicles_by_license_plate()
+
+			elif prompt == 'Find vehicle by make':
+				self.frame.delete_last_lines(7)
+				self.find_vehicles_by_make()
+
+			elif prompt == 'Find vehicle by type':
+				self.frame.delete_last_lines(7)
+				self.find_vehicles_by_type()
+
+			elif prompt == 'Go back':
+				# It goes in vehicles menu if go back is chosen!
+				self.vehicles()
+
+		####################################################    
+		#                   FOUND VEHICLE                  #                    
+		####################################################
+		elif menu_type == 'found vehicle':
+			if prompt == 'Edit vehicle':
+				self.frame.delete_last_lines(8)
+				self.edit_vehicle()
+
+			elif prompt == 'Remove vehicle':
+				self.frame.delete_last_lines(8)
+				self.delete_vehicle()
+
+			elif prompt == 'Print vehicle':
+
+				vehicle_details = self.__current_vehicle.return_details()
+				self.frame.delete_last_lines(9)
+				for detail, value in vehicle_details.items():
+					print("{}: {}".format(detail, value))
+				self.nocco_list.single_list('Go back')
+				self.frame.delete_last_lines(10)
+				print('Vehicle: ' + self.__current_vehicle.__str__() + '\n')
+				self.found_vehicle()
+			
+			elif prompt == 'Print vehicle history':
+				self.frame.delete_last_lines(7)
+				self.vehicle_history()
+				self.found_vehicle()
+
+			elif prompt == 'Go back':
+				self.frame.delete_last_lines(9)
+				self.find_vehicles()
+				
+		####################################################    
+		#             FOUND MULTIPLE VEHICLES              #                    
+		####################################################
+		elif menu_type == 'found multiple vehicles':
+			chosen, vehicles = prompt
+			if chosen['vehicle'] != 'Go back':
+				self.frame.delete_last_lines(len(vehicles) + 5)
+				self.__current_vehicle = vehicles[chosen['index']]
+				print('Vehicle: ' + self.__current_vehicle.__str__())
+				print()
+				self.found_vehicle()
+			else:
+				self.frame.delete_last_lines(len(vehicles) + 4)
+				print('\n' * 5)
+				self.vehicles()
+
+		####################################################    
+		#                SAVE EDITED VEHICLE               #                    
+		####################################################
+		elif menu_type == 'save edited vehicle':
+			if prompt == 'Save':
+				self.frame.delete_last_lines(15)
+				self.save_edited_vehicle()
+				self.frame.delete_last_lines()
+				self.__current_vehicle = self.vehicle_manager.find_vehicle_by_license_plate(self.__current_vehicle.get_license())
+				print('Vehicle: {}\n'.format(self.__current_vehicle.__str__()))
+				self.found_vehicle()
+				self.frame.delete_last_lines(2)
+
+			if prompt == 'Cancel':
+				self.frame.delete_last_lines(15)
+				print('Vehicle: {}\n'.format(self.__current_vehicle.__str__()))
+				self.found_vehicle()
+				self.frame.delete_last_lines(2)
+
+		####################################################    
+		#             SHOW VEHICLES IN SERVICE             #                    
+		####################################################
+		elif menu_type == 'show vehicles in service':
+			if prompt == 'Save':
+				self.frame.delete_last_lines(16)
+				self.save_new_vehicle()
+				print("\n" * 7)
+				self.vehicles()
+
+			if prompt == 'Cancel':
+				self.frame.delete_last_lines(10)
+				self.vehicles()
 
 	def save_new_vehicle(self):
 		"""this function saves a new registered vehicle in the vehicles csv file, it calls another function;
@@ -658,7 +1156,7 @@ class Menu:
 		register_vehicle = self.nocco_list.choose_one('Choose an action',
 												  ['Save', 'Cancel'],
 												  'action')
-		self.handle_answer_from_menu(register_vehicle['action'], 'register vehicle')
+		self.handle_answer_from_vehicle_menus(register_vehicle['action'], 'register vehicle')
 
 	def find_vehicles(self):
 		"""Here the employee is shown available actions after he chooses the action "find vehicle". This
@@ -667,7 +1165,7 @@ class Menu:
 		find_vehicles = self.nocco_list.choose_one('Choose an action', ['Find vehicle by license plate', 'Find vehicle by make',
 																	'Find vehicle by type', 'Go back'], 'action')
 		print()
-		self.handle_answer_from_menu(find_vehicles['action'], 'find vehicle')
+		self.handle_answer_from_vehicle_menus(find_vehicles['action'], 'find vehicle')
 
 	def find_vehicles_by_license_plate(self):
 		"""This function handles if the user wants to find vehicles by license plate, the input is compared
@@ -698,7 +1196,7 @@ class Menu:
 														], 
 														"action"
 														)
-			self.handle_answer_from_menu(found_vehicles_list['action'], 'found vehicle')
+			self.handle_answer_from_vehicle_menus(found_vehicles_list['action'], 'found vehicle')
 
 	def find_vehicles_by_make(self):
 		"""This function handles if the user wants to find a vehicle by make."""
@@ -730,7 +1228,7 @@ class Menu:
 				found_multiple_vehicles = self.nocco_list.choose_one('Choose vehicle',
 																	  printable_vehicles, 'vehicle', True)
 
-				self.handle_answer_from_menu((found_multiple_vehicles, vehicles),
+				self.handle_answer_from_vehicle_menus((found_multiple_vehicles, vehicles),
 											 'found multiple vehicles')
 
 	def find_vehicles_by_type(self):
@@ -763,7 +1261,7 @@ class Menu:
 				found_multiple_vehicles = self.nocco_list.choose_one('Choose vehicle',
 																	  printable_vehicles, 'vehicle', True)
 
-				self.handle_answer_from_menu((found_multiple_vehicles, vehicles),
+				self.handle_answer_from_vehicle_menus((found_multiple_vehicles, vehicles),
 											 'found multiple vehicles')
 
 	def found_vehicle(self):
@@ -772,7 +1270,7 @@ class Menu:
 		"""
 		found_vehicle_list = self.nocco_list.choose_one('Choose an action',
 						['Edit vehicle', 'Print vehicle', 'Print vehicle history', 'Remove vehicle', 'Go back'], 'action')
-		self.handle_answer_from_menu(found_vehicle_list['action'], 'found vehicle')											 
+		self.handle_answer_from_vehicle_menus(found_vehicle_list['action'], 'found vehicle')											 
 
 	def vehicle_history(self):
 		"""This functon shows the history of a vehicle; what vehicle has been with what car.
@@ -822,7 +1320,7 @@ class Menu:
 		save_edited_vehicle = self.nocco_list.choose_one('Choose an action',
 														  ['Save', 'Cancel'],
 														  'action')
-		self.handle_answer_from_menu(save_edited_vehicle['action'], 'save edited vehicle')
+		self.handle_answer_from_vehicle_menus(save_edited_vehicle['action'], 'save edited vehicle')
 		self.frame.delete_last_lines(8)
 		print("{}".format(self.color.return_colored("Vehicle Saved", 'green')))
 		time.sleep(4)
@@ -865,435 +1363,3 @@ class Menu:
 
 		self.nocco_list.single_list('Go back')
 		self.frame.delete_last_lines(len(vehicle_list) + 2)
-
-
-	def handle_answer_from_menu(self, prompt, menu_type):
-		"""This method handles all the choices that are made when choosing from he menus in every layer of the application.
-		**Note that are only menus that have a list of operations not a single operation, single operations, such as <Report an error>
-		which only prints a message and it has a single operation available to go back, uses a special method, in nocco_list that handles that case.
-		"""
-		######################################################
-		#                      MAIN MENU                     #                                                                                
-		######################################################
-		if menu_type == 'main_menu':
-			if prompt == 'Sign out':
-				self.signout()
-				self.init_menu()
-
-			elif prompt == 'Report an error':
-				self.report_error()
-				self.init_menu()
-
-			elif prompt == 'Customer':
-				self.frame.delete_last_lines(7)
-				self.customer()
-
-			elif prompt == 'Vehicles':
-				self.vehicles()
-
-			elif prompt == 'Order':
-				self.frame.delete_last_lines(7)
-				self.order()
-
-		######################################################    
-		#                      ORDER                         #
-		######################################################
-
-		elif menu_type == 'order':
-			if prompt == 'Go back':
-				self.frame.delete_last_lines(6)
-				self.init_menu()
-
-			elif prompt == 'Register order':
-				print()
-				self.frame.delete_last_lines(2)
-				self.register_order()
-
-			elif prompt == 'Find order':
-				print()
-				self.frame.delete_last_lines(7)
-				self.find_order()
-			elif prompt == 'Show pricing list':
-				print()
-				self.frame.delete_last_lines(6)
-				self.show_pricing_list()
-				self.frame.delete_last_lines(6)
-				self.order()
-
-		######################################################    
-		#                      FIND ORDER                    #
-		######################################################
-		elif menu_type == 'find order':
-			if prompt == 'Find order by ID':
-				self.frame.delete_last_lines(5)
-				self.find_order_by_id()
-
-			elif prompt == 'Find order by SSN':
-				self.frame.delete_last_lines(5)
-				self.find_order_by_ssn()
-
-			elif prompt == 'Go back':
-				self.frame.delete_last_lines(5)
-				self.order()
-
-		######################################################    
-		#                     FOUND ORDER                    #
-		######################################################
-		elif menu_type == 'found order':
-			if prompt == 'Edit order':
-				self.frame.delete_last_lines(6)
-				self.edit_order()
-			elif prompt == 'Print order':
-				order_details = self.__current_order.return_details()
-				self.frame.delete_last_lines(6)
-				for detail, value in order_details.items():
-					print("{}: {}".format(detail, value))
-				self.nocco_list.single_list('Go back')
-				self.frame.delete_last_lines(13)
-				print('Order: ' + self.__current_order.__str__() + '\n')
-				self.found_order()
-			elif prompt == 'Delete order':
-				self.frame.delete_last_lines(4)
-				self.delete_order()
-			elif prompt == 'Go back':
-				self.frame.delete_last_lines(6)
-				self.find_order()
-		
-		######################################################    
-		#                    SAVE EDITED ORDER               #
-		######################################################
-		elif menu_type == 'save edited order':
-			if prompt == 'Save':
-				self.frame.delete_last_lines(18)
-				self.save_edited_order()
-				self.frame.delete_last_lines()
-				try:
-					temp_order = self.order_manager.find_order_by_id(self.__current_order.get_id())
-					if not temp_order:
-						raise ValueError
-					self.__current_order = temp_order
-				except ValueError:
-					temp_order = self.order_manager.find_order_by_ssn(self.__current_order.get_ssn())
-					if not temp_order:
-						pass
-					else:
-						self.__current_order = temp_order[-1]
-				print('Order: {}\n'.format(self.__current_order.__str__()))
-				self.found_order()
-			if prompt == 'Cancel':
-				self.frame.delete_last_lines(18)
-				print('Order: {}\n'.format(self.__current_order.__str__()))
-				self.found_order()
-
-		######################################################    
-		#                 FOUND MULTIPLE ORDERS              #                    
-		######################################################
-		if menu_type == 'found multiple orders':
-			chosen, orders = prompt
-			self.frame.delete_last_lines(5 + len(orders))
-			if chosen['order'] != 'Go back':
-				self.__current_order = orders[chosen['index']]
-				print('Order: ' + self.__current_order.__str__())
-				print()
-				self.found_order()
-			else:
-				self.order()   
-
-		######################################################    
-		#                      CUSTOMER                      #
-		######################################################
-
-		elif menu_type == 'customer':
-			if prompt == 'Go back':
-				self.frame.delete_last_lines(5)
-				self.init_menu()
-
-			elif prompt == 'Register customer':
-				print()
-				self.register_customer()
-
-			elif prompt == 'Find customer':
-				self.frame.delete_last_lines(5)
-				self.find_customer()
-
-		######################################################    
-		#                    REGISTER CUSTOMER               #                    
-		######################################################
-		elif menu_type == 'register customer':
-			if prompt == 'Save':
-				self.frame.delete_last_lines(12)
-				self.save_new_customer()
-				customers = self.customer_manager.get_customer_list()
-				self.__current_customer = customers[-1]
-				print('Customer: {}\n'.format(self.__current_customer.__str__()))
-				self.found_customer()
-
-			elif prompt == 'Cancel':
-				self.frame.delete_last_lines(12)
-				self.customer()
-
-		######################################################    
-		#                  SAVE EDITED CUSTOMER              #                    
-		######################################################
-		elif menu_type == 'save edited customer':
-			if prompt == 'Save':
-				self.frame.delete_last_lines(14)
-				self.save_edited_customer()
-				self.__current_customer = self.customer_manager.find_customer_by_ssn(self.__current_customer.get_ssn())
-				print('Customer: {}\n'.format(self.__current_customer.__str__()))
-				self.found_customer()
-
-			elif prompt == 'Cancel':
-				self.frame.delete_last_lines(14)
-				print('Customer: {}\n'.format(self.__current_customer.__str__()))
-				self.found_customer()
-
-		######################################################    
-		#                    FIND CUSTOMER                   #                    
-		######################################################
-		elif menu_type == 'find customer':
-			if prompt == 'Find customer by name':
-				self.frame.delete_last_lines(5)
-				self.find_customer_by_name()
-
-			elif prompt == 'Find customer by SSN':
-				self.frame.delete_last_lines(5)
-				self.find_customer_by_ssn()
-
-			elif prompt == 'Go back':
-				self.frame.delete_last_lines(5)
-				self.customer()
-
-		######################################################    
-		#               FOUND MULTIPLE CUSTOMERS             #                    
-		######################################################
-		if menu_type == 'found multiple customers':
-			chosen, customers = prompt
-			self.frame.delete_last_lines(len(customers) + 5)
-			if chosen['customer'] != 'Go back':
-				self.__current_customer = customers[chosen['index']]
-				print('Customer: ' + self.__current_customer.__str__())
-				print()
-				self.found_customer()
-			else:
-				self.customer()
-
-		######################################################    
-		#               FOUND MULTIPLE VEHICLES              #                    
-		######################################################
-		if menu_type == 'found multiple vehicles':
-			chosen, vehicles = prompt
-			if chosen['vehicle'] != 'Go back':
-				self.frame.delete_last_lines(len(vehicles) + 5)
-				self.__current_vehicle = vehicles[chosen['index']]
-				print('Vehicle: ' + self.__current_vehicle.__str__())
-				print()
-				self.found_vehicle()
-			else:
-				self.frame.delete_last_lines(len(vehicles) + 4)
-				print('\n' * 5)
-				self.vehicles()
-
-		######################################################    
-		#                    FOUND CUSTOMER                  #                    
-		######################################################
-		if menu_type == 'found customer':
-			if prompt == 'Print customer details':
-				customer_details = self.__current_customer.return_details()
-				self.frame.delete_last_lines(6)
-				for detail, value in customer_details.items():
-					if detail == 'Credit card number':
-						print("{}: **** **** **** {}".format(detail, value[12:]))
-						continue
-					if detail == 'SSN':
-						print('{}: {}-{}'.format(detail, value[:6], value[6:]))
-						continue
-					print("{}: {}".format(detail, value))
-				self.nocco_list.single_list('Go back')
-				self.frame.delete_last_lines(9)
-				print('Customer: ' + self.__current_customer.__str__() + '\n')
-				self.found_customer()
-
-			elif prompt == 'Print order history':
-				self.frame.delete_last_lines(4)
-				self.customer_history()
-				self.found_customer()
-
-			elif prompt == 'Edit customer':
-				self.frame.delete_last_lines(6)
-				self.edit_customer()
-
-			elif prompt == 'Unsubscribe customer':
-				self.frame.delete_last_lines(5)
-				self.delete_customer()
-				self.frame.delete_last_lines()
-
-			elif prompt == 'Go back':
-				self.frame.delete_last_lines(6)
-				self.find_customer()
-
-		######################################################    
-		#                       VEHICLES                     #                    
-		######################################################
-		elif menu_type == 'vehicles':
-			if prompt == 'Register vehicle':
-				self.register_vehicle()
-				self.vehicles()
-
-			if prompt == 'Find vehicle':
-				self.frame.delete_last_lines(7)
-				self.find_vehicles()
-				self.vehicles()
-
-			elif prompt == 'Show all available vehicles':
-				self.frame.delete_last_lines(7)
-				self.show_vehicle_availability('available')
-				print()
-				print()
-				self.vehicles()
-
-			elif prompt == 'Show vehicles in service':
-				self.frame.delete_last_lines(7)
-				self.show_vehicle_availability('rented')
-				print()
-				print()
-				self.vehicles()
-
-			elif prompt == 'Go back':
-				self.frame.delete_last_lines(7)
-				self.init_menu()
-
-		########################################################
-		#                REGISTER NEW ORDER                    #
-		########################################################
-		elif menu_type == 'register_order':
-			start_date, end_date = self.order_manager.get_dates()
-			vehicle_list = self.vehicle_manager.show_vehicle_availability(start_date, end_date, 'available')
-			vehicle_type = self.order_manager.get_type()
-			filtered_list = self.vehicle_manager.find_vehicle_by_type(vehicle_type, vehicle_list)
-			if filtered_list:
-				self.frame.delete_last_lines(len(filtered_list) + 4)
-			else:
-				self.frame.delete_last_lines(4)
-				
-			if prompt == 'Cancel':
-				self.frame.delete_last_lines(19)
-				self.order()
-
-			elif prompt == 'Save':
-				self.frame.delete_last_lines(19)
-				self.save_new_order()
-				self.frame.delete_last_lines(2)
-				orders = self.order_manager.get_order_list()
-				self.__current_order = orders[-1]
-				print()
-				print('Order: {}\n'.format(self.__current_order.__str__()))
-				self.found_order()
-
-			elif prompt == 'Calculate order':
-				self.frame.delete_last_lines(20)
-				self.calculate_order()
-				self.frame.delete_last_lines(10)
-				print()
-				self.get_inputted_order()
-	
-		######################################################    
-		#                    FIND VEHICLE                    #                    
-		######################################################
-		elif menu_type == 'find vehicle':
-			if prompt == 'Find vehicle by license plate':
-				self.frame.delete_last_lines(7)
-				self.find_vehicles_by_license_plate()
-
-			elif prompt == 'Find vehicle by make':
-				self.frame.delete_last_lines(7)
-				self.find_vehicles_by_make()
-
-			elif prompt == 'Find vehicle by type':
-				self.frame.delete_last_lines(7)
-				self.find_vehicles_by_type()
-
-			elif prompt == 'Go back':
-				# It goes in vehicles menu if go back is chosen!
-				self.vehicles()
-
-		######################################################    
-		#                    FOUND VEHICLE                   #                    
-		######################################################
-		elif menu_type == 'found vehicle':
-			if prompt == 'Edit vehicle':
-				self.frame.delete_last_lines(8)
-				self.edit_vehicle()
-
-			elif prompt == 'Remove vehicle':
-				self.frame.delete_last_lines(8)
-				self.delete_vehicle()
-
-			elif prompt == 'Print vehicle':
-
-				vehicle_details = self.__current_vehicle.return_details()
-				self.frame.delete_last_lines(9)
-				for detail, value in vehicle_details.items():
-					print("{}: {}".format(detail, value))
-				self.nocco_list.single_list('Go back')
-				self.frame.delete_last_lines(10)
-				print('Vehicle: ' + self.__current_vehicle.__str__() + '\n')
-				self.found_vehicle()
-			
-			elif prompt == 'Print vehicle history':
-				self.frame.delete_last_lines(7)
-				self.vehicle_history()
-				self.found_vehicle()
-
-			elif prompt == 'Go back':
-				self.frame.delete_last_lines(9)
-				self.find_vehicles()
-
-		######################################################    
-		#                    REGISTER VEHICLE                #                    
-		######################################################
-		elif menu_type == 'register vehicle':
-			if prompt == 'Save':
-				self.frame.delete_last_lines(13)
-				self.save_new_vehicle()
-				vehicles = self.vehicle_manager.get_vehicle_list()
-				self.__current_vehicle = vehicles[-1]
-				print()
-				print('Vehicle: {}\n'.format(self.__current_vehicle.__str__()))
-				self.found_vehicle()
-
-			if prompt == 'Cancel':
-				self.frame.delete_last_lines(6)
-				self.vehicles()
-		######################################################    
-		#                    SAVE EDITED VEHICLE             #                    
-		######################################################
-		elif menu_type == 'save edited vehicle':
-			if prompt == 'Save':
-				self.frame.delete_last_lines(15)
-				self.save_edited_vehicle()
-				self.frame.delete_last_lines()
-				self.__current_vehicle = self.vehicle_manager.find_vehicle_by_license_plate(self.__current_vehicle.get_license())
-				print('Vehicle: {}\n'.format(self.__current_vehicle.__str__()))
-				self.found_vehicle()
-				self.frame.delete_last_lines(2)
-
-			if prompt == 'Cancel':
-				self.frame.delete_last_lines(15)
-				print('Vehicle: {}\n'.format(self.__current_vehicle.__str__()))
-				self.found_vehicle()
-				self.frame.delete_last_lines(2)
-
-		######################################################    
-		#               SHOW VEHICLES IN SERVICE             #                    
-		######################################################
-		elif menu_type == 'show vehicles in service':
-			if prompt == 'Save':
-				self.frame.delete_last_lines(16)
-				self.save_new_vehicle()
-				print("\n" * 7)
-				self.vehicles()
-
-			if prompt == 'Cancel':
-				self.frame.delete_last_lines(10)
-				self.vehicles()
