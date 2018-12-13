@@ -412,8 +412,8 @@ class Menu:
 	def register_customer(self):
 		"""Method for registering a new customer.
 		Provides all the required checks to prevent the employee entering wrong inputs.
-		After the employee has entered all required datas, then another sub menu will appear, to 
-		select an action for either save the customer or can cancel and go back.
+		After the employee has entered all required datas, then another sub menu will appear, 
+		to select an action for either save the customer or can cancel and go back.
 		"""
 		self.frame.delete_last_lines(6)
 
