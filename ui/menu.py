@@ -292,7 +292,8 @@ class Menu:
 		self.check_if_valid('type of vehicle (Small vehicle, sedan, offroad or bus)', self.order_manager.check_type_of_vehicle)
 		
 		start_date, end_date = self.order_manager.get_dates()
-		vehicle_list = self.vehicle_manager.show_vehicle_availability(start_date, end_date, 'available')  # Shows only the cars that are available in that time
+		vehicle_list = self.vehicle_manager.show_vehicle_availability(start_date, end_date, 'available')
+		# Shows only the cars that are available in that time
 		vehicle_type = self.order_manager.get_type()
 		filtered_list = self.vehicle_manager.find_vehicle_by_type(vehicle_type, vehicle_list)
 		print()
@@ -316,7 +317,8 @@ class Menu:
 
 			self.check_if_valid('license plate', self.order_manager.check_license_plate, plates)
 
-			self.check_if_valid('insurance (yes or no)', self.order_manager.check_insurance)  # Let the customer choose if he/she wants any insurance other than basic.
+			self.check_if_valid('insurance (yes or no)', self.order_manager.check_insurance) 
+			# Let the customer choose if he/she wants any insurance other than basic.
 
 			print()
 			register_order_list = self.nocco_list.choose_one("Choose an action", 
@@ -549,24 +551,24 @@ class Menu:
 		name = input("Enter name: ")
 		print()
 		customers = self.customer_manager.find_customer_by_name(name)
-		if customers == None:
+		if customers == None: #Then there is no customer, none will go through here...
 			print('{}'.format(self.color.return_colored("Customer not found!", 'red')))
 			time.sleep(1.5)
 			self.frame.delete_last_lines(4)
 			print()
 			self.find_customer()
-		else:
+		else: #If the customer is found
 			self.frame.delete_last_lines(2)
-			if len(customers) == 1:
-				self.__current_customer = customers[0]
+			if len(customers) == 1: #If there is only one customer
+				self.__current_customer = customers[0] #The first index
 				print("Customer: " + self.__current_customer.__str__())
 				print()
 				self.found_customer()
-			else:
+			else: #Else there must be at least more than one customer that are found.
 				print("{}".format(self.color.return_colored("There are multiple customers with that name!", 'red')))
 				print()
 				printable_customers = [
-					'{}'.format(customer.__str__()) for customer
+					'{}'.format(customer.__str__()) for customer #loops through the list of customers found.
 					in customers]
 
 				printable_customers.append('Go back')
@@ -582,6 +584,7 @@ class Menu:
 		because many customers can have the same name, but only one customer can have one SSN, so this method enables the employee to have more power
 		and being more effiecient in search, and editing or removing/unsubscring the customer afterwards.
 		"""
+		#Very similar to finding customer by name...
 		ssn = input("Enter SSN: ")
 		print()
 		customer = self.customer_manager.find_customer_by_ssn(ssn)
@@ -591,7 +594,7 @@ class Menu:
 			self.frame.delete_last_lines(4)
 			print()
 			self.find_customer()
-		else:
+		else: #... except for here because there can only be one customer with a particullar ssn.
 			self.frame.delete_last_lines(2)
 			self.__current_customer = customer
 			print("Customer: " + customer.__str__())
@@ -603,7 +606,8 @@ class Menu:
 		first the employee has to find the customer then can delete.
 		A short message will show to indicate that the customer is successfully removed.
 		"""
-		self.customer_manager.delete_customer(self.__current_customer)
+		self.customer_manager.delete_customer(self.__current_customer) #this functuonality deletes the
+																		#customer from the csv file.
 		self.frame.delete_last_lines()
 		print('{}'.format(self.color.return_colored("Customer removed!", 'red')))
 		time.sleep(1.5)
@@ -611,6 +615,8 @@ class Menu:
 		self.customer()
 
 	def vehicles(self):
+		"""This function allows the user to choose what action he wants after going to the section "cars"
+		using nocco list"""
 		self.frame.delete_last_lines(7)
 		vehicle = self.nocco_list.choose_one('Choose an action', ['Register vehicle', 'Find vehicle', 'Show all available vehicles',
 															  'Show vehicles in service',
@@ -618,12 +624,19 @@ class Menu:
 		self.handle_answer_from_menu(vehicle['action'], 'vehicles')
 
 	def save_new_vehicle(self):
+		"""this function saves a new registered vehicle in the vehicles csv file, it calls another function;
+		save_new_vehicle, inside of vehicle_manager that makes up the functionality for saving a vehivle.
+		"""
 		self.vehicle_manager.save_new_vehicle()
 		print("{}".format(self.color.return_colored("New vehicle registered!", 'green')))
 		time.sleep(1.5)
 		self.frame.delete_last_lines(2)
 
 	def register_vehicle(self):
+		"""Here we check if a inut from the employee is valid or not. If it is not valid the empoyee is
+		informed and asked to inpt the right input. It goes through check_if_valid function and check functions
+		in vehicle_manager.
+		"""
 		self.frame.delete_last_lines(7)
 
 		self.check_if_valid('Vehicle type (smallcar, sedan, offroad or bus)', self.vehicle_manager.check_type)
@@ -648,21 +661,28 @@ class Menu:
 		self.handle_answer_from_menu(register_vehicle['action'], 'register vehicle')
 
 	def find_vehicles(self):
+		"""Here the employee is shown available actions after he chooses the action "find vehicle". This
+		is doable with the help of nocco_list
+		"""
 		find_vehicles = self.nocco_list.choose_one('Choose an action', ['Find vehicle by license plate', 'Find vehicle by make',
 																	'Find vehicle by type', 'Go back'], 'action')
 		print()
 		self.handle_answer_from_menu(find_vehicles['action'], 'find vehicle')
 
 	def find_vehicles_by_license_plate(self):
+		"""This function handles if the user wants to find vehicles by license plate, the input is compared
+		to the data stored in vehicle_manager.
+		"""
 		license_plate = input("Enter license plate: ")
 		print()
 		vehicle = self.vehicle_manager.find_vehicle_by_license_plate(license_plate)
-		if vehicle == None:
+		if vehicle == None: #If there is no licence plate compared to the input, None will be the case.
 			print('{}'.format(self.color.return_colored("Vehicle not found!", 'red')))
 			self.frame.delete_last_lines(3)
 			time.sleep(1.5)
 			self.find_vehicles()
-		else:
+		else: # No need to check if there are many licence plates because there is only one licence plate
+			  # linked to a particullar car.
 			self.frame.delete_last_lines(2)
 			print("Vehicle: " + vehicle.get_license())
 			print()
@@ -681,10 +701,11 @@ class Menu:
 			self.handle_answer_from_menu(found_vehicles_list['action'], 'found vehicle')
 
 	def find_vehicles_by_make(self):
+		"""This function handles if the user wants to find a vehicle by make."""
 		make = input("Enter make: ")
 		print()
 		vehicles = self.vehicle_manager.find_vehicle_by_make(make)
-		if vehicles == None:
+		if vehicles == None: #similar to licence plate...
 			print('{}'.format(self.color.return_colored("No vehicle found!", 'red')))
 			time.sleep(1.5)
 			self.frame.delete_last_lines(4)
@@ -692,17 +713,18 @@ class Menu:
 			self.find_vehicles()
 		else:
 			self.frame.delete_last_lines(2)
-			if len(vehicles) == 1:
+			if len(vehicles) == 1: #Here we do need to check if there is only one make or many...
 				self.__current_vehicle = vehicles[0]
 				print("Vehicle: " + self.__current_vehicle.__str__())
 				print()
 				self.found_vehicle()
-			else:
+			else: #If there are many makes this will run.
 				print("{}".format(self.color.return_colored("There are multiple vehicles with that make!", 'red')))
 				print()
 				printable_vehicles = [
-					'{}'.format(vehicle.__str__()) for vehicle
-					in vehicles]
+					'{}'.format(vehicle.__str__()) for vehicle #Loops thorugh the list of all makes
+					in vehicles]							   #compared to the make is being searched for.
+					
 
 				printable_vehicles.append('Go back')
 				found_multiple_vehicles = self.nocco_list.choose_one('Choose vehicle',
@@ -712,10 +734,12 @@ class Menu:
 											 'found multiple vehicles')
 
 	def find_vehicles_by_type(self):
+		"""This function finds vehicles by type.
+		"""
 		type_of_vehicle = input("Enter type: ")
 		print()
 		vehicles = self.vehicle_manager.find_vehicle_by_type(type_of_vehicle)
-		if vehicles == None:
+		if vehicles == None: #Again very similar to finding makes or licence plates
 			print('{}'.format(self.color.return_colored("No vehicle found!", 'red')))
 			time.sleep(1.5)
 			self.frame.delete_last_lines(4)
@@ -723,12 +747,12 @@ class Menu:
 			self.find_vehicles()
 		else:
 			self.frame.delete_last_lines(2)
-			if len(vehicles) == 1:
+			if len(vehicles) == 1: #We do need to check if there are many types
 				self.__current_vehicle = vehicles[0]
 				print("Vehicle: " + self.__current_vehicle.__str__())
 				print()
 				self.found_vehicle()
-			else:
+			else: #If there are many types
 				print("{}".format(self.color.return_colored("There are multiple vehicles with that type!", 'red')))
 				print()
 				printable_vehicles = [
@@ -743,26 +767,35 @@ class Menu:
 											 'found multiple vehicles')
 
 	def found_vehicle(self):
+		"""If the program has found a vehicle this function will take care of it, using nocco list the employee
+		has options shown here down below.
+		"""
 		found_vehicle_list = self.nocco_list.choose_one('Choose an action',
 						['Edit vehicle', 'Print vehicle', 'Print vehicle history', 'Remove vehicle', 'Go back'], 'action')
 		self.handle_answer_from_menu(found_vehicle_list['action'], 'found vehicle')											 
 
 	def vehicle_history(self):
+		"""This functon shows the history of a vehicle; what vehicle has been with what car.
+		"""
 		license_plate = self.__current_vehicle.get_license()
 		order_list = self.order_manager.find_orders_by_vehicle(license_plate)
-		if order_list == []:
+		if order_list == []: #the vehicle has no orders linked to it.
 			print('{}'.format(self.color.return_colored("No orders registered to this vehicle", 'red')))
 			self.nocco_list.single_list('Go back')
 			self.frame.delete_last_lines(3)
-		else:
+		else: #The vehicle has a order linked to it.
 			print('{:<10}{:<15}{:<20}'.format('ID', 'Customer SSN', 'Dates'))
 			print('-'*48)
-			for order in order_list:
+			for order in order_list: #Loops throug the order_list
 				print('{:<10}{:<15}{:>20}'.format(order.get_id(), order.get_ssn(), order.get_date_str()))
+				#Prints the id, ssn and dates for a order, using get functions in order.
 			self.nocco_list.single_list('Go back')
-			self.frame.delete_last_lines(len(order_list) + 4)
+			self.frame.delete_last_lines(len(order_list) + 4) #Styling, lines will vary on length of order_list.
 
 	def edit_vehicle(self):
+		"""This function is for editing a vehicle, we need to error check the input in editing like we did
+		with registering, we can also use it to make editing easy.
+		"""
 		vehicle = self.__current_vehicle.return_details()
 		self.frame.delete_last_lines()
 		print('{}\n'.format(self.color.return_colored('Leave input empty to keep the value the same', 'green')))
@@ -795,6 +828,8 @@ class Menu:
 		time.sleep(4)
 		
 	def save_edited_vehicle(self):
+		"""This function saves a edited vehicle, we first must delete it and then save it.
+		"""
 		self.vehicle_manager.delete_vehicle(self.__current_vehicle)
 		self.vehicle_manager.save_new_vehicle()
 		print("{}".format(self.color.return_colored("Vehicle updated!", 'green')))
