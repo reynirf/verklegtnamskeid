@@ -24,7 +24,8 @@ class Vehicle:
 
     def set_rented_dates(self):
         """converts all dates in rent_dates to date instances and saves
-        them to rented_dates"""
+        them to rented_dates.
+        """
         try:
             for d in self.__rent_dates:
                 rent_day = date(int(d[:4]), int(d[4:6]), int(d[6:]))

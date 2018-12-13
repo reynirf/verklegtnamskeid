@@ -2,6 +2,12 @@ from lib.color import Color
 
 
 class Employee:
+    """An employee has:
+        title: str
+        name: str
+        user_id: str
+        password: str
+    """
     def __init__(self, title='', name='', user_id='', password=''):
         self.__title = title
         self.__name = name

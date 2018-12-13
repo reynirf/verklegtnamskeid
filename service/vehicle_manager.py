@@ -140,7 +140,8 @@ class VehicleManager:
     def check_license_plate(self, license_plate, ignore_empty_value=False, current_value=''):
         """Check if license plate is valid. Returns an error message if number 
         plate has punctuation in it. When editing a previous value is 
-        used if nothing is entered"""
+        used if nothing is entered.
+        """
         license_plate = license_plate.replace(' ', '')
         
         if license_plate.strip() == '' and not ignore_empty_value:
@@ -160,7 +161,8 @@ class VehicleManager:
     def check_fuel(self, fuel, ignore_empty_value=False, current_value=''):
         """Checks that input fuel is valid. Returns an error if it is not
         in our list of fuels. When editing a previous value is used 
-        if nothing is entered"""
+        if nothing is entered.
+        """
         fuels = ["gasoline", "diesel", "electric", "hybrid"]
         
         if fuel.strip() == '' and not ignore_empty_value:
@@ -181,7 +183,8 @@ class VehicleManager:
             self, driving_transmission, ignore_empty_value=False, current_value=''):
         """Checks that input driving transmission is valid. Returns an 
         error if it is not in our list of fuels. When editing a 
-        previous value is used if nothing is entered"""
+        previous value is used if nothing is entered.
+        """
         transmissions = ["automatic", "manual"]        
         
         if driving_transmission.strip() == '' and not ignore_empty_value:
@@ -201,7 +204,8 @@ class VehicleManager:
     def find_vehicle_by_license_plate(self, license_plate):
         """Searches through a list of vehicles to find one whose license 
         plate matches the given license. Returns a matched vehicle 
-        instance or None if no vehicle is found."""
+        instance or None if no vehicle is found.
+        """
         license_plate = license_plate.replace(' ', '')
 
         vehicle_list = self.__vehicle_repo.get_vehicle_list()
@@ -213,7 +217,8 @@ class VehicleManager:
     def find_vehicle_by_make(self, make):
         """Searches through a list of vehicles to find those whose make 
         matches the given make. Returns a list of matched vehicles 
-        or None if no vehicles are found."""
+        or None if no vehicles are found.
+        """
         vehicle_list = self.__vehicle_repo.get_vehicle_list()
         vehicles = []
         for vehicle in vehicle_list:
@@ -226,8 +231,9 @@ class VehicleManager:
     def find_vehicle_by_type(self, type_of_vehicle, vehicle_list=''):
         """Searches through a list of vehicles to find those whose type 
         matches the given type. Returns a list of matched vehicles 
-        or None if no vehicles are found."""
-        #if no car list is given go to vehicle_repo to get one
+        or None if no vehicles are found.
+        """
+        # if no car list is given go to vehicle_repo to get one
         if vehicle_list == '':
             vehicle_list = self.__vehicle_repo.get_vehicle_list()
         vehicles = []
@@ -248,7 +254,7 @@ class VehicleManager:
         rented_vehicles = []
 
         dates = set()
-        #adds start and end dates and every day between them to a set of dates
+        # adds start and end dates and every day between them to a set of dates
         working_date = start_date
         one_day = datetime.timedelta(days=1)
         while working_date <= end_date:
@@ -256,7 +262,7 @@ class VehicleManager:
             working_date += one_day
         
         for vehicle in vehicles:
-            #get dates from each car and creates a set to compare with the entered dates
+            # get dates from each car and creates a set to compare with the entered dates
             vehicle_dates = set(vehicle.get_rented_dates())
             check = vehicle_dates & dates
             if len(check) == 0:

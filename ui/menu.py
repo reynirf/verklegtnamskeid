@@ -633,66 +633,30 @@ class Menu:
 															  'Show vehicles in service',
 															  'Go back'], 'action')
 		self.handle_answer_from_menu(vehicle['action'], 'vehicles')
-	
-	def save_edited_vehicle(self):
-		self.vehicle_manager.delete_vehicle(self.__current_vehicle)
-		self.vehicle_manager.save_new_vehicle()
-		print("{}".format(self.color.return_colored("Vehicle updated!", 'green')))
-		time.sleep(1.5)
 
-	def found_vehicle(self):
-		found_vehicle_list = self.nocco_list.choose_one('Choose an action',
-						['Edit vehicle', 'Print vehicle', 'Print vehicle history', 'Remove vehicle', 'Go back'], 'action')
-		self.handle_answer_from_menu(found_vehicle_list['action'], 'found vehicle')
+	def register_vehicle(self):
+		self.frame.delete_last_lines(7)
 
-	def vehicle_history(self):
-		license_plate = self.__current_vehicle.get_license()
-		order_list = self.order_manager.find_orders_by_vehicle(license_plate)
-		if order_list == []:
-			print('{}'.format(self.color.return_colored("No orders registered to this vehicle", 'red')))
-			self.nocco_list.single_list('Go back')
-			self.frame.delete_last_lines(3)
-		else:
-			print('{:<10}{:<15}{:<20}'.format('ID', 'Customer SSN', 'Dates'))
-			print('-'*48)
-			for order in order_list:
-				print('{:<10}{:<15}{:>20}'.format(order.get_id(), order.get_ssn(), order.get_date_str()))
-			self.nocco_list.single_list('Go back')
-			self.frame.delete_last_lines(len(order_list) + 4)
+		self.check_if_valid('Vehicle type (smallcar, sedan, offroad or bus)', self.vehicle_manager.check_type)
 
-	def edit_vehicle(self):
-		vehicle = self.__current_vehicle.return_details()
-		self.frame.delete_last_lines()
-		print('{}\n'.format(self.color.return_colored('Leave input empty to keep the value the same', 'green')))
+		self.check_if_valid('Make', self.vehicle_manager.check_make)
 
-		self.check_if_valid('Vehicle type', self.vehicle_manager.check_type, True, vehicle['Vehicle type'])
+		self.check_if_valid('Model', self.vehicle_manager.check_model)
 
-		self.check_if_valid('Make', self.vehicle_manager.check_make, True, vehicle['Make'])
+		self.check_if_valid('Year', self.vehicle_manager.check_year)
 
-		self.check_if_valid('Model', self.vehicle_manager.check_model, True, vehicle['Model'])
+		self.check_if_valid('Number of seats', self.vehicle_manager.check_number_of_seats)
 
-		self.check_if_valid('Year', self.vehicle_manager.check_year, True, vehicle['Year'])
+		self.check_if_valid('License plate', self.vehicle_manager.check_license_plate)
 
-		self.check_if_valid('Number of seats', self.vehicle_manager.check_number_of_seats, True, vehicle['Number of seats'])
+		self.check_if_valid('Fuel (gasoline, diesel, electric or hybrid)', self.vehicle_manager.check_fuel)
 
-		self.check_if_valid('License plate', self.vehicle_manager.check_license_plate, True, vehicle['License'])
-
-		self.check_if_valid('Fuel', self.vehicle_manager.check_fuel, True,
-							vehicle['Fuel'])
-
-		self.check_if_valid('Driving transmission', self.vehicle_manager.check_driving_transmission, True, 
-							vehicle['Driving transmission'])
+		self.check_if_valid('Driving transmission (manual or automatic)', self.vehicle_manager.check_driving_transmission)
 		print()
-
-		save_edited_vehicle = self.nocco_list.choose_one('Choose an action',
-														  ['Save', 'Cancel'],
-														  'action')
-		self.handle_answer_from_menu(save_edited_vehicle['action'], 'save edited vehicle')
-		self.frame.delete_last_lines(8)
-		print("{}".format(self.color.return_colored("Vehicle Saved", 'green')))
-		time.sleep(4)
-		
-
+		register_vehicle = self.nocco_list.choose_one('Choose an action',
+												  ['Save', 'Cancel'],
+												  'action')
+		self.handle_answer_from_menu(register_vehicle['action'], 'register vehicle')
 
 	def find_vehicles(self):
 		find_vehicles = self.nocco_list.choose_one('Choose an action', ['Find vehicle by license plate', 'Find vehicle by make',
@@ -758,7 +722,6 @@ class Menu:
 				self.handle_answer_from_menu((found_multiple_vehicles, vehicles),
 											 'found multiple vehicles')
 
-
 	def find_vehicles_by_type(self):
 		type_of_vehicle = input("Enter type: ")
 		print()
@@ -790,6 +753,64 @@ class Menu:
 				self.handle_answer_from_menu((found_multiple_vehicles, vehicles),
 											 'found multiple vehicles')
 
+	def found_vehicle(self):
+		found_vehicle_list = self.nocco_list.choose_one('Choose an action',
+						['Edit vehicle', 'Print vehicle', 'Print vehicle history', 'Remove vehicle', 'Go back'], 'action')
+		self.handle_answer_from_menu(found_vehicle_list['action'], 'found vehicle')											 
+
+	def vehicle_history(self):
+		license_plate = self.__current_vehicle.get_license()
+		order_list = self.order_manager.find_orders_by_vehicle(license_plate)
+		if order_list == []:
+			print('{}'.format(self.color.return_colored("No orders registered to this vehicle", 'red')))
+			self.nocco_list.single_list('Go back')
+			self.frame.delete_last_lines(3)
+		else:
+			print('{:<10}{:<15}{:<20}'.format('ID', 'Customer SSN', 'Dates'))
+			print('-'*48)
+			for order in order_list:
+				print('{:<10}{:<15}{:>20}'.format(order.get_id(), order.get_ssn(), order.get_date_str()))
+			self.nocco_list.single_list('Go back')
+			self.frame.delete_last_lines(len(order_list) + 4)
+
+	def edit_vehicle(self):
+		vehicle = self.__current_vehicle.return_details()
+		self.frame.delete_last_lines()
+		print('{}\n'.format(self.color.return_colored('Leave input empty to keep the value the same', 'green')))
+
+		self.check_if_valid('Vehicle type', self.vehicle_manager.check_type, True, vehicle['Vehicle type'])
+
+		self.check_if_valid('Make', self.vehicle_manager.check_make, True, vehicle['Make'])
+
+		self.check_if_valid('Model', self.vehicle_manager.check_model, True, vehicle['Model'])
+
+		self.check_if_valid('Year', self.vehicle_manager.check_year, True, vehicle['Year'])
+
+		self.check_if_valid('Number of seats', self.vehicle_manager.check_number_of_seats, True, vehicle['Number of seats'])
+
+		self.check_if_valid('License plate', self.vehicle_manager.check_license_plate, True, vehicle['License'])
+
+		self.check_if_valid('Fuel', self.vehicle_manager.check_fuel, True,
+							vehicle['Fuel'])
+
+		self.check_if_valid('Driving transmission', self.vehicle_manager.check_driving_transmission, True, 
+							vehicle['Driving transmission'])
+		print()
+
+		save_edited_vehicle = self.nocco_list.choose_one('Choose an action',
+														  ['Save', 'Cancel'],
+														  'action')
+		self.handle_answer_from_menu(save_edited_vehicle['action'], 'save edited vehicle')
+		self.frame.delete_last_lines(8)
+		print("{}".format(self.color.return_colored("Vehicle Saved", 'green')))
+		time.sleep(4)
+		
+	def save_edited_vehicle(self):
+		self.vehicle_manager.delete_vehicle(self.__current_vehicle)
+		self.vehicle_manager.save_new_vehicle()
+		print("{}".format(self.color.return_colored("Vehicle updated!", 'green')))
+		time.sleep(1.5)
+
 	def delete_vehicle(self):
 		self.vehicle_manager.delete_vehicle(self.__current_vehicle)
 		self.frame.delete_last_lines(1)
@@ -799,29 +820,6 @@ class Menu:
 		print('\n' * 7)
 		self.vehicles()
 
-	def register_vehicle(self):
-		self.frame.delete_last_lines(7)
-
-		self.check_if_valid('Vehicle type (smallcar, sedan, offroad or bus)', self.vehicle_manager.check_type)
-
-		self.check_if_valid('Make', self.vehicle_manager.check_make)
-
-		self.check_if_valid('Model', self.vehicle_manager.check_model)
-
-		self.check_if_valid('Year', self.vehicle_manager.check_year)
-
-		self.check_if_valid('Number of seats', self.vehicle_manager.check_number_of_seats)
-
-		self.check_if_valid('License plate', self.vehicle_manager.check_license_plate)
-
-		self.check_if_valid('Fuel (gasoline, diesel, electric or hybrid)', self.vehicle_manager.check_fuel)
-
-		self.check_if_valid('Driving transmission (manual or automatic)', self.vehicle_manager.check_driving_transmission)
-		print()
-		register_vehicle = self.nocco_list.choose_one('Choose an action',
-												  ['Save', 'Cancel'],
-												  'action')
-		self.handle_answer_from_menu(register_vehicle['action'], 'register vehicle')
 
 	def init_menu(self):
 		prompt = self.nocco_list.choose_one(

@@ -1,4 +1,13 @@
 class Customer:
+    """Customer has:
+        name: str
+        ssn: int
+        phone: int
+        email: str
+        address: str
+        driver_liccence: str
+        credit_card: int
+    """
     def __init__(self, name, ssn, phone, email, address, driver_license, credit_card):
         self.__name = name
         self.__ssn = ssn

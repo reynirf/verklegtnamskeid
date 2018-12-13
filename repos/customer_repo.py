@@ -42,8 +42,9 @@ class CustomerRepo:
         self.__customer_list = []
 
     def delete_customer(self, customer):
-        """ Reads customers from file and compares with customer. Writes the
-        file again without the line that matches the SSN """
+        """Reads customers from file and compares with customer. Writes the
+        file again without the line that matches the SSN.
+        """
         file_content = []
         with open(self.CUSTOMER_FILE, 'r') as customer_file:
             csv_reader = csv.reader(customer_file)

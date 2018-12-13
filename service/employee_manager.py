@@ -11,7 +11,8 @@ class EmployeeManager:
     def authenticate(self, employee_id, employee_password):
         """Compares the given id and password to a list of employees.
         Returns an Employyee instance if they are a match, otherwise
-        an error message will be returned"""
+        an error message will be returned.
+        """
         empoloyee_list = self.__employee_repo.get_employee_list()
         for employee in empoloyee_list:
             if employee.get_id() == employee_id:
