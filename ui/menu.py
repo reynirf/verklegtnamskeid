@@ -140,7 +140,7 @@ class Menu:
 				self.frame.delete_last_lines(7)
 				self.customer()
 
-			elif prompt == "Vehicles":
+			elif prompt == "Vehicle":
 				self.vehicles()
 
 			elif prompt == "Order":
@@ -233,7 +233,7 @@ class Menu:
 			[
 				"Order", 
 				"Customer", 
-				"Vehicles", 
+				"Vehicle", 
 				"Report an error", 
 				"Sign out"
 			],
