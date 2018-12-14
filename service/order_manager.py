@@ -83,24 +83,9 @@ class OrderManager:
         print("Enter pick up location: {}".format(self.__temp_pick_up_location))
         print("Enter return location: {}".format(self.__temp_return_location))
         print("Enter type of vehicle: {}".format(self.__temp_type_of_vehicle))
-        start_date, end_date = self.get_dates()
-        vehicle_list = self.__vehicle_manager.show_vehicle_availability(
-            start_date, end_date, 'available')
-        vehicle_type = self.get_type()
-        filtered_list = self.__vehicle_manager.find_vehicle_by_type(
-            vehicle_type, vehicle_list)
-        print()
-        print('Available vehicles:')
-        print()
-        print('{:<20} {:<20} {:<20} {:<20}'.format('License', 'Make', 'Model', 'Seats'))
-        print('-'*70)
-        for vehicle in filtered_list:
-            print(vehicle.availability_string())
-        print()
         print("Enter license plate: {}".format(self.__temp_license_plate))
         print("Enter Insurance: {}".format(self.__temp_insurance))
         print()
-        return filtered_list
         
     def get_order_dates(self, start='', end=''):
         """Adds start and end dates and every day between them to a list of dates.

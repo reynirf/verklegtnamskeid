@@ -291,21 +291,10 @@ class Menu:
 		#                REGISTER NEW ORDER                  #
 		######################################################
 		if menu_type == 'register_order':
-			start_date, end_date = self.order_manager.get_dates()
-			vehicle_list = self.vehicle_manager.show_vehicle_availability(start_date, end_date, 'available')
-			vehicle_type = self.order_manager.get_type()
-			filtered_list = self.vehicle_manager.find_vehicle_by_type(vehicle_type, vehicle_list)
-			if filtered_list:
-				self.frame.delete_last_lines(len(filtered_list) + 4)
-			else:
-				self.frame.delete_last_lines(4)
-				
 			if prompt == 'Cancel':
-				self.frame.delete_last_lines(19)
 				self.order()
 
 			elif prompt == 'Save':
-				self.frame.delete_last_lines(19)
 				self.save_new_order()
 				self.frame.delete_last_lines(2)
 				orders = self.order_manager.get_order_list()
@@ -314,11 +303,9 @@ class Menu:
 				print('Order: {}\n'.format(self.__current_order.__str__()))
 				self.found_order()
 
-			elif prompt == 'Calculate order':
-				vehicles = self.order_manager.get_inputted_order()
-				self.frame.delete_last_lines(len(vehicles) * 2 + 36)				
+			elif prompt == 'Calculate order':			
 				self.calculate_order()
-				self.frame.delete_last_lines(len(vehicles) * 2 + 6)				
+				self.frame.delete_last_lines(10)				
 				print()
 				self.get_inputted_order()
 	
@@ -405,7 +392,6 @@ class Menu:
 		"""After the employee has inputed all the neccessary data, it calculates the order in a readable style,
 		with correct formating.
 		"""
-		print()
 		print('{:<20}{:>10}{:>12}'.format('Description', 'Per day', 'Amount'))
 		print('-'*42)
 		base_price, insurance, extra_ins, days = self.order_manager.calculate_order()
@@ -507,11 +493,11 @@ class Menu:
 		"""After the employee has entered all the neccessary datas about the order, then another menu will
 		appear with the functionalities to move on in further operations.
 		"""
-		vehicles = self.order_manager.get_inputted_order()
-		self.frame.delete_last_lines(len(vehicles) - 1)  # Deletes last lines equal to len(cars) -1...styling
+		self.order_manager.get_inputted_order()
 		print()
 		register_order_list = self.nocco_list.choose_one("Choose an action",
 							["Save", "Calculate order" , "Cancel"], "action")
+		self.frame.delete_last_lines(19)
 		self.handle_answer_from_order_menus(register_order_list['action'], 'register_order')
 
 	def delete_order(self):
@@ -599,7 +585,7 @@ class Menu:
 			print()
 			register_order_list = self.nocco_list.choose_one("Choose an action", 
 															["Save", "Calculate order", "Cancel"], "action")
-			
+			self.frame.delete_last_lines(len(filtered_list) + 23)
 			self.handle_answer_from_order_menus(register_order_list['action'], 'register_order')
 	
 	def edit_order(self):
