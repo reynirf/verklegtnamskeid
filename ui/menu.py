@@ -571,7 +571,7 @@ class Menu:
 		self.vehicle_manager.delete_order_dates(dates, vehicle)  # A function that deletes the dates a vehicle is rented.
 		self.order_manager.delete_order(self.__current_order)  # A function that deletes the particullar order
 		self.frame.delete_last_lines(2)
-		print("{}".format(self.color.return_colored("Order removed!", "red")))
+		print("{}".format(self.color.return_colored("Order deleted!", "red")))
 		time.sleep(1.5)
 		self.frame.delete_last_lines(1)
 		self.order()
@@ -793,7 +793,7 @@ class Menu:
 				self.frame.delete_last_lines(6)
 				self.edit_customer()
 
-			elif prompt == "Unsubscribe customer":
+			elif prompt == "Delete customer":
 				self.frame.delete_last_lines(5)
 				self.delete_customer()
 				self.frame.delete_last_lines()
@@ -917,7 +917,7 @@ class Menu:
 				"Print customer details", 
 				"Print order history", 
 				"Edit customer", 
-				"Unsubscribe customer",
+				"Delete customer",
 				"Go back"
 			], 
 			"action"
@@ -950,7 +950,7 @@ class Menu:
 		a short message will be printed to indiciate that. 
 		In case that there are more than one customer with a particular name then a message will be printed to indicate that, 
 		and the list of the cusomers will be printed in the screen for the employee to choose from.
-		In case that there is only one customer with that name, then the employee will be able to edit, or remove that customer.
+		In case that there is only one customer with that name, then the employee will be able to edit, or delete that customer.
 		"""
 		name = input("Enter name: ")
 		print()
@@ -984,7 +984,7 @@ class Menu:
 		"""This method is called when the employee wants to find a customer, because it uses SSN as criteria for search
 		and because SSN is unique for each customer, this method of finding customers is much more efficient than finding customers by name,
 		because many customers can have the same name, but only one customer can have one SSN, so this method enables the employee to have more power
-		and being more effiecient in search, and editing or removing/unsubscring the customer afterwards.
+		and being more effiecient in search, and editing or deleting the customer afterwards.
 		"""
 		#Very similar to finding customer by name...
 		ssn = input("Enter SSN: ")
@@ -1006,12 +1006,12 @@ class Menu:
 	def delete_customer(self):
 		"""When the employee wants to delete a customer, this method is called,
 		first the employee has to find the customer then can delete.
-		A short message will show to indicate that the customer is successfully removed.
+		A short message will show to indicate that the customer is successfully deleted.
 		"""
 		self.customer_manager.delete_customer(self.__current_customer) #this functuonality deletes the
 																		#customer from the csv file.
 		self.frame.delete_last_lines()
-		print("{}".format(self.color.return_colored("Customer removed!", "red")))
+		print("{}".format(self.color.return_colored("Customer deleted!", "red")))
 		time.sleep(1.5)
 		self.frame.delete_last_lines()
 		self.customer()
@@ -1072,7 +1072,7 @@ class Menu:
 				self.frame.delete_last_lines(8)
 				self.edit_vehicle()
 
-			elif prompt == "Remove vehicle":
+			elif prompt == "Delete vehicle":
 				self.frame.delete_last_lines(8)
 				self.delete_vehicle()
 
@@ -1215,7 +1215,7 @@ class Menu:
 					"Edit vehicle", 
 					"Print vehicle",
 					"Print vehicle history",
-					"Remove vehicle", 
+					"Delete vehicle", 
 					"Go back"
 				], 
 				"action"
@@ -1294,7 +1294,7 @@ class Menu:
 				"Edit vehicle", 
 				"Print vehicle", 
 				"Print vehicle history", 
-				"Remove vehicle", 
+				"Delete vehicle", 
 				"Go back"
 			], 
 			"action"
@@ -1359,13 +1359,13 @@ class Menu:
 		time.sleep(1.5)
 
 	def delete_vehicle(self):
-		"""If the employee wants to remove/delete a vehicle then after he/she has found the vehicle,
-		then clicks in remove vehicle, and then this method is called.
+		"""If the employee wants to delete a vehicle then after he/she has found the vehicle,
+		then clicks in delete vehicle, and then this method is called.
 		A short message to indicate that the operation was done successfully will be printed.
 		"""
 		self.vehicle_manager.delete_vehicle(self.__current_vehicle)
 		self.frame.delete_last_lines(1)
-		print("{}".format(self.color.return_colored("Vehicle removed!", "red")))
+		print("{}".format(self.color.return_colored("Vehicle deleted!", "red")))
 		time.sleep(1.5)
 		self.frame.delete_last_lines(2)
 		print("\n" * 7)
