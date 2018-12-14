@@ -40,7 +40,7 @@ class Vehicle:
         return "{} | {}".format(self.__license, self.__make)
 
     def availability_string(self):
-        return '{:<20} {:<20} {:<20} {:<20}'.format(
+        return "{:<20} {:<20} {:<20} {:<20}".format(
             self.__license, self.__make, self.__model, self.__seats)
 
     def get_license(self):

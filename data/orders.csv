@@ -1,6 +1,4 @@
 id,ssn,starting date,ending date,pick up time,returning time,pick up location,return location,number plate,insurance,type of vehicle
-1,0000000000,20181212,20181214,12:00,12:00,akureyri,akureyri,WOW00,yes,offroad
-2,1107983699,20181212,20181214,12:00,12:00,akureyri,akureyri,VIP00,yes,sedan
 10,0608001234,20181224,20181226,9:00,9:00,ak,ak,XXL13,yes,bus
 34290,94302904023,20191010,20191020,2:20,20:20,ak,ak,aaa00,yes,smallcar
 432,43243200,20191010,20191020,2:20,2:20,ak,ak,lol00,yes,smallcar

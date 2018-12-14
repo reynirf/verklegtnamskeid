@@ -1,16 +1,12 @@
 licence;make;model;year;type;seats;fuel;transmission;dates rented
 DNO45;skoda;octavia;2018;sedan;5;diesel;automatic;[]
-TTT11;volvo;clx;2018;sedan;5;hybrid;manual;[]
 lollol;volvo;x3;2018;sedan;5;diesel;automatic;[]
-BIG23;landcruiser;offroad;2017;offroad;8;gasoline;manual;[]
 BIG99;pugeot;xxl;2017;bus;13;diesel;automatic;[]
 XXL13;RAM;XL;2018;bus;8;gasoline;automatic;20181224,20181225,20181226,
 BBB33;skoda;octavia;2018;sedan;5;hybrid;manual;
-RYZ71;toyota;yaris;2017;smallcar;5;gasoline;automatic;
 AAA00;toyota;auris;2017;smallcar;5;hybrid;manual;20191010,20191011,20191012,20191013,20191014,20191015,20191016,20191017,20191018,20191019,20191020,
-LOL00;toyota;auris;2017;smallcar;5;diesel;automatic;20191010,20191011,20191012,20191013,20191014,20191015,20191016,20191017,20191018,20191019,20191020,
 FOK23;toyota;yaris;2017;smallcar;5;diesel;manual;20191010,20191011,20191012,20191013,20191014,20191015,20191016,20191017,20191018,20191019,20191020,
 VIP01;range rover;descovery;2018;offroad;5;diesel;manual;20191010,20191011,20191012,20191013,20191014,20191015,20191016,20191017,20191018,20191019,20191020,
-WOW00;toyota;rav;2018;offroad;6;hybrid;manual;20190112,20190113,
-ABC;toyota;auris;2017;smallcar;5;hybrid;automatic;20181220,
-VIP00;tesla;premium;2018;sedan;2;hybrid;manual;20181213,20190102,20190121,20190103,20190101,20181212,20190122,20181214,
+TTT11;volvo;clx;2018;sedan;5;hybrid;manual;20191010,20191011,20191012,20191013,20191014,20191015,20191016,20191017,20191018,20191019,20191020,
+RYZ71;toyota;yaris;2017;smallcar;5;gasoline;automatic;20191010,20191011,20191012,20191013,20191014,20191015,20191016,20191017,20191018,20191019,20191020,
+VIP00;tesla;premium;2018;sedan;2;hybrid;manual;

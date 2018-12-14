@@ -8,7 +8,7 @@ class Employee:
         user_id: str
         password: str
     """
-    def __init__(self, title='', name='', user_id='', password=''):
+    def __init__(self, title="", name="", user_id="", password=""):
         self.__title = title
         self.__name = name
         self.__id = user_id
@@ -26,7 +26,7 @@ class Employee:
 
     def __str__(self):
         return "[{}] {}. {}".format(
-            self.color.return_colored(self.__id, 'yellow'),
-            self.color.return_colored(self.__title, 'bold'), 
-            self.color.return_colored(self.__name,'bold')
+            self.color.return_colored(self.__id, "yellow"),
+            self.color.return_colored(self.__title, "bold"), 
+            self.color.return_colored(self.__name,"bold")
         )
